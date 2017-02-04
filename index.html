@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+
+<form class="BASE_FORM">base form</form>
+
+<form class="BASE_FORM BASE_FORM--WITH_ERROR">base form with error</form>
+
+<h1>Heading</h1>
+
+<p class="first-name">Callum</p>
+
+<a href="" class="some-link">Some link</a>
+
+<style>
+    /*
+    Using `:not()` pseudo class only sets `background` once (even when form has both classes).
+    */
+    .BASE_FORM:not(.BASE_FORM--WITH_ERROR) {
+        background: grey;
+    }
+
+    .BASE_FORM--WITH_ERROR {
+        background: red;
+    }
+
+    /*
+    Color property of `h1` is immutable.
+    */
+    h1 {
+        COLOR: red;
+    }
+
+    /*
+    If `.first-name` doesn't mutate any immutable properties of `<p>` build tool can trim `<p>` off selector,
+    Otherwise throw error.
+    */
+    .first-name<p> {
+        color: blue;
+    }
+
+    /*
+    Color property of `.some-link` is protected. Which means only pseudo classes can modify it.
+    */
+    .some-link {
+        Color: green;
+    }
+
+    .some-link:hover {
+        color: orange; /* allowed because `:hover` is a pseudo class */
+    }
+
+    /*.some-link {
+        color: red;  throws error because `color` of `some-link` can only be modified by pseudo classes
+    }*/
+
+</style>
+
+</body>
+</html>
