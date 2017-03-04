@@ -1,4 +1,30 @@
 
+/* Allows you to set multiple styles i.e:
+
+.foo({
+   COLOR: red;
+   PADDING: 4px 10px;
+});
+*/
+
+// For now use approach used for .foo and .bar mixins (rather than adding custom functions).
+
+.foo(@ruleset) {
+    // Force `@debug` variable to be scoped within mixin
+    & when (true) {
+        @debug: ~"/* immutable */";
+        @ruleset();
+    }
+}
+
+.bar(@ruleset) {
+     & when (true) {
+        // Force `@debug` variable to be scoped within mixin
+        @debug: ~"/* protected */";
+        @ruleset();
+    }
+}
+
 .immutable(@property, @value) {
     // Would be nice to uppercase property name here
     @{property}: @value;

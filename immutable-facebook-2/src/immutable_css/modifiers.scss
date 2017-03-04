@@ -1,0 +1,44 @@
+/**
+    Modifiers --
+
+    Specical functions that modify the value of CSS declarations.
+
+    Modifiers are associated to specific types. They can only be
+    used on willing types.
+
+    By design modifier functions are pure. They cannot modify values
+    passed as arguments, and cannot add additional CSS properties.
+    This gaurentees what styles are applied, which reduces side
+    effects.
+
+    Modifiers are prefixed with a double dash --
+
+*/
+
+
+/**
+    @modifier: Override
+    @description: Can modify the value of protected declarations.
+    @throws: some error name.
+*/
+@function --override($value) {
+    @return append($value, #{'/* Override */'})
+}
+
+/**
+    @modifier: Mutate
+    @description: Can modify the value of public declarations.
+    @throws: some error name.
+*/
+@function --mutate($value) {
+    @return append($value, #{'/* Mutate */'})
+}
+
+/**
+    @modifier: Overrule
+    @description: Can modify inline CSS styles
+    @throws: IllegalOverrule
+*/
+@function --overrule($value) {
+    @return append($value, #{!important '/* Overrule */'})
+}

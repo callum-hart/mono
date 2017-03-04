@@ -4,10 +4,10 @@
 - Immutable classes can only be declared once.
 - Immutable properties can only be declared once.
 - Protected properties can only be modified by pseudo-classes.
-- Public properties can only be modified by pseudo-classes of parent element.
+- Public properties can only be modified by pseudo and modifier class of parent element.
 - Immutable mixins can only be declared once.
 - Immutable variables can only be delcared once.
-- Media query breakpoints can't overlap one-another.
+- Media query breakpoints can't overlap one-another?
 
 ### Syntax:
 

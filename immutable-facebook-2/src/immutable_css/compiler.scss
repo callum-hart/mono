@@ -1,0 +1,27 @@
+/**
+    Compiler / Assistant --
+
+    The compiler should assist the developer by first educating,
+    and second enforcing the types, patterns and priciples of
+    immutable CSS.
+
+    It should be really user friendly - like elms compiler.
+*/
+
+
+/**
+    Errors
+
+    @type: IllegalOverrule
+    @modifier: --overrule
+    @description: Overrule can only modify styles inlined
+    in HTML or set by JavaScript.
+    @message: You have tried to overrule styles declared
+    in CSS.
+
+    Instead try using the modifiers --override or --mutate.
+
+
+
+    todo: document all compiler errors...
+*/

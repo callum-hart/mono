@@ -1,0 +1,175 @@
+/**
+    Patterns --
+
+    Document patterns used in immutable CSS
+*/
+
+
+/**
+    @technique: Negation
+    @description: Negation uses the :not pseudo-class to avoid
+    mutations amongst composable classes. A common example of
+    a composable class is a BEM modifier.
+    @problem:
+
+    .form {
+        background: grey;
+    }
+
+    .form--withError {
+        background: red;
+    }
+
+    When the form has both classes the background is set twice.
+    This breaks the principles enforced by some types, e.g:
+
+    .form {
+        background: Immutable(grey);
+    }
+
+    The background of `.form` is locked. When the form has the error
+    class it cannot change the background property.
+
+    @solution:
+
+    .form:not(.form--withError) {
+        background: grey;
+    }
+
+    .form--withError {
+        background: red;
+    }
+*/
+
+/**
+    @technique: Selector types
+    @description: Selectors should include their element type.
+    This has several benefits:
+
+    *Note: a consumer is an element or group of elements which CSS
+    rules are applied.
+
+    - Improved scoping – styles are scoped to the elements that use them.
+    - Encapsulation – styles are brought out of the global domain.
+    - Better visibility – reduces ambiguity of consumers.
+    - Reduces conflicts – easier to avoid and track unwanted overides.
+
+    @problem:
+
+    .title {
+        font-size: 20px;
+    }
+
+    The `.title` class is obscure. We cannot make any guarantee of
+    who the consumer is. And we have no control (or foresight) over
+    what other styles will be applied.
+
+    As it stands our title does not have a predictable or concrete
+    shape. For example:
+
+    <span class="title"></span>
+    <h1 class="title"></h1>
+
+    Both instances of `.title` will look different.
+
+    @solution:
+
+    h1.title {
+        font-size: 20px;
+    }
+
+*/
+
+/**
+    @technique: Breakpoint encapsulation
+    @description: Properties whose values change at different
+    screensizes should be scoped within breakpoints.
+    @problem:
+
+    .foo {
+        font-size: 14px;
+    }
+
+    @media(min-width: 500px) {
+        .foo {
+            font-size: 12px;
+        }
+    }
+
+    On screens wider than 500px the font-size of `.foo` is set twice.
+    This breaks the principles enforced by some types, e.g:
+
+    .foo {
+        font-size: Immutable(14px);
+    }
+
+    The font-size of `.foo` is locked. It cannot be changed inside the
+    media query.
+
+    @solution:
+
+    @media(max-width: 500px) {
+        .foo {
+            font-size: 14px;
+        }
+    }
+
+    @media(min-width: 500px) {
+        .foo {
+            font-size: 12px;
+        }
+    }
+
+*/
+
+/**
+    @technique: Shorthand appropriately
+    @description: Use shorthand notation only when a property has
+    multiple values.
+
+    @problem:
+
+    div.pow {
+        margin: 10px 0 0 0;
+    }
+
+    nav div.pow {
+        margin: 10px 0 0 10px;
+    }
+
+    The top margin of `.pow` is concrete (it should always be 10px).
+    With shorthand: future changes to margin sides of `.pow` must
+    hydrate concrete values by duplicating their assignment.
+
+    Inside `nav` the top margin is re-applyed even though only the
+    left margin is changed.
+
+    - Accidental mutations: easy to unintentionally override concrete
+      values.
+    - Unnecessary: we can leverage browser defaults, default margins
+      are already 0.
+    - Obfuscates values: cannot gaurentee hydrated values without
+      looking at their initial assignment.
+    - Increases risk of breaking principles, e.g:
+
+    div.pow {
+        margin: Immutable(10px 0 0 0);
+    }
+
+    All margin sides of `.pow` are locked. The top/right/bottom/left margins
+    cannot be changed.
+
+    @solution
+
+    div.pow {
+        margin-top: Immutable(10px);
+    }
+
+    nav div.pow {
+        margin-left: 10px;
+    }
+
+    *Aside: improves readability since the property name describes
+    where the value is applied.
+
+*/

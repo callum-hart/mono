@@ -34,6 +34,49 @@
 
 .btn-secondary {
     .BTN(@BTN_SECONDARY_BG, @BTN_SECONDARY_COLOR);
+
+    @somevar: blue;
+
+    .foo({
+       color: darken(@somevar, 20%) @debug;
+       padding: 4px 10px @debug;
+    });
+
+    .bar({
+       font-size: 12px @debug;
+       line-height: 13px @debug;
+    });
+
+    /*
+    Can now use LESS functions (rather than mixins)
+    (For now) can't use variables or functions inside ruleset, i.e can't do:
+
+    @color: red;
+
+    immutable({
+        color: darken(@color, 10%);
+    })
+
+    This can be done with mixins:
+
+    .immutable(color, darken(@color, 10%));
+
+    .foo({
+        color: darken(@color, 10%);
+    })
+    */
+
+    // bar(#ffffff);
+
+    // immutable({
+    //     color: red;
+    // });
+
+    // protected({
+    //     font-style: italic;
+    //     font-size: 20px;
+    //     line-height: 20px;
+    // });
 }
 
 .btn-secondary--with-icon {

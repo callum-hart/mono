@@ -1,0 +1,43 @@
+body {
+  background: green; }
+
+body {
+  width: 50; }
+
+.wat {
+  color: red;
+  background: green; }
+
+.foo {
+  color: red /* immutable */;
+  font-size: 40px /* immutable */; }
+
+.pow {
+  color: white /* Protected */;
+  font-size: 40 /* Immutable */; }
+
+.pow:hover {
+  color: red /* overriden */; }
+
+.pow:hover {
+  color: blue /* --overriden */; }
+
+.bar.bar--witherror .foo {
+  color: --mutate(red); }
+
+@media (max-width: 500px) {
+  .pow {
+    font-size: 12px /* Within */;
+    color: red /* Immutable */ /* Within */; } }
+@media (min-width: 500px) {
+  .pow {
+    font-size: 16px /* Within */;
+    color: blue /* Protected */ /* Within */; } }
+@media (min-width: 500px) {
+  .pow:hover {
+    color: green /* --overriden */; } }
+
+.bam {
+  font-size: 10px !important /* Overrule */; }
+
+/*# sourceMappingURL=app.css.map */

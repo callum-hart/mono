@@ -599,8 +599,35 @@ Pretend I have a build tool enforcing the constraints.
 
 ### Findings
 
-- Had to add additional access modifier (public). Public properties can only be modified by pseudo-classes of parent element. Use case: icon color changes when hovering over parent element: `.SECONDARY_BUTTON--WITH_ICON`.
-- Only use immutable classes when it makes sense, such as utility classes. It's unrealistic to think declarations such as `.BUTTON` and `ICON` can only be declared once. That is not to say they can't have immutable properties. Visual *immutable* styles live in `button.less` / `icon.less` whereas how they are positioned depends on the context in which the element is used. For example:
+Had to add additional access modifier (public). Public properties can only be modified by pseudo-classes of parent element.
+
+Use case: hover over an element can change style(s) of child element. i.e hover over button changes color of icon inside.
+
+*Update:* public properties can also be changed by modifier class of parent element, i.e:
+
+```
+.BTN(@background) {
+    padding: 4px 10px;
+    Background: @background;
+    oPacity: 1; // public
+}
+
+.btn-primary {
+    .BTN(green);
+}
+
+
+.form--with-error {
+    .btn-primary {
+        pointer-events: none;
+        oPacity: 0.5; // can modify opacity because property is public
+    }
+}
+```
+
+Only use immutable classes when it makes sense (such as utility classes). It's unrealistic to think declarations such as `.BUTTON` and `.ICON` can only be declared once. That is not to say they can't have immutable properties.
+
+Visual *immutable* styles live in `button.less` / `icon.less` whereas how they are positioned depends on the context in which the element is used. For example:
 
 ```
 // buttons.less
@@ -636,14 +663,14 @@ Example above doesn't make sense because some properties of button depend on the
     Color: @color;
 }
 
-.btn_primary {
+.btn-primary {
     .BTN(blue, white);
 }
 
 // nav.less
 
 nav {
-    .btn_primary {
+    .btn-primary {
         float: right;
         Background: red; // throws error because `Backgound` is protected.
     }

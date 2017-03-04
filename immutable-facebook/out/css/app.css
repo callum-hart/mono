@@ -1,3 +1,10 @@
+/* Allows you to set multiple styles i.e:
+
+.foo({
+   COLOR: red;
+   PADDING: 4px 10px;
+});
+*/
 .CLEARFIX {
   clear: both;
 }
@@ -27,6 +34,28 @@ body {
   debug: "Background is protected";
   Color: #19191b;
   debug: "Color is protected";
+  color: #000099 /* immutable */;
+  padding: 4px 10px /* immutable */;
+  font-size: 12px /* protected */;
+  line-height: 13px /* protected */;
+  /*
+    Can now use LESS functions (rather than mixins)
+    (For now) can't use variables or functions inside ruleset, i.e can't do:
+
+    @color: red;
+
+    immutable({
+        color: darken(@color, 10%);
+    })
+
+    This can be done with mixins:
+
+    .immutable(color, darken(@color, 10%));
+
+    .foo({
+        color: darken(@color, 10%);
+    })
+    */
 }
 .btn-secondary:hover {
   Background: #b7bbc4;
