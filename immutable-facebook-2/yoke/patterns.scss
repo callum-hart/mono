@@ -120,6 +120,14 @@
         }
     }
 
+    Could seperate styles into files?
+
+    ├── nav
+    |   └── nav.scss (common styles used accross breakpoints)
+    |   └── nav--desktop.css
+    |   └── nav--tablet.css
+    |   └── nav--mobile.css
+
 */
 
 /**
@@ -171,5 +179,26 @@
 
     *Aside: improves readability since the property name describes
     where the value is applied.
+
+*/
+
+/**
+    @technique: Universal objects
+    @description: Styles that are decoupled from their context.
+    Always look the same regardless of where they are used.
+    @problem:
+
+    - CSS classes are too brittle.
+    - No seperation between universal and contextual styles.
+    - Easy to override universal styles.
+
+    todo: add code examples
+
+    @solution:
+
+    - Encapsulate universal styles with a universal class.
+    - Add contextual styles with a regular class.
+
+    todo: add code examples
 
 */

@@ -1,0 +1,21 @@
+main {
+    display: immutable(flex);
+    position: immutable(absolute);
+    top: immutable($nav_height);
+    right: immutable(0);
+    bottom: immutable(0);
+    left: immutable(0);
+}
+
+section.left-bar {
+    width: immutable($leftBar_width);
+    overflow: immutable(auto);
+}
+
+section.content {
+    flex: immutable(1);
+}
+
+section.right-bar {
+    width: immutable($rightBar_width);
+}

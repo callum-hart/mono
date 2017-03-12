@@ -1,0 +1,121 @@
+section.right-bar {
+    display: immutable(flex);
+    flex-direction: immutable(column);
+    background: immutable($rightBar_background);
+    box-shadow: immutable(12px 0 12px -8px rgba(0, 0, 0, 0.3) inset);
+
+    section.right-bar__content {
+        flex: immutable(1);
+        overflow: immutable(auto);
+        padding-top: immutable(10px);
+        padding-left: immutable(12px);
+        padding-right: immutable(12px);
+    }
+
+    span.right-bar__heading {
+        display: immutable(block);
+        margin-top: immutable(10px);
+        margin-left: immutable(12px);
+        margin-bottom: immutable(10px);
+    }
+
+    ul.right-bar__list {
+        -webkit-padding-start: --veto(0);
+        -webkit-margin-before: --veto(0);
+        -webkit-margin-after: --veto(0);
+
+        li {
+            list-style: --veto(none);
+        }
+
+        a.list__item {
+            display: immutable(flex);
+            align-items: immutable(center);
+            padding-top: immutable(5px);
+            padding-bottom: immutable(5px);
+            text-decoration: --veto(none);
+        }
+
+        img.right-bar__user-pic {
+            margin-right: immutable(10px);
+            border: immutable(2px solid #495258);
+        }
+
+        span.list__text {
+            flex: immutable(1);
+            font-size: immutable(13px);
+            color: public(#D1D4D6);
+            overflow: immutable(hidden);
+            white-space: immutable(nowrap);
+            text-overflow: immutable(ellipsis);
+        }
+
+        span.list__status {
+            margin-left: immutable(10px);
+        }
+
+        a.list__item:hover {
+            span.list__text {
+                color: --mutate($white);
+            }
+        }
+    }
+
+    footer.right-bar__footer {
+        display: immutable(flex);
+        min-height: immutable(40px);
+        height: immutable(40px);
+        background: immutable(#636C72);
+        box-shadow: immutable(12px 0 12px -8px rgba(0, 0, 0, 0.3) inset);
+    }
+
+    div.right-bar__search {
+        display: immutable(flex);
+        align-items: immutable(center);
+
+        span.search__icon {
+            padding-left: immutable(10px);
+            padding-right: immutable(10px);
+            font-size: immutable(18px);
+            color: public(#BABDC0);
+        }
+
+        input.search__input {
+            height: immutable(100%);
+            width: immutable(100%);
+            box-sizing: immutable(border-box);
+            border: --veto(none);
+            font-size: immutable(13px);
+            outline: --veto(none);
+            background: immutable(transparent);
+            color: immutable($white);
+        }
+
+        input.search__input::-webkit-input-placeholder {
+            font-weight: immutable(100);
+            color: immutable(#BABDC0);
+        }
+    }
+
+    div.right-bar__search:hover {
+        span.search__icon {
+            color: --mutate($navIcon_color--hover);
+        }
+    }
+
+    a.right-bar__compose {
+        display: immutable(flex);
+        align-items: immutable(center);
+        justify-content: immutable(center);
+        width: immutable(45px);
+        height: immutable(100%);
+        border-left: immutable(1px solid $rightBar_background);
+        text-decoration: --veto(none);
+        font-size: immutable(18px);
+        color: protected(#C0C4C6);
+    }
+
+    a.right-bar__compose:hover {
+        color: --override($white);
+    }
+}

@@ -1,0 +1,110 @@
+nav {
+    display: immutable(flex);
+    height: immutable($nav_height);
+    position: immutable(relative);
+    z-index: immutable(2);
+    background: immutable($secondaryBlue);
+    box-shadow: immutable(0 1px 2px rgba(0,0,0,.3));
+
+    div.nav__logo {
+        display: immutable(flex);
+        align-items: immutable(center);
+        justify-content: immutable(center);
+        width: immutable($leftBar_width);
+        background: immutable($primaryBlue);
+        color: immutable($white);
+    }
+
+    div.nav__controls {
+        display: immutable(flex);
+        flex: immutable(1);
+    }
+
+    div.nav__search {
+        display: immutable(flex);
+        flex: immutable(1);
+        align-items: immutable(center);
+
+        span.search__icon {
+            padding-left: immutable(20px);
+            padding-right: immutable(10px);
+            font-size: immutable(18px);
+            color: public($navIcon_color);
+        }
+
+        input.search__input {
+            height: immutable(100%);
+            flex: immutable(1);
+            box-sizing: immutable(border-box);
+            border: --veto(none);
+            font-size: immutable(13px);
+            outline: --veto(none);
+            background: immutable(transparent);
+            color: immutable($white);
+        }
+
+        input.search__input::-webkit-input-placeholder {
+            font-weight: immutable(100);
+            color: immutable($navIcon_color);
+        }
+    }
+
+    div.nav__search:hover {
+        span.search__icon {
+            color: --mutate($navIcon_color--hover);
+        }
+    }
+
+    div.nav__bits {
+        display: immutable(flex);
+        align-items: immutable(center);
+        padding-right: immutable(20px);
+
+        a {
+            position: relative; // needed to contain .nav__count.
+            margin-left: immutable(10px);
+            margin-right: immutable(10px);
+            font-size: immutable(18px);
+            text-decoration: --veto(none);
+        }
+
+        a:not(.--active) {
+            color: protected($navIcon_color);
+
+            &:hover {
+                color: --override($navIcon_color--hover);
+            }
+        }
+
+        a.--active:before {
+            color: immutable($white);
+        }
+
+        span.nav__count {
+            top: immutable(-4px);
+            right: immutable(-8px);
+            box-shadow: immutable(0px 0px 0 2px $secondaryBlue);
+        }
+    }
+
+    div.nav__user {
+        display: immutable(flex);
+        align-items: immutable(center);
+        height: immutable(22px);
+        margin-left: immutable(10px);
+        margin-right: immutable(10px);
+        padding-left: immutable(15px);
+        border-left: immutable(1px solid $primaryBlue);
+
+    }
+
+    img.nav__user-pic {
+        border: immutable(2px solid $primaryBlue);
+    }
+
+    span.nav__user-name {
+        margin-right: immutable(10px);
+        font-size: immutable(13px);
+        color: immutable($white);
+    }
+}

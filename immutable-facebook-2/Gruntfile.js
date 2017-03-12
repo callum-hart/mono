@@ -1,7 +1,6 @@
 module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks("grunt-contrib-watch");
-  // grunt.loadNpmTasks("grunt-contrib-cssmin");
 
   grunt.initConfig({
     sass: {
@@ -12,7 +11,7 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      files: ["src/*", "src/immutable_css/*", "*.html"],
+      files: ["src/*", "src/*/*", "yoke/*", "*.html"],
       tasks: ["sass"],
       options: {
         livereload: true
@@ -20,20 +19,3 @@ module.exports = function(grunt) {
     }
   });
 };
-
-//   grunt.initConfig({
-//     cssmin: {
-//       my_target: {
-//         src: "out/css/app.css",
-//         dest: "out/css/app.min.css"
-//       }
-//     },
-//     watch: {
-//       files: ["src/less/*", "src/less/immutable_css/*", "*.html"],
-//       tasks: ["less", "cssmin"],
-//       options: {
-//         livereload: true
-//       }
-//     }
-//   });
-// };

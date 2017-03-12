@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="vendor/webfonts/ss-pika.css">
+
+    <link rel="stylesheet" href="out/app.css">
+</head>
+<body>
+
+<nav>
+    <div class="nav__logo">
+        <h3>facebook</h3>
+    </div>
+
+    <div class="nav__controls">
+        <div class="nav__search">
+            <span class="search__icon ss-search"></span>
+            <input type="text" class="search__input" placeholder="Search">
+        </div>
+
+        <div class="nav__bits">
+            <a href="#" class="ss-user"></a>
+            <a href="#" class="ss-chat --active">
+                <span class="nav__count *count">2</span>
+            </a>
+            <a href="#" class="ss-globe"></a>
+
+            <div class="nav__user">
+                <span class="nav__user-name">Callum Hart</span>
+                <img src="vendor/images/profile-pic.png" alt="" class="nav__user-pic *gravatar *gravatar--s">
+            </div>
+
+            <a href="#" class="ss-lock"></a>
+            <a href="#" class="ss-rows"></a>
+        </div>
+    </div>
+</nav>
+
+<main>
+    <section class="left-bar">
+        <div class="left-bar__user">
+            <img src="vendor/images/profile-pic.png" alt="" class="left-bar__user-pic *gravatar *gravatar--m">
+            <span class="left-bar__user-name">Callum Hart</span>
+        </div>
+
+        <ul class="left-bar__list">
+            <li>
+                <a href="#" class="list__item">
+                    <span class="list__icon ss-newspaper"></span>
+                    <span class="list__text">News feed</span>
+                    <span class="list__chevron ss-dropdown"></span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="list__item">
+                    <span class="list__icon ss-chat"></span>
+                    <span class="list__text">Messages</span>
+                    <span class="list__count">2</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="list__item">
+                    <span class="list__icon ss-calendar"></span>
+                    <span class="list__text">Events</span>
+                    <span class="list__count">4</span>
+                </a>
+            </li>
+        </ul>
+
+        <span class="*heading">Apps</span>
+
+        <ul class="left-bar__list">
+            <li>
+                <a href="#" class="list__item">
+                    <span class="list__icon ss-threedie"></span>
+                    <span class="list__text">Games</span>
+                    <span class="list__count">1</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="list__item">
+                    <span class="list__icon ss-pin"></span>
+                    <span class="list__text">Pokes</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="list__item">
+                    <span class="list__icon ss-picture"></span>
+                    <span class="list__text">Photos</span>
+                </a>
+            </li>
+        </ul>
+
+        <span class="*heading">Pages</span>
+
+        <ul class="left-bar__list">
+            <li>
+                <a href="#" class="list__item">
+                    <span class="list__icon ss-flag"></span>
+                    <span class="list__text">Pages feed</span>
+                    <span class="list__count">20+</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="list__item">
+                    <span class="list__icon ss-like"></span>
+                    <span class="list__text">Like pages</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="list__item">
+                    <span class="list__icon ss-plus"></span>
+                    <span class="list__text">Create page</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="list__item">
+                    <span class="list__icon ss-barchart"></span>
+                    <span class="list__text">Create advert</span>
+                </a>
+            </li>
+        </ul>
+
+        <span class="*heading">Groups</span>
+
+        <ul class="left-bar__list left-bar__list--last">
+            <li>
+                <a href="#" class="list__item">
+                    <span class="list__icon ss-list"></span>
+                    <span class="list__text">Manage your groups</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="list__item">
+                    <span class="list__icon ss-plus"></span>
+                    <span class="list__text">Create group</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="list__item">
+                    <span class="list__icon ss-search"></span>
+                    <span class="list__text">Find new groups</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+
+    <section class="content">
+        <content class="content__feed">
+            feed
+        </content>
+
+        <aside class="content__aside">
+            <div class="aside__box *box">
+                <span class="aside__heading *heading">Birthdays</span>
+
+                <ul class="aside__list">
+                    <li class="aside__item">
+                        <span class="aside__icon ss-gift"></span>
+                        <div>
+                            <a href="#" class="aside__link">Rene Descarte</a>
+                            <span class="aside__context">'s birthday is today</span>
+                        </div>
+                    </li>
+                    <li class="aside__item">
+                        <span class="aside__icon ss-gift"></span>
+                        <div>
+                            <a href="#" class="aside__link">Baruch Spinoza</a>
+                            <span class="aside__context">'s birthday is tomorrow</span>
+                        </div>
+                    </li>
+                    <li class="aside__item">
+                        <span class="aside__icon ss-gift"></span>
+                        <div>
+                            <a href="#" class="aside__link">Jean-Paul Sartre</a>
+                            <span class="aside__context">'s birthday is in 2 days</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <span class="aside__heading *heading">Events</span>
+
+                <ul class="aside__list">
+                    <li class="aside__item">
+                        <span class="aside__icon ss-calendar"></span>
+                        <div>
+                            <a href="#" class="aside__link">The Symposium</a>
+                            <span class="aside__context">&nbsp;at 2:30pm</span>
+                        </div>
+                    </li>
+                    <li class="aside__item">
+                        <span class="aside__icon ss-calendar"></span>
+                        <div>
+                            <a href="#" class="aside__link">Metaphysical discussion</a>
+                            <span class="aside__context">&nbsp;on Tuesday</span>
+                        </div>
+                    </li>
+                </ul>
+
+                <span class="aside__heading *heading">Recent photos</span>
+
+                <div class="aside__photos">
+                    <a href=="#" class="aside__pic">
+                        <img src="vendor/images/square-pic.png" alt="">
+                    </a>
+                    <a href=="#" class="aside__pic">
+                        <img src="vendor/images/square-pic.png" alt="">
+                    </a>
+                    <a href=="#" class="aside__pic">
+                        <img src="vendor/images/square-pic.png" alt="">
+                    </a>
+                    <a href=="#" class="aside__pic">
+                        <img src="vendor/images/square-pic.png" alt="">
+                    </a>
+                    <a href=="#" class="aside__pic">
+                        <img src="vendor/images/square-pic.png" alt="">
+                    </a>
+                    <a href=="#" class="aside__pic">
+                        <img src="vendor/images/square-pic.png" alt="">
+                    </a>
+                    <a href=="#" class="aside__pic">
+                        <img src="vendor/images/square-pic.png" alt="">
+                    </a>
+                    <a href=="#" class="aside__pic">
+                        <img src="vendor/images/square-pic.png" alt="">
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <div class="content__chat-box *chat-box">
+            chat box
+        </div>
+    </section>
+
+    <section class="right-bar">
+        <section class="right-bar__content">
+            <span class="right-bar__heading *heading">Online</span>
+
+            <ul class="right-bar__list">
+                <li>
+                    <a href="#" class="list__item">
+                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <span class="list__text">Thomas Hobbes</span>
+                        <span class="list__status *status *status--free"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="list__item">
+                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <span class="list__text">Emmanuel Kant</span>
+                        <span class="list__status *status *status--free"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="list__item">
+                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <span class="list__text">John Locke</span>
+                        <span class="list__status *status *status--busy"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="list__item">
+                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <span class="list__text">Charlotte Perkins Graham</span>
+                        <span class="list__status *status *status--free"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="list__item">
+                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <span class="list__text">Gertrude Anscombe</span>
+                        <span class="list__status *status *status--busy"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="list__item">
+                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <span class="list__text">Robert Persig</span>
+                        <span class="list__status *status *status--busy"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="list__item">
+                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <span class="list__text">Phillipa Foot</span>
+                        <span class="list__status *status *status--free"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="list__item">
+                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <span class="list__text">John Searle</span>
+                        <span class="list__status *status *status--free"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="list__item">
+                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <span class="list__text">Ludwig Wittenstein</span>
+                        <span class="list__status *status *status--away"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="list__item">
+                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <span class="list__text">Friedrich Nietzsche</span>
+                        <span class="list__status *status *status--free"></span>
+                    </a>
+                </li>
+            </ul>
+
+            <span class="right-bar__heading *heading">Offline</span>
+
+            <ul class="right-bar__list">
+                <li>
+                    <a href="#" class="list__item">
+                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <span class="list__text">Henri Bergson</span>
+                        <span class="list__status *status *status--offline"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="list__item">
+                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <span class="list__text">David Chalmers</span>
+                        <span class="list__status *status *status--offline"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="list__item">
+                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <span class="list__text">Karl Marx</span>
+                        <span class="list__status *status *status--offline"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="list__item">
+                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <span class="list__text">Margaret Atwood</span>
+                        <span class="list__status *status *status--offline"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="list__item">
+                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <span class="list__text">Hannah Arendt</span>
+                        <span class="list__status *status *status--offline"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="list__item">
+                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <span class="list__text">Martin Heidegger</span>
+                        <span class="list__status *status *status--offline"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="list__item">
+                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <span class="list__text">Mary McCarthy</span>
+                        <span class="list__status *status *status--offline"></span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <footer class="right-bar__footer">
+            <div class="right-bar__search">
+                <span class="search__icon ss-search"></span>
+                <input type="text" class="search__input" placeholder="Search">
+            </div>
+            <a href="#" class="right-bar__compose ss-compose"></a>
+        </footer>
+    </section>
+</main>
+
+</body>
+</html>

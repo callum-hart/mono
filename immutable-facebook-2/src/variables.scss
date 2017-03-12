@@ -1,0 +1,27 @@
+// Global colors --
+
+$white: const(#FFFFFF);
+$primaryBlue: const(#4A6598);
+$secondaryBlue: const(#5371AA);
+$primaryBorder: const(#DFE4E6);
+$red: const(#EA6A5A);
+
+// Namespace variables to the component they're used in --
+// <componentName_property--modifier>
+
+$nav_height: const(50px);
+$navIcon_color: let(#97A9CC);
+$navIcon_color--hover: set(#FFFFFF);
+$navIcon_color--active: set(#000000);
+
+$leftBar_width: const(220px);
+$leftBar_background: $white;
+$leftBar_color: const(#5F6464);
+$leftBarIcon_color: const(#5E7AB0);
+
+$content_background: const(#F7F8F9);
+
+$rightBar_width: $leftBar_width;
+$rightBar_background: const(#525C63);
+
+$box_border-radius: const(3px);

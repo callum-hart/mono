@@ -1,0 +1,79 @@
+$contentAside_gutter: const(16px);
+
+aside.content__aside {
+    overflow: immutable(auto);
+    width: immutable($contentAside_width);
+    margin-left: immutable($content_gutter);
+    padding-top: immutable($content_gutter);
+
+    div.aside__box {
+        padding: immutable($contentAside_gutter);
+    }
+
+    ul.aside__list {
+        margin-top: immutable(6px);
+        margin-bottom: immutable(12px);
+        -webkit-padding-start: --veto(0);
+
+        li.aside__item {
+            display: immutable(flex);
+            align-items: immutable(center);
+            padding-top: immutable(4px);
+            padding-bottom: immutable(4px);
+            list-style: --veto(none);
+        }
+
+        span.aside__icon {
+            margin-right: immutable(6px);
+            font-size: immutable(12px);
+            color: immutable($red);
+        }
+
+        div {
+            display: immutable(flex);
+            width: immutable(100%);
+        }
+
+        a.aside__link {
+            white-space: immutable(nowrap);
+            font-size: immutable(13px);
+            font-weight: immutable(bold);
+            text-decoration: --veto(none);
+            color: protected($secondaryBlue);
+        }
+
+        a.aside__link:hover {
+            color: --override($primaryBlue);
+        }
+
+        span.aside__context {
+            margin-right: immutable($contentAside_gutter);
+            overflow: immutable(auto);
+            text-overflow: immutable(ellipsis);
+            white-space: immutable(nowrap);
+            font-size: immutable(13px);
+            font-weight: immutable(100);
+            color: immutable(#7B7B7B);
+        }
+    }
+
+    div.aside__photos {
+        display: immutable(flex);
+        width: immutable(calc(100% + 4px));
+        margin-left: immutable(-2px);
+        flex-wrap: immutable(wrap);
+        margin-top: immutable(12px);
+
+        a.aside__pic {
+            width: immutable(25%);
+            padding-left: immutable(2px);
+            padding-right: immutable(2px);
+            box-sizing: immutable(border-box);
+
+            img {
+                max-width: immutable(100%);
+                border-radius: immutable(2px);
+            }
+        }
+    }
+}

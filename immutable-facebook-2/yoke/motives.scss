@@ -1,0 +1,57 @@
+/**
+    Motives --
+
+    Specical functions that add reasoning to CSS.
+
+    Often there is a specific reason as to why a CSS property
+    has been used. Suitable reasons could be overriding:
+
+    - Inline styles
+    - 3rd party styles
+    - User agent styles
+
+    By making CSS easier to reason with we make the process of
+    understanding (it) more immediate.
+
+    Motives remove investing time and enery in justifying why
+    a property exists.
+
+    Motives are prefixed with a double dash --
+
+*/
+
+/**
+    @motive: Overrule
+    @description: Can modify inline CSS styles.
+    @throws: IllegalOverrule
+*/
+@function --overrule($inlineStyle) {
+    @return append($inlineStyle, #{!important '/* --overrule */'})
+}
+
+// Another modifier for overriding 3rd party / alien styles (e.g bootstrap).
+// Helps keep track of styles that only exist to override
+// 3rd party styles. Useful for maintenence, if 3rd party
+// becomes redundent (removed from project) 3rd party overrides
+// can be removed. Makes CSS deterministic. Cannot be used to
+// override styles declared in projects CSS, this would throw an
+// error.
+
+/**
+    @motive: Overthrow
+    @description: Can modify 3rd party CSS styles.
+    @throws: IllegalOverthrow
+*/
+@function --overthrow($alienStyle) {
+    @return append($alienStyle, #{'/* --overthrow */'})
+}
+
+/**
+    @motive: Veto
+    @description: Override user agent styles. Used when
+    a property only exists to override browser default.
+    @throws: IllegalVeto
+*/
+@function --veto($browserDefault) {
+    @return append($browserDefault, #{'/* --veto */'})
+}

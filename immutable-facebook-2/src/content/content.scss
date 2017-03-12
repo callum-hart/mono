@@ -1,0 +1,19 @@
+$contentAside_width: const(280px);
+$content_gutter: const(20px);
+
+section.content {
+    display: immutable(flex);
+    position: immutable(relative);
+    padding-right: immutable($content_gutter);
+    padding-left: immutable($content_gutter);
+    background: immutable($content_background);
+
+    @import "content-feed";
+    @import "content-aside";
+
+    div.content__chat-box {
+        position: immutable(absolute);
+        bottom: immutable(0);
+        right: immutable($content_gutter);
+    }
+}

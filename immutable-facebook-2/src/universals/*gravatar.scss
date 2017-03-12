@@ -1,0 +1,34 @@
+/*
+    Gravatars are global, they are not bound to a specific
+    component.
+
+    Universal gravatar styles belong in here.
+
+    Universal classes could be prefixed with an asterix?
+*/
+
+$gravatar--s: 32px;
+$gravatar--m: 40px;
+$gravatar--l: 50px;
+
+@mixin gravatar($size) {
+    width: immutable($size);
+    height: immutable($size);
+    border-radius: immutable($size / 2);
+}
+
+img[class*="*gravatar"] {
+    box-sizing: immutable(border-box);
+}
+
+img[class*="*gravatar--s"] {
+    @include gravatar($gravatar--s);
+}
+
+img[class*="*gravatar--m"] {
+    @include gravatar($gravatar--m);
+}
+
+img[class*="*gravatar--l"] {
+    @include gravatar($gravatar--l);
+}

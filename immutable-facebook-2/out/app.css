@@ -1,43 +1,628 @@
-body {
-  background: green; }
+@charset "UTF-8";
+/**
+    Types --
+
+    Specical functions that add types to CSS declarations.
+
+    A type is bound to a CSS declaration within a ruleset.
+
+    Each type has a set of laws that determine how the declaration
+    can subsequently be used / modified.
+
+    By design type functions are pure. They cannot modify values
+    passed as arguments, and cannot add additional CSS properties.
+    This gaurentees what styles are applied, which reduces side
+    effects.
+
+*/
+/**
+    @type: Immutable
+    @description: Immutable properties can only be set once. They
+    cannot be modified after creation.
+    @usage:
+
+    .foo {
+        height: immutable(100px);
+    }
+
+    The height of `.foo` is locked – it cannot be changed.
+
+*/
+/**
+    @type: Protected
+    @description: Protected properties can only be modified by
+    pseudo-classes derived from the same selector.
+    @modifier: --override
+    @usage:
+
+    .foo {
+       color: protected(grey);
+    }
+
+    .foo:hover {
+       color: --override(grey);
+    }
+
+*/
+/**
+    @type: Public (perhaps better name is Exposed?)
+    @description: Public properties can only be modified by
+    pseudo and modifier classes derived from parent selectors.
+    @modifier: --mutate
+    @usage:
+
+    .bar {
+         background: public(white);
+    }
+
+    1. Pseudo-class
+
+    .foo:hover .bar {
+       background: --mutate(grey);
+    }
+
+    2. Modifier class
+
+    .foo.foo--withError .bar {
+       background: --mutate(red);
+    }
+
+*/
+/**
+    @type: Fallback
+    @description: Fallback properties allow multiple implementations
+    of the same CSS property. They can only be used for fallbacks.
+    @usage:
+
+    .foo {
+        background: fallback(grey);
+        background: Immutable(linear-gradient(white, black));
+    }
+
+*/
+/**
+    @type: Bound
+    @description: Bound properties are scoped within the breakpoints
+    they are defined. A bound type can wrap other types.
+    @args: CSS value or <Typed>CSS value.
+    @usage:
+
+    1. CSS value
+
+    .pow {
+        @media(max-width: 500px) {
+            font-size: bound(12px);
+        }
+
+        @media(min-width: 500px) {
+            font-size: bound(16px);
+        }
+    }
+
+    2. <Typed>CSS value
+
+    .bar {
+        @media(max-width: 500px) {
+            font-size: bound(Immutable(12px));
+        }
+
+        @media(min-width: 500px) {
+            font-size: bound(Protected(12px));
+        }
+    }
+
+    From zero to 500px the font-size of `.bar` is immutable. It
+    cannot be modified within the breakpoint boundary.
+
+    After 500px the font-size of `.bar` is protected. It would
+    therefore be legal to override the font-size from a pseudo-class:
+
+    .bar:hover {
+        @media(min-width: 500px) {
+           font-size: --override(green);
+       }
+    }
+
+*/
+/**
+    Modifiers --
+
+    Specical functions that modify the value of CSS declarations.
+
+    Modifiers are associated to specific types. They can only be
+    used on willing types.
+
+    By design modifier functions are pure. They cannot modify values
+    passed as arguments, and cannot add additional CSS properties.
+    This gaurentees what styles are applied, which in turn reduces
+    side effects.
+
+    Modifiers are prefixed with a double dash --
+
+*/
+/**
+    @modifier: Override
+    @description: Can modify the value of Protected declarations.
+    @throws: some error name.
+*/
+/**
+    @modifier: Mutate
+    @description: Can modify the value of Public declarations.
+    @throws: IllegalMutation
+*/
+/**
+    Motives --
+
+    Specical functions that add reasoning to CSS.
+
+    Often there is a specific reason as to why a CSS property
+    has been used. Suitable reasons could be overriding:
+
+    - Inline styles
+    - 3rd party styles
+    - User agent styles
+
+    By making CSS easier to reason with we make the process of
+    understanding (it) more immediate.
+
+    Motives remove investing time and enery in justifying why
+    a property exists.
+
+    Motives are prefixed with a double dash --
+
+*/
+/**
+    @motive: Overrule
+    @description: Can modify inline CSS styles.
+    @throws: IllegalOverrule
+*/
+/**
+    @motive: Overthrow
+    @description: Can modify 3rd party CSS styles.
+    @throws: IllegalOverthrow
+*/
+/**
+    @motive: Veto
+    @description: Override user agent styles. Used when
+    a property only exists to override browser default.
+    @throws: IllegalVeto
+*/
+/**
+    Variables --
+
+    Specical functions that add types and modifiers to
+    CSS variables.
+
+    Not sure yet whether this is overkill...?
+
+*/
+/**
+    @type: const
+    @description: Value cannot be modified through re-assignment.
+    Can only be declared once.
+    @usage:
+
+    $buttonColor: const(blue);
+
+*/
+/**
+    @type: let
+    @description: Variable can have multiple values via modifier
+    assignment.
+    @usage:
+
+    $buttonColor: let(blue);
+
+*/
+/**
+    @modifier: set
+    @description: Safely assign the value of variables of type let.
+    @usage:
+
+    $buttonColor: let(blue);
+    $buttonColor--hover: set(lightblue);
+    $buttonColor--active: set(darkblue);
+
+*/
+html, body {
+  margin: 0 /* --veto */;
+  height: 100% /* --veto */; }
 
 body {
-  width: 50; }
+  font-family: sans-serif /* --veto */; }
 
-.wat {
-  color: red;
-  background: green; }
+main {
+  display: flex /* immutable */;
+  position: absolute /* immutable */;
+  top: 50px /* const */ /* immutable */;
+  right: 0 /* immutable */;
+  bottom: 0 /* immutable */;
+  left: 0 /* immutable */; }
 
-.foo {
-  color: red /* immutable */;
-  font-size: 40px /* immutable */; }
+section.left-bar {
+  width: 220px /* const */ /* immutable */;
+  overflow: auto /* immutable */; }
 
-.pow {
-  color: white /* Protected */;
-  font-size: 40 /* Immutable */; }
+section.content {
+  flex: 1 /* immutable */; }
 
-.pow:hover {
-  color: red /* overriden */; }
+section.right-bar {
+  width: 220px /* const */ /* immutable */; }
 
-.pow:hover {
-  color: blue /* --overriden */; }
+/*
+    Gravatars are global, they are not bound to a specific
+    component.
 
-.bar.bar--witherror .foo {
-  color: --mutate(red); }
+    Universal gravatar styles belong in here.
 
-@media (max-width: 500px) {
-  .pow {
-    font-size: 12px /* Within */;
-    color: red /* Immutable */ /* Within */; } }
-@media (min-width: 500px) {
-  .pow {
-    font-size: 16px /* Within */;
-    color: blue /* Protected */ /* Within */; } }
-@media (min-width: 500px) {
-  .pow:hover {
-    color: green /* --overriden */; } }
+    Universal classes could be prefixed with an asterix?
+*/
+img[class*="*gravatar"] {
+  box-sizing: border-box /* immutable */; }
 
-.bam {
-  font-size: 10px !important /* Overrule */; }
+img[class*="*gravatar--s"] {
+  width: 32px /* immutable */;
+  height: 32px /* immutable */;
+  border-radius: 16px /* immutable */; }
+
+img[class*="*gravatar--m"] {
+  width: 40px /* immutable */;
+  height: 40px /* immutable */;
+  border-radius: 20px /* immutable */; }
+
+img[class*="*gravatar--l"] {
+  width: 50px /* immutable */;
+  height: 50px /* immutable */;
+  border-radius: 25px /* immutable */; }
+
+span[class*="*count"] {
+  position: absolute /* immutable */;
+  height: 12px /* immutable */;
+  padding: 0 4px /* immutable */;
+  border-radius: 12px /* immutable */;
+  font-size: 10px /* immutable */;
+  font-weight: 100 /* immutable */;
+  background: #EA6A5A /* const */ /* immutable */;
+  color: #FFFFFF /* const */ /* immutable */;
+  /*
+      Would be cool if a universal element could enforce parent elements to have a property(s).
+      For example parent elements of count should have `position: relative`. Not sure if
+      enforcing this is possible...?
+  */ }
+
+/*
+    Headings are global, they are not bound to a specific
+    component.
+
+    Universal heading styles belong in here.
+
+    Universal classes could be prefixed with an asterix?
+*/
+span[class*="*heading"] {
+  font-size: 12px /* immutable */;
+  text-transform: uppercase /* immutable */;
+  color: #B5BABC /* const */ /* immutable */; }
+
+/*
+    Status icons are global, they are not bound to a specific
+    component.
+
+    Universal status icons styles belong in here.
+
+    Universal classes could be prefixed with an asterix?
+*/
+span[class*="*status--free"] {
+  width: 8px /* const */ /* immutable */;
+  height: 8px /* const */ /* immutable */;
+  display: inline-block /* immutable */;
+  border-radius: 4px /* immutable */;
+  background: #84BD5D /* const */ /* immutable */; }
+
+span[class*="*status--busy"] {
+  width: 8px /* const */ /* immutable */;
+  height: 8px /* const */ /* immutable */;
+  display: inline-block /* immutable */;
+  border-radius: 4px /* immutable */;
+  background: #EF9F6B /* const */ /* immutable */; }
+
+span[class*="*status--away"] {
+  width: 8px /* const */ /* immutable */;
+  height: 8px /* const */ /* immutable */;
+  display: inline-block /* immutable */;
+  border-radius: 4px /* immutable */;
+  background: #EA6A5A /* const */ /* immutable */; }
+
+span[class*="*status--offline"] {
+  width: 8px /* const */ /* immutable */;
+  height: 8px /* const */ /* immutable */;
+  display: inline-block /* immutable */;
+  border-radius: 4px /* immutable */;
+  background: rgba(255, 255, 255, 0.2) /* const */ /* immutable */; }
+
+div[class*="*box"] {
+  background: #FFFFFF /* const */ /* immutable */;
+  border: 1px solid #DFE4E6 /* const */ /* immutable */;
+  border-radius: 3px /* const */ /* immutable */; }
+
+div[class*="*chat-box"] {
+  background: white; }
+
+nav {
+  display: flex /* immutable */;
+  height: 50px /* const */ /* immutable */;
+  position: relative /* immutable */;
+  z-index: 2 /* immutable */;
+  background: #5371AA /* const */ /* immutable */;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) /* immutable */; }
+  nav div.nav__logo {
+    display: flex /* immutable */;
+    align-items: center /* immutable */;
+    justify-content: center /* immutable */;
+    width: 220px /* const */ /* immutable */;
+    background: #4A6598 /* const */ /* immutable */;
+    color: #FFFFFF /* const */ /* immutable */; }
+  nav div.nav__controls {
+    display: flex /* immutable */;
+    flex: 1 /* immutable */; }
+  nav div.nav__search {
+    display: flex /* immutable */;
+    flex: 1 /* immutable */;
+    align-items: center /* immutable */; }
+    nav div.nav__search span.search__icon {
+      padding-left: 20px /* immutable */;
+      padding-right: 10px /* immutable */;
+      font-size: 18px /* immutable */;
+      color: #97A9CC /* let */ /* public */; }
+    nav div.nav__search input.search__input {
+      height: 100% /* immutable */;
+      flex: 1 /* immutable */;
+      box-sizing: border-box /* immutable */;
+      border: none /* --veto */;
+      font-size: 13px /* immutable */;
+      outline: none /* --veto */;
+      background: transparent /* immutable */;
+      color: #FFFFFF /* const */ /* immutable */; }
+    nav div.nav__search input.search__input::-webkit-input-placeholder {
+      font-weight: 100 /* immutable */;
+      color: #97A9CC /* let */ /* immutable */; }
+  nav div.nav__search:hover span.search__icon {
+    color: #FFFFFF /* set */ /* --mutate */; }
+  nav div.nav__bits {
+    display: flex /* immutable */;
+    align-items: center /* immutable */;
+    padding-right: 20px /* immutable */; }
+    nav div.nav__bits a {
+      position: relative;
+      margin-left: 10px /* immutable */;
+      margin-right: 10px /* immutable */;
+      font-size: 18px /* immutable */;
+      text-decoration: none /* --veto */; }
+    nav div.nav__bits a:not(.--active) {
+      color: #97A9CC /* let */ /* protected */; }
+      nav div.nav__bits a:not(.--active):hover {
+        color: #FFFFFF /* set */ /* --override */; }
+    nav div.nav__bits a.--active:before {
+      color: #FFFFFF /* const */ /* immutable */; }
+    nav div.nav__bits span.nav__count {
+      top: -4px /* immutable */;
+      right: -8px /* immutable */;
+      box-shadow: 0px 0px 0 2px #5371AA /* const */ /* immutable */; }
+  nav div.nav__user {
+    display: flex /* immutable */;
+    align-items: center /* immutable */;
+    height: 22px /* immutable */;
+    margin-left: 10px /* immutable */;
+    margin-right: 10px /* immutable */;
+    padding-left: 15px /* immutable */;
+    border-left: 1px solid #4A6598 /* const */ /* immutable */; }
+  nav img.nav__user-pic {
+    border: 2px solid #4A6598 /* const */ /* immutable */; }
+  nav span.nav__user-name {
+    margin-right: 10px /* immutable */;
+    font-size: 13px /* immutable */;
+    color: #FFFFFF /* const */ /* immutable */; }
+
+section.left-bar {
+  padding-left: 25px /* immutable */;
+  padding-right: 25px /* immutable */;
+  box-sizing: border-box /* immutable */;
+  border-right: 1px solid #DFE4E6 /* const */ /* immutable */;
+  background: #FFFFFF /* const */ /* immutable */;
+  box-shadow: -12px 0 12px -8px rgba(0, 0, 0, 0.06) inset /* immutable */; }
+  section.left-bar div.left-bar__user {
+    display: flex /* immutable */;
+    align-items: center /* immutable */;
+    margin-top: 20px /* immutable */; }
+  section.left-bar span.left-bar__user-name {
+    margin-left: 10px /* immutable */;
+    font-size: 14px /* immutable */;
+    font-weight: bold /* immutable */;
+    color: #5F6464 /* const */ /* immutable */; }
+  section.left-bar ul.left-bar__list {
+    -webkit-padding-start: 0 /* --veto */;
+    margin-top: 10px /* immutable */;
+    margin-bottom: 14px /* immutable */;
+    padding-bottom: 10px /* immutable */; }
+    section.left-bar ul.left-bar__list li {
+      list-style: none /* --veto */; }
+  section.left-bar ul.left-bar__list:not(:last-child) {
+    border-bottom: 1px solid #DFE4E6 /* const */ /* immutable */; }
+  section.left-bar a.list__item {
+    display: flex /* immutable */;
+    align-items: center /* immutable */;
+    padding-top: 6px /* immutable */;
+    padding-bottom: 6px /* immutable */;
+    text-decoration: none /* --veto */; }
+  section.left-bar span.list__icon {
+    margin-right: 13px /* immutable */;
+    font-size: 13px /* immutable */;
+    color: #5E7AB0 /* const */ /* public */; }
+  section.left-bar span.list__text {
+    flex: 1 /* immutable */;
+    font-size: 12px /* immutable */;
+    font-weight: bold /* immutable */;
+    color: #5F6464 /* const */ /* public */; }
+  section.left-bar span.list__count {
+    font-size: 12px /* immutable */;
+    font-weight: 100 /* immutable */;
+    color: #BBC0C2 /* immutable */; }
+  section.left-bar span.list__chevron {
+    font-size: 10px /* immutable */;
+    color: #5F6464 /* const */ /* immutable */; }
+  section.left-bar a.list__item:hover span.list__icon {
+    color: #4A6598 /* const */ /* --mutate */; }
+  section.left-bar a.list__item:hover span.list__text {
+    color: #4A6598 /* const */ /* --mutate */; }
+
+section.content {
+  display: flex /* immutable */;
+  position: relative /* immutable */;
+  padding-right: 20px /* const */ /* immutable */;
+  padding-left: 20px /* const */ /* immutable */;
+  background: #F7F8F9 /* const */ /* immutable */; }
+  section.content content.content__feed {
+    flex: 1 /* immutable */;
+    overflow: auto /* immutable */; }
+  section.content aside.content__aside {
+    overflow: auto /* immutable */;
+    width: 280px /* const */ /* immutable */;
+    margin-left: 20px /* const */ /* immutable */;
+    padding-top: 20px /* const */ /* immutable */; }
+    section.content aside.content__aside div.aside__box {
+      padding: 16px /* const */ /* immutable */; }
+    section.content aside.content__aside ul.aside__list {
+      margin-top: 6px /* immutable */;
+      margin-bottom: 12px /* immutable */;
+      -webkit-padding-start: 0 /* --veto */; }
+      section.content aside.content__aside ul.aside__list li.aside__item {
+        display: flex /* immutable */;
+        align-items: center /* immutable */;
+        padding-top: 4px /* immutable */;
+        padding-bottom: 4px /* immutable */;
+        list-style: none /* --veto */; }
+      section.content aside.content__aside ul.aside__list span.aside__icon {
+        margin-right: 6px /* immutable */;
+        font-size: 12px /* immutable */;
+        color: #EA6A5A /* const */ /* immutable */; }
+      section.content aside.content__aside ul.aside__list div {
+        display: flex /* immutable */;
+        width: 100% /* immutable */; }
+      section.content aside.content__aside ul.aside__list a.aside__link {
+        white-space: nowrap /* immutable */;
+        font-size: 13px /* immutable */;
+        font-weight: bold /* immutable */;
+        text-decoration: none /* --veto */;
+        color: #5371AA /* const */ /* protected */; }
+      section.content aside.content__aside ul.aside__list a.aside__link:hover {
+        color: #4A6598 /* const */ /* --override */; }
+      section.content aside.content__aside ul.aside__list span.aside__context {
+        margin-right: 16px /* const */ /* immutable */;
+        overflow: auto /* immutable */;
+        text-overflow: ellipsis /* immutable */;
+        white-space: nowrap /* immutable */;
+        font-size: 13px /* immutable */;
+        font-weight: 100 /* immutable */;
+        color: #7B7B7B /* immutable */; }
+    section.content aside.content__aside div.aside__photos {
+      display: flex /* immutable */;
+      width: calc(100% + 4px) /* immutable */;
+      margin-left: -2px /* immutable */;
+      flex-wrap: wrap /* immutable */;
+      margin-top: 12px /* immutable */; }
+      section.content aside.content__aside div.aside__photos a.aside__pic {
+        width: 25% /* immutable */;
+        padding-left: 2px /* immutable */;
+        padding-right: 2px /* immutable */;
+        box-sizing: border-box /* immutable */; }
+        section.content aside.content__aside div.aside__photos a.aside__pic img {
+          max-width: 100% /* immutable */;
+          border-radius: 2px /* immutable */; }
+  section.content div.content__chat-box {
+    position: absolute /* immutable */;
+    bottom: 0 /* immutable */;
+    right: 20px /* const */ /* immutable */; }
+
+section.right-bar {
+  display: flex /* immutable */;
+  flex-direction: column /* immutable */;
+  background: #525C63 /* const */ /* immutable */;
+  box-shadow: 12px 0 12px -8px rgba(0, 0, 0, 0.3) inset /* immutable */; }
+  section.right-bar section.right-bar__content {
+    flex: 1 /* immutable */;
+    overflow: auto /* immutable */;
+    padding-top: 10px /* immutable */;
+    padding-left: 12px /* immutable */;
+    padding-right: 12px /* immutable */; }
+  section.right-bar span.right-bar__heading {
+    display: block /* immutable */;
+    margin-top: 10px /* immutable */;
+    margin-left: 12px /* immutable */;
+    margin-bottom: 10px /* immutable */; }
+  section.right-bar ul.right-bar__list {
+    -webkit-padding-start: 0 /* --veto */;
+    -webkit-margin-before: 0 /* --veto */;
+    -webkit-margin-after: 0 /* --veto */; }
+    section.right-bar ul.right-bar__list li {
+      list-style: none /* --veto */; }
+    section.right-bar ul.right-bar__list a.list__item {
+      display: flex /* immutable */;
+      align-items: center /* immutable */;
+      padding-top: 5px /* immutable */;
+      padding-bottom: 5px /* immutable */;
+      text-decoration: none /* --veto */; }
+    section.right-bar ul.right-bar__list img.right-bar__user-pic {
+      margin-right: 10px /* immutable */;
+      border: 2px solid #495258 /* immutable */; }
+    section.right-bar ul.right-bar__list span.list__text {
+      flex: 1 /* immutable */;
+      font-size: 13px /* immutable */;
+      color: #D1D4D6 /* public */;
+      overflow: hidden /* immutable */;
+      white-space: nowrap /* immutable */;
+      text-overflow: ellipsis /* immutable */; }
+    section.right-bar ul.right-bar__list span.list__status {
+      margin-left: 10px /* immutable */; }
+    section.right-bar ul.right-bar__list a.list__item:hover span.list__text {
+      color: #FFFFFF /* const */ /* --mutate */; }
+  section.right-bar footer.right-bar__footer {
+    display: flex /* immutable */;
+    min-height: 40px /* immutable */;
+    height: 40px /* immutable */;
+    background: #636C72 /* immutable */;
+    box-shadow: 12px 0 12px -8px rgba(0, 0, 0, 0.3) inset /* immutable */; }
+  section.right-bar div.right-bar__search {
+    display: flex /* immutable */;
+    align-items: center /* immutable */; }
+    section.right-bar div.right-bar__search span.search__icon {
+      padding-left: 10px /* immutable */;
+      padding-right: 10px /* immutable */;
+      font-size: 18px /* immutable */;
+      color: #BABDC0 /* public */; }
+    section.right-bar div.right-bar__search input.search__input {
+      height: 100% /* immutable */;
+      width: 100% /* immutable */;
+      box-sizing: border-box /* immutable */;
+      border: none /* --veto */;
+      font-size: 13px /* immutable */;
+      outline: none /* --veto */;
+      background: transparent /* immutable */;
+      color: #FFFFFF /* const */ /* immutable */; }
+    section.right-bar div.right-bar__search input.search__input::-webkit-input-placeholder {
+      font-weight: 100 /* immutable */;
+      color: #BABDC0 /* immutable */; }
+  section.right-bar div.right-bar__search:hover span.search__icon {
+    color: #FFFFFF /* set */ /* --mutate */; }
+  section.right-bar a.right-bar__compose {
+    display: flex /* immutable */;
+    align-items: center /* immutable */;
+    justify-content: center /* immutable */;
+    width: 45px /* immutable */;
+    height: 100% /* immutable */;
+    border-left: 1px solid #525C63 /* const */ /* immutable */;
+    text-decoration: none /* --veto */;
+    font-size: 18px /* immutable */;
+    color: #C0C4C6 /* protected */; }
+  section.right-bar a.right-bar__compose:hover {
+    color: #FFFFFF /* const */ /* --override */; }
 
 /*# sourceMappingURL=app.css.map */

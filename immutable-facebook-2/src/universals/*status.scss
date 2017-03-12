@@ -1,0 +1,40 @@
+/*
+    Status icons are global, they are not bound to a specific
+    component.
+
+    Universal status icons styles belong in here.
+
+    Universal classes could be prefixed with an asterix?
+*/
+
+$status_size: const(8px);
+$status_color--free: const(#84BD5D);
+$status_color--busy: const(#EF9F6B);
+$status_color--away: const(#EA6A5A);
+$status_color--offline: const(rgba(255,255,255,.2));
+
+@mixin status($color) {
+    width: immutable($status_size);
+    height: immutable($status_size);
+    display: immutable(inline-block);
+    // border-radius: immutable($status_size / 2); // doesn't work since $status_size contains /* const */ comment
+    // currently cannot apply calculations to const / let variables
+    border-radius: immutable(4px);
+    background: immutable($color);
+}
+
+span[class*="*status--free"] {
+    @include status($status_color--free);
+}
+
+span[class*="*status--busy"] {
+    @include status($status_color--busy);
+}
+
+span[class*="*status--away"] {
+    @include status($status_color--away);
+}
+
+span[class*="*status--offline"] {
+    @include status($status_color--offline);
+}

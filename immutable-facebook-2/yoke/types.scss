@@ -13,40 +13,36 @@
     This gaurentees what styles are applied, which reduces side
     effects.
 
-    Types are denoted using capitalized function names.
-
 */
 
 
 /**
     @type: Immutable
-    @description: Immutable declarations can only be set once. They
+    @description: Immutable properties can only be set once. They
     cannot be modified after creation.
-    @throws: some error name
     @usage:
 
     .foo {
-        height: Immutable(100px);
+        height: immutable(100px);
     }
 
     The height of `.foo` is locked – it cannot be changed.
 
 */
-@function Immutable($value) {
+@function immutable($value) {
     // Only append debug flags when env variable is set...
-    @return append($value, #{'/* Immutable */'});
+    @return append($value, #{'/* immutable */'});
 }
 
 /**
     @type: Protected
-    @description: Protected declarations can only be modified by
+    @description: Protected properties can only be modified by
     pseudo-classes derived from the same selector.
     @modifier: --override
-    @throws: some error name
     @usage:
 
     .foo {
-       color: Protected(grey);
+       color: protected(grey);
     }
 
     .foo:hover {
@@ -54,20 +50,19 @@
     }
 
 */
-@function Protected($value) {
-    @return append($value, #{'/* Protected */'});
+@function protected($value) {
+    @return append($value, #{'/* protected */'});
 }
 
 /**
     @type: Public (perhaps better name is Exposed?)
-    @description: Public declarations can only be modified by
+    @description: Public properties can only be modified by
     pseudo and modifier classes derived from parent selectors.
     @modifier: --mutate
-    @throws: some error name
     @usage:
 
     .bar {
-         background: Public(white);
+         background: public(white);
     }
 
     1. Pseudo-class
@@ -83,44 +78,42 @@
     }
 
 */
-@function Public($value) {
-    @return append($value, #{'/* Public */'});
+@function public($value) {
+    @return append($value, #{'/* public */'});
 }
 
 /**
     @type: Fallback
-    @description: Fallback declarations allow multiple implementations
+    @description: Fallback properties allow multiple implementations
     of the same CSS property. They can only be used for fallbacks.
-    @throws: some error name
     @usage:
 
     .foo {
-        background: Fallback(grey);
+        background: fallback(grey);
         background: Immutable(linear-gradient(white, black));
     }
 
 */
-@function Fallback($value) {
-    @return append($value, #{'/* Fallback */'});
+@function fallback($value) {
+    @return append($value, #{'/* fallback */'});
 }
 
 /**
     @type: Bound
-    @description: Bound declarations are scoped within the breakpoints
+    @description: Bound properties are scoped within the breakpoints
     they are defined. A bound type can wrap other types.
     @args: CSS value or <Typed>CSS value.
-    @throws: some error name
     @usage:
 
     1. CSS value
 
     .pow {
         @media(max-width: 500px) {
-            font-size: Bound(12px);
+            font-size: bound(12px);
         }
 
         @media(min-width: 500px) {
-            font-size: Bound(16px);
+            font-size: bound(16px);
         }
     }
 
@@ -128,11 +121,11 @@
 
     .bar {
         @media(max-width: 500px) {
-            font-size: Bound(Immutable(12px));
+            font-size: bound(Immutable(12px));
         }
 
         @media(min-width: 500px) {
-            font-size: Bound(Protected(12px));
+            font-size: bound(Protected(12px));
         }
     }
 
@@ -149,6 +142,6 @@
     }
 
 */
-@function Bound($value) {
-    @return append($value, #{'/* Bound */'});
+@function bound($value) {
+    @return append($value, #{'/* bound */'});
 }

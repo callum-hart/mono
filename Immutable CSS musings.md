@@ -676,3 +676,43 @@ nav {
     }
 }
 ```
+
+### The case for Immutable CSS
+
+Would be useful to compare CSS with an Object-orientated language. i.e
+
+```
+public class Foo {
+    // final variables cannot be redefined
+    final String color = "blue";
+
+    // variables also have a type.
+
+    // setters (only way to externally modify a variable)
+    public void setColor(String newColor) {
+        this.color = newColor;
+    }
+}
+
+vs:
+
+.foo {
+    color: blue;
+}
+```
+
+### Project name
+
+I think Immutable CSS is too specific. And whilst immutability plays a
+role in the project, it isn't the only thing. Ideas:
+
+- Cassius
+- Hitch
+- Styl
+- Yoke
+- Curb
+
+### Notes
+
+- Gives library authors finite control over what styles are exposed – those that can be changed externally.
+- Abolish specificity wars!
