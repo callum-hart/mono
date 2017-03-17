@@ -711,8 +711,103 @@ role in the project, it isn't the only thing. Ideas:
 - Styl
 - Yoke
 - Curb
+- Mono
+- Monostyle
+- Solo
+- Monty
+
+### Project concise description
+
+- Mutation management for CSS
 
 ### Notes
 
 - Gives library authors finite control over what styles are exposed – those that can be changed externally.
 - Abolish specificity wars!
+- [Immutable facebook 2] credit design: https://dribbble.com/shots/1666016-Facebook-redesign/attachments/262440
+- I'm currently building UI's using yoke to test my assumptions.
+- MVP uses Sass, merely because it's the quickest way to test ideas. Ideally yoke will be decoupled from a specific
+preprocessor. It should be as agnostic as possible. Compatible with any CSS strategy.
+- Example UI's should also include common use cases (such as AB tests, responsive pages) – and how they can be achieved with yoke.
+- Default architecture for CSS is broken -> declare a value and then override it N times.
+- [Technical goals] Leverage naitive CSS as much as possible.
+
+### Tooling / Ecosystem
+
+**Browser extension**
+
+- Show every property mutation for a given element.
+- Could be represented as a timeline.
+- If a property for a given element mutates N times show each change. Almost like a debugger breakpoint at each mutation.
+
+Example:
+
+```css
+
+// line 2
+p {
+    font-size: 10px;
+}
+
+// line 14
+p {
+    font-size: 15px;
+}
+
+// line 22
+p {
+    font-size: 20px;
+}
+```
+
+`font-size` for the element `p` is mutated 3 times. With the last declaration in the cascade sticking.
+
+Browser extension:
+
+Select an element to show it's property mutations.
+
+Selector: `p`
+Property: `font-size`
+Mutations: 3
+                |              |              |
+       text     |     text     |     text     |
+                |              |              |
+      (10px)    |    (15px)    |    (20px)    |
+      (line 2)  |    (line 14) |    (line 22) |
+....................................................
+                    Time ->
+                    (corresponds to cascade)
+
+Shows how the `font-size` of `p` changes over time. The top line in the table ("text") represents the style.
+In this example the size of "text" would increase (from left to right).
+
+Another example:
+
+```css
+// line 40 (app.css)
+h3.title {
+    color: grey;
+}
+
+// line 12 (main.css; which is included after app.css)
+h3.title {
+    color: red;
+}
+```
+
+Browser extension:
+
+Selector: `h3.title`
+Property: `color`
+Mutations: 2
+                        |                       |
+       text             |     text              |
+                        |                       |
+      (grey)            |    (red)              |
+      line 40 (app.css) |    line 12 (main.css) |
+......................................................
+                        Time ->
+                        (corresponds to cascade)
+
+In this example the color of "text" on the left would be grey, and the color of "text" on the right would be red.
+

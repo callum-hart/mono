@@ -10,6 +10,7 @@ section.left-bar {
         display: immutable(flex);
         align-items: immutable(center);
         margin-top: immutable(20px);
+        margin-bottom: immutable(20px);
     }
 
     span.left-bar__user-name {

@@ -6,7 +6,7 @@
 
     A type is bound to a CSS declaration within a ruleset.
 
-    Each type has a set of laws that determine how the declaration
+    Each type has a set of laws that govern how the declaration
     can subsequently be used / modified.
 
     By design type functions are pure. They cannot modify values
@@ -184,8 +184,26 @@
 /**
     @motive: Veto
     @description: Override user agent styles. Used when
-    a property only exists to override browser default.
+    a property only exists to remove / reset a browser
+    default.
     @throws: IllegalVeto
+    @example:
+
+    input {
+        outline: --veto(none); // remove outline
+    }
+
+    Good:
+
+    ul {
+        padding-left: --veto(0); // reset padding
+    }
+
+    Bad:
+
+    ul {
+        padding-left: --veto(12px); // doesn't remove or reset value
+    }
 */
 /**
     Variables --
@@ -249,6 +267,24 @@ section.content {
 section.right-bar {
   width: 220px /* const */ /* immutable */; }
 
+button[class*="button"] {
+  height: 40px /* immutable */;
+  padding-right: 30px /* immutable */;
+  padding-left: 30px /* immutable */;
+  font-weight: 500 /* immutable */;
+  text-transform: uppercase /* immutable */;
+  border: none /* --veto */;
+  color: #FFFFFF /* const */ /* immutable */;
+  cursor: pointer /* immutable */; }
+
+button[class*="button"]:not([class*="*button--square"]) {
+  border-radius: 3px /* const */ /* immutable */; }
+
+button[class*="button--primary"] {
+  background: #5371AA /* const */ /* protected */; }
+  button[class*="button--primary"]:hover {
+    background: #4A6598 /* const */ /* --override */; }
+
 /*
     Gravatars are global, they are not bound to a specific
     component.
@@ -285,8 +321,8 @@ span[class*="*count"] {
   background: #EA6A5A /* const */ /* immutable */;
   color: #FFFFFF /* const */ /* immutable */;
   /*
-      Would be cool if a universal element could enforce parent elements to have a property(s).
-      For example parent elements of count should have `position: relative`. Not sure if
+      Would be cool if a universal object could enforce parent elements to have a property(s).
+      For example parent elements of *count should have `position: relative`. Not sure if
       enforcing this is possible...?
   */ }
 
@@ -341,8 +377,10 @@ span[class*="*status--offline"] {
 
 div[class*="*box"] {
   background: #FFFFFF /* const */ /* immutable */;
-  border: 1px solid #DFE4E6 /* const */ /* immutable */;
   border-radius: 3px /* const */ /* immutable */; }
+
+div[class*="box"]:not([class*="*box--borderless"]) {
+  border: 1px solid #DFE4E6 /* const */ /* immutable */; }
 
 div[class*="*chat-box"] {
   background: white; }
@@ -432,7 +470,8 @@ section.left-bar {
   section.left-bar div.left-bar__user {
     display: flex /* immutable */;
     align-items: center /* immutable */;
-    margin-top: 20px /* immutable */; }
+    margin-top: 20px /* immutable */;
+    margin-bottom: 20px /* immutable */; }
   section.left-bar span.left-bar__user-name {
     margin-left: 10px /* immutable */;
     font-size: 14px /* immutable */;
@@ -480,15 +519,70 @@ section.content {
   padding-right: 20px /* const */ /* immutable */;
   padding-left: 20px /* const */ /* immutable */;
   background: #F7F8F9 /* const */ /* immutable */; }
+  section.content div.post__box {
+    overflow: hidden /* immutable */; }
+    section.content div.post__box textarea.post__input {
+      display: flex /* immutable */;
+      width: 100% /* immutable */;
+      padding: 15px /* immutable */;
+      box-sizing: border-box /* immutable */;
+      font-size: 13px /* immutable */;
+      font-weight: 100 /* immutable */;
+      border-color: #DFE4E6 /* const */ /* immutable */;
+      border-bottom-width: 0 /* --veto */;
+      border-top-left-radius: 3px /* const */ /* immutable */;
+      border-top-right-radius: 3px /* const */ /* immutable */;
+      color: #7B7B7B /* immutable */;
+      resize: none /* --veto */;
+      outline: none /* --veto */; }
+    section.content div.post__box textarea.post__input::-webkit-input-placeholder {
+      color: #7B7B7B /* immutable */; }
+    section.content div.post__box button.post__button {
+      float: right /* immutable */; }
+    section.content div.post__box footer.post__footer {
+      display: flex /* immutable */;
+      align-items: center /* immutable */;
+      height: 40px /* immutable */;
+      padding-right: 15px /* immutable */;
+      padding-left: 15px /* immutable */;
+      background: #DFE4E6 /* immutable */; }
+    section.content div.post__box ul.post__icons {
+      -webkit-padding-start: 0 /* --veto */;
+      -webkit-margin-before: 0 /* --veto */;
+      -webkit-margin-after: 0 /* --veto */;
+      display: flex /* immutable */;
+      flex: 1 /* immutable */; }
+      section.content div.post__box ul.post__icons li {
+        list-style: none /* --veto */; }
+      section.content div.post__box ul.post__icons a.post__icon {
+        padding-right: 18px /* immutable */;
+        font-size: 18px /* immutable */;
+        text-decoration: none /* --veto */;
+        color: #9B9FA0 /* protected */; }
+      section.content div.post__box ul.post__icons a.post__icon:hover {
+        color: #4A6598 /* const */ /* --override */; }
+    section.content div.post__box a.post__dropdown {
+      text-decoration: none /* --veto */; }
+      section.content div.post__box a.post__dropdown span.dropdown__text {
+        font-size: 12px /* immutable */;
+        font-weight: bold /* immutable */;
+        color: #5F6464 /* const */ /* public */; }
+      section.content div.post__box a.post__dropdown span.dropdown__chevron {
+        font-size: 10px /* immutable */;
+        color: #5F6464 /* const */ /* immutable */; }
+    section.content div.post__box a.post__dropdown:hover span.dropdown__text {
+      color: #4A6598 /* const */ /* --mutate */; }
   section.content content.content__feed {
     flex: 1 /* immutable */;
-    overflow: auto /* immutable */; }
+    overflow: auto /* immutable */;
+    padding-top: 20px /* const */ /* immutable */; }
   section.content aside.content__aside {
     overflow: auto /* immutable */;
     width: 280px /* const */ /* immutable */;
     margin-left: 20px /* const */ /* immutable */;
     padding-top: 20px /* const */ /* immutable */; }
     section.content aside.content__aside div.aside__box {
+      overflow: hidden /* immutable */;
       padding: 16px /* const */ /* immutable */; }
     section.content aside.content__aside ul.aside__list {
       margin-top: 6px /* immutable */;

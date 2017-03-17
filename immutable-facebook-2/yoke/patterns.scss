@@ -39,6 +39,89 @@
     .form--withError {
         background: red;
     }
+
+    @more
+
+    Negation removes affects of the cascade - the order of declarations
+    doesn't matter. Which makes declarations more portable and predictable.
+
+    Test case: text in a row is blue, text in an active row is green:
+
+    <div class="row">
+        <p>Normal text</p>
+    </div>
+
+    <div class="row row--active">
+        <p>Active text</p>
+    </div>
+
+    Without negation, the overriding declaration only wins if:
+
+    - It is declared after the style it's overriding
+    - Or, it has a selector with a higher specificity
+
+    This works (declared after):
+
+    .row p {
+        color: blue;
+    }
+
+    .row--active p {
+        color: green;
+    }
+
+    This works (higher specificity):
+
+    div.row--active p {
+        color: green;
+    }
+
+    .row p {
+        color: blue;
+    }
+
+    This doesn't work (declared before + equal specificity):
+
+    .row--active p {
+        color: green;
+    }
+
+    .row p {
+        color: blue;
+    }
+
+    With negation we needn't bother about cascasde position or selector
+    specificity, since there is only one source of truth for each state.
+
+    As expected this works (declared after + equal specificity):
+
+    .row:not(.row--active) p {
+        color: blue;
+    }
+
+    .row--active p {
+        color: green;
+    }
+
+    As does this (declared before + equal specificity):
+
+    .row--active p {
+        color: green;
+    }
+
+    .row:not(.row--active) p {
+        color: blue;
+    }
+
+    Removing the override has bought us portability and predictability.
+    I can gaurentee that text in `row` is blue, and text in `row--active`
+    is green. I no longer have to think about the order of declarations
+    and the strength of their selector.
+
+    This is super powerful! Negation has removed 2 painpoints of CSS: the
+    cascade and selector specificity, which just leaves the styles to
+    worry about :)
+
 */
 
 /**

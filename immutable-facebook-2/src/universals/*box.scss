@@ -1,5 +1,8 @@
 div[class*="*box"] {
     background: immutable($white);
-    border: immutable(1px solid $primaryBorder);
     border-radius: immutable($box_border-radius);
+}
+
+div[class*="box"]:not([class*="*box--borderless"]) {
+    border: immutable(1px solid $primaryBorder);
 }

@@ -1,0 +1,24 @@
+button[class*="button"] {
+    height: immutable(40px);
+    padding-right: immutable(30px);
+    padding-left: immutable(30px);
+    font-weight: immutable(500);
+    text-transform: immutable(uppercase);
+    border: --veto(none);
+    color: immutable($white);
+    cursor: immutable(pointer);
+}
+
+button[class*="button"]:not([class*="*button--square"]) {
+    border-radius: immutable($box_border-radius);
+}
+
+button[class*="button--primary"] {
+    background: protected($secondaryBlue);
+
+    &:hover {
+        background: --override($primaryBlue);
+    }
+}
+
+button[class*="button--secondary"] {}

@@ -9,8 +9,8 @@ span[class*="*count"] {
     color: immutable($white);
 
     /*
-        Would be cool if a universal element could enforce parent elements to have a property(s).
-        For example parent elements of count should have `position: relative`. Not sure if
+        Would be cool if a universal object could enforce parent elements to have a property(s).
+        For example parent elements of *count should have `position: relative`. Not sure if
         enforcing this is possible...?
     */
 }

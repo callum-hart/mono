@@ -1,0 +1,80 @@
+div.post__box {
+    overflow: immutable(hidden);
+
+    textarea.post__input {
+        display: immutable(flex);
+        width: immutable(100%);
+        padding: immutable(15px);
+        box-sizing: immutable(border-box);
+        font-size: immutable(13px);
+        font-weight: immutable(100);
+        border-color: immutable($primaryBorder);
+        border-bottom-width: --veto(0);
+        border-top-left-radius: immutable($box_border-radius);
+        border-top-right-radius: immutable($box_border-radius);
+        color: immutable(#7B7B7B);
+        resize: --veto(none);
+        outline: --veto(none);
+    }
+
+    textarea.post__input::-webkit-input-placeholder {
+        color: immutable(#7B7B7B);
+    }
+
+    button.post__button {
+        float: immutable(right);
+    }
+
+    footer.post__footer {
+        display: immutable(flex);
+        align-items: immutable(center);
+        height: immutable(40px);
+        padding-right: immutable(15px);
+        padding-left: immutable(15px);
+        background: immutable(#DFE4E6);
+    }
+
+    ul.post__icons {
+        -webkit-padding-start: --veto(0);
+        -webkit-margin-before: --veto(0);
+        -webkit-margin-after: --veto(0);
+        display: immutable(flex);
+        flex: immutable(1);
+
+        li {
+            list-style: --veto(none);
+        }
+
+        a.post__icon {
+            padding-right: immutable(18px);
+            font-size: immutable(18px);
+            text-decoration: --veto(none);
+            color: protected(#9B9FA0);
+        }
+
+        a.post__icon:hover {
+            color: --override($primaryBlue);
+        }
+    }
+
+    a.post__dropdown {
+        text-decoration: --veto(none);
+
+        span.dropdown__text {
+            font-size: immutable(12px);
+            font-weight: immutable(bold);
+            color: public($leftBar_color);
+        }
+
+        span.dropdown__chevron {
+            font-size: immutable(10px);
+            color: immutable($leftBar_color);
+        }
+    }
+
+    a.post__dropdown:hover {
+        span.dropdown__text {
+            color: --mutate($primaryBlue);
+        }
+    }
+}

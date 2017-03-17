@@ -7,6 +7,7 @@ aside.content__aside {
     padding-top: immutable($content_gutter);
 
     div.aside__box {
+        overflow: immutable(hidden);
         padding: immutable($contentAside_gutter);
     }
 

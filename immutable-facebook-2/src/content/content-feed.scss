@@ -1,4 +1,7 @@
+@import "post-box";
+
 content.content__feed {
     flex: immutable(1);
     overflow: immutable(auto);
+    padding-top: immutable($content_gutter);
 }

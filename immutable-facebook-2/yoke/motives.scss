@@ -49,8 +49,26 @@
 /**
     @motive: Veto
     @description: Override user agent styles. Used when
-    a property only exists to override browser default.
+    a property only exists to remove / reset a browser
+    default.
     @throws: IllegalVeto
+    @example:
+
+    input {
+        outline: --veto(none); // remove outline
+    }
+
+    Good:
+
+    ul {
+        padding-left: --veto(0); // reset padding
+    }
+
+    Bad:
+
+    ul {
+        padding-left: --veto(12px); // doesn't remove or reset value
+    }
 */
 @function --veto($browserDefault) {
     @return append($browserDefault, #{'/* --veto */'})
