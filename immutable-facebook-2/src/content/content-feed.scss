@@ -1,7 +1,9 @@
 @import "post-box";
+@import "story-box";
 
 content.content__feed {
     flex: immutable(1);
     overflow: immutable(auto);
     padding-top: immutable($content_gutter);
+    padding-bottom: immutable($content_gutter);
 }

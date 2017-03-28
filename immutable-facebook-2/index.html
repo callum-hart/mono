@@ -150,32 +150,181 @@
 
     <section class="content">
         <content class="content__feed">
-            <div class="post__box *box *box--borderless">
+            <div class="post-box *box *box--borderless">
                 <form action="">
-                    <textarea class="post__input" name="" id="" rows="2" placeholder="Whats on your mind?"></textarea>
-                    <button class="post__button *button *button--primary *button--square">Post</button>
+                    <textarea class="post-box__input" name="" id="" rows="2" placeholder="Whats on your mind?"></textarea>
+                    <button class="post-box__button *button *button--primary *button--square">Post</button>
                 </form>
 
-                <footer class="post__footer">
-                    <ul class="post__icons">
+                <footer class="post-box__footer">
+                    <ul class="post-box__icons">
                         <li>
-                            <a href="" class="post__icon ss-picture"></a>
+                            <a href="" class="post-box__icon ss-picture"></a>
                         </li>
                         <li>
-                            <a href="" class="post__icon ss-adduser"></a>
+                            <a href="" class="post-box__icon ss-adduser"></a>
                         </li>
                         <li>
-                            <a href="" class="post__icon ss-location"></a>
+                            <a href="" class="post-box__icon ss-location"></a>
                         </li>
                         <li>
-                            <a href="" class="post__icon ss-bearface"></a>
+                            <a href="" class="post-box__icon ss-bearface"></a>
                         </li>
                     </ul>
 
-                    <a href="" class="post__dropdown">
+                    <a href="" class="post-box__dropdown">
                         <span class="dropdown__text">Friends</span>
                         <span class="dropdown__chevron ss-dropdown"></span>
                     </a>
+                </footer>
+            </div>
+
+            <div class="story-box *box">
+                <div class="story-box__hero">
+                    <img src="vendor/images/rectangle-pic.png" alt="">
+                </div>
+
+                <div class="story-box__header story-box__header--inline">
+                    <img src="vendor/images/profile-pic.png" alt="" class="story-box__author-pic *gravatar *gravatar--l">
+
+                    <div class="story-box__title">
+                        <p class="story-box__title-text">
+                            <a href="">Carol Gilligan</a>
+                        </p>
+
+                        <ul class="story-box__title-venue">
+                            <li>
+                                <span class="venue__icon ss-clock"></span>
+                                <span class="venue__text">31 mins ago</span>
+                            </li>
+                            <li>
+                                <span class="venue__icon ss-location"></span>
+                                <span class="venue__text">Auckland</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="story-box__content">
+                    <p>
+                        In the different voice of women lies the truth of an ethic of care, the tie
+                        between relationship and responsibility, and the origins of aggression in
+                        the failure of connection.
+                    </p>
+                </div>
+
+                <div class="story-box__pre-footer">
+                    <ul class="story-box__reactions">
+                        <li>
+                            <a href="" class="story-box__action">Like</a>
+                        </li>
+                        <li>
+                            <a href="" class="story-box__action">Comment</a>
+                        </li>
+                        <li>
+                            <a href="" class="story-box__action">Share</a>
+                        </li>
+                    </ul>
+
+                    <ul class="story-box__impressions">
+                        <li>
+                            <span class="story-box__likon ss-like"></span>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="vendor/images/profile-pic.png" alt="" class="*gravatar *gravatar--xs">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="vendor/images/profile-pic.png" alt="" class="*gravatar *gravatar--xs">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="vendor/images/profile-pic.png" alt="" class="*gravatar *gravatar--xs">
+                            </a>
+                        </li>
+                        <li>
+                            <span class="*tally">
+                                <span class="tally__icon">+</span>
+                                8
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+                <footer class="story-box__footer">
+                    <input type="text" class="comment__input" placeholder="Write a comment...">
+                    <a href="" class="comment__icon ss-picture"></a>
+                </footer>
+            </div>
+
+            <div class="story-box *box">
+                <div class="story-box__header story-box__header--stacked">
+                    <img src="vendor/images/profile-pic.png" alt="" class="story-box__author-pic *gravatar *gravatar--l">
+
+                    <div class="story-box__title">
+                        <p class="story-box__title-text">
+                            <a href="">Jacques Lacan</a>
+                            <span>shared a</span>
+                            <a href="">link</a>
+                        </p>
+
+                        <ul class="story-box__title-venue">
+                            <li>
+                                <span class="venue__icon ss-clock"></span>
+                                <span class="venue__text">2 hours ago</span>
+                            </li>
+                            <li>
+                                <span class="venue__icon ss-location"></span>
+                                <span class="venue__text">Near Wellington</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="story-box__content">
+                    <p>
+                        For the signifier is a unit in its very uniqueness, being
+                        by nature symbol only of an absence.
+                    </p>
+                    <!-- todo: video -->
+                </div>
+
+                <div class="story-box__pre-footer">
+                    <ul class="story-box__reactions">
+                        <li>
+                            <a href="" class="story-box__action">Like</a>
+                        </li>
+                        <li>
+                            <a href="" class="story-box__action">Comment</a>
+                        </li>
+                        <li>
+                            <a href="" class="story-box__action">Share</a>
+                        </li>
+                    </ul>
+
+                    <ul class="story-box__impressions">
+                        <li>
+                            <span class="story-box__likon ss-like"></span>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="vendor/images/profile-pic.png" alt="" class="*gravatar *gravatar--xs">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="vendor/images/profile-pic.png" alt="" class="*gravatar *gravatar--xs">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <footer class="story-box__footer">
+                    <input type="text" class="comment__input" placeholder="Write a comment...">
+                    <a href="" class="comment__icon ss-picture"></a>
                 </footer>
             </div>
         </content>

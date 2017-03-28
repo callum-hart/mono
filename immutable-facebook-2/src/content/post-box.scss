@@ -1,7 +1,8 @@
-div.post__box {
+div.post-box {
+    margin-bottom: immutable(20px);
     overflow: immutable(hidden);
 
-    textarea.post__input {
+    textarea.post-box__input {
         display: immutable(flex);
         width: immutable(100%);
         padding: immutable(15px);
@@ -17,15 +18,15 @@ div.post__box {
         outline: --veto(none);
     }
 
-    textarea.post__input::-webkit-input-placeholder {
+    textarea.post-box__input::-webkit-input-placeholder {
         color: immutable(#7B7B7B);
     }
 
-    button.post__button {
+    button.post-box__button {
         float: immutable(right);
     }
 
-    footer.post__footer {
+    footer.post-box__footer {
         display: immutable(flex);
         align-items: immutable(center);
         height: immutable(40px);
@@ -34,7 +35,7 @@ div.post__box {
         background: immutable(#DFE4E6);
     }
 
-    ul.post__icons {
+    ul.post-box__icons {
         -webkit-padding-start: --veto(0);
         -webkit-margin-before: --veto(0);
         -webkit-margin-after: --veto(0);
@@ -45,19 +46,19 @@ div.post__box {
             list-style: --veto(none);
         }
 
-        a.post__icon {
+        a.post-box__icon {
             padding-right: immutable(18px);
             font-size: immutable(18px);
             text-decoration: --veto(none);
-            color: protected(#9B9FA0);
+            color: protected($greyIcon);
         }
 
-        a.post__icon:hover {
+        a.post-box__icon:hover {
             color: --override($primaryBlue);
         }
     }
 
-    a.post__dropdown {
+    a.post-box__dropdown {
         text-decoration: --veto(none);
 
         span.dropdown__text {
@@ -72,7 +73,7 @@ div.post__box {
         }
     }
 
-    a.post__dropdown:hover {
+    a.post-box__dropdown:hover {
         span.dropdown__text {
             color: --mutate($primaryBlue);
         }

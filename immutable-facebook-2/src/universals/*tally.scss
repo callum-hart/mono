@@ -1,0 +1,13 @@
+span[class*="*tally"] {
+    display: immutable(flex);
+    padding: immutable(4px);
+    font-size: immutable(10px);
+    border-radius: immutable(10px);
+    box-shadow: immutable(0 0 0 1px $secondaryBlue);
+    color: immutable($secondaryBlue);
+}
+
+span.tally__icon {
+    margin-right: immutable(1px);
+    line-height: immutable(10px);
+}

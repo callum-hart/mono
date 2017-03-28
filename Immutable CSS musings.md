@@ -12,7 +12,7 @@
 ### Existing techniques that "solve" the problems with CSS
 
 **Inlining CSS**
-*React styles, aphrodyte etc... (not to be confused with inline CSS `style=""`)*
+*React styles, aphrodyte, styltron etc... (not to be confused with inline CSS `style=""`)*
 
 - Easier to be reasoned with.
 - Which boosts confidence. Gives more certainty styles will be applied.
@@ -716,9 +716,17 @@ role in the project, it isn't the only thing. Ideas:
 - Solo
 - Monty
 
-### Project concise description
+### Project description in 1 sentence
 
 - Mutation management for CSS
+- Mutation control for CSS
+- Immutability and data types meet CSS
+- A single source of truth for CSS styles
+- Abolish specificity and cascading wars
+- Making every CSS property a winner
+- CSS without mutation, specificity wars or cascading conflicts
+- Immutable CSS - abolish specificity wars & cascading conflicts
+
 
 ### Notes
 

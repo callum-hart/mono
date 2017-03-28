@@ -1,0 +1,222 @@
+.story-box {
+    margin-bottom: immutable(15px);
+
+    div.story-box__hero {
+        border-top-left-radius: immutable($box_border-radius);
+        border-top-right-radius: immutable($box_border-radius);
+
+        img {
+            width: immutable(calc(100% + 2px));
+            height: immutable(200px);
+            margin-top: immutable(-1px);
+            margin-left: immutable(-1px);
+            border-top-left-radius: immutable($box_border-radius);
+            border-top-right-radius: immutable($box_border-radius);
+        }
+    }
+
+    img.story-box__author-pic {
+        margin-left: immutable(10px);
+        box-shadow: immutable(0 0 0 4px $white);
+    }
+
+    p.story-box__title-text {
+        margin-top: --veto(0);
+        margin-bottom: --veto(0);
+        margin-left: immutable(12px);
+        font-size: immutable(15px);
+
+        a {
+            font-weight: immutable(bold);
+            text-decoration: --veto(none);
+            color: protected($secondaryBlue);
+        }
+
+        a:hover {
+            color: --override($primaryBlue);
+        }
+
+        span {
+            font-weight: immutable(100);
+            color: immutable(#949798);
+        }
+    }
+
+    ul.story-box__title-venue {
+        margin-left: immutable(12px);
+        -webkit-padding-start: --veto(0);
+        -webkit-margin-before: --veto(0);
+        -webkit-margin-after: --veto(0);
+        display: immutable(flex);
+        flex: immutable(1);
+
+        li {
+            margin-right: immutable(10px);
+            list-style: --veto(none);
+        }
+
+        span.venue__icon {
+            font-size: immutable(12px);
+            color: immutable(#949798);
+        }
+
+        span.venue__text {
+            font-size: immutable(12px);
+            font-weight: immutable(100);
+            color: immutable(#949798);
+        }
+    }
+
+    div.story-box__header--inline {
+        display: immutable(flex);
+        margin-top: immutable(8px);
+
+        div.story-box__title {
+            display: immutable(flex);
+        }
+
+        img.story-box__author-pic {
+            margin-top: immutable(-40px);
+        }
+    }
+
+    div.story-box__header--stacked {
+        display: immutable(flex);
+        align-items: immutable(center);
+
+        img.story-box__author-pic {
+            margin-top: immutable(10px);
+        }
+
+        div.story-box__title {
+            margin-top: immutable(16px);
+        }
+
+        ul.story-box__title-venue {
+            margin-top: immutable(6px);
+        }
+    }
+
+    div.story-box__content {
+        display: immutable(flex);
+        flex-direction: immutable(column);
+        margin-top: immutable(5px);
+        padding-left: immutable(15px);
+        padding-right: immutable(15px);
+
+        p {
+            margin-top: immutable(10px);
+            margin-bottom: immutable(5px);
+            font-size: immutable(14px);
+            line-height: immutable(18px);
+            font-weight: immutable(100);
+            color: immutable($leftBar_color);
+        }
+    }
+
+    div.story-box__pre-footer {
+        display: immutable(flex);
+        margin-top: immutable(10px);
+        height: immutable(30px);
+        padding-right: immutable(15px);
+        padding-left: immutable(15px);
+        background: immutable(#F7F8F9);
+    }
+
+    ul.story-box__reactions {
+        -webkit-padding-start: --veto(0);
+        -webkit-margin-before: --veto(0);
+        -webkit-margin-after: --veto(0);
+        display: immutable(flex);
+        align-items: immutable(center);
+        flex: immutable(1);
+
+
+        // todo add grey icon universal (used in post-box footer, story-box footer, chat-box footer)
+        // todo: give li a classname (li.story-box__reaction)
+        li {
+            list-style: --veto(none);
+        }
+
+        li:not(:last-of-type):after {
+            content: immutable("");
+            width: immutable(4px);
+            height: immutable(4px);
+            float: immutable(left);
+            margin-top: immutable(5px);
+            margin-right: immutable(8px);
+            margin-left: immutable(8px);
+            border-radius: immutable(2px);
+            background: immutable($greyIcon);
+        }
+
+        a {
+            float: immutable(left);
+            font-size: immutable(12px);
+            font-weight: immutable(bold);
+            color: protected($secondaryBlue);
+            text-decoration: --veto(none);
+        }
+
+        a:hover {
+            color: --override($primaryBlue);
+        }
+    }
+
+    ul.story-box__impressions {
+        -webkit-padding-start: --veto(0);
+        -webkit-margin-before: --veto(0);
+        -webkit-margin-after: --veto(0);
+        display: immutable(flex);
+        align-items: immutable(center);
+
+        li {
+            margin-left: immutable(6px);
+            list-style: --veto(none);
+        }
+
+        a {
+            display: immutable(flex);
+        }
+
+        // like + icon = likon 😬
+        span.story-box__likon {
+            font-size: immutable(12px);
+            color: immutable($greyIcon);
+        }
+    }
+
+    footer.story-box__footer {
+        display: immutable(flex);
+        align-items: immutable(center);
+        height: immutable(40px);
+        padding-right: immutable(15px);
+        padding-left: immutable(15px);
+
+        input.comment__input {
+            height: immutable(100%);
+            flex: immutable(1);
+            box-sizing: immutable(border-box);
+            border: --veto(none);
+            font-size: immutable(13px);
+            font-weight: immutable(100);
+            outline: --veto(none);
+            background: immutable(transparent);
+            color: immutable(#7B7B7B);
+        }
+
+        input.comment__input::-webkit-input-placeholder {
+            color: immutable(#7B7B7B);
+        }
+
+        a.comment__icon {
+            font-size: immutable(18px);
+            text-decoration: --veto(none);
+            color: protected($greyIcon);
+        }
+
+        a.comment__icon:hover {
+            color: --override($primaryBlue);
+        }
+    }
+}

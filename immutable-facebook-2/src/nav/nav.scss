@@ -83,7 +83,7 @@ nav {
         span.nav__count {
             top: immutable(-4px);
             right: immutable(-8px);
-            box-shadow: immutable(0px 0px 0 2px $secondaryBlue);
+            box-shadow: immutable(0 0 0 2px $secondaryBlue);
         }
     }
 
@@ -95,7 +95,6 @@ nav {
         margin-right: immutable(10px);
         padding-left: immutable(15px);
         border-left: immutable(1px solid $primaryBlue);
-
     }
 
     img.nav__user-pic {
