@@ -736,9 +736,19 @@ role in the project, it isn't the only thing. Ideas:
 - I'm currently building UI's using yoke to test my assumptions.
 - MVP uses Sass, merely because it's the quickest way to test ideas. Ideally yoke will be decoupled from a specific
 preprocessor. It should be as agnostic as possible. Compatible with any CSS strategy.
-- Example UI's should also include common use cases (such as AB tests, responsive pages) – and how they can be achieved with yoke.
+- Example UI's should also include common use cases (AB tests, themes, responsive pages) – and how they can be achieved with yoke.
 - Default architecture for CSS is broken -> declare a value and then override it N times.
 - [Technical goals] Leverage naitive CSS as much as possible.
+- What is mutation in CSS? When a CSS property for a given element has more than 1 declaration.
+- Baked in ommitence of redundant styles. Preventing mutation eliminates dead code (styles that aren't used).
+- [Dipping in and out of fb ui] I've found it easier and quicker to jump back into the project and continue where I left off. Think this is due to a number of reasons:
+    1. Code is expressive / has clarity -> easier to understand
+    2. Patterns promote consistency -> which in turn increases familiarity (reduces onboarding time)
+    3. Constraints limit uncertainly
+    4. Predefined rules guide workflow -> less decision making
+    5. Code feels more logical than abstract -> easier to reason with
+    6. More confident to make changes -> less risk of side effects
+- More performant? Is it expensive for the CSSDOM to draw elements with duplicate property declarations? i.e draw h1 with font size 18px and then redraw h1 with font size 20px.
 
 ### Tooling / Ecosystem
 
@@ -758,12 +768,12 @@ p {
 }
 
 // line 14
-p {
+section p {
     font-size: 15px;
 }
 
 // line 22
-p {
+div p {
     font-size: 20px;
 }
 ```
@@ -774,17 +784,16 @@ Browser extension:
 
 Select an element to show it's property mutations.
 
-Selector: `p`
 Property: `font-size`
 Mutations: 3
-                |              |              |
-       text     |     text     |     text     |
-                |              |              |
-      (10px)    |    (15px)    |    (20px)    |
-      (line 2)  |    (line 14) |    (line 22) |
-....................................................
-                    Time ->
-                    (corresponds to cascade)
+
+| <span style="font-size='10px'">text</span> | <span style="font-size='15px'">text</span> | <span style="font-size='20px'">text</span> |
+| :---| :--- | :--- |
+| 10px | 15px | 20px |
+| `p {}` | `section p {}` | `div p {}` |
+| line 2 *(app.css)* | line 14 *(app.css)* | line 122 *(main.css)* |
+
+Time *(corresponds to cascade)* ->
 
 Shows how the `font-size` of `p` changes over time. The top line in the table ("text") represents the style.
 In this example the size of "text" would increase (from left to right).
@@ -805,17 +814,28 @@ h3.title {
 
 Browser extension:
 
-Selector: `h3.title`
 Property: `color`
 Mutations: 2
-                        |                       |
-       text             |     text              |
-                        |                       |
-      (grey)            |    (red)              |
-      line 40 (app.css) |    line 12 (main.css) |
-......................................................
-                        Time ->
-                        (corresponds to cascade)
+
+| <span style="color='grey'">text</span> | <span style="color='red'">text</span> |
+| :---| :--- |
+| grey | red |
+| `h3.title {}` | `h3.title {}` |
+| line 40 *(app.css)* | line 12 *(main.css)* |
+
+Time *(corresponds to cascade)* ->
 
 In this example the color of "text" on the left would be grey, and the color of "text" on the right would be red.
 
+Alternative view *(which might be more useful)* would be property mutation count. Select an element and get a list of it's CSS properties with a count of how many times property is set. i.e:
+
+Element: '<p class="heading"></p>'
+
+| CSS property | Mutation count |
+| :---| :--- |
+| `font-size` | 5 |
+| `font-weight` | 3 |
+| `color` | 6 |
+| `text-decoration` | 2 |
+
+*High mutation count is bad. With Mono CSS mutation count should always be 1.*

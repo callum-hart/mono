@@ -29,18 +29,17 @@
     @return append($inlineStyle, #{!important '/* --overrule */'})
 }
 
-// Another modifier for overriding 3rd party / alien styles (e.g bootstrap).
-// Helps keep track of styles that only exist to override
-// 3rd party styles. Useful for maintenence, if 3rd party
-// becomes redundent (removed from project) 3rd party overrides
-// can be removed. Makes CSS deterministic. Cannot be used to
-// override styles declared in projects CSS, this would throw an
-// error.
-
 /**
     @motive: Overthrow
     @description: Can modify 3rd party CSS styles.
     @throws: IllegalOverthrow
+
+    Helps keep track of styles that only exist to override
+    3rd party styles. Useful for maintenence, if 3rd party
+    becomes redundent (removed from project) 3rd party
+    overrides can be removed. Makes CSS deterministic.
+
+    Cannot be used to override styles declared in projects CSS.
 */
 @function --overthrow($alienStyle) {
     @return append($alienStyle, #{'/* --overthrow */'})
@@ -73,3 +72,11 @@
 @function --veto($browserDefault) {
     @return append($browserDefault, #{'/* --veto */'})
 }
+
+/* --theme motive? used to denote styles that are affetced by a theme...
+    i.e.
+
+    button {
+        background: --theme(@buttonBg); // value of background is dependant on active theme
+    }
+*/
