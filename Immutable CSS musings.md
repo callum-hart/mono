@@ -726,7 +726,7 @@ role in the project, it isn't the only thing. Ideas:
 - Making every CSS property a winner
 - CSS without mutation, specificity wars or cascading conflicts
 - Immutable CSS - abolish specificity wars & cascading conflicts
-
+- Language that improves CSS architecture
 
 ### Notes
 
@@ -744,17 +744,19 @@ preprocessor. It should be as agnostic as possible. Compatible with any CSS stra
 - [Dipping in and out of fb ui] I've found it easier and quicker to jump back into the project and continue where I left off. Think this is due to a number of reasons:
     1. Code is expressive / has clarity -> easier to understand
     2. Patterns promote consistency -> which in turn increases familiarity (reduces onboarding time)
-    3. Constraints limit uncertainly
+    3. Constraints limit uncertainly -> and narrow scope of potential problems
     4. Predefined rules guide workflow -> less decision making
     5. Code feels more logical than abstract -> easier to reason with
     6. More confident to make changes -> less risk of side effects
 - More performant? Is it expensive for the CSSDOM to draw elements with duplicate property declarations? i.e draw h1 with font size 18px and then redraw h1 with font size 20px.
+- [Motivation] Fed up of scrolling through inspectors style tab hunting down the 'winning' CSS rule. In some cases a property was set 10 times. And I just thought this has got to stop. Not only is tracking down styles difficult, changing them can be equally combersome: having to compete with specificity, cascade and importance. Often CSS rules only exist soley to overright unwanted inherited styles - differentiating between required styles and those that act as a bandaide is tricky. No wonder maintaing CSS is a nightmare! The problems are a **language** and **architectural** issue.
 
 ### Tooling / Ecosystem
 
 **Browser extension**
 
 - Show every property mutation for a given element.
+- Think of ways to visualize property mutations.
 - Could be represented as a timeline.
 - If a property for a given element mutates N times show each change. Almost like a debugger breakpoint at each mutation.
 
@@ -829,7 +831,7 @@ In this example the color of "text" on the left would be grey, and the color of 
 
 Alternative view *(which might be more useful)* would be property mutation count. Select an element and get a list of it's CSS properties with a count of how many times property is set. i.e:
 
-Element: '<p class="heading"></p>'
+Element: `<p class="heading"></p>`
 
 | CSS property | Mutation count |
 | :---| :--- |
