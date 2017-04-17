@@ -22,7 +22,7 @@
     @throws: some error name.
 */
 @function --override($protectedProperty) {
-    @return append($protectedProperty, #{'/* --override */'})
+    @return append($protectedProperty, #{'/* --override */'});
 }
 
 /**
@@ -31,5 +31,5 @@
     @throws: IllegalMutation
 */
 @function --mutate($publicProperty) {
-    @return append($publicProperty, #{'/* --mutate */'})
+    @return append($publicProperty, #{'/* --mutate */'});
 }

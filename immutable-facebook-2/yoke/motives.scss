@@ -3,8 +3,11 @@
 
     Specical functions that add reasoning to CSS.
 
-    Often there is a specific reason as to why a CSS property
-    has been used. Suitable reasons could be overriding:
+    Goal of a motive is to off-load information about
+    the code (from your brain) to the code itself.
+
+    Often there is a specific reason why a CSS property
+    exists. Suitable reasons could be overriding:
 
     - Inline styles
     - 3rd party styles
@@ -26,7 +29,7 @@
     @throws: IllegalOverrule
 */
 @function --overrule($inlineStyle) {
-    @return append($inlineStyle, #{!important '/* --overrule */'})
+    @return append($inlineStyle, #{!important '/* --overrule */'});
 }
 
 /**
@@ -42,7 +45,7 @@
     Cannot be used to override styles declared in projects CSS.
 */
 @function --overthrow($alienStyle) {
-    @return append($alienStyle, #{'/* --overthrow */'})
+    @return append($alienStyle, #{'/* --overthrow */'});
 }
 
 /**
@@ -70,11 +73,11 @@
     }
 */
 @function --veto($browserDefault) {
-    @return append($browserDefault, #{'/* --veto */'})
+    @return append($browserDefault, #{'/* --veto */'});
 }
 
 /* --theme motive? used to denote styles that are set by a theme...
-    i.e.
+    I think this should be a type, i.e.
 
     button {
         background: --theme(@buttonBg); // value of background is dependant on active theme

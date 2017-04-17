@@ -727,6 +727,7 @@ role in the project, it isn't the only thing. Ideas:
 - CSS without mutation, specificity wars or cascading conflicts
 - Immutable CSS - abolish specificity wars & cascading conflicts
 - Language that improves CSS architecture
+- CSS with logic, data-types & immutability
 
 ### Notes
 
@@ -750,6 +751,8 @@ preprocessor. It should be as agnostic as possible. Compatible with any CSS stra
     6. More confident to make changes -> less risk of side effects
 - More performant? Is it expensive for the CSSDOM to draw elements with duplicate property declarations? i.e draw h1 with font size 18px and then redraw h1 with font size 20px.
 - [Motivation] Fed up of scrolling through inspectors style tab hunting down the 'winning' CSS rule. In some cases a property was set 10 times. And I just thought this has got to stop. Not only is tracking down styles difficult, changing them can be equally combersome: having to compete with specificity, cascade and importance. Often CSS rules only exist soley to overright unwanted inherited styles - differentiating between required styles and those that act as a bandaide is tricky. No wonder maintaing CSS is a nightmare! The problems are a **language** and **architectural** issue.
+- [Case studies] Look at the CSS for popular websites and see how often styles are overriden. For example the "What's happening" Netflix popup.
+- [Docs] When explaining concepts include a code example(s) demonstrating each concept in isolation. *Concept being a type / modifier / motive / pattern / principal*.
 
 ### Tooling / Ecosystem
 
@@ -841,3 +844,12 @@ Element: `<p class="heading"></p>`
 | `text-decoration` | 2 |
 
 *High mutation count is bad. With Mono CSS mutation count should always be 1.*
+
+### Todos
+
+- Finish Facebook example
+- Test RWD *(using `Bound`)* by building a responsive grid layout
+- Build more example UIs using Mono
+- Case studies
+- Organise project
+- Docs

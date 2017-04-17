@@ -270,7 +270,7 @@
 */
 
 /**
-    @technique: Universal objects
+    @technique: Universal entities
     @description: Styles that are decoupled from their context.
     Always look the same regardless of where they are used.
     @problem:
@@ -284,7 +284,8 @@
     @solution:
 
     - Encapsulate universal styles with a universal class (i.e *box)
-    - Add contextual styles with a universal identifier class (i.e story-*box)
+    - Add contextual styles with a universal identifier class. (i.e story-*box)
+      Should the identifier class include the universal class name?
 
     class="*box story-*box"
 
