@@ -155,8 +155,11 @@
 
     Specical functions that add reasoning to CSS.
 
-    Often there is a specific reason as to why a CSS property
-    has been used. Suitable reasons could be overriding:
+    Goal of a motive is to off-load information about
+    the code (from your brain) to the code itself.
+
+    Often there is a specific reason why a CSS property
+    exists. Suitable reasons could be overriding:
 
     - Inline styles
     - 3rd party styles
@@ -180,6 +183,13 @@
     @motive: Overthrow
     @description: Can modify 3rd party CSS styles.
     @throws: IllegalOverthrow
+
+    Helps keep track of styles that only exist to override
+    3rd party styles. Useful for maintenence, if 3rd party
+    becomes redundent (removed from project) 3rd party
+    overrides can be removed. Makes CSS deterministic.
+
+    Cannot be used to override styles declared in projects CSS.
 */
 /**
     @motive: Veto
@@ -203,6 +213,13 @@
 
     ul {
         padding-left: --veto(12px); // doesn't remove or reset value
+    }
+*/
+/* --theme motive? used to denote styles that are set by a theme...
+    I think this should be a type, i.e.
+
+    button {
+        background: --theme(@buttonBg); // value of background is dependant on active theme
     }
 */
 /**
@@ -407,6 +424,57 @@ div[class*="*box"]:not([class*="*box--borderless"]) {
 
 div[class*="*chat-box"] {
   background: white; }
+
+a[class*="*video__hero"] {
+  height: 200px /* immutable */;
+  overflow: hidden /* immutable */;
+  position: relative /* immutable */;
+  display: flex /* immutable */;
+  align-items: center /* immutable */;
+  justify-content: center /* immutable */;
+  border-top-left-radius: 4px /* immutable */;
+  border-top-right-radius: 4px /* immutable */;
+  text-decoration: none /* --veto */;
+  background: #D2D4D4 /* immutable */; }
+
+a[class*="*video__hero"]:hover span[class*="video__control"] {
+  transform: scale(1.2);
+  background: rgba(0, 0, 0, 0.4) /* --mutate */; }
+
+img[class*="*video__thumbnail"] {
+  position: absolute /* immutable */;
+  top: 0px /* immutable */;
+  width: 100% /* immutable */;
+  border-radius: inherit /* immutable */; }
+
+span[class*="video__control"] {
+  position: relative /* immutable */;
+  display: flex /* immutable */;
+  align-items: center /* immutable */;
+  justify-content: center /* immutable */;
+  width: 60px /* immutable */;
+  height: 60px /* immutable */;
+  font-size: 20px /* immutable */;
+  border-radius: 30px /* immutable */;
+  background: rgba(0, 0, 0, 0.3) /* public */;
+  color: white /* immutable */;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.4s ease-out; }
+
+footer[class*="*video__footer"] {
+  padding-top: 15px /* immutable */;
+  padding-bottom: 15px /* immutable */;
+  padding-left: 20px /* immutable */;
+  padding-right: 20px /* immutable */;
+  border-left: 1px solid #DFE4E6 /* const */ /* immutable */;
+  border-right: 1px solid #DFE4E6 /* const */ /* immutable */;
+  border-bottom: 1px solid #DFE4E6 /* const */ /* immutable */; }
+  footer[class*="*video__footer"] h2 {
+    margin-top: 0 /* --veto */;
+    margin-bottom: 0 /* --veto */;
+    font-size: 18px /* immutable */;
+    font-weight: 100 /* immutable */;
+    line-height: 24px /* immutable */;
+    color: #5F6464 /* const */ /* immutable */; }
 
 nav {
   display: flex /* immutable */;
@@ -662,8 +730,8 @@ section.content {
       display: flex /* immutable */;
       flex-direction: column /* immutable */;
       margin-top: 5px /* immutable */;
-      padding-left: 15px /* immutable */;
-      padding-right: 15px /* immutable */; }
+      padding-left: 20px /* immutable */;
+      padding-right: 20px /* immutable */; }
       section.content .story-box div.story-box__content p {
         margin-top: 10px /* immutable */;
         margin-bottom: 5px /* immutable */;
@@ -671,12 +739,17 @@ section.content {
         line-height: 18px /* immutable */;
         font-weight: 100 /* immutable */;
         color: #5F6464 /* const */ /* immutable */; }
+    section.content .story-box div.story-box__video {
+      width: calc(100% + 20px) /* immutable */;
+      margin-left: -10px /* immutable */;
+      margin-top: 10px /* immutable */;
+      margin-bottom: 10px /* immutable */; }
     section.content .story-box div.story-box__pre-footer {
       display: flex /* immutable */;
       margin-top: 10px /* immutable */;
       height: 30px /* immutable */;
-      padding-right: 15px /* immutable */;
-      padding-left: 15px /* immutable */;
+      padding-right: 20px /* immutable */;
+      padding-left: 20px /* immutable */;
       background: #F7F8F9 /* immutable */; }
     section.content .story-box ul.story-box__reactions {
       -webkit-padding-start: 0 /* --veto */;
@@ -723,8 +796,8 @@ section.content {
       display: flex /* immutable */;
       align-items: center /* immutable */;
       height: 40px /* immutable */;
-      padding-right: 15px /* immutable */;
-      padding-left: 15px /* immutable */; }
+      padding-right: 20px /* immutable */;
+      padding-left: 20px /* immutable */; }
       section.content .story-box footer.story-box__footer input.comment__input {
         height: 100% /* immutable */;
         flex: 1 /* immutable */;

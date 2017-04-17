@@ -848,8 +848,17 @@ Element: `<p class="heading"></p>`
 ### Todos
 
 - Finish Facebook example
+    - Chat box
+    - Gravatar fallback
+    - Images (gravatar, recent photos, video)
 - Test RWD *(using `Bound`)* by building a responsive grid layout
-- Build more example UIs using Mono
+- Build more example UIs using Mono. Alongside building popular sites use mono for:
+    - Portfolio site *(when redesign is due)*
+    - Effortless
+    - And of course the mono site *(when it needs one)*
+    - Side projects
 - Case studies
 - Organise project
 - Docs
+- Tooling
+- Compiler

@@ -1,0 +1,62 @@
+div[class*="*video"] {}
+
+a[class*="*video__hero"] {
+    height: immutable(200px);
+    overflow: immutable(hidden);
+    position: immutable(relative);
+    display: immutable(flex);
+    align-items: immutable(center);
+    justify-content: immutable(center);
+    border-top-left-radius: immutable(4px);
+    border-top-right-radius: immutable(4px);
+    text-decoration: --veto(none);
+    background: immutable(#D2D4D4);
+}
+
+a[class*="*video__hero"]:hover {
+    span[class*="video__control"] {
+        transform: scale(1.2); // without modifier since property only exists on hover
+        background: --mutate(rgba(0,0,0,.4));
+    }
+}
+
+img[class*="*video__thumbnail"] {
+    position: immutable(absolute);
+    top: immutable(0px);
+    width: immutable(100%);
+    border-radius: immutable(inherit);
+}
+
+span[class*="video__control"] {
+    position: immutable(relative);
+    display: immutable(flex);
+    align-items: immutable(center);
+    justify-content: immutable(center);
+    width: immutable(60px);
+    height: immutable(60px);
+    font-size: immutable(20px);
+    border-radius: immutable(30px);
+    background: public(rgba(0,0,0,.3));
+    color: immutable(white);
+    transition: transform .4s cubic-bezier(0.175, 0.885, 0.320, 1.275),
+                background .4s ease-out;
+}
+
+footer[class*="*video__footer"] {
+    padding-top: immutable(15px);
+    padding-bottom: immutable(15px);
+    padding-left: immutable(20px);
+    padding-right: immutable(20px);
+    border-left: immutable(1px solid $primaryBorder);
+    border-right: immutable(1px solid $primaryBorder);
+    border-bottom: immutable(1px solid $primaryBorder);
+
+    h2 {
+        margin-top: --veto(0);
+        margin-bottom: --veto(0);
+        font-size: immutable(18px);
+        font-weight: immutable(100);
+        line-height: immutable(24px);
+        color: immutable($leftBar_color);
+    }
+}

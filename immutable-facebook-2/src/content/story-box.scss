@@ -101,8 +101,8 @@
         display: immutable(flex);
         flex-direction: immutable(column);
         margin-top: immutable(5px);
-        padding-left: immutable(15px);
-        padding-right: immutable(15px);
+        padding-left: immutable(20px);
+        padding-right: immutable(20px);
 
         p {
             margin-top: immutable(10px);
@@ -114,12 +114,19 @@
         }
     }
 
+    div.story-box__video {
+        width: immutable(calc(100% + 20px));
+        margin-left: immutable(-10px);
+        margin-top: immutable(10px);
+        margin-bottom: immutable(10px);
+    }
+
     div.story-box__pre-footer {
         display: immutable(flex);
         margin-top: immutable(10px);
         height: immutable(30px);
-        padding-right: immutable(15px);
-        padding-left: immutable(15px);
+        padding-right: immutable(20px);
+        padding-left: immutable(20px);
         background: immutable(#F7F8F9);
     }
 
@@ -190,8 +197,8 @@
         display: immutable(flex);
         align-items: immutable(center);
         height: immutable(40px);
-        padding-right: immutable(15px);
-        padding-left: immutable(15px);
+        padding-right: immutable(20px);
+        padding-left: immutable(20px);
 
         input.comment__input {
             height: immutable(100%);
