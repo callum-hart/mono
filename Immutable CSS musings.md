@@ -753,6 +753,7 @@ preprocessor. It should be as agnostic as possible. Compatible with any CSS stra
 - [Motivation] Fed up of scrolling through inspectors style tab hunting down the 'winning' CSS rule. In some cases a property was set 10 times. And I just thought this has got to stop. Not only is tracking down styles difficult, changing them can be equally combersome: having to compete with specificity, cascade and importance. Often CSS rules only exist soley to overright unwanted inherited styles - differentiating between required styles and those that act as a bandaide is tricky. No wonder maintaing CSS is a nightmare! The problems are a **language** and **architectural** issue.
 - [Case studies] Look at the CSS for popular websites and see how often styles are overriden. For example the "What's happening" Netflix popup.
 - [Docs] When explaining concepts include a code example(s) demonstrating each concept in isolation. *Concept being a type / modifier / motive / pattern / principal*.
+- [mono is agnostic / flexible] In the fb example I use the BEM naming convension. This isn't integral to mono, and neither is how you architect your CSS files.
 
 ### Tooling / Ecosystem
 

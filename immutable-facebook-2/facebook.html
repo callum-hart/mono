@@ -16,10 +16,10 @@
     </div>
 
     <div class="nav__controls">
-        <div class="nav__search">
+        <form class="nav__search">
             <span class="search__icon ss-search"></span>
             <input type="text" class="search__input" placeholder="Search">
-        </div>
+        </form>
 
         <div class="nav__bits">
             <a href="#" class="ss-user"></a>
@@ -30,7 +30,9 @@
 
             <div class="nav__user">
                 <span class="nav__user-name">Callum Hart</span>
-                <img src="vendor/images/profile-pic.png" alt="" class="nav__user-pic *gravatar *gravatar--s">
+                <img src="vendor/images/profile-pic.png"
+                    alt=""
+                    class="nav__user-pic *gravatar *gravatar--s">
             </div>
 
             <a href="#" class="ss-lock"></a>
@@ -42,7 +44,10 @@
 <main>
     <section class="left-bar">
         <div class="left-bar__user">
-            <img src="vendor/images/profile-pic.png" alt="" class="left-bar__user-pic *gravatar *gravatar--m">
+            <img src="vendor/images/profile-pic.png"
+                alt=""
+                class="left-bar__user-pic *gravatar *gravatar--m">
+
             <span class="left-bar__user-name">Callum Hart</span>
         </div>
 
@@ -151,7 +156,7 @@
     <section class="content">
         <content class="content__feed">
             <div class="post-box *box *box--borderless">
-                <form action="">
+                <form>
                     <textarea class="post-box__input" name="" id="" rows="2" placeholder="Whats on your mind?"></textarea>
                     <button class="post-box__button *button *button--primary *button--square">Post</button>
                 </form>
@@ -420,8 +425,60 @@
             </div>
         </aside>
 
-        <div class="content__chat-box *chat-box">
-            chat box
+        <div class="content__chat-box *chat-box *chat-box--visible">
+            <div class="*chat-box__header">
+                <div class="*chat-box__header-left">
+                    <span class="*chat-box__status *status *status--free"></span>
+                    <span class="*chat-box__title">David Hume</span>
+                </div>
+
+                <div class="*chat-box__header-icons">
+                    <a href="" class="*chat-box__header-icon ss-settings"></a>
+                    <a href="" class="*chat-box__header-icon ss-delete"></a>
+                </div>
+            </div>
+
+            <ul class="*chat-box__feed">
+                <li>
+                    <span class="*chat-box__feed-item *chat-box__feed-item--moi">
+                        What are your thoughts on the human condition?
+                    </span>
+                </li>
+                <li>
+                    <img src="vendor/images/profile-pic.png"
+                        alt=""
+                        class="*chat-box__user-pic *gravatar *gravatar--s">
+
+                    <span class="*chat-box__feed-item *chat-box__feed-item--recipient">
+                        Nothing is more suprising than the easiness with which
+                        the many governed by the few
+                    </span>
+                </li>
+                <li>
+                    <span class="*chat-box__feed-timestamp">Today</span>
+                </li>
+                <li>
+                    <span class="*chat-box__feed-item *chat-box__feed-item--moi">Very true Dave</span>
+                </li>
+                <li>
+                    <img src="vendor/images/profile-pic.png"
+                        alt=""
+                        class="*chat-box__user-pic *gravatar *gravatar--s">
+
+                    <span class="*chat-box__feed-item *chat-box__feed-item--recipient">
+                        The rules of morality are not the conclusion of our reason
+                    </span>
+                </li>
+            </ul>
+
+            <form class="*chat-box__form">
+                <input type="text" class="*chat-box__form-input">
+
+                <div class="*chat-box__form-icons">
+                    <a href="" class="*chat-box__form-icon ss-attach"></a>
+                    <a href="" class="*chat-box__form-icon ss-bearface"></a>
+                </div>
+            </form>
         </div>
     </section>
 
@@ -432,70 +489,100 @@
             <ul class="right-bar__list">
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <img src="vendor/images/profile-pic.png"
+                            alt=""
+                            class="right-bar__user-pic *gravatar *gravatar--s">
+
                         <span class="list__text">Thomas Hobbes</span>
                         <span class="list__status *status *status--free"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <img src="vendor/images/profile-pic.png"
+                            alt=""
+                            class="right-bar__user-pic *gravatar *gravatar--s">
+
                         <span class="list__text">Emmanuel Kant</span>
                         <span class="list__status *status *status--free"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <img src="vendor/images/profile-pic.png"
+                            alt=""
+                            class="right-bar__user-pic *gravatar *gravatar--s">
+
                         <span class="list__text">John Locke</span>
                         <span class="list__status *status *status--busy"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <img src="vendor/images/profile-pic.png"
+                            alt=""
+                            class="right-bar__user-pic *gravatar *gravatar--s">
+
                         <span class="list__text">Charlotte Perkins Graham</span>
                         <span class="list__status *status *status--free"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <img src="vendor/images/profile-pic.png"
+                            alt=""
+                            class="right-bar__user-pic *gravatar *gravatar--s">
+
                         <span class="list__text">Gertrude Anscombe</span>
                         <span class="list__status *status *status--busy"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <img src="vendor/images/profile-pic.png"
+                            alt=""
+                            class="right-bar__user-pic *gravatar *gravatar--s">
+
                         <span class="list__text">Robert Persig</span>
                         <span class="list__status *status *status--busy"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <img src="vendor/images/profile-pic.png"
+                            alt=""
+                            class="right-bar__user-pic *gravatar *gravatar--s">
+
                         <span class="list__text">Phillipa Foot</span>
                         <span class="list__status *status *status--free"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <img src="vendor/images/profile-pic.png"
+                            alt=""
+                            class="right-bar__user-pic *gravatar *gravatar--s">
+
                         <span class="list__text">John Searle</span>
                         <span class="list__status *status *status--free"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <img src="vendor/images/profile-pic.png"
+                            alt=""
+                            class="right-bar__user-pic *gravatar *gravatar--s">
+
                         <span class="list__text">Ludwig Wittenstein</span>
                         <span class="list__status *status *status--away"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <img src="vendor/images/profile-pic.png"
+                            alt=""
+                            class="right-bar__user-pic *gravatar *gravatar--s">
+
                         <span class="list__text">Friedrich Nietzsche</span>
                         <span class="list__status *status *status--free"></span>
                     </a>
@@ -507,49 +594,70 @@
             <ul class="right-bar__list">
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <img src="vendor/images/profile-pic.png"
+                            alt=""
+                            class="right-bar__user-pic *gravatar *gravatar--s">
+
                         <span class="list__text">Henri Bergson</span>
                         <span class="list__status *status *status--offline"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <img src="vendor/images/profile-pic.png"
+                            alt=""
+                            class="right-bar__user-pic *gravatar *gravatar--s">
+
                         <span class="list__text">David Chalmers</span>
                         <span class="list__status *status *status--offline"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <img src="vendor/images/profile-pic.png"
+                            alt=""
+                            class="right-bar__user-pic *gravatar *gravatar--s">
+
                         <span class="list__text">Karl Marx</span>
                         <span class="list__status *status *status--offline"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <img src="vendor/images/profile-pic.png"
+                            alt=""
+                            class="right-bar__user-pic *gravatar *gravatar--s">
+
                         <span class="list__text">Margaret Atwood</span>
                         <span class="list__status *status *status--offline"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <img src="vendor/images/profile-pic.png"
+                            alt=""
+                            class="right-bar__user-pic *gravatar *gravatar--s">
+
                         <span class="list__text">Hannah Arendt</span>
                         <span class="list__status *status *status--offline"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <img src="vendor/images/profile-pic.png"
+                            alt=""
+                            class="right-bar__user-pic *gravatar *gravatar--s">
+
                         <span class="list__text">Martin Heidegger</span>
                         <span class="list__status *status *status--offline"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png" alt="" class="right-bar__user-pic *gravatar *gravatar--s">
+                        <img src="vendor/images/profile-pic.png"
+                            alt=""
+                            class="right-bar__user-pic *gravatar *gravatar--s">
+
                         <span class="list__text">Mary McCarthy</span>
                         <span class="list__status *status *status--offline"></span>
                     </a>

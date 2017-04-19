@@ -20,7 +20,7 @@ nav {
         flex: immutable(1);
     }
 
-    div.nav__search {
+    form.nav__search {
         display: immutable(flex);
         flex: immutable(1);
         align-items: immutable(center);
@@ -49,7 +49,7 @@ nav {
         }
     }
 
-    div.nav__search:hover {
+    form.nav__search:hover {
         span.search__icon {
             color: --mutate($navIcon_color--hover);
         }

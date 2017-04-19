@@ -13,6 +13,7 @@ section.content {
 
     div.content__chat-box {
         position: immutable(absolute);
+        z-index: immutable(3);
         bottom: immutable(0);
         right: immutable($content_gutter);
     }

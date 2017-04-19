@@ -1,3 +1,40 @@
+$chatBox_width:      const(260px);
+$chatBoxFeed_height: const(240px);
+
 div[class*="*chat-box"] {
-    background: white;
+    width: immutable($chatBox_width);
+    box-shadow: immutable(0 10px 10px 0 rgba(0,0,0,.2));
+}
+
+// todo: this targets all child div's which contain the class *chat-box...
+// i.e *chat-box__header and *chat-box__form-icons.
+
+// Child classnames within universal entites can't contain the universal
+// class. Perhaps a different symbol, i,e ^chat-box__header
+
+div[class*="*chat-box"]:not([class*="*chat-box--visible"]) {
+    // display: immutable(none);
+}
+
+div[class*="*chat-box--visible"] {
+    // display: immutable(block);
+}
+
+div[class*="*chat-box__header"] {
+    border-top-left-radius: immutable($box_border-radius);
+    border-top-right-radius: immutable($box_border-radius);
+    background: immutable($secondaryBlue);
+}
+
+ul[class*="*chat-box__feed"] {
+    height: immutable($chatBoxFeed_height);
+    overflow: immutable(auto);
+    -webkit-margin-before: --veto(0);
+    -webkit-margin-after: --veto(0);
+    -webkit-padding-start: --veto(0);
+    background: immutable($white);
+}
+
+form[class*="*chat-box__form"] {
+    background: immutable($white);
 }

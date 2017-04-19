@@ -14,7 +14,7 @@ a[class*="*video__hero"] {
 }
 
 a[class*="*video__hero"]:hover {
-    span[class*="video__control"] {
+    span[class*="*video__control"] {
         transform: scale(1.2); // without modifier since property only exists on hover
         background: --mutate(rgba(0,0,0,.4));
     }
@@ -27,7 +27,7 @@ img[class*="*video__thumbnail"] {
     border-radius: immutable(inherit);
 }
 
-span[class*="video__control"] {
+span[class*="*video__control"] {
     position: immutable(relative);
     display: immutable(flex);
     align-items: immutable(center);

@@ -423,7 +423,24 @@ div[class*="*box"]:not([class*="*box--borderless"]) {
   border: 1px solid #DFE4E6 /* const */ /* immutable */; }
 
 div[class*="*chat-box"] {
-  background: white; }
+  width: 260px /* const */ /* immutable */;
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2) /* immutable */; }
+
+div[class*="*chat-box__header"] {
+  border-top-left-radius: 3px /* const */ /* immutable */;
+  border-top-right-radius: 3px /* const */ /* immutable */;
+  background: #5371AA /* const */ /* immutable */; }
+
+ul[class*="*chat-box__feed"] {
+  height: 240px /* const */ /* immutable */;
+  overflow: auto /* immutable */;
+  -webkit-margin-before: 0 /* --veto */;
+  -webkit-margin-after: 0 /* --veto */;
+  -webkit-padding-start: 0 /* --veto */;
+  background: #FFFFFF /* const */ /* immutable */; }
+
+form[class*="*chat-box__form"] {
+  background: #FFFFFF /* const */ /* immutable */; }
 
 a[class*="*video__hero"] {
   height: 200px /* immutable */;
@@ -437,7 +454,7 @@ a[class*="*video__hero"] {
   text-decoration: none /* --veto */;
   background: #D2D4D4 /* immutable */; }
 
-a[class*="*video__hero"]:hover span[class*="video__control"] {
+a[class*="*video__hero"]:hover span[class*="*video__control"] {
   transform: scale(1.2);
   background: rgba(0, 0, 0, 0.4) /* --mutate */; }
 
@@ -447,7 +464,7 @@ img[class*="*video__thumbnail"] {
   width: 100% /* immutable */;
   border-radius: inherit /* immutable */; }
 
-span[class*="video__control"] {
+span[class*="*video__control"] {
   position: relative /* immutable */;
   display: flex /* immutable */;
   align-items: center /* immutable */;
@@ -493,16 +510,16 @@ nav {
   nav div.nav__controls {
     display: flex /* immutable */;
     flex: 1 /* immutable */; }
-  nav div.nav__search {
+  nav form.nav__search {
     display: flex /* immutable */;
     flex: 1 /* immutable */;
     align-items: center /* immutable */; }
-    nav div.nav__search span.search__icon {
+    nav form.nav__search span.search__icon {
       padding-left: 20px /* immutable */;
       padding-right: 10px /* immutable */;
       font-size: 18px /* immutable */;
       color: #97A9CC /* let */ /* public */; }
-    nav div.nav__search input.search__input {
+    nav form.nav__search input.search__input {
       height: 100% /* immutable */;
       flex: 1 /* immutable */;
       box-sizing: border-box /* immutable */;
@@ -511,10 +528,10 @@ nav {
       outline: none /* --veto */;
       background: transparent /* immutable */;
       color: #FFFFFF /* const */ /* immutable */; }
-    nav div.nav__search input.search__input::-webkit-input-placeholder {
+    nav form.nav__search input.search__input::-webkit-input-placeholder {
       font-weight: 100 /* immutable */;
       color: #97A9CC /* let */ /* immutable */; }
-  nav div.nav__search:hover span.search__icon {
+  nav form.nav__search:hover span.search__icon {
     color: #FFFFFF /* set */ /* --mutate */; }
   nav div.nav__bits {
     display: flex /* immutable */;
@@ -878,6 +895,7 @@ section.content {
           border-radius: 2px /* immutable */; }
   section.content div.content__chat-box {
     position: absolute /* immutable */;
+    z-index: 3 /* immutable */;
     bottom: 0 /* immutable */;
     right: 20px /* const */ /* immutable */; }
 
