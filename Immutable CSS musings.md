@@ -754,6 +754,7 @@ preprocessor. It should be as agnostic as possible. Compatible with any CSS stra
 - [Case studies] Look at the CSS for popular websites and see how often styles are overriden. For example the "What's happening" Netflix popup.
 - [Docs] When explaining concepts include a code example(s) demonstrating each concept in isolation. *Concept being a type / modifier / motive / pattern / principal*.
 - [mono is agnostic / flexible] In the fb example I use the BEM naming convension. This isn't integral to mono, and neither is how you architect your CSS files.
+- [Technical goals] want the mono api to be as small as it can be. Bloated projects are harder to consume.
 
 ### Tooling / Ecosystem
 

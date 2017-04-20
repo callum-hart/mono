@@ -272,23 +272,128 @@
 /**
     @technique: Universal entities
     @description: Styles that are decoupled from their context.
-    Always look the same regardless of where they are used.
+    Always look the same regardless of where they are used. Commonly
+    used for common / global styling.
+
     @problem:
+
+    <div class="box"></div>
+
+    .box {
+        padding: 10px;
+        background: white;
+    }
 
     - CSS classes are too brittle.
     - No seperation between universal and contextual styles.
     - Easy to accidentally override universal styles.
-
-    todo: add code examples
+    - Semantics: No indication that `box` styles are global, nothing to
+    differentiate it from other classes.
 
     @solution:
 
-    - Encapsulate universal styles with a universal class (i.e *box)
-    - Add contextual styles with a universal identifier class. (i.e story-*box)
-      Should the identifier class include the universal class name?
+    <div class="*box"></div>
 
-    class="*box story-*box"
+    div[class*="*box"] {
+        padding: 10px;
+        background: white;
+    }
 
-    todo: add code examples
+    Universal entities are denoted using a universal class which is prefixed
+    with an asterix (*) and has the following structure:
+
+    `*[universal name]`
+
+    The subtle change to the classname (using the * prefix) buys us a few
+    things:
+
+    - Protection: the * prefix adds a layer of protection. It's harder to
+    accidentally override universal styles, since the CSS selector is more
+    verbose (`div[class*="*box"]` vs `div.box`).
+    - Identity: universal entities are easy to identify (and thus differentiate)
+    just by looking at the CSS or HTML.
+
+    Universal entities may have contextual styles. These are styles tied to a
+    specific use case(s), and are applied using a universal identifier class:
+
+    `*[universal name] [contextual identifier]`
+
+    Example:
+
+    <aside>
+        <div class="*box box__aside"></div>
+    </aside>
+
+    div.box__aside {
+        height: 100%;
+    }
+
+    The identifier class `box__aside` is used to add context specific styles.
+
+
+    More complex universal entities have nested (child) elements. These too should
+    enjoy the benefits we've seen above (protection & identity).
+
+    Universal children are denoted using a universal child class which are prefixed
+    with a caret (^) and have the following structure:
+
+    `^[universal name][child identifier]`
+
+    Example:
+
+    <div class="*box">
+        <div class="^box__header">
+        </div>
+
+        <footer class="^box__footer">
+        </footer>
+    </div>
+
+    div[class*="^box__header"] {
+        height: 40px;
+    }
+
+    footer[class*="^box__footer"] {
+        height: 50px;
+    }
+
+    Again the prefix (^) protects universal child styles from the outside world,
+    and gives them an identity.
+
+    Universal children may also have contextual styles, which are applied using
+    a universal child identifier class:
+
+    `^[universal name][child identifier] [contextual identifier]`
+
+    Example:
+
+    <aside>
+        <div class="*box box__aside">
+            <div class="^box__header box__aside__header">
+            </div>
+
+            <footer class="^box__footer box__aside__footer">
+            </footer>
+        </div>
+    </aside>
+
+    div.box__aside__header {
+        box-shadow: 0 0 2px black;
+    }
+
+    *Note: it is important that universal child classes use a different prefix
+    from the universal class. This prevents conflicts with the universal class.
+    I originally prefixed child universal classes with the universal class
+    (i.e *box__header). However we run into problems when both (the universal
+    class and universal child class) have the same element type. For example:
+
+    <div class="*box">
+        <div class="*box__header">
+        </div>
+    </div>
+
+    The wildcard selector `div[class*="*box"]` targets both `*box` and `*box__header`.
+
+    *Aside: asterix prefix (*) denotes everywhere, caret prefix (^) points up to parent.
 
 */

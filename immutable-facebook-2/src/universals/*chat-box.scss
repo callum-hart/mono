@@ -10,7 +10,11 @@ div[class*="*chat-box"] {
 // i.e *chat-box__header and *chat-box__form-icons.
 
 // Child classnames within universal entites can't contain the universal
-// class. Perhaps a different symbol, i,e ^chat-box__header
+// class incase they share the same element type.
+
+// Perhaps use a different symbol, i,e ^chat-box__header. Same with
+// *video universal - issue wasn't detected here, since child elements
+// in *video have a different type...
 
 div[class*="*chat-box"]:not([class*="*chat-box--visible"]) {
     // display: immutable(none);
