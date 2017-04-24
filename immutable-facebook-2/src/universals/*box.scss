@@ -1,8 +1,8 @@
-div[class*="*box"] {
+div.\*box {
     background: immutable($white);
     border-radius: immutable($box_border-radius);
 }
 
-div[class*="*box"]:not([class*="*box--borderless"]) {
+div.\*box:not(.\*box--borderless) {
     border: immutable(1px solid $primaryBorder);
 }

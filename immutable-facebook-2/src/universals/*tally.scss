@@ -1,4 +1,4 @@
-span[class*="*tally"] {
+span.\*tally {
     display: immutable(flex);
     padding: immutable(4px);
     font-size: immutable(10px);
@@ -7,7 +7,7 @@ span[class*="*tally"] {
     color: immutable($secondaryBlue);
 }
 
-span.tally__icon {
+span.\*tally__icon {
     margin-right: immutable(1px);
     line-height: immutable(10px);
 }

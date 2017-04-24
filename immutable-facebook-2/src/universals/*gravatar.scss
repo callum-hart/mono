@@ -23,22 +23,22 @@ $gravatar--l: 50px;
     border-radius: immutable($size / 2);
 }
 
-img[class*="*gravatar"] {
+img.\*gravatar {
     box-sizing: immutable(border-box);
 }
 
-img[class*="*gravatar--xs"] {
+img.\*gravatar--xs {
     @include gravatar($gravatar--xs);
 }
 
-img[class*="*gravatar--s"] {
+img.\*gravatar--s {
     @include gravatar($gravatar--s);
 }
 
-img[class*="*gravatar--m"] {
+img.\*gravatar--m {
     @include gravatar($gravatar--m);
 }
 
-img[class*="*gravatar--l"] {
+img.\*gravatar--l {
     @include gravatar($gravatar--l);
 }

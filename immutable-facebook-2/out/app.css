@@ -284,7 +284,7 @@ section.content {
 section.right-bar {
   width: 220px /* const */ /* immutable */; }
 
-button[class*="button"] {
+button.\*button {
   height: 40px /* immutable */;
   padding-right: 30px /* immutable */;
   padding-left: 30px /* immutable */;
@@ -294,12 +294,12 @@ button[class*="button"] {
   color: #FFFFFF /* const */ /* immutable */;
   cursor: pointer /* immutable */; }
 
-button[class*="button"]:not([class*="*button--square"]) {
+button.\*button:not(.\*button--square) {
   border-radius: 3px /* const */ /* immutable */; }
 
-button[class*="button--primary"] {
+button.\*button--primary {
   background: #5371AA /* const */ /* protected */; }
-  button[class*="button--primary"]:hover {
+  button.\*button--primary:hover {
     background: #4A6598 /* const */ /* --override */; }
 
 /*
@@ -314,30 +314,30 @@ button[class*="button--primary"] {
     todo: add fallback gravatar for when no image exists, i.e `*gravatar--fallback`
     can come in all sizes (xs, s, m, l)
 */
-img[class*="*gravatar"] {
+img.\*gravatar {
   box-sizing: border-box /* immutable */; }
 
-img[class*="*gravatar--xs"] {
+img.\*gravatar--xs {
   width: 22px /* immutable */;
   height: 22px /* immutable */;
   border-radius: 11px /* immutable */; }
 
-img[class*="*gravatar--s"] {
+img.\*gravatar--s {
   width: 32px /* immutable */;
   height: 32px /* immutable */;
   border-radius: 16px /* immutable */; }
 
-img[class*="*gravatar--m"] {
+img.\*gravatar--m {
   width: 40px /* immutable */;
   height: 40px /* immutable */;
   border-radius: 20px /* immutable */; }
 
-img[class*="*gravatar--l"] {
+img.\*gravatar--l {
   width: 50px /* immutable */;
   height: 50px /* immutable */;
   border-radius: 25px /* immutable */; }
 
-span[class*="*count"] {
+span.\*count {
   position: absolute /* immutable */;
   height: 12px /* immutable */;
   padding: 0 4px /* immutable */;
@@ -354,7 +354,7 @@ span[class*="*count"] {
         assert: parentContains(position: relative);
     */ }
 
-span[class*="*tally"] {
+span.\*tally {
   display: flex /* immutable */;
   padding: 4px /* immutable */;
   font-size: 10px /* immutable */;
@@ -362,7 +362,7 @@ span[class*="*tally"] {
   box-shadow: 0 0 0 1px #5371AA /* const */ /* immutable */;
   color: #5371AA /* const */ /* immutable */; }
 
-span.tally__icon {
+span.\*tally__icon {
   margin-right: 1px /* immutable */;
   line-height: 10px /* immutable */; }
 
@@ -374,7 +374,7 @@ span.tally__icon {
 
     Universal classes could be prefixed with an asterix?
 */
-span[class*="*heading"] {
+span.\*heading {
   font-size: 12px /* immutable */;
   text-transform: uppercase /* immutable */;
   color: #B5BABC /* const */ /* immutable */; }
@@ -387,51 +387,75 @@ span[class*="*heading"] {
 
     Universal classes could be prefixed with an asterix?
 */
-span[class*="*status--free"] {
+span.\*status--free {
   width: 8px /* const */ /* immutable */;
   height: 8px /* const */ /* immutable */;
   display: inline-block /* immutable */;
   border-radius: 4px /* immutable */;
   background: #84BD5D /* const */ /* immutable */; }
 
-span[class*="*status--busy"] {
+span.\*status--busy {
   width: 8px /* const */ /* immutable */;
   height: 8px /* const */ /* immutable */;
   display: inline-block /* immutable */;
   border-radius: 4px /* immutable */;
   background: #EF9F6B /* const */ /* immutable */; }
 
-span[class*="*status--away"] {
+span.\*status--away {
   width: 8px /* const */ /* immutable */;
   height: 8px /* const */ /* immutable */;
   display: inline-block /* immutable */;
   border-radius: 4px /* immutable */;
   background: #EA6A5A /* const */ /* immutable */; }
 
-span[class*="*status--offline"] {
+span.\*status--offline {
   width: 8px /* const */ /* immutable */;
   height: 8px /* const */ /* immutable */;
   display: inline-block /* immutable */;
   border-radius: 4px /* immutable */;
   background: rgba(255, 255, 255, 0.2) /* const */ /* immutable */; }
 
-div[class*="*box"] {
+div.\*box {
   background: #FFFFFF /* const */ /* immutable */;
   border-radius: 3px /* const */ /* immutable */; }
 
-div[class*="*box"]:not([class*="*box--borderless"]) {
+div.\*box:not(.\*box--borderless) {
   border: 1px solid #DFE4E6 /* const */ /* immutable */; }
 
-div[class*="*chat-box"] {
+div.\*chat-box {
   width: 260px /* const */ /* immutable */;
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2) /* immutable */; }
 
-div[class*="*chat-box__header"] {
+div.\*chat-box:not(.\*chat-box--visible) {
+  display: none /* immutable */; }
+
+div.\*chat-box--visible {
+  display: block /* immutable */; }
+
+div.\*chat-box__header {
+  display: flex /* immutable */;
+  align-items: center /* immutable */;
   border-top-left-radius: 3px /* const */ /* immutable */;
   border-top-right-radius: 3px /* const */ /* immutable */;
   background: #5371AA /* const */ /* immutable */; }
 
-ul[class*="*chat-box__feed"] {
+div.\*chat-box__header-left {
+  flex: 1 /* immutable */; }
+  div.\*chat-box__header-left span.\*chat-box__title {
+    font-size: 13px /* immutable */;
+    color: #FFFFFF /* const */ /* immutable */; }
+
+a.\*chat-box__header-icon {
+  text-decoration: none /* --veto */;
+  color: #97A9CC /* let */ /* protected */;
+  font-size: 12px /* immutable */; }
+  a.\*chat-box__header-icon:hover {
+    color: #FFFFFF /* set */ /* --mutate */; }
+
+a.\*chat-box__header-icon.ss-delete {
+  background: #4A6598 /* const */ /* immutable */; }
+
+ul.\*chat-box__feed {
   height: 240px /* const */ /* immutable */;
   overflow: auto /* immutable */;
   -webkit-margin-before: 0 /* --veto */;
@@ -439,10 +463,10 @@ ul[class*="*chat-box__feed"] {
   -webkit-padding-start: 0 /* --veto */;
   background: #FFFFFF /* const */ /* immutable */; }
 
-form[class*="*chat-box__form"] {
+form.\*chat-box__form {
   background: #FFFFFF /* const */ /* immutable */; }
 
-a[class*="*video__hero"] {
+a.\*video__hero {
   height: 200px /* immutable */;
   overflow: hidden /* immutable */;
   position: relative /* immutable */;
@@ -454,17 +478,17 @@ a[class*="*video__hero"] {
   text-decoration: none /* --veto */;
   background: #D2D4D4 /* immutable */; }
 
-a[class*="*video__hero"]:hover span[class*="*video__control"] {
+a.\*video__hero:hover span.\*video__control {
   transform: scale(1.2);
   background: rgba(0, 0, 0, 0.4) /* --mutate */; }
 
-img[class*="*video__thumbnail"] {
+img.\*video__thumbnail {
   position: absolute /* immutable */;
   top: 0px /* immutable */;
   width: 100% /* immutable */;
   border-radius: inherit /* immutable */; }
 
-span[class*="*video__control"] {
+span.\*video__control {
   position: relative /* immutable */;
   display: flex /* immutable */;
   align-items: center /* immutable */;
@@ -477,7 +501,7 @@ span[class*="*video__control"] {
   color: white /* immutable */;
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.4s ease-out; }
 
-footer[class*="*video__footer"] {
+footer.\*video__footer {
   padding-top: 15px /* immutable */;
   padding-bottom: 15px /* immutable */;
   padding-left: 20px /* immutable */;
@@ -485,7 +509,7 @@ footer[class*="*video__footer"] {
   border-left: 1px solid #DFE4E6 /* const */ /* immutable */;
   border-right: 1px solid #DFE4E6 /* const */ /* immutable */;
   border-bottom: 1px solid #DFE4E6 /* const */ /* immutable */; }
-  footer[class*="*video__footer"] h2 {
+  footer.\*video__footer h2 {
     margin-top: 0 /* --veto */;
     margin-bottom: 0 /* --veto */;
     font-size: 18px /* immutable */;

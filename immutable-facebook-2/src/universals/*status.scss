@@ -23,18 +23,18 @@ $status_color--offline: const(rgba(255,255,255,.2));
     background: immutable($color);
 }
 
-span[class*="*status--free"] {
+span.\*status--free {
     @include status($status_color--free);
 }
 
-span[class*="*status--busy"] {
+span.\*status--busy {
     @include status($status_color--busy);
 }
 
-span[class*="*status--away"] {
+span.\*status--away {
     @include status($status_color--away);
 }
 
-span[class*="*status--offline"] {
+span.\*status--offline {
     @include status($status_color--offline);
 }

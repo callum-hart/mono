@@ -1,36 +1,51 @@
 $chatBox_width:      const(260px);
 $chatBoxFeed_height: const(240px);
 
-div[class*="*chat-box"] {
+div.\*chat-box {
     width: immutable($chatBox_width);
     box-shadow: immutable(0 10px 10px 0 rgba(0,0,0,.2));
 }
 
-// todo: this targets all child div's which contain the class *chat-box...
-// i.e *chat-box__header and *chat-box__form-icons.
-
-// Child classnames within universal entites can't contain the universal
-// class incase they share the same element type.
-
-// Perhaps use a different symbol, i,e ^chat-box__header. Same with
-// *video universal - issue wasn't detected here, since child elements
-// in *video have a different type...
-
-div[class*="*chat-box"]:not([class*="*chat-box--visible"]) {
-    // display: immutable(none);
+div.\*chat-box:not(.\*chat-box--visible) {
+    display: immutable(none);
 }
 
-div[class*="*chat-box--visible"] {
-    // display: immutable(block);
+div.\*chat-box--visible {
+    display: immutable(block);
 }
 
-div[class*="*chat-box__header"] {
+div.\*chat-box__header {
+    display: immutable(flex);
+    align-items: immutable(center);
     border-top-left-radius: immutable($box_border-radius);
     border-top-right-radius: immutable($box_border-radius);
     background: immutable($secondaryBlue);
 }
 
-ul[class*="*chat-box__feed"] {
+div.\*chat-box__header-left {
+    flex: immutable(1);
+
+    span.\*chat-box__title {
+        font-size: immutable(13px);
+        color: immutable($white);
+    }
+}
+
+a.\*chat-box__header-icon {
+    text-decoration: --veto(none);
+    color: protected($navIcon_color);
+    font-size: immutable(12px);
+
+    &:hover {
+        color: --mutate($navIcon_color--hover);
+    }
+}
+
+a.\*chat-box__header-icon.ss-delete {
+    background: immutable($primaryBlue);
+}
+
+ul.\*chat-box__feed {
     height: immutable($chatBoxFeed_height);
     overflow: immutable(auto);
     -webkit-margin-before: --veto(0);
@@ -39,6 +54,6 @@ ul[class*="*chat-box__feed"] {
     background: immutable($white);
 }
 
-form[class*="*chat-box__form"] {
+form.\*chat-box__form {
     background: immutable($white);
 }

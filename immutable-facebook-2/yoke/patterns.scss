@@ -381,19 +381,29 @@
         box-shadow: 0 0 2px black;
     }
 
-    *Note: it is important that universal child classes use a different prefix
-    from the universal class. This prevents conflicts with the universal class.
-    I originally prefixed child universal classes with the universal class
-    (i.e *box__header). However we run into problems when both (the universal
-    class and universal child class) have the same element type. For example:
+    *Aside: asterix prefix (*) denotes everywhere, caret prefix (^) points up to parent.
 
-    <div class="*box">
-        <div class="*box__header">
-        </div>
+    UPDATE: universal selector change:
+
+    Issue with wildcard selectors is that they don't play nicely with BEM.
+
+    e.g: the selector `div[class*="^chat-box__header"]` targets both
+    elements:
+
+    <div class="^chat-box__header">
+        <div class="^chat-box__header-icons"></div>
     </div>
 
-    The wildcard selector `div[class*="*box"]` targets both `*box` and `*box__header`.
+    Instead escape the special character:
 
-    *Aside: asterix prefix (*) denotes everywhere, caret prefix (^) points up to parent.
+    `div.\^chat-box__header`
+
+    Which only targets the class `^chat-box__header`.
+
+    This is so much more robust.
+
+    This means we no longer need to use a different prefix for universal
+    children, they too can use an asterix. (Which I think simplifies the
+    mono api).
 
 */
