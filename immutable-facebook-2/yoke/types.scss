@@ -93,6 +93,7 @@
         background: Immutable(linear-gradient(white, black));
     }
 
+    I wonder whether this should be a motive?
 */
 @function fallback($value) {
     @return append($value, #{'/* fallback */'});

@@ -426,7 +426,7 @@
         </aside>
 
         <div class="content__chat-box *chat-box *chat-box--visible">
-            <div class="*chat-box__header someIdentifierClass">
+            <div class="*chat-box__header">
                 <div class="*chat-box__header-left">
                     <span class="*chat-box__status *status *status--free"></span>
                     <span class="*chat-box__title">David Hume</span>
@@ -439,34 +439,41 @@
             </div>
 
             <ul class="*chat-box__feed">
-                <li>
-                    <span class="*chat-box__feed-item *chat-box__feed-item--moi">
+                <li class="*chat-box__feed-item *chat-box__feed-item--from">
+                    <span class="*chat-box__feed-msg">
                         What are your thoughts on the human condition?
                     </span>
                 </li>
-                <li>
+                <li class="*chat-box__feed-item *chat-box__feed-item--to">
                     <img src="vendor/images/profile-pic.png"
                         alt=""
                         class="*chat-box__user-pic *gravatar *gravatar--s">
 
-                    <span class="*chat-box__feed-item *chat-box__feed-item--recipient">
+                    <span class="*chat-box__feed-msg">
                         Nothing is more suprising than the easiness with which
                         the many governed by the few
                     </span>
                 </li>
-                <li>
-                    <span class="*chat-box__feed-timestamp">Today</span>
+                <li class="*chat-box__feed-timestamp">
+                    <span>Today</span>
                 </li>
-                <li>
-                    <span class="*chat-box__feed-item *chat-box__feed-item--moi">Very true Dave</span>
+                <li class="*chat-box__feed-item *chat-box__feed-item--from">
+                    <span class="*chat-box__feed-msg">
+                        Very true Dave
+                    </span>
                 </li>
-                <li>
+                <li class="*chat-box__feed-item *chat-box__feed-item--to">
                     <img src="vendor/images/profile-pic.png"
                         alt=""
                         class="*chat-box__user-pic *gravatar *gravatar--s">
 
-                    <span class="*chat-box__feed-item *chat-box__feed-item--recipient">
+                    <span class="*chat-box__feed-msg">
                         The rules of morality are not the conclusion of our reason
+                    </span>
+                </li>
+                <li class="*chat-box__feed-item *chat-box__feed-item--from">
+                    <span class="*chat-box__feed-msg">
+                        That's deep bro
                     </span>
                 </li>
             </ul>

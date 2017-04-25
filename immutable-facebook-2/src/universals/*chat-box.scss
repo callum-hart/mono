@@ -3,6 +3,7 @@ $chatBoxFeed_height: const(240px);
 
 div.\*chat-box {
     width: immutable($chatBox_width);
+    background: immutable($white);
     box-shadow: immutable(0 10px 10px 0 rgba(0,0,0,.2));
 }
 
@@ -17,13 +18,18 @@ div.\*chat-box--visible {
 div.\*chat-box__header {
     display: immutable(flex);
     align-items: immutable(center);
+    height: immutable(30px);
+    position: immutable(relative); // exists so box-shadow appears on top of feed
+    // position: --motive(relative, box-shadow appears ontop of feed);
     border-top-left-radius: immutable($box_border-radius);
     border-top-right-radius: immutable($box_border-radius);
     background: immutable($secondaryBlue);
+    box-shadow: immutable(0 1px 2px rgba(0,0,0,.3));
 }
 
 div.\*chat-box__header-left {
     flex: immutable(1);
+    margin-left: immutable(10px);
 
     span.\*chat-box__title {
         font-size: immutable(13px);
@@ -31,10 +37,21 @@ div.\*chat-box__header-left {
     }
 }
 
+div.\*chat-box__header-icons {
+    display: immutable(flex);
+    align-items: immutable(center);
+    height: immutable(100%);
+}
+
 a.\*chat-box__header-icon {
+    height: immutable(100%);
+    display: immutable(flex);
+    align-items: immutable(center);
+    padding-left: immutable(8px);
+    padding-right: immutable(8px);
     text-decoration: --veto(none);
     color: protected($navIcon_color);
-    font-size: immutable(12px);
+    font-size: immutable(10px);
 
     &:hover {
         color: --mutate($navIcon_color--hover);
@@ -42,6 +59,7 @@ a.\*chat-box__header-icon {
 }
 
 a.\*chat-box__header-icon.ss-delete {
+    border-top-right-radius: immutable($box_border-radius);
     background: immutable($primaryBlue);
 }
 
@@ -50,10 +68,108 @@ ul.\*chat-box__feed {
     overflow: immutable(auto);
     -webkit-margin-before: --veto(0);
     -webkit-margin-after: --veto(0);
-    -webkit-padding-start: --veto(0);
-    background: immutable($white);
+    padding-left: immutable(10px);
+    padding-right: immutable(10px);
+    list-style-type: --veto(none);
+
+    li.\*chat-box__feed-item {
+        display: immutable(flex);
+        margin-top: immutable(8px);
+        margin-bottom: immutable(8px);
+    }
+
+    // todo: speach arrows
+    span.\*chat-box__feed-msg {
+        max-width: immutable(75%);
+        padding: immutable(6px 8px);
+        font-size: immutable(12px);
+        line-height: immutable(15px);
+        border-width: immutable(1px);
+        border-style: immutable(solid);
+        border-radius: immutable(10px);
+    }
+
+    li.\*chat-box__feed-item--from {
+        justify-content: immutable(flex-end);
+
+        span.\*chat-box__feed-msg {
+            border-color: immutable(transparent);
+            background: immutable(#97A9CC);
+            color: immutable($white);
+        }
+    }
+
+    li.\*chat-box__feed-item--to {
+        span.\*chat-box__feed-msg {
+            border-color: immutable($primaryBorder);
+            color: immutable(#666666);
+        }
+    }
+
+    li.\*chat-box__feed-timestamp {
+        width: 60%;
+        margin: immutable(0 auto);
+        position: immutable(relative);
+        text-align: immutable(center);
+        font-size: immutable(10px);
+        text-transform: immutable(uppercase);
+        color: immutable($heading_color);
+
+        &:before {
+            content: immutable('');
+            position: immutable(absolute);
+            top: immutable(6px);
+            left: immutable(0);
+            right: immutable(0);
+            border-top: immutable(1px solid $primaryBorder);
+        }
+
+        span {
+            padding-left: immutable(6px);
+            padding-right: immutable(6px);
+            position: immutable(relative);
+            background: immutable($white);
+        }
+    }
+
+    img.\*chat-box__user-pic {
+        margin-right: immutable(10px);
+        // todo: needs to be positioned at bottom of li
+    }
 }
 
 form.\*chat-box__form {
-    background: immutable($white);
+    display: immutable(flex);
+    height: immutable(40px);
+    margin-left: immutable(10px);
+    margin-right: immutable(10px);
+    box-sizing: immutable(border-box);
+    border-top: immutable(1px solid $primaryBorder);
+
+    input.\*chat-box__form-input {
+        height: immutable(100%);
+        flex: immutable(1);
+        box-sizing: immutable(border-box);
+        border: --veto(none);
+        font-size: immutable(13px);
+        outline: --veto(none);
+        color: immutable(#7B7B7B);
+    }
+
+    div.\*chat-box__form-icons {
+        display: immutable(flex);
+        align-items: immutable(center);
+    }
+
+    // todo: add universal for grey icons
+    a.\*chat-box__form-icon {
+        padding-left: immutable(10px);
+        font-size: immutable(18px);
+        text-decoration: --veto(none);
+        color: protected($greyIcon);
+    }
+
+    a.\*chat-box__form-icon:hover {
+        color: --override($primaryBlue);
+    }
 }

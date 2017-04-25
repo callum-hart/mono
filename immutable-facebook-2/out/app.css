@@ -79,6 +79,7 @@
         background: Immutable(linear-gradient(white, black));
     }
 
+    I wonder whether this should be a motive?
 */
 /**
     @type: Bound
@@ -424,6 +425,7 @@ div.\*box:not(.\*box--borderless) {
 
 div.\*chat-box {
   width: 260px /* const */ /* immutable */;
+  background: #FFFFFF /* const */ /* immutable */;
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.2) /* immutable */; }
 
 div.\*chat-box:not(.\*chat-box--visible) {
@@ -435,24 +437,39 @@ div.\*chat-box--visible {
 div.\*chat-box__header {
   display: flex /* immutable */;
   align-items: center /* immutable */;
+  height: 30px /* immutable */;
+  position: relative /* immutable */;
   border-top-left-radius: 3px /* const */ /* immutable */;
   border-top-right-radius: 3px /* const */ /* immutable */;
-  background: #5371AA /* const */ /* immutable */; }
+  background: #5371AA /* const */ /* immutable */;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) /* immutable */; }
 
 div.\*chat-box__header-left {
-  flex: 1 /* immutable */; }
+  flex: 1 /* immutable */;
+  margin-left: 10px /* immutable */; }
   div.\*chat-box__header-left span.\*chat-box__title {
     font-size: 13px /* immutable */;
     color: #FFFFFF /* const */ /* immutable */; }
 
+div.\*chat-box__header-icons {
+  display: flex /* immutable */;
+  align-items: center /* immutable */;
+  height: 100% /* immutable */; }
+
 a.\*chat-box__header-icon {
+  height: 100% /* immutable */;
+  display: flex /* immutable */;
+  align-items: center /* immutable */;
+  padding-left: 8px /* immutable */;
+  padding-right: 8px /* immutable */;
   text-decoration: none /* --veto */;
   color: #97A9CC /* let */ /* protected */;
-  font-size: 12px /* immutable */; }
+  font-size: 10px /* immutable */; }
   a.\*chat-box__header-icon:hover {
     color: #FFFFFF /* set */ /* --mutate */; }
 
 a.\*chat-box__header-icon.ss-delete {
+  border-top-right-radius: 3px /* const */ /* immutable */;
   background: #4A6598 /* const */ /* immutable */; }
 
 ul.\*chat-box__feed {
@@ -460,11 +477,78 @@ ul.\*chat-box__feed {
   overflow: auto /* immutable */;
   -webkit-margin-before: 0 /* --veto */;
   -webkit-margin-after: 0 /* --veto */;
-  -webkit-padding-start: 0 /* --veto */;
-  background: #FFFFFF /* const */ /* immutable */; }
+  padding-left: 10px /* immutable */;
+  padding-right: 10px /* immutable */;
+  list-style-type: none /* --veto */; }
+  ul.\*chat-box__feed li.\*chat-box__feed-item {
+    display: flex /* immutable */;
+    margin-top: 8px /* immutable */;
+    margin-bottom: 8px /* immutable */; }
+  ul.\*chat-box__feed span.\*chat-box__feed-msg {
+    max-width: 75% /* immutable */;
+    padding: 6px 8px /* immutable */;
+    font-size: 12px /* immutable */;
+    line-height: 15px /* immutable */;
+    border-width: 1px /* immutable */;
+    border-style: solid /* immutable */;
+    border-radius: 10px /* immutable */; }
+  ul.\*chat-box__feed li.\*chat-box__feed-item--from {
+    justify-content: flex-end /* immutable */; }
+    ul.\*chat-box__feed li.\*chat-box__feed-item--from span.\*chat-box__feed-msg {
+      border-color: transparent /* immutable */;
+      background: #97A9CC /* immutable */;
+      color: #FFFFFF /* const */ /* immutable */; }
+  ul.\*chat-box__feed li.\*chat-box__feed-item--to span.\*chat-box__feed-msg {
+    border-color: #DFE4E6 /* const */ /* immutable */;
+    color: #666666 /* immutable */; }
+  ul.\*chat-box__feed li.\*chat-box__feed-timestamp {
+    width: 60%;
+    margin: 0 auto /* immutable */;
+    position: relative /* immutable */;
+    text-align: center /* immutable */;
+    font-size: 10px /* immutable */;
+    text-transform: uppercase /* immutable */;
+    color: #B5BABC /* const */ /* immutable */; }
+    ul.\*chat-box__feed li.\*chat-box__feed-timestamp:before {
+      content: "" /* immutable */;
+      position: absolute /* immutable */;
+      top: 6px /* immutable */;
+      left: 0 /* immutable */;
+      right: 0 /* immutable */;
+      border-top: 1px solid #DFE4E6 /* const */ /* immutable */; }
+    ul.\*chat-box__feed li.\*chat-box__feed-timestamp span {
+      padding-left: 6px /* immutable */;
+      padding-right: 6px /* immutable */;
+      position: relative /* immutable */;
+      background: #FFFFFF /* const */ /* immutable */; }
+  ul.\*chat-box__feed img.\*chat-box__user-pic {
+    margin-right: 10px /* immutable */; }
 
 form.\*chat-box__form {
-  background: #FFFFFF /* const */ /* immutable */; }
+  display: flex /* immutable */;
+  height: 40px /* immutable */;
+  margin-left: 10px /* immutable */;
+  margin-right: 10px /* immutable */;
+  box-sizing: border-box /* immutable */;
+  border-top: 1px solid #DFE4E6 /* const */ /* immutable */; }
+  form.\*chat-box__form input.\*chat-box__form-input {
+    height: 100% /* immutable */;
+    flex: 1 /* immutable */;
+    box-sizing: border-box /* immutable */;
+    border: none /* --veto */;
+    font-size: 13px /* immutable */;
+    outline: none /* --veto */;
+    color: #7B7B7B /* immutable */; }
+  form.\*chat-box__form div.\*chat-box__form-icons {
+    display: flex /* immutable */;
+    align-items: center /* immutable */; }
+  form.\*chat-box__form a.\*chat-box__form-icon {
+    padding-left: 10px /* immutable */;
+    font-size: 18px /* immutable */;
+    text-decoration: none /* --veto */;
+    color: #9B9FA0 /* const */ /* protected */; }
+  form.\*chat-box__form a.\*chat-box__form-icon:hover {
+    color: #4A6598 /* const */ /* --override */; }
 
 a.\*video__hero {
   height: 200px /* immutable */;
