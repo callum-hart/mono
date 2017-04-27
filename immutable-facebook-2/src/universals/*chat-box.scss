@@ -32,6 +32,7 @@ div.\*chat-box__header-left {
     margin-left: immutable(10px);
 
     span.\*chat-box__title {
+        margin-left: immutable(2px);
         font-size: immutable(13px);
         color: immutable($white);
     }
@@ -51,7 +52,7 @@ a.\*chat-box__header-icon {
     padding-right: immutable(8px);
     text-decoration: --veto(none);
     color: protected($navIcon_color);
-    font-size: immutable(10px);
+    font-size: immutable(11px);
 
     &:hover {
         color: --mutate($navIcon_color--hover);

@@ -849,18 +849,17 @@ Element: `<p class="heading"></p>`
 
 ### Todos
 
-- Finish Facebook example
-    - Chat box
-    - Gravatar fallback
-    - Images (gravatar, recent photos, video)
+- Mmove mono src out, so it can be used by multiple examples
 - Test RWD *(using `Bound`)* by building a responsive grid layout
 - Build more example UIs using Mono. Alongside building popular sites use mono for:
     - Portfolio site *(when redesign is due)*
     - Effortless
     - And of course the mono site *(when it needs one)*
     - Side projects
-- Case studies
 - Organise project
+- Case studies
 - Docs
 - Tooling
 - Compiler
+- Add flag that enables / disables type/modifier/variable annotations.
+- Get better images for example UIs (gravatar, photos)

@@ -97,7 +97,9 @@ nav {
         border-left: immutable(1px solid $primaryBlue);
     }
 
-    img.nav__user-pic {
+    // <img, span>.nav__user-pic {}
+    img.nav__user-pic,
+    span.nav__user-pic {
         border: immutable(2px solid $primaryBlue);
     }
 

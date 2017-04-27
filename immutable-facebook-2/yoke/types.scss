@@ -26,7 +26,7 @@
         height: immutable(100px);
     }
 
-    The height of `.foo` is locked – it cannot be changed.
+    The height of `.foo` is locked – it can never be changed.
 
 */
 @function immutable($value) {
@@ -83,23 +83,6 @@
 }
 
 /**
-    @type: Fallback
-    @description: Fallback properties allow multiple implementations
-    of the same CSS property. They can only be used for fallbacks.
-    @usage:
-
-    .foo {
-        background: fallback(grey);
-        background: Immutable(linear-gradient(white, black));
-    }
-
-    I wonder whether this should be a motive?
-*/
-@function fallback($value) {
-    @return append($value, #{'/* fallback */'});
-}
-
-/**
     @type: Bound
     @description: Bound properties are scoped within the breakpoints
     they are defined. A bound type can wrap other types.
@@ -122,11 +105,11 @@
 
     .bar {
         @media(max-width: 500px) {
-            font-size: bound(Immutable(12px));
+            font-size: bound(immutable(12px));
         }
 
         @media(min-width: 500px) {
-            font-size: bound(Protected(12px));
+            font-size: bound(protected(12px));
         }
     }
 
@@ -145,4 +128,34 @@
 */
 @function bound($value) {
     @return append($value, #{'/* bound */'});
+}
+
+/**
+    @type: Theme
+    @description: The value of Theme properties are changeable,
+    they depend on the active theme. A theme type can wrap other
+    types.
+    @args: CSS value or <Typed>CSS value.
+    @depreciate: I think this is better suited with a variable type.
+    @usage:
+
+    1. CSS value
+
+    button {
+        background: theme(@buttonBg); // value of background depends on theme
+    }
+
+    2. <Typed>CSS value
+
+    button {
+        background: theme(immutable(@buttonBg));
+    }
+
+    Decide how much value this type adds... if any? This could equally
+    be handled with a new variable type (see `variables.scss`), i.e:
+
+    $buttonBg: theme(red);
+*/
+@function theme($value) {
+    @return append($value, #{'/* theme */'});
 }

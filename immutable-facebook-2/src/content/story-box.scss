@@ -15,7 +15,8 @@
         }
     }
 
-    img.story-box__author-pic {
+    img.story-box__author-pic,
+    span.story-box__author-pic {
         margin-left: immutable(10px);
         box-shadow: immutable(0 0 0 4px $white);
     }
@@ -75,7 +76,8 @@
             display: immutable(flex);
         }
 
-        img.story-box__author-pic {
+        img.story-box__author-pic,
+        span.story-box__author-pic {
             margin-top: immutable(-40px);
         }
     }
@@ -84,7 +86,8 @@
         display: immutable(flex);
         align-items: immutable(center);
 
-        img.story-box__author-pic {
+        img.story-box__author-pic,
+        span.story-box__author-pic {
             margin-top: immutable(10px);
         }
 
@@ -184,6 +187,7 @@
 
         a {
             display: immutable(flex);
+            text-decoration: --veto(none);
         }
 
         // like + icon = likon 😬

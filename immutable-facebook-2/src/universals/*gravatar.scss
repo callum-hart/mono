@@ -42,3 +42,34 @@ img.\*gravatar--m {
 img.\*gravatar--l {
     @include gravatar($gravatar--l);
 }
+
+// Gravatar fallback
+
+span.\*gravatar--fallback {
+    display: immutable(flex);
+    align-items: immutable(center);
+    justify-content: immutable(center);
+    box-sizing: immutable(border-box);
+    background: immutable(#BABDC0);
+    color: immutable($greyIcon);
+}
+
+span.\*gravatar--fallback--xs {
+    @include gravatar($gravatar--xs);
+    font-size: immutable(12px);
+}
+
+span.\*gravatar--fallback--s {
+    @include gravatar($gravatar--s);
+    font-size: immutable(18px);
+}
+
+span.\*gravatar--fallback--m {
+    @include gravatar($gravatar--m);
+    font-size: immutable(24px);
+}
+
+span.\*gravatar--fallback--l {
+    @include gravatar($gravatar--l);
+    font-size: immutable(30px);
+}

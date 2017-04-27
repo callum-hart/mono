@@ -25,7 +25,7 @@
         height: immutable(100px);
     }
 
-    The height of `.foo` is locked – it cannot be changed.
+    The height of `.foo` is locked – it can never be changed.
 
 */
 /**
@@ -69,19 +69,6 @@
 
 */
 /**
-    @type: Fallback
-    @description: Fallback properties allow multiple implementations
-    of the same CSS property. They can only be used for fallbacks.
-    @usage:
-
-    .foo {
-        background: fallback(grey);
-        background: Immutable(linear-gradient(white, black));
-    }
-
-    I wonder whether this should be a motive?
-*/
-/**
     @type: Bound
     @description: Bound properties are scoped within the breakpoints
     they are defined. A bound type can wrap other types.
@@ -104,11 +91,11 @@
 
     .bar {
         @media(max-width: 500px) {
-            font-size: bound(Immutable(12px));
+            font-size: bound(immutable(12px));
         }
 
         @media(min-width: 500px) {
-            font-size: bound(Protected(12px));
+            font-size: bound(protected(12px));
         }
     }
 
@@ -124,6 +111,32 @@
        }
     }
 
+*/
+/**
+    @type: Theme
+    @description: The value of Theme properties are changeable,
+    they depend on the active theme. A theme type can wrap other
+    types.
+    @args: CSS value or <Typed>CSS value.
+    @depreciate: I think this is better suited with a variable type.
+    @usage:
+
+    1. CSS value
+
+    button {
+        background: theme(@buttonBg); // value of background depends on theme
+    }
+
+    2. <Typed>CSS value
+
+    button {
+        background: theme(immutable(@buttonBg));
+    }
+
+    Decide how much value this type adds... if any? This could equally
+    be handled with a new variable type (see `variables.scss`), i.e:
+
+    $buttonBg: theme(red);
 */
 /**
     Modifiers --
@@ -216,12 +229,19 @@
         padding-left: --veto(12px); // doesn't remove or reset value
     }
 */
-/* --theme motive? used to denote styles that are set by a theme...
-    I think this should be a type, i.e.
+/**
+    @type: Fallback
+    @description: Fallback properties allow multiple implementations
+    of the same CSS property. They can only be used for fallbacks.
 
-    button {
-        background: --theme(@buttonBg); // value of background is dependant on active theme
+    @description:
+    @usage:
+
+    .foo {
+        background: fallback(grey);
+        background: Immutable(linear-gradient(white, black));
     }
+
 */
 /**
     Variables --
@@ -338,6 +358,38 @@ img.\*gravatar--l {
   height: 50px /* immutable */;
   border-radius: 25px /* immutable */; }
 
+span.\*gravatar--fallback {
+  display: flex /* immutable */;
+  align-items: center /* immutable */;
+  justify-content: center /* immutable */;
+  box-sizing: border-box /* immutable */;
+  background: #BABDC0 /* immutable */;
+  color: #9B9FA0 /* const */ /* immutable */; }
+
+span.\*gravatar--fallback--xs {
+  width: 22px /* immutable */;
+  height: 22px /* immutable */;
+  border-radius: 11px /* immutable */;
+  font-size: 12px /* immutable */; }
+
+span.\*gravatar--fallback--s {
+  width: 32px /* immutable */;
+  height: 32px /* immutable */;
+  border-radius: 16px /* immutable */;
+  font-size: 18px /* immutable */; }
+
+span.\*gravatar--fallback--m {
+  width: 40px /* immutable */;
+  height: 40px /* immutable */;
+  border-radius: 20px /* immutable */;
+  font-size: 24px /* immutable */; }
+
+span.\*gravatar--fallback--l {
+  width: 50px /* immutable */;
+  height: 50px /* immutable */;
+  border-radius: 25px /* immutable */;
+  font-size: 30px /* immutable */; }
+
 span.\*count {
   position: absolute /* immutable */;
   height: 12px /* immutable */;
@@ -448,6 +500,7 @@ div.\*chat-box__header-left {
   flex: 1 /* immutable */;
   margin-left: 10px /* immutable */; }
   div.\*chat-box__header-left span.\*chat-box__title {
+    margin-left: 2px /* immutable */;
     font-size: 13px /* immutable */;
     color: #FFFFFF /* const */ /* immutable */; }
 
@@ -464,7 +517,7 @@ a.\*chat-box__header-icon {
   padding-right: 8px /* immutable */;
   text-decoration: none /* --veto */;
   color: #97A9CC /* let */ /* protected */;
-  font-size: 10px /* immutable */; }
+  font-size: 11px /* immutable */; }
   a.\*chat-box__header-icon:hover {
     color: #FFFFFF /* set */ /* --mutate */; }
 
@@ -669,7 +722,8 @@ nav {
     margin-right: 10px /* immutable */;
     padding-left: 15px /* immutable */;
     border-left: 1px solid #4A6598 /* const */ /* immutable */; }
-  nav img.nav__user-pic {
+  nav img.nav__user-pic,
+  nav span.nav__user-pic {
     border: 2px solid #4A6598 /* const */ /* immutable */; }
   nav span.nav__user-name {
     margin-right: 10px /* immutable */;
@@ -801,7 +855,8 @@ section.content {
         margin-left: -1px /* immutable */;
         border-top-left-radius: 3px /* const */ /* immutable */;
         border-top-right-radius: 3px /* const */ /* immutable */; }
-    section.content .story-box img.story-box__author-pic {
+    section.content .story-box img.story-box__author-pic,
+    section.content .story-box span.story-box__author-pic {
       margin-left: 10px /* immutable */;
       box-shadow: 0 0 0 4px #FFFFFF /* const */ /* immutable */; }
     section.content .story-box p.story-box__title-text {
@@ -840,12 +895,14 @@ section.content {
       margin-top: 8px /* immutable */; }
       section.content .story-box div.story-box__header--inline div.story-box__title {
         display: flex /* immutable */; }
-      section.content .story-box div.story-box__header--inline img.story-box__author-pic {
+      section.content .story-box div.story-box__header--inline img.story-box__author-pic,
+      section.content .story-box div.story-box__header--inline span.story-box__author-pic {
         margin-top: -40px /* immutable */; }
     section.content .story-box div.story-box__header--stacked {
       display: flex /* immutable */;
       align-items: center /* immutable */; }
-      section.content .story-box div.story-box__header--stacked img.story-box__author-pic {
+      section.content .story-box div.story-box__header--stacked img.story-box__author-pic,
+      section.content .story-box div.story-box__header--stacked span.story-box__author-pic {
         margin-top: 10px /* immutable */; }
       section.content .story-box div.story-box__header--stacked div.story-box__title {
         margin-top: 16px /* immutable */; }
@@ -913,7 +970,8 @@ section.content {
         margin-left: 6px /* immutable */;
         list-style: none /* --veto */; }
       section.content .story-box ul.story-box__impressions a {
-        display: flex /* immutable */; }
+        display: flex /* immutable */;
+        text-decoration: none /* --veto */; }
       section.content .story-box ul.story-box__impressions span.story-box__likon {
         font-size: 12px /* immutable */;
         color: #9B9FA0 /* const */ /* immutable */; }
@@ -1035,7 +1093,8 @@ section.right-bar {
       padding-top: 5px /* immutable */;
       padding-bottom: 5px /* immutable */;
       text-decoration: none /* --veto */; }
-    section.right-bar ul.right-bar__list img.right-bar__user-pic {
+    section.right-bar ul.right-bar__list img.right-bar__user-pic,
+    section.right-bar ul.right-bar__list span.right-bar__user-pic {
       margin-right: 10px /* immutable */;
       border: 2px solid #495258 /* immutable */; }
     section.right-bar ul.right-bar__list span.list__text {

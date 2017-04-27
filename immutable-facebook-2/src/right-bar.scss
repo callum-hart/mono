@@ -36,7 +36,9 @@ section.right-bar {
             text-decoration: --veto(none);
         }
 
-        img.right-bar__user-pic {
+        // <img, span>.right-bar__user-pic {}
+        img.right-bar__user-pic,
+        span.right-bar__user-pic {
             margin-right: immutable(10px);
             border: immutable(2px solid #495258);
         }

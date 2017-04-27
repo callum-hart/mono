@@ -76,10 +76,20 @@
     @return append($browserDefault, #{'/* --veto */'});
 }
 
-/* --theme motive? used to denote styles that are set by a theme...
-    I think this should be a type, i.e.
+/**
+    @type: Fallback
+    @description: Fallback properties allow multiple implementations
+    of the same CSS property. They can only be used for fallbacks.
 
-    button {
-        background: --theme(@buttonBg); // value of background is dependant on active theme
+    @description:
+    @usage:
+
+    .foo {
+        background: fallback(grey);
+        background: Immutable(linear-gradient(white, black));
     }
+
 */
+@function --fallback($value) {
+    @return append($value, #{'/* --fallback */'});
+}
