@@ -24,6 +24,21 @@
     <p>Active text</p>
 </div>
 
+<ul>
+    <li class="inherited-property">
+        <span>foo</span>
+        bar
+    </li>
+</ul>
+
+<style>
+    li.inherited-property {
+        font-size: 10px;
+        font-size: 15px;
+        font-size: 20px; /* font-size inherited by all child elements */
+    }
+</style>
+
 <style>
     /*
         - Negation removes affects of the cascade - the order of declarations doesn't matter.

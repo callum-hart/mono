@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
-  grunt.loadNpmTasks("grunt-contrib-watch");
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.initConfig({
     sass: {
@@ -11,8 +11,8 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      files: ["src/*", "src/*/*", "yoke/*", "*.html"],
-      tasks: ["sass"],
+      files: ['src/*', 'src/*/*', '*.html', '../../lang/*'],
+      tasks: ['sass'],
       options: {
         livereload: true
       }

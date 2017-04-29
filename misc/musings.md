@@ -684,21 +684,51 @@ Would be useful to compare CSS with an Object-orientated language. i.e
 ```
 public class Foo {
     // final variables cannot be redefined
-    final String color = "blue";
+    final String blue = "blue";
 
     // variables also have a type.
 
     // setters (only way to externally modify a variable)
-    public void setColor(String newColor) {
-        this.color = newColor;
+    public void setFontSize(String fontSize) {
+        this.fontSize = fontSize;
     }
 }
 
+- The variable `blue` cannot be redefined.
+- Foo can only have 1 font size. Even if the setter (`setFontSize`) is called multiple times (unlikely) Foo will still only have 1 font size.
+
+Foo foo = new Foo()
+foo.setFontSize('10px');
+foo.setFontSize('14px');
+foo.setFontSize('12px');
+foo.setFontSize('20px');
+
+We can guarantee the font size of foo will always equal the last setter (20px).
+
 vs:
 
-.foo {
-    color: blue;
+@blue: "blue";
+@blue: "red";
+
+p.foo {
+    color: @blue;
+    font-size: 10px;
+    font-size: 14px;
 }
+
+p {
+    font-size: 12px !important;
+}
+
+.foo {
+    font-size: 20px;
+}
+
+Font size of `.foo` is uncertain, the winning style is determined by importance, specificity and cascade order.
+
+In the OOP example, when font size is mutated the original value is overridden. It can be set {n} times, but always have 1 definition.
+
+In the CSS example, when font size is mutated the original value is preserved, and a new attribute+value is spawned. When set {n} times, it will have {n} definitions.
 ```
 
 ### Project name
@@ -709,7 +739,7 @@ role in the project, it isn't the only thing. Ideas:
 - Cassius
 - Hitch
 - Styl
-- Yoke
+- mono
 - Curb
 - Mono
 - Monostyle
@@ -734,10 +764,10 @@ role in the project, it isn't the only thing. Ideas:
 - Gives library authors finite control over what styles are exposed – those that can be changed externally.
 - Abolish specificity wars!
 - [Immutable facebook 2] credit design: https://dribbble.com/shots/1666016-Facebook-redesign/attachments/262440
-- I'm currently building UI's using yoke to test my assumptions.
-- MVP uses Sass, merely because it's the quickest way to test ideas. Ideally yoke will be decoupled from a specific
+- I'm currently building UI's using mono to test my assumptions.
+- MVP has 1 dependency Sass - merely because it's the quickest way to test ideas. Ideally mono will be decoupled from a specific
 preprocessor. It should be as agnostic as possible. Compatible with any CSS strategy.
-- Example UI's should also include common use cases (AB tests, themes, responsive pages) – and how they can be achieved with yoke.
+- Example UI's should also include common use cases (AB tests, themes, responsive pages) – and how they can be achieved with mono.
 - Default architecture for CSS is broken -> declare a value and then override it N times.
 - [Technical goals] Leverage naitive CSS as much as possible.
 - What is mutation in CSS? When a CSS property for a given element has more than 1 declaration.
@@ -755,6 +785,7 @@ preprocessor. It should be as agnostic as possible. Compatible with any CSS stra
 - [Docs] When explaining concepts include a code example(s) demonstrating each concept in isolation. *Concept being a type / modifier / motive / pattern / principal*.
 - [mono is agnostic / flexible] In the fb example I use the BEM naming convension. This isn't integral to mono, and neither is how you architect your CSS files.
 - [Technical goals] want the mono api to be as small as it can be. Bloated projects are harder to consume.
+- [Think] What todo about inherited properties... if anything? i.e `<li><span>hey</span></li>`, `li { font-size: 12px; }` (span inherits font-size from li).
 
 ### Tooling / Ecosystem
 
