@@ -1,0 +1,99 @@
+/*
+    Might need another modifier?
+    Use case: set default property and override at different
+    breakpoints.
+
+    This could be avoided by explicitly setting the default
+    property at each breakpoint (see example at bottom).
+*/
+
+// This actually breaks the principle of mono... the display
+// property for the active breakpoint is mutated (see comment above)
+code {
+    display: immutable(none);
+
+    @media (max-width: $small)  {
+        &.\$small {
+            display: block;
+        }
+    }
+
+    @media (min-width: $small) and (max-width: $medium)  {
+        &.\$small2\$medium {
+            display: block;
+        }
+    }
+
+    @media (min-width: $medium) and (max-width: $large) {
+        &.\$medium,
+        &.\$medium2\$large {
+            display: block;
+        }
+    }
+
+    @media (min-width: $large) {
+        &.\$medium,
+        &.\$large {
+            display: block;
+        }
+    }
+}
+
+
+// Explicitly set the display property at each breakpoint
+// (without mutating display property). This follows mono
+// principle, but is rather verbose:
+
+// code {
+//     @media (max-width: $small)  {
+//         &.\$small {
+//             display: block;
+//         }
+
+//         &.\$small2\$medium,
+//         &.\$medium,
+//         &.\$medium2\$large,
+//         &.\$large {
+//             display: none;
+//         }
+//     }
+
+//     @media (min-width: $small) and (max-width: $medium)  {
+//         &.\$small2\$medium {
+//             display: block;
+//         }
+
+//         &.\$small,
+//         &.\$medium,
+//         &.\$medium2\$large,
+//         &.\$large {
+//             display: none;
+//         }
+//     }
+
+//     @media (min-width: $medium) and (max-width: $large) {
+//         &.\$medium,
+//         &.\$medium2\$large {
+//             display: block;
+//         }
+
+//         &.\$small,
+//         &.\$small2\$medium,
+//         &.\$large {
+//             display: none;
+//         }
+//     }
+
+//     @media (min-width: $large) {
+//         &.\$medium,
+//         &.\$large {
+//             display: block;
+//         }
+
+//         &.\$small,
+//         &.\$small2\$medium,
+//         &.\$medium2\$large {
+//             display: none;
+//         }
+//     }
+// }

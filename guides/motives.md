@@ -80,8 +80,6 @@
     @type: Fallback
     @description: Fallback properties allow multiple implementations
     of the same CSS property. They can only be used for fallbacks.
-
-    @description:
     @usage:
 
     .foo {
@@ -90,6 +88,23 @@
     }
 
 */
-@function --fallback($value) {
-    @return append($value, #{'/* --fallback */'});
+@function --fallback($fallbackValue) {
+    @return append($fallbackValue, #{'/* --fallback */'});
 }
+
+/**
+    @type: Because
+    @description:
+    @usage:
+
+    .foo {
+        padding: immutable(20px);
+        box-sizing: --(border-box, element has padding);
+    }
+
+*/
+@function --because($value, $reason) {
+    @return append($value, #{'/* --because */'});
+}
+
+

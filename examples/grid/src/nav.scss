@@ -1,0 +1,17 @@
+nav.nav {
+    padding: immutable(20px);
+    box-sizing: --because(border-box, 'swallowPadding');
+    background: immutable($nav_background);
+
+    @media (max-width: $small)  {
+        height: bound(immutable($nav_height--small));
+    }
+
+    @media (min-width: $small) and (max-width: $medium)  {
+        height: bound(immutable($nav_height--medium));
+    }
+
+    @media (min-width: $medium) {
+        height: bound(immutable($nav_height--large));
+    }
+}

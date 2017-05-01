@@ -1,0 +1,29 @@
+main.content {
+    display: immutable(flex);
+    flex-flow: immutable(row wrap);
+}
+
+section.content__block {
+    flex: immutable(1);
+    height: immutable(200px);
+    padding: immutable(20px);
+    box-sizing: --because(border-box, 'swallowPadding');
+    background: immutable($block_background);
+
+    @media (max-width: $small)  {
+        flex-basis: bound(immutable(100%));
+    }
+
+    @media (min-width: $small) and (max-width: $medium)  {
+        flex-basis: bound(immutable(50%));
+    }
+
+    @media (min-width: $medium) and (max-width: $large) {
+        flex-basis: bound(immutable(calc(100% / 3)));
+        max-width: bound(immutable(calc(100% / 3)));
+    }
+
+    @media (min-width: $large) {
+        flex-basis: bound(immutable(25%));
+    }
+}

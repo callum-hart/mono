@@ -679,7 +679,36 @@ nav {
 
 ### The case for Immutable CSS
 
-Would be useful to compare CSS with an Object-orientated language. i.e
+#### CSS compared to JS
+
+Duplicate attribute definitions in an POJO is bad design.
+
+```
+var user = {
+    firstName: "Callum",
+    lastName: "Hart",
+    firstName: "Bob",
+    firstName: "Sally"
+}
+
+user.firstName = "Henry";
+
+var session = {
+    currentUser: user,
+    sessionId: sessionId
+}
+
+// Changing first name from a different context (same as overriding CSS prop from different scope).
+
+session.user.firstName = "Bill";
+```
+
+We wouldn't do this in JS, so why does the equivalent happen in CSS?
+
+#### CSS compared to OO
+
+Would be useful to compare CSS with an Object-orientated language, which has variable types
+and safe ways to assign values, i.e
 
 ```
 public class Foo {
@@ -786,6 +815,7 @@ preprocessor. It should be as agnostic as possible. Compatible with any CSS stra
 - [mono is agnostic / flexible] In the fb example I use the BEM naming convension. This isn't integral to mono, and neither is how you architect your CSS files.
 - [Technical goals] want the mono api to be as small as it can be. Bloated projects are harder to consume.
 - [Think] What todo about inherited properties... if anything? i.e `<li><span>hey</span></li>`, `li { font-size: 12px; }` (span inherits font-size from li).
+- The premise of mono is a CSS property for a given element should have 1 definition.
 
 ### Tooling / Ecosystem
 
@@ -878,19 +908,3 @@ Element: `<p class="heading"></p>`
 
 *High mutation count is bad. With Mono CSS mutation count should always be 1.*
 
-### Todos
-
-- Mmove mono src out, so it can be used by multiple examples
-- Test RWD *(using `Bound`)* by building a responsive grid layout
-- Build more example UIs using Mono. Alongside building popular sites use mono for:
-    - Portfolio site *(when redesign is due)*
-    - Effortless
-    - And of course the mono site *(when it needs one)*
-    - Side projects
-- Organise project
-- Case studies
-- Docs
-- Tooling
-- Compiler
-- Add flag that enables / disables type/modifier/variable annotations.
-- Get better images for example UIs (gravatar, photos)

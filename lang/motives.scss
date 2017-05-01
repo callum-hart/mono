@@ -80,8 +80,6 @@
     @type: Fallback
     @description: Fallback properties allow multiple implementations
     of the same CSS property. They can only be used for fallbacks.
-
-    @description:
     @usage:
 
     .foo {
@@ -90,6 +88,43 @@
     }
 
 */
-@function --fallback($value) {
-    @return append($value, #{'/* --fallback */'});
+@function --fallback($fallbackValue) {
+    @return append($fallbackValue, #{'/* --fallback */'});
+}
+
+/**
+    @type: Because
+    @description: Used to denote property dependencies. Property B
+    only exists because of property A.
+    @args:
+        $value: CSS property value
+        $reason: Reason why value exists. <map key> or <custom string>
+    @usage:
+
+    .foo {
+        padding: immutable(20px);
+        box-sizing: --because(border-box, 'element has padding');
+    }
+
+*/
+@function --because($value, $reason) {
+    // $reason can be pre-defined (have a dictionary of common reasons) or
+    // can be custom (passed as string).
+
+    // If reasons could only be pre-defined it would limit misue, convension vs
+    // configuration...
+
+    $theReason: $reason;
+
+    $definedReasons: (
+        'swallowPadding': 'Include padding & border in calculated width & height',
+        'foo': 'the reason is foo',
+        'bar': 'the reason is bar'
+    );
+
+    @if (map-has-key($definedReasons, $reason)) {
+        $theReason: map-get($definedReasons, $reason);
+    }
+
+    @return append($value, #{'/* --because: #{$theReason} */'});
 }
