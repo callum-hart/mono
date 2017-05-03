@@ -165,7 +165,7 @@ form.\*chat-box__form {
     // todo: add universal for grey icons
     a.\*chat-box__form-icon {
         padding-left: immutable(10px);
-        font-size: immutable(18px);
+        font-size: immutable($iconSize);
         text-decoration: --veto(none);
         color: protected($greyIcon);
     }

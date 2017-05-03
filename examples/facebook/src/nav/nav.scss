@@ -28,7 +28,7 @@ nav {
         span.search__icon {
             padding-left: immutable(20px);
             padding-right: immutable(10px);
-            font-size: immutable(18px);
+            font-size: immutable($iconSize);
             color: public($navIcon_color);
         }
 
@@ -61,10 +61,10 @@ nav {
         padding-right: immutable(20px);
 
         a {
-            position: relative; // needed to contain .nav__count.
+            position: --because(relative, 'contain child *count (which has absolute positioning)');
             margin-left: immutable(10px);
             margin-right: immutable(10px);
-            font-size: immutable(18px);
+            font-size: immutable($iconSize);
             text-decoration: --veto(none);
         }
 

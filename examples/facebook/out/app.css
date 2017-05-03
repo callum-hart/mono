@@ -233,13 +233,26 @@
     @type: Fallback
     @description: Fallback properties allow multiple implementations
     of the same CSS property. They can only be used for fallbacks.
-
-    @description:
     @usage:
 
     .foo {
         background: fallback(grey);
         background: Immutable(linear-gradient(white, black));
+    }
+
+*/
+/**
+    @type: Because
+    @description: Used to denote property dependencies. Property B
+    only exists because of property A.
+    @args:
+        $value: CSS property value
+        $reason: Reason why value exists. <map key> or <custom string>
+    @usage:
+
+    .foo {
+        padding: immutable(20px);
+        box-sizing: --because(border-box, 'element has padding');
     }
 
 */
@@ -330,10 +343,6 @@ button.\*button--primary {
     Universal gravatar styles belong in here.
 
     Universal classes could be prefixed with an asterix?
-*/
-/*
-    todo: add fallback gravatar for when no image exists, i.e `*gravatar--fallback`
-    can come in all sizes (xs, s, m, l)
 */
 img.\*gravatar {
   box-sizing: border-box /* immutable */; }
@@ -597,7 +606,7 @@ form.\*chat-box__form {
     align-items: center /* immutable */; }
   form.\*chat-box__form a.\*chat-box__form-icon {
     padding-left: 10px /* immutable */;
-    font-size: 18px /* immutable */;
+    font-size: 18px /* const */ /* immutable */;
     text-decoration: none /* --veto */;
     color: #9B9FA0 /* const */ /* protected */; }
   form.\*chat-box__form a.\*chat-box__form-icon:hover {
@@ -678,7 +687,7 @@ nav {
     nav form.nav__search span.search__icon {
       padding-left: 20px /* immutable */;
       padding-right: 10px /* immutable */;
-      font-size: 18px /* immutable */;
+      font-size: 18px /* const */ /* immutable */;
       color: #97A9CC /* let */ /* public */; }
     nav form.nav__search input.search__input {
       height: 100% /* immutable */;
@@ -699,10 +708,10 @@ nav {
     align-items: center /* immutable */;
     padding-right: 20px /* immutable */; }
     nav div.nav__bits a {
-      position: relative;
+      position: relative /* --because: contain child *count (which has absolute positioning) */;
       margin-left: 10px /* immutable */;
       margin-right: 10px /* immutable */;
-      font-size: 18px /* immutable */;
+      font-size: 18px /* const */ /* immutable */;
       text-decoration: none /* --veto */; }
     nav div.nav__bits a:not(.--active) {
       color: #97A9CC /* let */ /* protected */; }
@@ -827,7 +836,7 @@ section.content {
         list-style: none /* --veto */; }
       section.content div.post-box ul.post-box__icons a.post-box__icon {
         padding-right: 18px /* immutable */;
-        font-size: 18px /* immutable */;
+        font-size: 18px /* const */ /* immutable */;
         text-decoration: none /* --veto */;
         color: #9B9FA0 /* const */ /* protected */; }
       section.content div.post-box ul.post-box__icons a.post-box__icon:hover {
@@ -994,7 +1003,7 @@ section.content {
       section.content .story-box footer.story-box__footer input.comment__input::-webkit-input-placeholder {
         color: #7B7B7B /* immutable */; }
       section.content .story-box footer.story-box__footer a.comment__icon {
-        font-size: 18px /* immutable */;
+        font-size: 18px /* const */ /* immutable */;
         text-decoration: none /* --veto */;
         color: #9B9FA0 /* const */ /* protected */; }
       section.content .story-box footer.story-box__footer a.comment__icon:hover {
@@ -1120,7 +1129,7 @@ section.right-bar {
     section.right-bar div.right-bar__search span.search__icon {
       padding-left: 10px /* immutable */;
       padding-right: 10px /* immutable */;
-      font-size: 18px /* immutable */;
+      font-size: 18px /* const */ /* immutable */;
       color: #BABDC0 /* public */; }
     section.right-bar div.right-bar__search input.search__input {
       height: 100% /* immutable */;
@@ -1144,7 +1153,7 @@ section.right-bar {
     height: 100% /* immutable */;
     border-left: 1px solid #525C63 /* const */ /* immutable */;
     text-decoration: none /* --veto */;
-    font-size: 18px /* immutable */;
+    font-size: 18px /* const */ /* immutable */;
     color: #C0C4C6 /* protected */; }
   section.right-bar a.right-bar__compose:hover {
     color: #FFFFFF /* const */ /* --override */; }

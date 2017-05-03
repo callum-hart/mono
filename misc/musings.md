@@ -12,12 +12,28 @@
 ### Existing techniques that "solve" the problems with CSS
 
 **Inlining CSS**
-*React styles, aphrodyte, styltron etc... (not to be confused with inline CSS `style=""`)*
+*React styles, aphrodyte, styltron etc... other JS styling libs (not to be confused with inline CSS `style=""`)*
+
+Benefits:
 
 - Easier to be reasoned with.
-- Which boosts confidence. Gives more certainty styles will be applied.
-- Reduces probability of mutation.
+- Which boosts confidence.
+- Gives more certainty styles will be applied.
+- Reduces probability of mutation / accidental overrides.
 - Reduces side affects.
+- Better scoping / encapsulation.
+
+Drawbacks:
+
+- Styling is coupled to JavaScript rendering.
+- Business logic / functional stuff highly coupled with presentation *(no seperation of concerns)*.
+- High barrier of entry - can't untilize a designer who knows HTML & CSS - they'd need to learn JS.
+- Styles tied into build process.
+- Anti-pattern. On the server-side it's considered bad practice to mix SQL with business logic, so why mix eveything up on the front-end?
+- Caching / performance implications?
+- Low cohesion - components responsible for markup, functionality & presentation.
+- Pre-processors & flexbox handle most of the niceties JS styles bring (variables, calcualted dimensions).
+- [Personal opinion] I tend to split work into manageble chunks. Prefer to focus on business logic seperately to styling; so don't find co-located styles useful - if anything they pollute the JS and are a distraction.
 
 ### What constraints can be added to CSS?
 *What can we borrow from: other programming languages / design patterns?*
@@ -790,7 +806,7 @@ role in the project, it isn't the only thing. Ideas:
 
 ### Notes
 
-- Gives library authors finite control over what styles are exposed – those that can be changed externally.
+- Gives library authors finite control over what styles are exposed – those that can be changed externally. *Use Complete-Me in YouTube example and use `--overthrow` motive.*
 - Abolish specificity wars!
 - [Immutable facebook 2] credit design: https://dribbble.com/shots/1666016-Facebook-redesign/attachments/262440
 - I'm currently building UI's using mono to test my assumptions.

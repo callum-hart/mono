@@ -141,9 +141,6 @@
         align-items: immutable(center);
         flex: immutable(1);
 
-
-        // todo add grey icon universal (used in post-box footer, story-box footer, chat-box footer)
-        // todo: give li a classname (li.story-box__reaction)
         li {
             list-style: --veto(none);
         }
@@ -221,7 +218,7 @@
         }
 
         a.comment__icon {
-            font-size: immutable(18px);
+            font-size: immutable($iconSize);
             text-decoration: --veto(none);
             color: protected($greyIcon);
         }

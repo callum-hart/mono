@@ -48,7 +48,7 @@ div.post-box {
 
         a.post-box__icon {
             padding-right: immutable(18px);
-            font-size: immutable(18px);
+            font-size: immutable($iconSize);
             text-decoration: --veto(none);
             color: protected($greyIcon);
         }

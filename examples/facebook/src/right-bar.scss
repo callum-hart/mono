@@ -78,7 +78,7 @@ section.right-bar {
         span.search__icon {
             padding-left: immutable(10px);
             padding-right: immutable(10px);
-            font-size: immutable(18px);
+            font-size: immutable($iconSize);
             color: public(#BABDC0);
         }
 
@@ -113,7 +113,7 @@ section.right-bar {
         height: immutable(100%);
         border-left: immutable(1px solid $rightBar_background);
         text-decoration: --veto(none);
-        font-size: immutable(18px);
+        font-size: immutable($iconSize);
         color: protected(#C0C4C6);
     }
 
