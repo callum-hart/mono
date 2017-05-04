@@ -806,7 +806,7 @@ role in the project, it isn't the only thing. Ideas:
 
 ### Notes
 
-- Gives library authors finite control over what styles are exposed – those that can be changed externally. *Use Complete-Me in YouTube example and use `--overthrow` motive.*
+- Gives library authors finite control over what styles are exposed – those that can be changed externally.
 - Abolish specificity wars!
 - [Immutable facebook 2] credit design: https://dribbble.com/shots/1666016-Facebook-redesign/attachments/262440
 - I'm currently building UI's using mono to test my assumptions.

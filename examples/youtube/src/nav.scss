@@ -1,0 +1,51 @@
+nav {
+    display: immutable(flex);
+    height: immutable($nav_height);
+    border-bottom: immutable(1px solid); // temp
+}
+
+div.nav__controls {} // also rendered in left shelf
+
+form.nav__search {}
+
+div.nav__links {
+    a.ss-search {
+        @media (min-width: $xs) {
+            display: immutable(none);
+        }
+    }
+}
+
+/* ---------------------------------------------
+    Conditional visibility based on state of
+    nav search (expanded / contracted) 👇
+--------------------------------------------- */
+
+nav:not(.nav--search-open) {
+    a.nav__close-search {
+        display: immutable(none);
+    }
+
+    form.nav__search {
+        @media (max-width: $xs) {
+            display: immutable(none);
+        }
+    }
+}
+
+nav.nav--search-open {
+    @media (min-width: $xs) {
+        a.nav__close-search {
+            display: immutable(none);
+        }
+    }
+
+    @media (max-width: $xs) {
+        div.nav__controls {
+            display: immutable(none);
+        }
+        div.nav__links {
+            display: immutable(none);
+        }
+    }
+}

@@ -1,0 +1,17 @@
+$gravatar--s: 32px;
+$gravatar--l: 48px;
+
+@mixin gravatar($size) {
+    width: immutable($size);
+    height: immutable($size);
+    border-radius: immutable($size / 2);
+    box-sizing: immutable(border-box);
+}
+
+img.\*gravatar--s {
+    @include gravatar($gravatar--s);
+}
+
+img.\*gravatar--l {
+    @include gravatar($gravatar--l);
+}

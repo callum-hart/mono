@@ -1,0 +1,343 @@
+@charset "UTF-8";
+/**
+    Types --
+
+    Specical functions that add types to CSS declarations.
+
+    A type is bound to a CSS declaration within a ruleset.
+
+    Each type has a set of laws that govern how the declaration
+    can subsequently be used / modified.
+
+    By design type functions are pure. They cannot modify values
+    passed as arguments, and cannot add additional CSS properties.
+    This gaurentees what styles are applied, which reduces side
+    effects.
+
+*/
+/**
+    @type: Immutable
+    @description: Immutable properties can only be set once. They
+    cannot be modified after creation.
+    @usage:
+
+    .foo {
+        height: immutable(100px);
+    }
+
+    The height of `.foo` is locked – it can never be changed.
+
+*/
+/**
+    @type: Protected
+    @description: Protected properties can only be modified by
+    pseudo-classes derived from the same selector.
+    @modifier: --override
+    @usage:
+
+    .foo {
+       color: protected(grey);
+    }
+
+    .foo:hover {
+       color: --override(grey);
+    }
+
+*/
+/**
+    @type: Public (perhaps better name is Exposed?)
+    @description: Public properties can only be modified by
+    pseudo and modifier classes derived from parent selectors.
+    @modifier: --mutate
+    @usage:
+
+    .bar {
+         background: public(white);
+    }
+
+    1. Pseudo-class
+
+    .foo:hover .bar {
+       background: --mutate(grey);
+    }
+
+    2. Modifier class
+
+    .foo.foo--withError .bar {
+       background: --mutate(red);
+    }
+
+*/
+/**
+    @type: Bound
+    @description: Bound properties are scoped within the breakpoints
+    they are defined. A bound type can wrap other types.
+    @args: CSS value or <Typed>CSS value.
+    @usage:
+
+    1. CSS value
+
+    .pow {
+        @media(max-width: 500px) {
+            font-size: bound(12px);
+        }
+
+        @media(min-width: 500px) {
+            font-size: bound(16px);
+        }
+    }
+
+    2. <Typed>CSS value
+
+    .bar {
+        @media(max-width: 500px) {
+            font-size: bound(immutable(12px));
+        }
+
+        @media(min-width: 500px) {
+            font-size: bound(protected(12px));
+        }
+    }
+
+    From zero to 500px the font-size of `.bar` is immutable. It
+    cannot be modified within the breakpoint boundary.
+
+    After 500px the font-size of `.bar` is protected. It would
+    therefore be legal to override the font-size from a pseudo-class:
+
+    .bar:hover {
+        @media(min-width: 500px) {
+           font-size: --override(green);
+       }
+    }
+
+*/
+/**
+    @type: Theme
+    @description: The value of Theme properties are changeable,
+    they depend on the active theme. A theme type can wrap other
+    types.
+    @args: CSS value or <Typed>CSS value.
+    @depreciate: I think this is better suited with a variable type.
+    @usage:
+
+    1. CSS value
+
+    button {
+        background: theme(@buttonBg); // value of background depends on theme
+    }
+
+    2. <Typed>CSS value
+
+    button {
+        background: theme(immutable(@buttonBg));
+    }
+
+    Decide how much value this type adds... if any? This could equally
+    be handled with a new variable type (see `variables.scss`), i.e:
+
+    $buttonBg: theme(red);
+*/
+/**
+    Modifiers --
+
+    Specical functions that modify the value of CSS declarations.
+
+    Modifiers are associated to specific types. They can only be
+    used on willing types.
+
+    By design modifier functions are pure. They cannot modify values
+    passed as arguments, and cannot add additional CSS properties.
+    This gaurentees what styles are applied, which in turn reduces
+    side effects.
+
+    Modifiers are prefixed with a double dash --
+
+*/
+/**
+    @modifier: Override
+    @description: Can modify the value of Protected declarations.
+    @throws: some error name.
+*/
+/**
+    @modifier: Mutate
+    @description: Can modify the value of Public declarations.
+    @throws: IllegalMutation
+*/
+/**
+    Motives --
+
+    Specical functions that add reasoning to CSS.
+
+    Goal of a motive is to off-load information about
+    the code (from your brain) to the code itself.
+
+    Often there is a specific reason why a CSS property
+    exists. Suitable reasons could be overriding:
+
+    - Inline styles
+    - 3rd party styles
+    - User agent styles
+
+    By making CSS easier to reason with we make the process of
+    understanding (it) more immediate.
+
+    Motives remove investing time and enery in justifying why
+    a property exists.
+
+    Motives are prefixed with a double dash --
+
+*/
+/**
+    @motive: Overrule
+    @description: Can modify inline CSS styles.
+    @throws: IllegalOverrule
+*/
+/**
+    @motive: Overthrow
+    @description: Can modify 3rd party CSS styles.
+    @throws: IllegalOverthrow
+
+    Helps keep track of styles that only exist to override
+    3rd party styles. Useful for maintenence, if 3rd party
+    becomes redundent (removed from project) 3rd party
+    overrides can be removed. Makes CSS deterministic.
+
+    Cannot be used to override styles declared in projects CSS.
+*/
+/**
+    @motive: Veto
+    @description: Override user agent styles. Used when
+    a property only exists to remove / reset a browser
+    default.
+    @throws: IllegalVeto
+    @example:
+
+    input {
+        outline: --veto(none); // remove outline
+    }
+
+    Good:
+
+    ul {
+        padding-left: --veto(0); // reset padding
+    }
+
+    Bad:
+
+    ul {
+        padding-left: --veto(12px); // doesn't remove or reset value
+    }
+*/
+/**
+    @type: Fallback
+    @description: Fallback properties allow multiple implementations
+    of the same CSS property. They can only be used for fallbacks.
+    @usage:
+
+    .foo {
+        background: fallback(grey);
+        background: Immutable(linear-gradient(white, black));
+    }
+
+*/
+/**
+    @type: Because
+    @description: Used to denote property dependencies. Property B
+    only exists because of property A.
+    @args:
+        $value: CSS property value
+        $reason: Reason why value exists. <map key> or <custom string>
+    @usage:
+
+    .foo {
+        padding: immutable(20px);
+        box-sizing: --because(border-box, 'element has padding');
+    }
+
+*/
+/**
+    Variables --
+
+    Specical functions that add types and modifiers to
+    CSS variables.
+
+    Not sure yet whether this is overkill...?
+
+*/
+/**
+    @type: const
+    @description: Value cannot be modified through re-assignment.
+    Can only be declared once.
+    @usage:
+
+    $buttonColor: const(blue);
+
+*/
+/**
+    @type: let
+    @description: Variable can have multiple values via modifier
+    assignment.
+    @usage:
+
+    $buttonColor: let(blue);
+
+*/
+/**
+    @modifier: set
+    @description: Safely assign the value of variables of type let.
+    @usage:
+
+    $buttonColor: let(blue);
+    $buttonColor--hover: set(lightblue);
+    $buttonColor--active: set(darkblue);
+
+*/
+html, body {
+  margin: 0 /* --veto */;
+  height: 100% /* --veto */; }
+
+body {
+  font-family: sans-serif /* --veto */; }
+
+img.\*gravatar--s {
+  width: 32px /* immutable */;
+  height: 32px /* immutable */;
+  border-radius: 16px /* immutable */;
+  box-sizing: border-box /* immutable */; }
+
+img.\*gravatar--l {
+  width: 48px /* immutable */;
+  height: 48px /* immutable */;
+  border-radius: 24px /* immutable */;
+  box-sizing: border-box /* immutable */; }
+
+nav {
+  display: flex /* immutable */;
+  height: 56px /* const */ /* immutable */;
+  border-bottom: 1px solid /* immutable */; }
+
+@media (min-width: 660px) {
+  div.nav__links a.ss-search {
+    display: none /* immutable */; } }
+
+/* ---------------------------------------------
+    Conditional visibility based on state of
+    nav search (expanded / contracted) 👇
+--------------------------------------------- */
+nav:not(.nav--search-open) a.nav__close-search {
+  display: none /* immutable */; }
+@media (max-width: 660px) {
+  nav:not(.nav--search-open) form.nav__search {
+    display: none /* immutable */; } }
+
+@media (min-width: 660px) {
+  nav.nav--search-open a.nav__close-search {
+    display: none /* immutable */; } }
+@media (max-width: 660px) {
+  nav.nav--search-open div.nav__controls {
+    display: none /* immutable */; }
+  nav.nav--search-open div.nav__links {
+    display: none /* immutable */; } }
+
+/*# sourceMappingURL=app.css.map */
