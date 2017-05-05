@@ -666,8 +666,8 @@ footer.\*video__footer {
 nav {
   display: flex /* immutable */;
   height: 50px /* const */ /* immutable */;
-  position: relative /* immutable */;
-  z-index: 2 /* immutable */;
+  position: relative /* immutable */ /* --because: Bring element to the foreground so it's box-shadow sits infront of content below */;
+  z-index: 2 /* immutable */ /* --because: Bring element to the foreground so it's box-shadow sits infront of content below */;
   background: #5371AA /* const */ /* immutable */;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) /* immutable */; }
   nav div.nav__logo {

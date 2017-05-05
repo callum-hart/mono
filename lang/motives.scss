@@ -16,8 +16,14 @@
     By making CSS easier to reason with we make the process of
     understanding (it) more immediate.
 
-    Motives remove investing time and enery in justifying why
+    Motives remove investing time and energy in justifying why
     a property exists.
+
+    Motives capture the reasoning in the moment the property
+    is declared. It's easy to forget why a property exists,
+    which means once added it generally stays (even when
+    the reason for adding it is later nullified). This makes
+    refactoring CSS rather dicey!
 
     Motives are prefixed with a double dash --
 
@@ -118,8 +124,8 @@
 
     $definedReasons: (
         'swallowPadding': 'Include padding & border in calculated width & height',
-        'foo': 'the reason is foo',
-        'bar': 'the reason is bar'
+        'increaseClickArea': 'Increase target area of element to make it easier to click',
+        'bringToFront': 'Bring element to foreground so it\'s box-shadow sits infront of content below'
     );
 
     @if (map-has-key($definedReasons, $reason)) {

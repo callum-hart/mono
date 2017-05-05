@@ -16,8 +16,14 @@
     By making CSS easier to reason with we make the process of
     understanding (it) more immediate.
 
-    Motives remove investing time and enery in justifying why
+    Motives remove investing time and energy in justifying why
     a property exists.
+
+    Motives capture the reasoning in the moment the property
+    is declared. It's easy to forget why a property exists,
+    which means once added it generally stays (even when
+    the reason for adding it is later nullified). This makes
+    refactoring CSS rather dicey!
 
     Motives are prefixed with a double dash --
 
@@ -94,17 +100,37 @@
 
 /**
     @type: Because
-    @description:
+    @description: Used to denote property dependencies. Property B
+    only exists because of property A.
+    @args:
+        $value: CSS property value
+        $reason: Reason why value exists. <map key> or <custom string>
     @usage:
 
     .foo {
         padding: immutable(20px);
-        box-sizing: --(border-box, element has padding);
+        box-sizing: --because(border-box, 'element has padding');
     }
 
 */
 @function --because($value, $reason) {
-    @return append($value, #{'/* --because */'});
+    // $reason can be pre-defined (have a dictionary of common reasons) or
+    // can be custom (passed as string).
+
+    // If reasons could only be pre-defined it would limit misue, convension vs
+    // configuration...
+
+    $theReason: $reason;
+
+    $definedReasons: (
+        'swallowPadding': 'Include padding & border in calculated width & height',
+        'increaseClickArea': 'Increase target area of element to make it easier to click',
+        'bringToFront': 'Bring element to foreground so it\'s box-shadow sits infront of content below'
+    );
+
+    @if (map-has-key($definedReasons, $reason)) {
+        $theReason: map-get($definedReasons, $reason);
+    }
+
+    @return append($value, #{'/* --because: #{$theReason} */'});
 }
-
-

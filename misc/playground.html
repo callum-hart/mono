@@ -31,6 +31,10 @@
     </li>
 </ul>
 
+<p class="indiscrete">I change color at different screen sizes (indiscrete)</p>
+
+<p class="discrete">I change color at different screen sizes (discrete)</p>
+
 <style>
     li.inherited-property {
         font-size: 10px;
@@ -41,78 +45,63 @@
 
 <style>
     /*
-        - Negation removes affects of the cascade - the order of declarations doesn't matter.
-        - Which makes declarations more portable and predictable.
+        Indiscrete vs Discrete breakpoints.
+    */
 
-        Test case: text in a row is blue, text in an active row is green.
+    /*
+        Indiscrete
+        - The order of media queries affect which style will win.
+        - It's the cascade that controls which style will win, not the breakpoint.
+    */
 
-        Without negation, the overriding declaration only wins if:
+    @media (min-width: 800px) {
+        .indiscrete {
+            color: red;
+        }
+    }
 
-        - It is declared after the style it's overriding
-        - Or, it has a selector with a higher specificity
-
-        This works (declared after):
-
-        .row p {
+    @media (min-width: 500px) {
+        .indiscrete {
             color: blue;
         }
+    }
 
-        .row--active p {
-            color: green;
+     @media (min-width: 200px) {
+        .indiscrete {
+            color: grey;
         }
+    }
 
-        This works (higher specificity):
+    /*
+        Discrete
+        - Media queries are portable, their order doesn't matter.
+        - The breakpoint range has full control over which styles will win, better predictability!
+    */
 
-        div.row--active p {
-            color: green;
+    @media (min-width: 800px) {
+        .discrete {
+            color: red;
         }
+    }
 
-        .row p {
+    @media (min-width: 500px) and (max-width: 800px) {
+        .discrete {
             color: blue;
         }
+    }
 
-        This doesn't work (declared before + equal specificity):
-
-        .row--active p {
-            color: green;
+    @media (min-width: 200px) and (max-width: 500px) {
+        .discrete {
+            color: grey;
         }
+    }
 
-        .row p {
-            color: blue;
-        }
 
-        With negation we needn't bother about cascasde position or selector
-        specificity, since there is only one source of truth for each state.
+</style>
 
-        As expected this works (declared after + equal specificity):
-
-        .row:not(.row--active) p {
-            color: blue;
-        }
-
-        .row--active p {
-            color: green;
-        }
-
-        As does this (declared before + equal specificity):
-
-        .row--active p {
-            color: green;
-        }
-
-        .row:not(.row--active) p {
-            color: blue;
-        }
-
-        Removing the override has bought us portability and predictability.
-        I can gaurentee that text in a row is blue, and text in an active
-        row is green. I no longer have to think about the order of declarations
-        and the strength of their selector.
-
-        This is super powerful! Negation has removed 2 painpoints of CSS: the
-        cascade and selector specificity, which just leaves the styles to
-        worry about :)
-
+<style>
+    /*
+        Negation removes affects of the cascade - order of declarations doesn't matter.
     */
 
     .row--active p {

@@ -1,17 +1,100 @@
 nav {
     display: immutable(flex);
+    align-items: immutable(center);
+    justify-content: immutable(space-between);
     height: immutable($nav_height);
-    border-bottom: immutable(1px solid); // temp
+    position: --because(immutable(relative), 'bringToFront');
+    z-index: --because(immutable(2), 'bringToFront');
+    border-bottom: immutable(1px solid #EAEAEA);
+    box-shadow: immutable(0 0px 6px 2px rgba(0, 0, 0, 0.08));
+
+    @media (max-width: $xs) {
+        padding-left: immutable(10px);
+        padding-right: immutable(10px);
+    }
+
+    @media (min-width: $xs) {
+        padding-left: immutable(20px);
+        padding-right: immutable(20px);
+    }
+
+    a[class*=ss-] {
+        padding: --because(immutable(5px), 'increaseClickArea');
+        font-size: immutable($icon_size--m);
+        color: immutable($secondary-icon_color);
+        text-decoration: --veto(none);
+    }
 }
 
-div.nav__controls {} // also rendered in left shelf
+div.nav__controls {
+    display: immutable(flex);
+    box-sizing: --because(border-box, 'swallowPadding');
 
-form.nav__search {}
+    @media (max-width: $s) {
+        width: immutable(130px);
+    }
+
+    @media (min-width: $s) {
+        width: immutable($sideBar_width);
+    }
+
+    a.nav__logo img {
+        width: immutable(56px);
+        margin-top: immutable(2px);
+
+        @media (max-width: $xs) {
+            margin-left: immutable(10px);
+        }
+
+        @media (min-width: $xs) {
+            margin-left: immutable(20px);
+        }
+    }
+}
+
+a.nav__close-search {
+    margin-right: immutable(10px);
+}
+
+form.nav__search {
+    display: immutable(flex);
+    flex: immutable(1);
+    background: #EAEAEA; // temp
+}
 
 div.nav__links {
-    a.ss-search {
+    width: immutable(160px);
+    display: immutable(flex);
+    align-items: immutable(center);
+    justify-content: immutable(flex-end);
+
+    a.nav__link {
+        @media (max-width: $xs) {
+            margin-left: immutable(6px);
+            margin-right: immutable(6px);
+        }
+
         @media (min-width: $xs) {
-            display: immutable(none);
+            margin-left: immutable(10px);
+            margin-right: immutable(10px);
+        }
+
+        &.ss-search {
+            @media (min-width: $xs) {
+                display: immutable(none);
+            }
+        }
+    }
+
+    img.nav__gravatar {
+        margin-right: --because(immutable(5px), 'make distance consistent with left spacing of menu icon');
+
+        @media (max-width: $xs) {
+            margin-left: immutable(6px);
+        }
+
+        @media (min-width: $xs) {
+            margin-left: immutable(10px);
         }
     }
 }

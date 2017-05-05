@@ -182,8 +182,14 @@
     By making CSS easier to reason with we make the process of
     understanding (it) more immediate.
 
-    Motives remove investing time and enery in justifying why
+    Motives remove investing time and energy in justifying why
     a property exists.
+
+    Motives capture the reasoning in the moment the property
+    is declared. It's easy to forget why a property exists,
+    which means once added it generally stays (even when
+    the reason for adding it is later nullified). This makes
+    refactoring CSS rather dicey!
 
     Motives are prefixed with a double dash --
 
@@ -314,12 +320,78 @@ img.\*gravatar--l {
 
 nav {
   display: flex /* immutable */;
+  align-items: center /* immutable */;
+  justify-content: space-between /* immutable */;
   height: 56px /* const */ /* immutable */;
-  border-bottom: 1px solid /* immutable */; }
+  position: relative /* immutable */ /* --because: Bring element to foreground so it's box-shadow sits infront of content below */;
+  z-index: 2 /* immutable */ /* --because: Bring element to foreground so it's box-shadow sits infront of content below */;
+  border-bottom: 1px solid #EAEAEA /* immutable */;
+  box-shadow: 0 0px 6px 2px rgba(0, 0, 0, 0.08) /* immutable */; }
+  @media (max-width: 660px) {
+    nav {
+      padding-left: 10px /* immutable */;
+      padding-right: 10px /* immutable */; } }
+  @media (min-width: 660px) {
+    nav {
+      padding-left: 20px /* immutable */;
+      padding-right: 20px /* immutable */; } }
+  nav a[class*=ss-] {
+    padding: 5px /* immutable */ /* --because: Increase target area of element to make it easier to click */;
+    font-size: 16px /* const */ /* immutable */;
+    color: #A0A0A0 /* const */ /* immutable */;
+    text-decoration: none /* --veto */; }
 
-@media (min-width: 660px) {
-  div.nav__links a.ss-search {
-    display: none /* immutable */; } }
+div.nav__controls {
+  display: flex /* immutable */;
+  box-sizing: border-box /* --because: Include padding & border in calculated width & height */; }
+  @media (max-width: 875px) {
+    div.nav__controls {
+      width: 130px /* immutable */; } }
+  @media (min-width: 875px) {
+    div.nav__controls {
+      width: 240px /* const */ /* immutable */; } }
+  div.nav__controls a.nav__logo img {
+    width: 56px /* immutable */;
+    margin-top: 2px /* immutable */; }
+    @media (max-width: 660px) {
+      div.nav__controls a.nav__logo img {
+        margin-left: 10px /* immutable */; } }
+    @media (min-width: 660px) {
+      div.nav__controls a.nav__logo img {
+        margin-left: 20px /* immutable */; } }
+
+a.nav__close-search {
+  margin-right: 10px /* immutable */; }
+
+form.nav__search {
+  display: flex /* immutable */;
+  flex: 1 /* immutable */;
+  background: #EAEAEA; }
+
+div.nav__links {
+  width: 160px /* immutable */;
+  display: flex /* immutable */;
+  align-items: center /* immutable */;
+  justify-content: flex-end /* immutable */; }
+  @media (max-width: 660px) {
+    div.nav__links a.nav__link {
+      margin-left: 6px /* immutable */;
+      margin-right: 6px /* immutable */; } }
+  @media (min-width: 660px) {
+    div.nav__links a.nav__link {
+      margin-left: 10px /* immutable */;
+      margin-right: 10px /* immutable */; } }
+  @media (min-width: 660px) {
+    div.nav__links a.nav__link.ss-search {
+      display: none /* immutable */; } }
+  div.nav__links img.nav__gravatar {
+    margin-right: 5px /* immutable */ /* --because: make distance consistent with left spacing of menu icon */; }
+    @media (max-width: 660px) {
+      div.nav__links img.nav__gravatar {
+        margin-left: 6px /* immutable */; } }
+    @media (min-width: 660px) {
+      div.nav__links img.nav__gravatar {
+        margin-left: 10px /* immutable */; } }
 
 /* ---------------------------------------------
     Conditional visibility based on state of

@@ -207,13 +207,55 @@
         }
     }
 
-    Could seperate styles into files?
+    In order to achieve no overrides, breakpoint ranges need to be
+    discrete. Styles within one media query cannot affect styles in
+    another.
 
-    ├── nav
-    |   └── nav.scss (common styles used accross breakpoints)
-    |   └── nav--desktop.css
-    |   └── nav--tablet.css
-    |   └── nav--mobile.css
+    Consider the following:
+
+    $s: 400px;
+    $m: 900px;
+    $l: 1200px;
+
+    Indiscrete breakpoints (styles compete):
+
+    @media (min-width: $s) {
+        // anything above 400px
+        // competes with $m and $l
+    }
+
+    @media (min-width: $m) {
+        // anything above 900px
+        // competes with $l
+    }
+
+    @media (min-width: $l) {
+        // anything above 1200px
+    }
+
+
+    Discrete breakpoints (no style competition):
+
+    @media (max-width: $s) {
+        // anything below 400px
+    }
+
+    @media (min-width: $s) and (max-width: $m)  {
+        // between 400px and 900px
+    }
+
+    @media (min-width: $m) and (max-width: $l)  {
+        // between 900px and 1200px
+    }
+
+    @media (min-width: $l) {
+        // anything above 1200px
+    }
+
+    Not only do discrete breakpoints eliminate competing styles
+    they also buy portability. Just like negation, specicifity
+    and cascade no longer determine the winning style. Styles are
+    encapulated within their ranges.
 
 */
 
