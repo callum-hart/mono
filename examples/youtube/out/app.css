@@ -325,8 +325,7 @@ nav {
   height: 56px /* const */ /* immutable */;
   position: relative /* immutable */ /* --because: Bring element to foreground so it's box-shadow sits infront of content below */;
   z-index: 2 /* immutable */ /* --because: Bring element to foreground so it's box-shadow sits infront of content below */;
-  border-bottom: 1px solid #EAEAEA /* immutable */;
-  box-shadow: 0 0px 6px 2px rgba(0, 0, 0, 0.08) /* immutable */; }
+  box-shadow: 0 1px 6px 2px rgba(0, 0, 0, 0.08) /* immutable */; }
   @media (max-width: 660px) {
     nav {
       padding-left: 10px /* immutable */;
@@ -363,10 +362,75 @@ div.nav__controls {
 a.nav__close-search {
   margin-right: 10px /* immutable */; }
 
-form.nav__search {
+form.nav__search-form {
   display: flex /* immutable */;
-  flex: 1 /* immutable */;
-  background: #EAEAEA; }
+  flex: 1 /* immutable */; }
+  form.nav__search-form div.nav__search-field {
+    display: flex /* immutable */;
+    width: 100% /* immutable */;
+    max-width: 560px /* immutable */; }
+  form.nav__search-form div.nav__search-input {
+    flex: 1 /* immutable */;
+    width: auto /* --overthrow */; }
+    form.nav__search-form div.nav__search-input.focussed div.cm-input-wrap {
+      border-color: #1C62B9 /* const */ /* --overthrow */ /* --mutate */;
+      box-shadow: 0px 2px 2px -2px rgba(0, 0, 0, 0.8) inset /* --mutate */; }
+  form.nav__search-form div.cm-input-wrap {
+    border-color: #CCCCCC /* const */ /* --overthrow */ /* public */;
+    box-shadow: 0px 2px 2px -2px rgba(0, 0, 0, 0.2) inset /* public */;
+    border-top-left-radius: 2px /* const */ /* immutable */;
+    border-bottom-left-radius: 2px /* const */ /* immutable */; }
+    form.nav__search-form div.cm-input-wrap input.cm-input {
+      padding-left: 12px /* --overthrow */;
+      padding-right: 12px /* --overthrow */;
+      font-size: 15px /* --overthrow */;
+      color: #111111 /* --overthrow */; }
+  form.nav__search-form div.cm-results-wrap {
+    width: 100% /* --overthrow */;
+    margin-top: 12px /* --overthrow */;
+    border: none /* --overthrow */;
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.15) /* --overthrow */; }
+    form.nav__search-form div.cm-results-wrap ul.cm-results {
+      border-right: 1px solid #CCCCCC /* const */ /* immutable */;
+      border-left: 1px solid #CCCCCC /* const */ /* immutable */;
+      box-shadow: 0px 7px 5px -4px rgba(0, 0, 0, 0.08) inset /* immutable */; }
+      form.nav__search-form div.cm-results-wrap ul.cm-results:hover {
+        cursor: default /* --overthrow */; }
+      form.nav__search-form div.cm-results-wrap ul.cm-results li:last-child {
+        border-bottom: 1px solid #CCCCCC /* const */ /* immutable */;
+        box-sizing: border-box /* --because: Include padding & border in calculated width & height */; }
+      form.nav__search-form div.cm-results-wrap ul.cm-results li.cm-without-results {
+        display: none /* --overthrow */; }
+      form.nav__search-form div.cm-results-wrap ul.cm-results li:hover a {
+        background: #EEEEEE /* --overthrow */;
+        border-color: transparent /* --overthrow */; }
+      form.nav__search-form div.cm-results-wrap ul.cm-results a {
+        padding-left: 12px /* --overthrow */;
+        padding-right: 12px /* --overthrow */;
+        color: #111111 /* --overthrow */; }
+        form.nav__search-form div.cm-results-wrap ul.cm-results a.active {
+          background: #EEEEEE /* --overthrow */;
+          border-color: transparent /* --overthrow */; }
+      form.nav__search-form div.cm-results-wrap ul.cm-results span.cm-highlight {
+        border-bottom: none /* --overthrow */;
+        color: #111111 /* --overthrow */; }
+  form.nav__search-form button.nav__search-button {
+    padding: 6px 24px /* immutable */;
+    font-size: 13px /* immutable */;
+    border-top: 1px solid #CCCCCC /* const */ /* immutable */;
+    border-right: 1px solid #CCCCCC /* const */ /* immutable */;
+    border-bottom: 1px solid #CCCCCC /* const */ /* immutable */;
+    border-left: none /* --veto */;
+    border-top-right-radius: 2px /* const */ /* immutable */;
+    border-bottom-right-radius: 2px /* const */ /* immutable */;
+    box-sizing: border-box /* --because: Include padding & border in calculated width & height */;
+    color: #A0A0A0 /* const */ /* protected */;
+    background: #F8F8F8 /* const */ /* protected */; }
+    form.nav__search-form button.nav__search-button:hover {
+      cursor: pointer /* immutable */;
+      color: #888888 /* const */ /* --override */;
+      background: #F0F0F0 /* const */ /* --override */;
+      box-shadow: 0 1px 0px #E6E6E6 /* immutable */; }
 
 div.nav__links {
   width: 160px /* immutable */;
@@ -400,7 +464,7 @@ div.nav__links {
 nav:not(.nav--search-open) a.nav__close-search {
   display: none /* immutable */; }
 @media (max-width: 660px) {
-  nav:not(.nav--search-open) form.nav__search {
+  nav:not(.nav--search-open) form.nav__search-form {
     display: none /* immutable */; } }
 
 @media (min-width: 660px) {

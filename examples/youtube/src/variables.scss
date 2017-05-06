@@ -20,5 +20,14 @@ $icon_size--m: const(16px);
 
 // Colors
 
+$white: const(#FFFFFF);
 $primary-icon_color: const(#888888);
 $secondary-icon_color: const(#A0A0A0);
+
+// Nav
+
+$navSearchField_border-radius: const(2px);
+$navSearchField_border-color: const(#CCCCCC);
+$navSearchField_border-color--focussed: const(#1C62B9);
+$navSearchButton_background: const(#F8F8F8);
+$navSearchButton_background--hover: const(#F0F0F0);

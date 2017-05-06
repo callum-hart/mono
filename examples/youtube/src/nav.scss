@@ -5,8 +5,7 @@ nav {
     height: immutable($nav_height);
     position: --because(immutable(relative), 'bringToFront');
     z-index: --because(immutable(2), 'bringToFront');
-    border-bottom: immutable(1px solid #EAEAEA);
-    box-shadow: immutable(0 0px 6px 2px rgba(0, 0, 0, 0.08));
+    box-shadow: immutable(0 1px 6px 2px rgba(0,0,0,.08));
 
     @media (max-width: $xs) {
         padding-left: immutable(10px);
@@ -56,10 +55,109 @@ a.nav__close-search {
     margin-right: immutable(10px);
 }
 
-form.nav__search {
+form.nav__search-form {
     display: immutable(flex);
     flex: immutable(1);
-    background: #EAEAEA; // temp
+
+    div.nav__search-field {
+        display: immutable(flex);
+        width: immutable(100%);
+        max-width: immutable(560px);
+    }
+
+    div.nav__search-input {
+        flex: immutable(1);
+        width: --overthrow(auto);
+
+        &.focussed {
+            div.cm-input-wrap {
+                border-color: --mutate(--overthrow($navSearchField_border-color--focussed));
+                box-shadow: --mutate(0px 2px 2px -2px rgba(0,0,0,.8) inset);
+            }
+        }
+    }
+
+    div.cm-input-wrap {
+        border-color: public(--overthrow($navSearchField_border-color));
+        box-shadow: public(0px 2px 2px -2px rgba(0,0,0,.2) inset);
+        border-top-left-radius: immutable($navSearchField_border-radius);
+        border-bottom-left-radius: immutable($navSearchField_border-radius);
+
+        input.cm-input {
+            padding-left: --overthrow(12px);
+            padding-right: --overthrow(12px);
+            font-size: --overthrow(15px);
+            color: --overthrow(#111111);
+        }
+    }
+
+    div.cm-results-wrap {
+        width: --overthrow(100%);
+        margin-top: --overthrow(12px);
+        border: --overthrow(none);
+        box-shadow: --overthrow(0px 2px 3px 0px rgba(0,0,0,.15));
+
+        ul.cm-results {
+            border-right: immutable(1px solid $navSearchField_border-color);
+            border-left: immutable(1px solid $navSearchField_border-color);
+            box-shadow: immutable(0px 7px 5px -4px rgba(0,0,0,.08) inset);
+
+            &:hover {
+                cursor: --overthrow(default);
+            }
+
+            li:last-child {
+                border-bottom: immutable(1px solid $navSearchField_border-color);
+                box-sizing: --because(border-box, 'swallowPadding');
+            }
+
+            li.cm-without-results {
+                display: --overthrow(none);
+            }
+
+            li:hover a {
+                background: --overthrow(#EEEEEE);
+                border-color: --overthrow(transparent);
+            }
+
+            a {
+                padding-left: --overthrow(12px);
+                padding-right: --overthrow(12px);
+                color: --overthrow(#111111);
+
+                &.active {
+                    background: --overthrow(#EEEEEE);
+                    border-color: --overthrow(transparent);
+                }
+            }
+
+            span.cm-highlight {
+                border-bottom: --overthrow(none);
+                color: --overthrow(#111111);
+            }
+        }
+    }
+
+    button.nav__search-button {
+        padding: immutable(6px 24px);
+        font-size: immutable(13px);
+        border-top: immutable(1px solid $navSearchField_border-color);
+        border-right: immutable(1px solid $navSearchField_border-color);
+        border-bottom: immutable(1px solid $navSearchField_border-color);
+        border-left: --veto(none);
+        border-top-right-radius: immutable($navSearchField_border-radius);
+        border-bottom-right-radius: immutable($navSearchField_border-radius);
+        box-sizing: --because(border-box, 'swallowPadding');
+        color: protected($secondary-icon_color);
+        background: protected($navSearchButton_background);
+
+        &:hover {
+            cursor: immutable(pointer);
+            color: --override($primary-icon_color);
+            background: --override($navSearchButton_background--hover);
+            box-shadow: immutable(0 1px 0px #E6E6E6);
+        }
+    }
 }
 
 div.nav__links {
@@ -109,7 +207,7 @@ nav:not(.nav--search-open) {
         display: immutable(none);
     }
 
-    form.nav__search {
+    form.nav__search-form {
         @media (max-width: $xs) {
             display: immutable(none);
         }
