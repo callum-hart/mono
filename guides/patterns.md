@@ -257,6 +257,9 @@
     and cascade no longer determine the winning style. Styles are
     encapulated within their ranges.
 
+    Monos compiler should detect (and prevent) indiscrete
+    breakpoints.
+
 */
 
 /**

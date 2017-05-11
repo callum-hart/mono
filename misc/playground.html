@@ -16,6 +16,50 @@
 
 <a href="" class="some-link">Some link</a>
 
+<style>
+    /*
+    Using `:not()` pseudo class only sets `background` once (even when form has both classes).
+    */
+    .BASE_FORM:not(.BASE_FORM--WITH_ERROR) {
+        background: grey;
+    }
+
+    .BASE_FORM--WITH_ERROR {
+        background: red;
+    }
+
+    /*
+    Color property of `h1` is immutable.
+    */
+    h1 {
+        COLOR: red;
+    }
+
+    /*
+    If `.first-name` doesn't mutate any immutable properties of `<p>` build tool can trim `<p>` off selector,
+    Otherwise throw error.
+    */
+    .first-name<p> {
+        color: blue;
+    }
+
+    /*
+    Color property of `.some-link` is protected. Which means only pseudo classes can modify it.
+    */
+    .some-link {
+        Color: green;
+    }
+
+    .some-link:hover {
+        color: orange; /* allowed because `:hover` is a pseudo class */
+    }
+
+    /*.some-link {
+        color: red;  throws error because `color` of `some-link` can only be modified by pseudo classes
+    }*/
+</style>
+
+
 <div class="row">
     <p>Normal text</p>
 </div>
@@ -24,16 +68,27 @@
     <p>Active text</p>
 </div>
 
+<style>
+    /*
+        Negation removes affects of the cascade - order of declarations doesn't matter.
+    */
+
+    .row--active p {
+        color: green;
+    }
+
+    .row:not(.row--active) p {
+        color: blue;
+    }
+</style>
+
+
 <ul>
     <li class="inherited-property">
         <span>foo</span>
         bar
     </li>
 </ul>
-
-<p class="indiscrete">I change color at different screen sizes (indiscrete)</p>
-
-<p class="discrete">I change color at different screen sizes (discrete)</p>
 
 <style>
     li.inherited-property {
@@ -42,6 +97,12 @@
         font-size: 20px; /* font-size inherited by all child elements */
     }
 </style>
+
+
+
+<p class="indiscrete">I should change color at different screen sizes (indiscrete)</p>
+
+<p class="discrete">I change color at different screen sizes (discrete)</p>
 
 <style>
     /*
@@ -95,67 +156,102 @@
             color: grey;
         }
     }
-
-
 </style>
+
+
+<p class="bar">Using negation for psuedo classes (color isn't overriden)</p>
+
+<p class="bar bar--active">Using negation for psuedo classes (color isn't overriden)</p>
+
+<div class="parent-div">
+    <span class="child-span">Child element changes color when hovering over parent element.</span>
+</div>
+
+<div class="parent-div parent-div--active">
+    <span class="child-span">Child element changes color when hovering over parent element.</span>
+</div>
 
 <style>
     /*
-        Negation removes affects of the cascade - order of declarations doesn't matter.
+        Using negation for pseudo classes means no overrides ever!
+
+        This makes the modifiers --override and --mutate redundant,
+        which in turns affects whether the types Immutable, Protected
+        & Public are needed at all?
+
+        The examples below demonstrate that any CSS property can truely
+        have only 1 definition.
+
+        The question is:
+        - Is this style of CSS too verbose?
+        - Can the same result be achieved using a simpler method? (i.e what
+        we see below would be the compiled output, not necessarily the
+        source code).
     */
 
-    .row--active p {
+    /* Same selector psuedo classes */
+
+    p.bar:not(:hover):not(.bar--active) {
+        color: grey;
+    }
+
+    p.bar:hover {
+        color: blue;
+    }
+
+    p.bar--active:not(:hover) {
         color: green;
     }
 
-    .row:not(.row--active) p {
-        color: blue;
-    }
-</style>
+    /* Parent selector psuedo classes */
 
-<style>
-    /*
-    Using `:not()` pseudo class only sets `background` once (even when form has both classes).
-    */
-    .BASE_FORM:not(.BASE_FORM--WITH_ERROR) {
-        background: grey;
+    div.parent-div:not(:hover):not(.parent-div--active) span.child-span {
+        color: grey;
     }
 
-    .BASE_FORM--WITH_ERROR {
-        background: red;
-    }
-
-    /*
-    Color property of `h1` is immutable.
-    */
-    h1 {
-        COLOR: red;
-    }
-
-    /*
-    If `.first-name` doesn't mutate any immutable properties of `<p>` build tool can trim `<p>` off selector,
-    Otherwise throw error.
-    */
-    .first-name<p> {
+    div.parent-div:hover span.child-span {
         color: blue;
     }
 
+    div.parent-div--active:not(:hover) span.child-span {
+        color: green;
+    }
+
     /*
-    Color property of `.some-link` is protected. Which means only pseudo classes can modify it.
+        The color of `p.bar` depends on 3 scenarios:
+
+        1. Default
+        2. User interaction (:hover)
+        3. State (`.bar--active`)
+
+        What would a less verbose solution look like? How can
+        these 3 scenarios be represented?
+
+        p.bar {
+            color: grey;
+        }
+
+        p.bar:hover {
+            color: blue;
+        }
+
+        p.bar--active {
+            color: green;
+        }
+
+        Removing :not from the selectors makes the 3 scenarios
+        easy to compose and understand. However in naitive CSS
+        this equates to overrides:
+
+        - On :hover the color of `p.bar` & `p.bar--active` is overriden.
+        - When active the color of `p.bar` is overriden.
+
+        Could the selectors be generated? i.e a compiler reads what
+        we have above, identifies the 3 scenarios, and transforms the
+        selectors appropriately...
     */
-    .some-link {
-        Color: green;
-    }
-
-    .some-link:hover {
-        color: orange; /* allowed because `:hover` is a pseudo class */
-    }
-
-    /*.some-link {
-        color: red;  throws error because `color` of `some-link` can only be modified by pseudo classes
-    }*/
-
 </style>
+
 
 </body>
 </html>

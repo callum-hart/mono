@@ -19,11 +19,15 @@
     Motives remove investing time and energy in justifying why
     a property exists.
 
-    Motives capture the reasoning in the moment the property
+    Motives capture the rational in the moment the property
     is declared. It's easy to forget why a property exists,
     which means once added it generally stays (even when
     the reason for adding it is later nullified). This makes
     refactoring CSS rather dicey!
+
+    Externalizing information from our heads to artifacts not only
+    frees our mind, but makes it easier for someone else to
+    understand and work with.
 
     Motives are prefixed with a double dash --
 
