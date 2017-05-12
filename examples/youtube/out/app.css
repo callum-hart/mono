@@ -185,7 +185,7 @@
     Motives remove investing time and energy in justifying why
     a property exists.
 
-    Motives capture the reasoning in the moment the property
+    Motives capture the rational in the moment the property
     is declared. It's easy to forget why a property exists,
     which means once added it generally stays (even when
     the reason for adding it is later nullified). This makes
@@ -318,11 +318,21 @@ img.\*gravatar--l {
   border-radius: 24px /* immutable */;
   box-sizing: border-box /* immutable */; }
 
+main.main {
+  display: flex /* immutable */;
+  height: calc(100% - 56px) /* immutable */; }
+
+section.left-shelf {
+  width: 240px /* const */ /* immutable */; }
+
+section.content {
+  flex: 1 /* immutable */; }
+
 nav {
   display: flex /* immutable */;
   align-items: center /* immutable */;
   justify-content: space-between /* immutable */;
-  height: 56px /* const */ /* immutable */;
+  height: 56px /* immutable */;
   position: relative /* immutable */ /* --because: Bring element to foreground so it's box-shadow sits infront of content below */;
   z-index: 2 /* immutable */ /* --because: Bring element to foreground so it's box-shadow sits infront of content below */;
   box-shadow: 0 1px 6px 2px rgba(0, 0, 0, 0.08) /* immutable */; }
@@ -415,8 +425,8 @@ form.nav__search-form {
         border-bottom: none /* --overthrow */;
         color: #111111 /* --overthrow */; }
   form.nav__search-form button.nav__search-button {
-    padding: 6px 24px /* immutable */;
-    font-size: 13px /* immutable */;
+    padding: 5px 24px /* immutable */;
+    font-size: 14px /* immutable */;
     border-top: 1px solid #CCCCCC /* const */ /* immutable */;
     border-right: 1px solid #CCCCCC /* const */ /* immutable */;
     border-bottom: 1px solid #CCCCCC /* const */ /* immutable */;
@@ -475,5 +485,12 @@ nav:not(.nav--search-open) a.nav__close-search {
     display: none /* immutable */; }
   nav.nav--search-open div.nav__links {
     display: none /* immutable */; } }
+
+section.left-shelf--open {
+  display: block /* immutable */; }
+
+@media (max-width: 1275px) {
+  section.left-shelf:not(.left-shelf--open) {
+    display: none /* bound */; } }
 
 /*# sourceMappingURL=app.css.map */

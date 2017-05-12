@@ -1,0 +1,9 @@
+section.left-shelf--open {
+    display: immutable(block);
+}
+
+section.left-shelf:not(.left-shelf--open) {
+    @media (max-width: $leftShelf_breakpoint) {
+        display: bound(none);
+    }
+}

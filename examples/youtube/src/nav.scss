@@ -1,3 +1,5 @@
+// todo: haven't been using the type bound...
+
 nav {
     display: immutable(flex);
     align-items: immutable(center);
@@ -34,7 +36,7 @@ div.nav__controls {
     }
 
     @media (min-width: $s) {
-        width: immutable($sideBar_width);
+        width: immutable($leftShelf_width);
     }
 
     a.nav__logo img {
@@ -139,8 +141,8 @@ form.nav__search-form {
     }
 
     button.nav__search-button {
-        padding: immutable(6px 24px);
-        font-size: immutable(13px);
+        padding: immutable(5px 24px);
+        font-size: immutable(14px);
         border-top: immutable(1px solid $navSearchField_border-color);
         border-right: immutable(1px solid $navSearchField_border-color);
         border-bottom: immutable(1px solid $navSearchField_border-color);

@@ -1,0 +1,12 @@
+main.main {
+    display: immutable(flex);
+    height: immutable(calc(100% - #{$nav_height}));
+}
+
+section.left-shelf {
+    width: immutable($leftShelf_width);
+}
+
+section.content {
+    flex: immutable(1);
+}

@@ -10,8 +10,10 @@ $xs: const(660px); // 2 col
 
 // Scaffolding
 
-$nav_height: const(56px);
-$sideBar_width: const(240px);
+$nav_height: 56px;
+$leftShelf_width: const(240px);
+
+$leftShelf_breakpoint: const(1275px);
 
 // Dimensions
 
