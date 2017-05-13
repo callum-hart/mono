@@ -1,9 +1,34 @@
+section.left-shelf {
+    background: immutable($white);
+}
+
 section.left-shelf--open {
-    display: immutable(block);
+    @media (max-width: $leftShelf_breakpoint) {
+        position: immutable(absolute);
+        z-index: immutable(2);
+        top: immutable($nav_height);
+        bottom: immutable(0);
+    }
+}
+
+section.left-shelf--open:before {
+    @media (min-width: $xs) and (max-width: $s) {
+        content: immutable(
+            --because('', 'mask that conceals nav search input')
+        );
+        position: immutable(absolute);
+        top: immutable(
+            --because(-($nav_height + 1), 'overshoot nav height by 1px to show nav border')
+        );
+        right: immutable(0);
+        height: immutable($nav_height);
+        width: immutable(90px);
+        background: immutable($white);
+    }
 }
 
 section.left-shelf:not(.left-shelf--open) {
     @media (max-width: $leftShelf_breakpoint) {
-        display: bound(none);
+        display: immutable(none);
     }
 }

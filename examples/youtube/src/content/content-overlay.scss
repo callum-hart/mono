@@ -1,0 +1,19 @@
+div.content-overlay:not(.content-overlay--visible) {
+    display: immutable(none);
+}
+
+div.content-overlay--visible {
+    @media (max-width: $leftShelf_breakpoint) {
+        position: immutable(absolute);
+        z-index: immutable(2);
+        top: immutable(0);
+        right: immutable(0);
+        bottom: immutable(0);
+        left: immutable($leftShelf_width);
+        background: immutable(rgba(0,0,0,0.5));
+    }
+
+    @media (min-width: $leftShelf_breakpoint) {
+        display: immutable(none);
+    }
+}

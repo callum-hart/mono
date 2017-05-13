@@ -1,4 +1,4 @@
-// todo: haven't been using the type bound...
+// todo: haven't been using the type bound, it doesn't seem to add much...
 
 nav {
     display: immutable(flex);
@@ -7,7 +7,9 @@ nav {
     height: immutable($nav_height);
     position: --because(immutable(relative), 'bringToFront');
     z-index: --because(immutable(2), 'bringToFront');
-    box-shadow: immutable(0 1px 6px 2px rgba(0,0,0,.08));
+    border-bottom: immutable(1px solid #EEEEEE);
+    box-shadow: immutable(0 1px 6px 1px rgba(0,0,0,.08));
+    box-sizing: --because(border-box, 'swallowPadding');
 
     @media (max-width: $xs) {
         padding-left: immutable(10px);

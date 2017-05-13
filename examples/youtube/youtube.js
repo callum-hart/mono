@@ -58,6 +58,7 @@ Handle left shelf visibility
 (() => {
   const leftShelf = document.querySelector('.left-shelf');
   const leftShelfToggle = document.querySelector('#toggle-left-shelf--js');
+  const contentOverlay = document.querySelector('.content-overlay');
 
   const toggleLeftShelf = (e) => {
     e.preventDefault();
@@ -65,13 +66,25 @@ Handle left shelf visibility
 
     switch (action) {
       case 'OPEN': {
-        return leftShelf.classList.add('left-shelf--open');
+        return openLeftShelf();
       }
       case 'CLOSE': {
-        return leftShelf.classList.remove('left-shelf--open');
+        return closeLeftShelf();
       }
     }
   }
 
+  const openLeftShelf = () => {
+    leftShelf.classList.add('left-shelf--open');
+    contentOverlay.classList.add('content-overlay--visible');
+  }
+
+  const closeLeftShelf = () => {
+    leftShelf.classList.remove('left-shelf--open');
+    contentOverlay.classList.remove('content-overlay--visible');
+  }
+
   leftShelfToggle.addEventListener('click', toggleLeftShelf);
+  contentOverlay.addEventListener('click', closeLeftShelf);
+
 })();

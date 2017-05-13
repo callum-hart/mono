@@ -335,7 +335,9 @@ nav {
   height: 56px /* immutable */;
   position: relative /* immutable */ /* --because: Bring element to foreground so it's box-shadow sits infront of content below */;
   z-index: 2 /* immutable */ /* --because: Bring element to foreground so it's box-shadow sits infront of content below */;
-  box-shadow: 0 1px 6px 2px rgba(0, 0, 0, 0.08) /* immutable */; }
+  border-bottom: 1px solid #EEEEEE /* immutable */;
+  box-shadow: 0 1px 6px 1px rgba(0, 0, 0, 0.08) /* immutable */;
+  box-sizing: border-box /* --because: Include padding & border in calculated width & height */; }
   @media (max-width: 660px) {
     nav {
       padding-left: 10px /* immutable */;
@@ -486,11 +488,68 @@ nav:not(.nav--search-open) a.nav__close-search {
   nav.nav--search-open div.nav__links {
     display: none /* immutable */; } }
 
-section.left-shelf--open {
-  display: block /* immutable */; }
+section.left-shelf {
+  background: #FFFFFF /* const */ /* immutable */; }
+
+@media (max-width: 1275px) {
+  section.left-shelf--open {
+    position: absolute /* immutable */;
+    z-index: 2 /* immutable */;
+    top: 56px /* immutable */;
+    bottom: 0 /* immutable */; } }
+
+@media (min-width: 660px) and (max-width: 875px) {
+  section.left-shelf--open:before {
+    content: "" /* --because: mask that conceals nav search input */ /* immutable */;
+    position: absolute /* immutable */;
+    top: -57px /* --because: overshoot nav height by 1px to show nav border */ /* immutable */;
+    right: 0 /* immutable */;
+    height: 56px /* immutable */;
+    width: 90px /* immutable */;
+    background: #FFFFFF /* const */ /* immutable */; } }
 
 @media (max-width: 1275px) {
   section.left-shelf:not(.left-shelf--open) {
-    display: none /* bound */; } }
+    display: none /* immutable */; } }
+
+section.media-items {
+  margin: 0 auto /* immutable */; }
+  @media (max-width: 875px) {
+    section.media-items {
+      max-width: calc(2 * 210px /* const */) /* immutable */; } }
+  @media (min-width: 875px) and (max-width: 1090px) {
+    section.media-items {
+      max-width: calc(3 * 210px /* const */) /* immutable */; } }
+  @media (min-width: 1090px) and (max-width: 1390px) {
+    section.media-items {
+      max-width: calc(4 * 210px /* const */) /* immutable */; } }
+  @media (min-width: 1390px) and (max-width: 1605px) {
+    section.media-items {
+      max-width: calc(5 * 210px /* const */) /* immutable */; } }
+  @media (min-width: 1605px) {
+    section.media-items {
+      max-width: calc(6 * 210px /* const */) /* immutable */; } }
+
+div.media-item {
+  float: left /* immutable */;
+  width: 210px /* const */ /* immutable */;
+  border: 1px solid #ccc /* immutable */;
+  box-sizing: border-box /* --because: Include padding & border in calculated width & height */; }
+
+div.content-overlay:not(.content-overlay--visible) {
+  display: none /* immutable */; }
+
+@media (max-width: 1275px) {
+  div.content-overlay--visible {
+    position: absolute /* immutable */;
+    z-index: 2 /* immutable */;
+    top: 0 /* immutable */;
+    right: 0 /* immutable */;
+    bottom: 0 /* immutable */;
+    left: 240px /* const */ /* immutable */;
+    background: rgba(0, 0, 0, 0.5) /* immutable */; } }
+@media (min-width: 1275px) {
+  div.content-overlay--visible {
+    display: none /* immutable */; } }
 
 /*# sourceMappingURL=app.css.map */

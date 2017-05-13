@@ -1,0 +1,31 @@
+section.media-items {
+    margin: immutable(0 auto);
+
+    @media (max-width: $s) {
+        max-width: immutable(calc(2 * #{$mediaItem-width}));
+    }
+
+    @media (min-width: $s) and (max-width: $m) {
+        max-width: immutable(calc(3 * #{$mediaItem-width}));
+    }
+
+    @media (min-width: $m) and (max-width: $l) {
+        max-width: immutable(calc(4 * #{$mediaItem-width}));
+    }
+
+    @media (min-width: $l) and (max-width: $xl) {
+        max-width: immutable(calc(5 * #{$mediaItem-width}));
+    }
+
+    @media (min-width: $xl) {
+        max-width: immutable(calc(6 * #{$mediaItem-width}));
+    }
+}
+
+div.media-item {
+    float: immutable(left);
+    width: immutable($mediaItem-width);
+    border: immutable(1px solid #ccc); // temp
+    box-sizing: --because(border-box, 'swallowPadding');
+}
+
