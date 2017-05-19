@@ -835,7 +835,6 @@ preprocessor. It should be as agnostic as possible. Compatible with any CSS stra
 - [No overrides] don't have to spend time & energy on specificity battles, order of styles in the cascade, fighting with !important. No overrides makes a large proportion of the work we do in CSS redundant - there's no need to undo unwanted styles. This 1 constraint *(no overrides)* removes **3 of the worst painpoints of CSS** (specificity, cascade, !important). No overrides is also possible with pseudo classes *(i.e :hover)* -> see "Using negation for pseudo classes" in `playground.html`. One could argue that an **override indicates improper reuse**.
 - [Interop] Some motives are for interop; working with non-mono code, i.e --overthrow, --overrule.
 - [Mono format] Would an enforced format be useful? *low priority*.
-- Co-located media queries:
 
 
 ### Tooling / Ecosystem

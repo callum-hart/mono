@@ -1,0 +1,33 @@
+// <componentName_property--modifier>
+
+// Breakpoints
+
+$xs: const(660px); // 2 col
+$s:  const(875px); // 3 col
+$m:  const(1090px); // 4 col
+$l:  const(1390px); // 5 col
+$xl: const(1605px); // 6 col
+
+// Scaffolding
+
+$nav_height: 56px;
+$leftShelf_width: const(240px);
+
+$leftShelf_breakpoint: const(1275px);
+
+// Dimensions
+
+$icon_size--s: const(12px);
+$icon_size--m: const(16px);
+$mediaItem-width: const(210px);
+
+// Colors
+
+$white: const(#FFFFFF);
+
+// Nav
+
+$navSearchField_border-radius: const(2px);
+
+// import theme'able variables at the end, so they can use colors defined here
+@import 'themeable';

@@ -299,9 +299,6 @@
     $buttonColor--active: set(darkblue);
 
 */
-body {
-  background: black; }
-
 html, body {
   margin: 0 /* --veto */;
   height: 100% /* --veto */; }
@@ -338,9 +335,10 @@ nav {
   height: 56px /* immutable */;
   position: relative /* immutable */ /* --because: Bring element to foreground so it's box-shadow sits infront of content below */;
   z-index: 2 /* immutable */ /* --because: Bring element to foreground so it's box-shadow sits infront of content below */;
-  border-bottom: 1px solid #EEEEEE /* immutable */;
+  border-bottom: 1px solid #2E2E2E /* theme */ /* immutable */;
   box-shadow: 0 1px 6px 1px rgba(0, 0, 0, 0.08) /* immutable */;
-  box-sizing: border-box /* --because: Include padding & border in calculated width & height */; }
+  box-sizing: border-box /* --because: Include border in calculated width & height */;
+  background: #232323 /* theme */ /* immutable */; }
   @media (max-width: 660px) {
     nav {
       padding-left: 10px /* immutable */;
@@ -352,26 +350,30 @@ nav {
   nav a[class*=ss-] {
     padding: 5px /* immutable */ /* --because: Increase target area of element to make it easier to click */;
     font-size: 16px /* const */ /* immutable */;
-    color: #A0A0A0 /* const */ /* immutable */;
+    color: #FFFFFF /* const */ /* theme */ /* immutable */;
     text-decoration: none /* --veto */; }
 
 div.nav__controls {
   display: flex /* immutable */;
-  box-sizing: border-box /* --because: Include padding & border in calculated width & height */; }
+  align-items: center /* immutable */;
+  box-sizing: border-box /* --because: Include padding in calculated width & height */; }
   @media (max-width: 875px) {
     div.nav__controls {
       width: 130px /* immutable */; } }
   @media (min-width: 875px) {
     div.nav__controls {
       width: 240px /* const */ /* immutable */; } }
-  div.nav__controls a.nav__logo img {
+  div.nav__controls a.nav__logo {
     width: 56px /* immutable */;
-    margin-top: 2px /* immutable */; }
+    height: 24px /* immutable */;
+    background: url("/vendor/images/rectangle-pic.png") /* theme */ /* immutable */;
+    background-repeat: no-repeat /* immutable */;
+    background-size: 56px 24px /* immutable */; }
     @media (max-width: 660px) {
-      div.nav__controls a.nav__logo img {
+      div.nav__controls a.nav__logo {
         margin-left: 10px /* immutable */; } }
     @media (min-width: 660px) {
-      div.nav__controls a.nav__logo img {
+      div.nav__controls a.nav__logo {
         margin-left: 20px /* immutable */; } }
 
 a.nav__close-search {
@@ -388,32 +390,33 @@ form.nav__search-form {
     flex: 1 /* immutable */;
     width: auto /* --overthrow */; }
     form.nav__search-form div.nav__search-input.focussed div.cm-input-wrap {
-      border-color: #1C62B9 /* const */ /* --overthrow */ /* --mutate */;
+      border-color: #1C62B9 /* theme */ /* --overthrow */ /* --mutate */;
       box-shadow: 0px 2px 2px -2px rgba(0, 0, 0, 0.8) inset /* --mutate */; }
   form.nav__search-form div.cm-input-wrap {
-    border-color: #CCCCCC /* const */ /* --overthrow */ /* public */;
+    border-color: #303030 /* theme */ /* --overthrow */ /* public */;
     box-shadow: 0px 2px 2px -2px rgba(0, 0, 0, 0.2) inset /* public */;
     border-top-left-radius: 2px /* const */ /* immutable */;
-    border-bottom-left-radius: 2px /* const */ /* immutable */; }
+    border-bottom-left-radius: 2px /* const */ /* immutable */;
+    background: #111111 /* theme */ /* --overthrow */; }
     form.nav__search-form div.cm-input-wrap input.cm-input {
       padding-left: 12px /* --overthrow */;
       padding-right: 12px /* --overthrow */;
       font-size: 15px /* --overthrow */;
-      color: #111111 /* --overthrow */; }
+      color: #E3E3E3 /* theme */ /* --overthrow */; }
   form.nav__search-form div.cm-results-wrap {
     width: 100% /* --overthrow */;
     margin-top: 12px /* --overthrow */;
     border: none /* --overthrow */;
     box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.15) /* --overthrow */; }
     form.nav__search-form div.cm-results-wrap ul.cm-results {
-      border-right: 1px solid #CCCCCC /* const */ /* immutable */;
-      border-left: 1px solid #CCCCCC /* const */ /* immutable */;
+      border-right: 1px solid #303030 /* theme */ /* immutable */;
+      border-left: 1px solid #303030 /* theme */ /* immutable */;
       box-shadow: 0px 7px 5px -4px rgba(0, 0, 0, 0.08) inset /* immutable */; }
       form.nav__search-form div.cm-results-wrap ul.cm-results:hover {
         cursor: default /* --overthrow */; }
       form.nav__search-form div.cm-results-wrap ul.cm-results li:last-child {
-        border-bottom: 1px solid #CCCCCC /* const */ /* immutable */;
-        box-sizing: border-box /* --because: Include padding & border in calculated width & height */; }
+        border-bottom: 1px solid #303030 /* theme */ /* immutable */;
+        box-sizing: border-box /* --because: Include border in calculated width & height */; }
       form.nav__search-form div.cm-results-wrap ul.cm-results li.cm-without-results {
         display: none /* --overthrow */; }
       form.nav__search-form div.cm-results-wrap ul.cm-results li:hover a {
@@ -432,20 +435,20 @@ form.nav__search-form {
   form.nav__search-form button.nav__search-button {
     padding: 5px 24px /* immutable */;
     font-size: 14px /* immutable */;
-    border-top: 1px solid #CCCCCC /* const */ /* immutable */;
-    border-right: 1px solid #CCCCCC /* const */ /* immutable */;
-    border-bottom: 1px solid #CCCCCC /* const */ /* immutable */;
+    border-top: 1px solid #303030 /* theme */ /* immutable */;
+    border-right: 1px solid #303030 /* theme */ /* immutable */;
+    border-bottom: 1px solid #303030 /* theme */ /* immutable */;
     border-left: none /* --veto */;
     border-top-right-radius: 2px /* const */ /* immutable */;
     border-bottom-right-radius: 2px /* const */ /* immutable */;
-    box-sizing: border-box /* --because: Include padding & border in calculated width & height */;
-    color: #A0A0A0 /* const */ /* protected */;
-    background: #F8F8F8 /* const */ /* protected */; }
+    box-sizing: border-box /* --because: Include padding in calculated width & height */;
+    color: #717171 /* theme */ /* protected */;
+    background: #343434 /* theme */ /* protected */; }
     form.nav__search-form button.nav__search-button:hover {
       cursor: pointer /* immutable */;
-      color: #888888 /* const */ /* --override */;
-      background: #F0F0F0 /* const */ /* --override */;
-      box-shadow: 0 1px 0px #E6E6E6 /* immutable */; }
+      color: #999999 /* theme */ /* --override */;
+      background: #343434 /* theme */ /* --override */;
+      box-shadow: 0 1px 0px rgba(0, 0, 0, 0.1) /* immutable */; }
 
 div.nav__links {
   width: 160px /* immutable */;
@@ -492,7 +495,7 @@ nav:not(.nav--search-open) a.nav__close-search {
     display: none /* immutable */; } }
 
 section.left-shelf {
-  background: #FFFFFF /* const */ /* immutable */; }
+  background: #1C1C1C /* theme */ /* immutable */; }
 
 @media (max-width: 1275px) {
   section.left-shelf--open {
@@ -509,7 +512,7 @@ section.left-shelf {
     right: 0 /* immutable */;
     height: 56px /* immutable */;
     width: 90px /* immutable */;
-    background: #FFFFFF /* const */ /* const */ /* immutable */; } }
+    background: #232323 /* theme */ /* immutable */; } }
 
 @media (max-width: 1275px) {
   section.left-shelf:not(.left-shelf--open) {
@@ -537,7 +540,7 @@ div.media-item {
   float: left /* immutable */;
   width: 210px /* const */ /* immutable */;
   border: 1px solid #ccc /* immutable */;
-  box-sizing: border-box /* --because: Include padding & border in calculated width & height */; }
+  box-sizing: border-box /* --because: Include padding in calculated width & height */; }
 
 div.content-overlay:not(.content-overlay--visible) {
   display: none /* immutable */; }
@@ -554,5 +557,8 @@ div.content-overlay:not(.content-overlay--visible) {
 @media (min-width: 1275px) {
   div.content-overlay--visible {
     display: none /* immutable */; } }
+
+section.content {
+  background: #111111 /* theme */ /* immutable */; }
 
 /*# sourceMappingURL=app.css.map */

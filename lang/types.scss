@@ -157,5 +157,7 @@
     $buttonBg: theme(red);
 */
 @function theme($value) {
+    // would be nice to be able to see variable name in comment, i.e
+    // color: red /* theme $content_bg */;
     @return append($value, #{'/* theme */'});
 }

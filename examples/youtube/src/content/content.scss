@@ -1,2 +1,6 @@
 @import 'content-grid';
 @import 'content-overlay';
+
+section.content {
+    background: immutable($content_background);
+}

@@ -7,9 +7,10 @@ nav {
     height: immutable($nav_height);
     position: --because(immutable(relative), 'bringToFront');
     z-index: --because(immutable(2), 'bringToFront');
-    border-bottom: immutable(1px solid #EEEEEE);
+    border-bottom: immutable(1px solid $nav_border-bottom-color);
     box-shadow: immutable(0 1px 6px 1px rgba(0,0,0,.08));
-    box-sizing: --because(border-box, 'swallowPadding'); // swallowBorder
+    box-sizing: --because(border-box, 'swallowBorder');
+    background: immutable($nav_background);
 
     @media (max-width: $xs) {
         padding-left: immutable(10px);
@@ -24,13 +25,14 @@ nav {
     a[class*=ss-] {
         padding: --because(immutable(5px), 'increaseClickArea');
         font-size: immutable($icon_size--m);
-        color: immutable($secondary-icon_color);
+        color: immutable($nav_icon-color);
         text-decoration: --veto(none);
     }
 }
 
 div.nav__controls {
     display: immutable(flex);
+    align-items: immutable(center);
     box-sizing: --because(border-box, 'swallowPadding');
 
     @media (max-width: $s) {
@@ -41,9 +43,12 @@ div.nav__controls {
         width: immutable($leftShelf_width);
     }
 
-    a.nav__logo img {
+    a.nav__logo {
         width: immutable(56px);
-        margin-top: immutable(2px);
+        height: immutable(24px);
+        background: immutable($nav_logo-image);
+        background-repeat: immutable(no-repeat);
+        background-size: immutable(56px 24px);
 
         @media (max-width: $xs) {
             margin-left: immutable(10px);
@@ -86,12 +91,13 @@ form.nav__search-form {
         box-shadow: public(0px 2px 2px -2px rgba(0,0,0,.2) inset);
         border-top-left-radius: immutable($navSearchField_border-radius);
         border-bottom-left-radius: immutable($navSearchField_border-radius);
+        background: --overthrow($navSearchField_background);
 
         input.cm-input {
             padding-left: --overthrow(12px);
             padding-right: --overthrow(12px);
             font-size: --overthrow(15px);
-            color: --overthrow(#111111);
+            color: --overthrow($navSearchField_color);
         }
     }
 
@@ -112,7 +118,7 @@ form.nav__search-form {
 
             li:last-child {
                 border-bottom: immutable(1px solid $navSearchField_border-color);
-                box-sizing: --because(border-box, 'swallowPadding'); // swallowBorder
+                box-sizing: --because(border-box, 'swallowBorder');
             }
 
             li.cm-without-results {
@@ -152,14 +158,14 @@ form.nav__search-form {
         border-top-right-radius: immutable($navSearchField_border-radius);
         border-bottom-right-radius: immutable($navSearchField_border-radius);
         box-sizing: --because(border-box, 'swallowPadding');
-        color: protected($secondary-icon_color);
+        color: protected($navSearchButton_icon-color);
         background: protected($navSearchButton_background);
 
         &:hover {
             cursor: immutable(pointer);
-            color: --override($primary-icon_color);
+            color: --override($navSearchButton_icon-color--hover);
             background: --override($navSearchButton_background--hover);
-            box-shadow: immutable(0 1px 0px #E6E6E6);
+            box-shadow: immutable(0 1px 0px rgba(0,0,0,.1));
         }
     }
 }

@@ -1,0 +1,56 @@
+// <componentName_property--modifier>
+
+$theme--dark: true;
+$theme--blue: false;
+$theme--red: false;
+
+// default values for variables whose value is theme'able
+$nav_background: theme($white);
+$nav_border-bottom-color: theme(#EEEEEE);
+$nav_icon-color: theme(#888888);
+$nav_logo-image: theme(url('/vendor/images/logo.png'));
+
+$navSearchField_background: theme($white);
+$navSearchField_color: theme(#111111);
+$navSearchField_border-color: theme(#CCCCCC);
+$navSearchField_border-color--focussed: theme(#1C62B9);
+$navSearchButton_background: theme(#F8F8F8);
+$navSearchButton_background--hover: theme(#F0F0F0);
+$navSearchButton_icon-color: theme(#828282);
+$navSearchButton_icon-color--hover: theme(#333333);
+
+$leftShelf_background: theme($white);
+
+$content_background: theme($white);
+
+$primary-icon_color: theme(#888888);
+$secondary-icon_color: theme(#A0A0A0);
+
+@if $theme--dark {
+    $nav_background: theme(#232323);
+    $nav_border-bottom-color: theme(#2E2E2E);
+    $nav_icon-color: theme($white);
+    // $nav_logo-image: theme(url('/vendor/images/logo--white.png'));
+    $nav_logo-image: theme(url('/vendor/images/rectangle-pic.png'));
+
+    $navSearchField_background: theme(#111111);
+    $navSearchField_color: theme(#E3E3E3);
+    $navSearchField_border-color: theme(#303030);
+    $navSearchField_border-color--focussed: theme(#1C62B9);
+    $navSearchButton_background: theme(#343434);
+    $navSearchButton_background--hover: theme(#343434);
+    $navSearchButton_icon-color: theme(#717171);
+    $navSearchButton_icon-color--hover: theme(#999999);
+    $leftShelf_background: theme(#1C1C1C);
+    $content_background: theme(#111111);
+}
+
+@if $theme--blue {
+    $nav_background: theme(blue);
+    $leftShelf_background: theme(blue);
+}
+
+@if $theme--red {
+    $nav_background: theme(red);
+    $leftShelf_background: theme(red);
+}
