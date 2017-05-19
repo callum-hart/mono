@@ -299,6 +299,9 @@
     $buttonColor--active: set(darkblue);
 
 */
+body {
+  background: black; }
+
 html, body {
   margin: 0 /* --veto */;
   height: 100% /* --veto */; }
@@ -506,7 +509,7 @@ section.left-shelf {
     right: 0 /* immutable */;
     height: 56px /* immutable */;
     width: 90px /* immutable */;
-    background: #FFFFFF /* const */ /* immutable */; } }
+    background: #FFFFFF /* const */ /* const */ /* immutable */; } }
 
 @media (max-width: 1275px) {
   section.left-shelf:not(.left-shelf--open) {

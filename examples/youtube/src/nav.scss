@@ -9,7 +9,7 @@ nav {
     z-index: --because(immutable(2), 'bringToFront');
     border-bottom: immutable(1px solid #EEEEEE);
     box-shadow: immutable(0 1px 6px 1px rgba(0,0,0,.08));
-    box-sizing: --because(border-box, 'swallowPadding');
+    box-sizing: --because(border-box, 'swallowPadding'); // swallowBorder
 
     @media (max-width: $xs) {
         padding-left: immutable(10px);
@@ -112,7 +112,7 @@ form.nav__search-form {
 
             li:last-child {
                 border-bottom: immutable(1px solid $navSearchField_border-color);
-                box-sizing: --because(border-box, 'swallowPadding');
+                box-sizing: --because(border-box, 'swallowPadding'); // swallowBorder
             }
 
             li.cm-without-results {

@@ -17,3 +17,21 @@
 - Compiler
 - Add flag that enables / disables type/modifier/variable annotations.
 - Get better images for example UIs (gravatar, photos)
+
+### Roadmap
+
+- [Example] Finish YouTube example
+- [Guides]
+    - Tidy up guides.
+    - Focus on spec *not so much syntax / implementation*
+- [Support material]
+    - Writing: introduction, motivation, case studies etc...
+    - Presentation
+- [Implementation]
+    - Current: scss mvp
+    - Future: mono syntax
+- [Compiler]
+    - Document warnings / errors
+    - Implemenation v0.0.1
+- [Tooling]
+    - Prototypes

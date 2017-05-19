@@ -23,7 +23,7 @@ section.left-shelf--open:before {
         right: immutable(0);
         height: immutable($nav_height);
         width: immutable(90px);
-        background: immutable($white);
+        background: immutable($nav_background);
     }
 }
 

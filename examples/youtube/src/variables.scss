@@ -29,8 +29,34 @@ $secondary-icon_color: const(#A0A0A0);
 
 // Nav
 
+$nav_background: const($white);
 $navSearchField_border-radius: const(2px);
 $navSearchField_border-color: const(#CCCCCC);
 $navSearchField_border-color--focussed: const(#1C62B9);
 $navSearchButton_background: const(#F8F8F8);
 $navSearchButton_background--hover: const(#F0F0F0);
+
+// Left shelf
+
+$leftShelf_background: const($white);
+
+// Theme
+
+$theme--light: 'light';
+$theme--dark: 'dark';
+$ACTIVE_THEME: $theme--dark;
+
+$foo: null;
+
+@if $ACTIVE_THEME == $theme--light {
+    $foo: white;
+    @debug('theme: light');
+} @else if $ACTIVE_THEME == $theme--dark {
+    $foo: black;
+    @debug('theme: dark');
+}
+
+body {
+    background: $foo;
+}
+

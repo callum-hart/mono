@@ -1,6 +1,8 @@
 section.media-items {
     margin: immutable(0 auto);
 
+    // todo: grid isn't quite right around $leftShelf_breakpoint
+
     @media (max-width: $s) {
         max-width: immutable(calc(2 * #{$mediaItem-width}));
     }

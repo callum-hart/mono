@@ -260,6 +260,24 @@
     Monos compiler should detect (and prevent) indiscrete
     breakpoints.
 
+
+    Co-located media queries?
+
+    div.someClass {
+        color: immutable(#ccc);
+        font-family: immutable(operator);
+        font-weight: immutable(300);
+        font-size:
+            switch(@meda) {
+                case width 0px -> 400px:
+                    16px;
+                case width 400px -> 900px:
+                    14px;
+                default:
+                    12px;
+            };
+    }
+
 */
 
 /**
