@@ -318,6 +318,9 @@ img.\*gravatar--l {
   border-radius: 24px /* immutable */;
   box-sizing: border-box /* immutable */; }
 
+body {
+  overflow: hidden /* --because: Prevent page scrolling */ /* immutable */; }
+
 main.main {
   display: flex /* immutable */;
   height: calc(100% - 56px) /* immutable */; }
@@ -335,10 +338,10 @@ nav {
   height: 56px /* immutable */;
   position: relative /* immutable */ /* --because: Bring element to foreground so it's box-shadow sits infront of content below */;
   z-index: 2 /* immutable */ /* --because: Bring element to foreground so it's box-shadow sits infront of content below */;
-  border-bottom: 1px solid #2E2E2E /* theme */ /* immutable */;
+  border-bottom: 1px solid #EEEEEE /* theme */ /* immutable */;
   box-shadow: 0 1px 6px 1px rgba(0, 0, 0, 0.08) /* immutable */;
   box-sizing: border-box /* --because: Include border in calculated width & height */;
-  background: #232323 /* theme */ /* immutable */; }
+  background: #FFFFFF /* const */ /* theme */ /* immutable */; }
   @media (max-width: 660px) {
     nav {
       padding-left: 10px /* immutable */;
@@ -348,9 +351,9 @@ nav {
       padding-left: 20px /* immutable */;
       padding-right: 20px /* immutable */; } }
   nav a[class*=ss-] {
-    padding: 5px /* immutable */ /* --because: Increase target area of element to make it easier to click */;
+    padding: 5px /* --because: Increase target area of element to make it easier to click */ /* immutable */;
     font-size: 16px /* const */ /* immutable */;
-    color: #FFFFFF /* const */ /* theme */ /* immutable */;
+    color: #888888 /* theme */ /* immutable */;
     text-decoration: none /* --veto */; }
 
 div.nav__controls {
@@ -366,7 +369,7 @@ div.nav__controls {
   div.nav__controls a.nav__logo {
     width: 56px /* immutable */;
     height: 24px /* immutable */;
-    background: url("/vendor/images/rectangle-pic.png") /* theme */ /* immutable */;
+    background: url("/vendor/images/logo.png") /* theme */ /* immutable */;
     background-repeat: no-repeat /* immutable */;
     background-size: 56px 24px /* immutable */; }
     @media (max-width: 660px) {
@@ -393,29 +396,29 @@ form.nav__search-form {
       border-color: #1C62B9 /* theme */ /* --overthrow */ /* --mutate */;
       box-shadow: 0px 2px 2px -2px rgba(0, 0, 0, 0.8) inset /* --mutate */; }
   form.nav__search-form div.cm-input-wrap {
-    border-color: #303030 /* theme */ /* --overthrow */ /* public */;
+    border-color: #CCCCCC /* theme */ /* --overthrow */ /* public */;
     box-shadow: 0px 2px 2px -2px rgba(0, 0, 0, 0.2) inset /* public */;
     border-top-left-radius: 2px /* const */ /* immutable */;
     border-bottom-left-radius: 2px /* const */ /* immutable */;
-    background: #111111 /* theme */ /* --overthrow */; }
+    background: #FFFFFF /* const */ /* theme */ /* --overthrow */; }
     form.nav__search-form div.cm-input-wrap input.cm-input {
       padding-left: 12px /* --overthrow */;
       padding-right: 12px /* --overthrow */;
       font-size: 15px /* --overthrow */;
-      color: #E3E3E3 /* theme */ /* --overthrow */; }
+      color: #111111 /* theme */ /* --overthrow */; }
   form.nav__search-form div.cm-results-wrap {
     width: 100% /* --overthrow */;
     margin-top: 12px /* --overthrow */;
     border: none /* --overthrow */;
     box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.15) /* --overthrow */; }
     form.nav__search-form div.cm-results-wrap ul.cm-results {
-      border-right: 1px solid #303030 /* theme */ /* immutable */;
-      border-left: 1px solid #303030 /* theme */ /* immutable */;
+      border-right: 1px solid #CCCCCC /* theme */ /* immutable */;
+      border-left: 1px solid #CCCCCC /* theme */ /* immutable */;
       box-shadow: 0px 7px 5px -4px rgba(0, 0, 0, 0.08) inset /* immutable */; }
       form.nav__search-form div.cm-results-wrap ul.cm-results:hover {
         cursor: default /* --overthrow */; }
       form.nav__search-form div.cm-results-wrap ul.cm-results li:last-child {
-        border-bottom: 1px solid #303030 /* theme */ /* immutable */;
+        border-bottom: 1px solid #CCCCCC /* theme */ /* immutable */;
         box-sizing: border-box /* --because: Include border in calculated width & height */; }
       form.nav__search-form div.cm-results-wrap ul.cm-results li.cm-without-results {
         display: none /* --overthrow */; }
@@ -435,19 +438,19 @@ form.nav__search-form {
   form.nav__search-form button.nav__search-button {
     padding: 5px 24px /* immutable */;
     font-size: 14px /* immutable */;
-    border-top: 1px solid #303030 /* theme */ /* immutable */;
-    border-right: 1px solid #303030 /* theme */ /* immutable */;
-    border-bottom: 1px solid #303030 /* theme */ /* immutable */;
+    border-top: 1px solid #CCCCCC /* theme */ /* immutable */;
+    border-right: 1px solid #CCCCCC /* theme */ /* immutable */;
+    border-bottom: 1px solid #CCCCCC /* theme */ /* immutable */;
     border-left: none /* --veto */;
     border-top-right-radius: 2px /* const */ /* immutable */;
     border-bottom-right-radius: 2px /* const */ /* immutable */;
     box-sizing: border-box /* --because: Include padding in calculated width & height */;
-    color: #717171 /* theme */ /* protected */;
-    background: #343434 /* theme */ /* protected */; }
+    color: #828282 /* theme */ /* protected */;
+    background: #F8F8F8 /* theme */ /* protected */; }
     form.nav__search-form button.nav__search-button:hover {
       cursor: pointer /* immutable */;
-      color: #999999 /* theme */ /* --override */;
-      background: #343434 /* theme */ /* --override */;
+      color: #333333 /* theme */ /* --override */;
+      background: #F0F0F0 /* theme */ /* --override */;
       box-shadow: 0 1px 0px rgba(0, 0, 0, 0.1) /* immutable */; }
 
 div.nav__links {
@@ -467,7 +470,7 @@ div.nav__links {
     div.nav__links a.nav__link.ss-search {
       display: none /* immutable */; } }
   div.nav__links img.nav__gravatar {
-    margin-right: 5px /* immutable */ /* --because: make distance consistent with left spacing of menu icon */; }
+    margin-right: 5px /* --because: make distance consistent with `.nav` menu icon left padding */ /* immutable */; }
     @media (max-width: 660px) {
       div.nav__links img.nav__gravatar {
         margin-left: 6px /* immutable */; } }
@@ -495,28 +498,54 @@ nav:not(.nav--search-open) a.nav__close-search {
     display: none /* immutable */; } }
 
 section.left-shelf {
-  background: #1C1C1C /* theme */ /* immutable */; }
+  background: #FFFFFF /* const */ /* theme */ /* immutable */; }
 
 @media (max-width: 1275px) {
   section.left-shelf--open {
     position: absolute /* immutable */;
     z-index: 2 /* immutable */;
-    top: 56px /* immutable */;
-    bottom: 0 /* immutable */; } }
+    top: 55px /* --because: overshoot nav height by 1px to account for its bottom border */ /* immutable */;
+    bottom: 0 /* immutable */;
+    border-top: 1px solid #EEEEEE /* theme */ /* theme */ /* immutable */; } }
 
 @media (min-width: 660px) and (max-width: 875px) {
   section.left-shelf--open:before {
     content: "" /* --because: mask that conceals nav search input */ /* immutable */;
     position: absolute /* immutable */;
-    top: -57px /* --because: overshoot nav height by 1px to show nav border */ /* immutable */;
+    top: -57px /* --because: overshoot nav height by 1px to account for left-shelf top border */ /* immutable */;
     right: 0 /* immutable */;
     height: 56px /* immutable */;
     width: 90px /* immutable */;
-    background: #232323 /* theme */ /* immutable */; } }
+    background: #FFFFFF /* const */ /* theme */ /* immutable */; } }
 
 @media (max-width: 1275px) {
   section.left-shelf:not(.left-shelf--open) {
     display: none /* immutable */; } }
+
+div.left-shelf__inner {
+  display: flex /* immutable */;
+  flex-direction: column /* immutable */;
+  height: 100% /* immutable */;
+  overflow: auto /* immutable */; }
+
+div.left-shelf__segments {
+  flex: 1 /* immutable */; }
+
+div.left-shelf__segment {
+  display: flex /* immutable */;
+  flex-direction: column /* immutable */;
+  border-bottom: 1px solid #EEEEEE /* theme */ /* theme */ /* immutable */; }
+
+@media (max-width: 660px) {
+  a.left-shelf__item,
+  span.left-shelf__items-title,
+  footer.left-shelf__footer {
+    padding-left: 15px /* --because: vertically align with `.nav` menu icon */ /* immutable */; } }
+@media (min-width: 660px) {
+  a.left-shelf__item,
+  span.left-shelf__items-title,
+  footer.left-shelf__footer {
+    padding-left: 25px /* --because: vertically align with `.nav` menu icon */ /* immutable */; } }
 
 section.media-items {
   margin: 0 auto /* immutable */; }
@@ -559,6 +588,6 @@ div.content-overlay:not(.content-overlay--visible) {
     display: none /* immutable */; } }
 
 section.content {
-  background: #111111 /* theme */ /* immutable */; }
+  background: #FFFFFF /* const */ /* theme */ /* immutable */; }
 
 /*# sourceMappingURL=app.css.map */

@@ -8,18 +8,23 @@ $m:  const(1090px); // 4 col
 $l:  const(1390px); // 5 col
 $xl: const(1605px); // 6 col
 
+$leftShelf_breakpoint: const(1275px);
+
 // Scaffolding
 
-$nav_height: 56px;
-$leftShelf_width: const(240px);
+$viewport-gutter--xs: 10px; // can't be const since it's used in a sass calculation
+$viewport-gutter: 20px; // can't be const since it's used in a sass calculation
 
-$leftShelf_breakpoint: const(1275px);
+$nav_height: 56px; // can't be const since it's used in a sass calculation
+$leftShelf_width: const(240px);
 
 // Dimensions
 
+$click_padding: 5px; // can't be const since it's used in a sass calculation
+
 $icon_size--s: const(12px);
 $icon_size--m: const(16px);
-$mediaItem-width: const(210px);
+$mediaItem_width: const(210px);
 
 // Colors
 

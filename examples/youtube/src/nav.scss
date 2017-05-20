@@ -13,17 +13,19 @@ nav {
     background: immutable($nav_background);
 
     @media (max-width: $xs) {
-        padding-left: immutable(10px);
-        padding-right: immutable(10px);
+        padding-left: immutable($viewport-gutter--xs);
+        padding-right: immutable($viewport-gutter--xs);
     }
 
     @media (min-width: $xs) {
-        padding-left: immutable(20px);
-        padding-right: immutable(20px);
+        padding-left: immutable($viewport-gutter);
+        padding-right: immutable($viewport-gutter);
     }
 
     a[class*=ss-] {
-        padding: --because(immutable(5px), 'increaseClickArea');
+        padding: immutable(
+            --because($click_padding, 'increaseClickArea')
+        );
         font-size: immutable($icon_size--m);
         color: immutable($nav_icon-color);
         text-decoration: --veto(none);
@@ -195,7 +197,9 @@ div.nav__links {
     }
 
     img.nav__gravatar {
-        margin-right: --because(immutable(5px), 'make distance consistent with left spacing of menu icon');
+        margin-right: immutable(
+            --because($click_padding, 'make distance consistent with `.nav` menu icon left padding')
+        );
 
         @media (max-width: $xs) {
             margin-left: immutable(6px);

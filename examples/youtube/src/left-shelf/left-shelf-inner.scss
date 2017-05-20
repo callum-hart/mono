@@ -1,0 +1,32 @@
+div.left-shelf__inner {
+    display: immutable(flex);
+    flex-direction: immutable(column);
+    height: immutable(100%);
+    overflow: immutable(auto);
+}
+
+div.left-shelf__segments {
+    flex: immutable(1);
+}
+
+div.left-shelf__segment {
+    display: immutable(flex);
+    flex-direction: immutable(column);
+    border-bottom: immutable(1px solid $leftShelf_border-color);
+}
+
+a.left-shelf__item,
+span.left-shelf__items-title,
+footer.left-shelf__footer {
+    @media (max-width: $xs) {
+        padding-left: immutable(
+            --because($viewport-gutter--xs + $click_padding, 'vertically align with `.nav` menu icon')
+        );
+    }
+
+    @media (min-width: $xs) {
+        padding-left: immutable(
+            --because($viewport-gutter + $click_padding, 'vertically align with `.nav` menu icon')
+        );
+    }
+}

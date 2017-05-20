@@ -126,7 +126,8 @@
         'swallowPadding': 'Include padding in calculated width & height',
         'swallowBorder': 'Include border in calculated width & height',
         'increaseClickArea': 'Increase target area of element to make it easier to click',
-        'bringToFront': 'Bring element to foreground so it\'s box-shadow sits infront of content below'
+        'bringToFront': 'Bring element to foreground so it\'s box-shadow sits infront of content below',
+        'preventPageScroll': 'Prevent page scrolling'
     );
 
     @if (map-has-key($definedReasons, $reason)) {

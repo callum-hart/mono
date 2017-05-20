@@ -1,3 +1,9 @@
+body {
+    overflow: immutable(
+        --because(hidden, 'preventPageScroll')
+    );
+}
+
 main.main {
     display: immutable(flex);
     height: immutable(calc(100% - #{$nav_height}));

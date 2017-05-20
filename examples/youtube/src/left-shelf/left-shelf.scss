@@ -6,8 +6,11 @@ section.left-shelf--open {
     @media (max-width: $leftShelf_breakpoint) {
         position: immutable(absolute);
         z-index: immutable(2);
-        top: immutable($nav_height);
+        top: immutable(
+            --because(($nav_height - 1), 'overshoot nav height by 1px to account for its bottom border')
+        );
         bottom: immutable(0);
+        border-top: immutable(1px solid $leftShelf_border-color);
     }
 }
 
@@ -18,7 +21,7 @@ section.left-shelf--open:before {
         );
         position: immutable(absolute);
         top: immutable(
-            --because(-($nav_height + 1), 'overshoot nav height by 1px to show nav border')
+            --because(-($nav_height + 1), 'overshoot nav height by 1px to account for left-shelf top border')
         );
         right: immutable(0);
         height: immutable($nav_height);
