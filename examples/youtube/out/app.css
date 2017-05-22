@@ -299,6 +299,44 @@
     $buttonColor--active: set(darkblue);
 
 */
+html:not(.theme--dark):not(.theme--blue):root {
+  --nav_background: #FFFFFF /* const */ /* theme */;
+  --nav_border-bottom-color: #EEEEEE /* theme */;
+  --nav_icon-color: #888888 /* theme */;
+  --nav_logo-image: url("http://localhost:8000/vendor/images/logo.png") /* theme */;
+  --navSearchField_background: #FFFFFF /* const */ /* theme */;
+  --navSearchField_color: #111111 /* theme */;
+  --navSearchField_border-color: #CCCCCC /* theme */;
+  --navSearchField_border-color--focussed: #1C62B9 /* theme */;
+  --navSearchButton_background: #F8F8F8 /* theme */;
+  --navSearchButton_background--hover: #F0F0F0 /* theme */;
+  --navSearchButton_icon-color: #828282 /* theme */;
+  --navSearchButton_icon-color--hover: #333333 /* theme */;
+  --leftShelf_background: #FFFFFF /* const */ /* theme */;
+  --leftShelf_border-color: #EEEEEE /* theme */;
+  --leftShelfItem_background--hover: #EEEEEE /* theme */;
+  --leftShelfItemName_color: #111111 /* theme */;
+  --content_background: #FFFFFF /* const */ /* theme */; }
+
+html.theme--dark:not(.theme--blue):root {
+  --nav_background: #232323 /* theme */;
+  --nav_border-bottom-color: transparent /* theme */;
+  --nav_icon-color: #FFFFFF /* const */ /* theme */;
+  --nav_logo-image: url("http://localhost:8000/vendor/images/logo-white.png") /* theme */;
+  --navSearchField_background: #111111 /* theme */;
+  --navSearchField_color: #E3E3E3 /* theme */;
+  --navSearchField_border-color: #303030 /* theme */;
+  --navSearchField_border-color--focussed: #1C62B9 /* theme */;
+  --navSearchButton_background: #343434 /* theme */;
+  --navSearchButton_background--hover: #343434 /* theme */;
+  --navSearchButton_icon-color: #717171 /* theme */;
+  --navSearchButton_icon-color--hover: #999999 /* theme */;
+  --leftShelf_background: #1C1C1C /* theme */;
+  --leftShelf_border-color: #2E2E2E /* theme */;
+  --leftShelfItem_background--hover: #474747 /* theme */;
+  --leftShelfItemName_color: #E4E4E4 /* theme */;
+  --content_background: #111111 /* theme */; }
+
 html, body {
   margin: 0 /* --veto */;
   height: 100% /* --veto */; }
@@ -338,10 +376,10 @@ nav {
   height: 56px /* immutable */;
   position: relative /* immutable */ /* --because: Bring element to foreground so it's box-shadow sits infront of content below */;
   z-index: 2 /* immutable */ /* --because: Bring element to foreground so it's box-shadow sits infront of content below */;
-  border-bottom: 1px solid #EEEEEE /* theme */ /* immutable */;
+  border-bottom: 1px solid var(--nav_border-bottom-color) /* immutable */;
   box-shadow: 0 1px 6px 1px rgba(0, 0, 0, 0.08) /* immutable */;
   box-sizing: border-box /* --because: Include border in calculated width & height */;
-  background: #FFFFFF /* const */ /* theme */ /* immutable */; }
+  background: var(--nav_background) /* immutable */; }
   @media (max-width: 660px) {
     nav {
       padding-left: 10px /* immutable */;
@@ -353,7 +391,7 @@ nav {
   nav a[class*=ss-] {
     padding: 5px /* --because: Increase target area of element to make it easier to click */ /* immutable */;
     font-size: 16px /* const */ /* immutable */;
-    color: #888888 /* theme */ /* immutable */;
+    color: var(--nav_icon-color) /* immutable */;
     text-decoration: none /* --veto */; }
 
 div.nav__controls {
@@ -369,7 +407,7 @@ div.nav__controls {
   div.nav__controls a.nav__logo {
     width: 56px /* immutable */;
     height: 24px /* immutable */;
-    background: url("/vendor/images/logo.png") /* theme */ /* immutable */;
+    background: var(--nav_logo-image) /* immutable */;
     background-repeat: no-repeat /* immutable */;
     background-size: 56px 24px /* immutable */; }
     @media (max-width: 660px) {
@@ -393,32 +431,32 @@ form.nav__search-form {
     flex: 1 /* immutable */;
     width: auto /* --overthrow */; }
     form.nav__search-form div.nav__search-input.focussed div.cm-input-wrap {
-      border-color: #1C62B9 /* theme */ /* --overthrow */ /* --mutate */;
+      border-color: var(--navSearchField_border-color--focussed) /* --overthrow */ /* --mutate */;
       box-shadow: 0px 2px 2px -2px rgba(0, 0, 0, 0.8) inset /* --mutate */; }
   form.nav__search-form div.cm-input-wrap {
-    border-color: #CCCCCC /* theme */ /* --overthrow */ /* public */;
+    border-color: var(--navSearchField_border-color) /* --overthrow */ /* public */;
     box-shadow: 0px 2px 2px -2px rgba(0, 0, 0, 0.2) inset /* public */;
     border-top-left-radius: 2px /* const */ /* immutable */;
     border-bottom-left-radius: 2px /* const */ /* immutable */;
-    background: #FFFFFF /* const */ /* theme */ /* --overthrow */; }
+    background: var(--navSearchField_background) /* --overthrow */; }
     form.nav__search-form div.cm-input-wrap input.cm-input {
       padding-left: 12px /* --overthrow */;
       padding-right: 12px /* --overthrow */;
       font-size: 15px /* --overthrow */;
-      color: #111111 /* theme */ /* --overthrow */; }
+      color: var(--navSearchField_color) /* --overthrow */; }
   form.nav__search-form div.cm-results-wrap {
     width: 100% /* --overthrow */;
     margin-top: 12px /* --overthrow */;
     border: none /* --overthrow */;
     box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.15) /* --overthrow */; }
     form.nav__search-form div.cm-results-wrap ul.cm-results {
-      border-right: 1px solid #CCCCCC /* theme */ /* immutable */;
-      border-left: 1px solid #CCCCCC /* theme */ /* immutable */;
+      border-right: 1px solid var(--navSearchField_border-color) /* immutable */;
+      border-left: 1px solid var(--navSearchField_border-color) /* immutable */;
       box-shadow: 0px 7px 5px -4px rgba(0, 0, 0, 0.08) inset /* immutable */; }
       form.nav__search-form div.cm-results-wrap ul.cm-results:hover {
         cursor: default /* --overthrow */; }
       form.nav__search-form div.cm-results-wrap ul.cm-results li:last-child {
-        border-bottom: 1px solid #CCCCCC /* theme */ /* immutable */;
+        border-bottom: 1px solid var(--navSearchField_border-color) /* immutable */;
         box-sizing: border-box /* --because: Include border in calculated width & height */; }
       form.nav__search-form div.cm-results-wrap ul.cm-results li.cm-without-results {
         display: none /* --overthrow */; }
@@ -438,19 +476,19 @@ form.nav__search-form {
   form.nav__search-form button.nav__search-button {
     padding: 5px 24px /* immutable */;
     font-size: 14px /* immutable */;
-    border-top: 1px solid #CCCCCC /* theme */ /* immutable */;
-    border-right: 1px solid #CCCCCC /* theme */ /* immutable */;
-    border-bottom: 1px solid #CCCCCC /* theme */ /* immutable */;
+    border-top: 1px solid var(--navSearchField_border-color) /* immutable */;
+    border-right: 1px solid var(--navSearchField_border-color) /* immutable */;
+    border-bottom: 1px solid var(--navSearchField_border-color) /* immutable */;
     border-left: none /* --veto */;
     border-top-right-radius: 2px /* const */ /* immutable */;
     border-bottom-right-radius: 2px /* const */ /* immutable */;
     box-sizing: border-box /* --because: Include padding in calculated width & height */;
-    color: #828282 /* theme */ /* protected */;
-    background: #F8F8F8 /* theme */ /* protected */; }
+    color: var(--navSearchButton_icon-color) /* protected */;
+    background: var(--navSearchButton_background) /* protected */; }
     form.nav__search-form button.nav__search-button:hover {
       cursor: pointer /* immutable */;
-      color: #333333 /* theme */ /* --override */;
-      background: #F0F0F0 /* theme */ /* --override */;
+      color: var(--navSearchButton_icon-color--hover) /* --override */;
+      background: var(--navSearchButton_background--hover) /* --override */;
       box-shadow: 0 1px 0px rgba(0, 0, 0, 0.1) /* immutable */; }
 
 div.nav__links {
@@ -498,7 +536,7 @@ nav:not(.nav--search-open) a.nav__close-search {
     display: none /* immutable */; } }
 
 section.left-shelf {
-  background: #FFFFFF /* const */ /* theme */ /* immutable */; }
+  background: var(--leftShelf_background) /* immutable */; }
 
 @media (max-width: 1275px) {
   section.left-shelf--open {
@@ -506,7 +544,7 @@ section.left-shelf {
     z-index: 2 /* immutable */;
     top: 55px /* --because: overshoot nav height by 1px to account for its bottom border */ /* immutable */;
     bottom: 0 /* immutable */;
-    border-top: 1px solid #EEEEEE /* theme */ /* theme */ /* immutable */; } }
+    border-top: 1px solid var(--leftShelf_border-color) /* immutable */; } }
 
 @media (min-width: 660px) and (max-width: 875px) {
   section.left-shelf--open:before {
@@ -516,7 +554,7 @@ section.left-shelf {
     right: 0 /* immutable */;
     height: 56px /* immutable */;
     width: 90px /* immutable */;
-    background: #FFFFFF /* const */ /* theme */ /* immutable */; } }
+    background: var(--nav_background) /* immutable */; } }
 
 @media (max-width: 1275px) {
   section.left-shelf:not(.left-shelf--open) {
@@ -529,21 +567,51 @@ div.left-shelf__inner {
   overflow: auto /* immutable */; }
 
 div.left-shelf__segments {
-  flex: 1 /* immutable */; }
+  flex: 1 /* immutable */;
+  padding-top: 10px /* immutable */; }
 
 div.left-shelf__segment {
   display: flex /* immutable */;
   flex-direction: column /* immutable */;
-  border-bottom: 1px solid #EEEEEE /* theme */ /* theme */ /* immutable */; }
+  border-bottom: 1px solid var(--leftShelf_border-color) /* immutable */; }
+
+a.left-shelf__item {
+  height: 40px /* immutable */;
+  display: flex /* immutable */;
+  align-items: center /* immutable */;
+  text-decoration: none /* --veto */; }
+  @media (max-width: 660px) {
+    a.left-shelf__item {
+      padding-left: 15px /* --because: vertically align with `.nav` menu icon */ /* immutable */; } }
+  @media (min-width: 660px) {
+    a.left-shelf__item {
+      padding-left: 25px /* --because: vertically align with `.nav` menu icon */ /* immutable */; } }
+  a.left-shelf__item:hover {
+    background: var(--leftShelfItem_background--hover) /* immutable */; }
+  a.left-shelf__item span.left-shelf__icon {
+    font-size: 16px /* const */ /* immutable */;
+    color: #888888 /* const */ /* public */; }
+  a.left-shelf__item span.left-shelf__item-name {
+    margin-left: 25px /* --because: vertically align with .nav__logo */ /* immutable */;
+    font-size: 14px /* immutable */;
+    color: var(--leftShelfItemName_color) /* immutable */; }
+
+a.left-shelf__item--active span.left-shelf__icon {
+  color: #E91D00 /* const */ /* --mutate */; }
+a.left-shelf__item--active span.left-shelf__item-name {
+  font-weight: bold /* immutable */; }
 
 @media (max-width: 660px) {
-  a.left-shelf__item,
-  span.left-shelf__items-title,
+  span.left-shelf__items-title {
+    padding-left: 15px /* --because: vertically align with `.nav` menu icon */ /* immutable */; } }
+@media (min-width: 660px) {
+  span.left-shelf__items-title {
+    padding-left: 25px /* --because: vertically align with `.nav` menu icon */ /* immutable */; } }
+
+@media (max-width: 660px) {
   footer.left-shelf__footer {
     padding-left: 15px /* --because: vertically align with `.nav` menu icon */ /* immutable */; } }
 @media (min-width: 660px) {
-  a.left-shelf__item,
-  span.left-shelf__items-title,
   footer.left-shelf__footer {
     padding-left: 25px /* --because: vertically align with `.nav` menu icon */ /* immutable */; } }
 
@@ -588,6 +656,6 @@ div.content-overlay:not(.content-overlay--visible) {
     display: none /* immutable */; } }
 
 section.content {
-  background: #FFFFFF /* const */ /* theme */ /* immutable */; }
+  background: var(--content_background) /* immutable */; }
 
 /*# sourceMappingURL=app.css.map */

@@ -7,10 +7,10 @@ nav {
     height: immutable($nav_height);
     position: --because(immutable(relative), 'bringToFront');
     z-index: --because(immutable(2), 'bringToFront');
-    border-bottom: immutable(1px solid $nav_border-bottom-color);
+    border-bottom: immutable(1px solid var(--nav_border-bottom-color));
     box-shadow: immutable(0 1px 6px 1px rgba(0,0,0,.08));
     box-sizing: --because(border-box, 'swallowBorder');
-    background: immutable($nav_background);
+    background: immutable(var(--nav_background));
 
     @media (max-width: $xs) {
         padding-left: immutable($viewport-gutter--xs);
@@ -27,7 +27,7 @@ nav {
             --because($click_padding, 'increaseClickArea')
         );
         font-size: immutable($icon_size--m);
-        color: immutable($nav_icon-color);
+        color: immutable(var(--nav_icon-color));
         text-decoration: --veto(none);
     }
 }
@@ -48,7 +48,7 @@ div.nav__controls {
     a.nav__logo {
         width: immutable(56px);
         height: immutable(24px);
-        background: immutable($nav_logo-image);
+        background: immutable(var(--nav_logo-image));
         background-repeat: immutable(no-repeat);
         background-size: immutable(56px 24px);
 
@@ -82,24 +82,24 @@ form.nav__search-form {
 
         &.focussed {
             div.cm-input-wrap {
-                border-color: --mutate(--overthrow($navSearchField_border-color--focussed));
+                border-color: --mutate(--overthrow(var(--navSearchField_border-color--focussed)));
                 box-shadow: --mutate(0px 2px 2px -2px rgba(0,0,0,.8) inset);
             }
         }
     }
 
     div.cm-input-wrap {
-        border-color: public(--overthrow($navSearchField_border-color));
+        border-color: public(--overthrow(var(--navSearchField_border-color)));
         box-shadow: public(0px 2px 2px -2px rgba(0,0,0,.2) inset);
         border-top-left-radius: immutable($navSearchField_border-radius);
         border-bottom-left-radius: immutable($navSearchField_border-radius);
-        background: --overthrow($navSearchField_background);
+        background: --overthrow(var(--navSearchField_background));
 
         input.cm-input {
             padding-left: --overthrow(12px);
             padding-right: --overthrow(12px);
             font-size: --overthrow(15px);
-            color: --overthrow($navSearchField_color);
+            color: --overthrow(var(--navSearchField_color));
         }
     }
 
@@ -110,8 +110,8 @@ form.nav__search-form {
         box-shadow: --overthrow(0px 2px 3px 0px rgba(0,0,0,.15));
 
         ul.cm-results {
-            border-right: immutable(1px solid $navSearchField_border-color);
-            border-left: immutable(1px solid $navSearchField_border-color);
+            border-right: immutable(1px solid var(--navSearchField_border-color));
+            border-left: immutable(1px solid var(--navSearchField_border-color));
             box-shadow: immutable(0px 7px 5px -4px rgba(0,0,0,.08) inset);
 
             &:hover {
@@ -119,7 +119,7 @@ form.nav__search-form {
             }
 
             li:last-child {
-                border-bottom: immutable(1px solid $navSearchField_border-color);
+                border-bottom: immutable(1px solid var(--navSearchField_border-color));
                 box-sizing: --because(border-box, 'swallowBorder');
             }
 
@@ -153,20 +153,20 @@ form.nav__search-form {
     button.nav__search-button {
         padding: immutable(5px 24px);
         font-size: immutable(14px);
-        border-top: immutable(1px solid $navSearchField_border-color);
-        border-right: immutable(1px solid $navSearchField_border-color);
-        border-bottom: immutable(1px solid $navSearchField_border-color);
+        border-top: immutable(1px solid var(--navSearchField_border-color));
+        border-right: immutable(1px solid var(--navSearchField_border-color));
+        border-bottom: immutable(1px solid var(--navSearchField_border-color));
         border-left: --veto(none);
         border-top-right-radius: immutable($navSearchField_border-radius);
         border-bottom-right-radius: immutable($navSearchField_border-radius);
         box-sizing: --because(border-box, 'swallowPadding');
-        color: protected($navSearchButton_icon-color);
-        background: protected($navSearchButton_background);
+        color: protected(var(--navSearchButton_icon-color));
+        background: protected(var(--navSearchButton_background));
 
         &:hover {
             cursor: immutable(pointer);
-            color: --override($navSearchButton_icon-color--hover);
-            background: --override($navSearchButton_background--hover);
+            color: --override(var(--navSearchButton_icon-color--hover));
+            background: --override(var(--navSearchButton_background--hover));
             box-shadow: immutable(0 1px 0px rgba(0,0,0,.1));
         }
     }

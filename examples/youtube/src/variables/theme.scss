@@ -1,0 +1,50 @@
+$theme--default: 'html:not(.theme--dark):not(.theme--blue):root';
+$theme--dark: 'html.theme--dark:not(.theme--blue):root';
+$theme--blue: 'html.theme--blue:not(.theme--dark):root';
+
+#{$theme--default} {
+    --nav_background:                        #{theme($white)};
+    --nav_border-bottom-color:               #{theme(#EEEEEE)};
+    --nav_icon-color:                        #{theme(#888888)};
+    --nav_logo-image:                        #{theme(url('http://localhost:8000/vendor/images/logo.png'))};
+
+    --navSearchField_background:             #{theme($white)};
+    --navSearchField_color:                  #{theme(#111111)};
+    --navSearchField_border-color:           #{theme(#CCCCCC)};
+    --navSearchField_border-color--focussed: #{theme(#1C62B9)};
+    --navSearchButton_background:            #{theme(#F8F8F8)};
+    --navSearchButton_background--hover:     #{theme(#F0F0F0)};
+    --navSearchButton_icon-color:            #{theme(#828282)};
+    --navSearchButton_icon-color--hover:     #{theme(#333333)};
+
+    --leftShelf_background:                  #{theme($white)};
+    --leftShelf_border-color:                #{theme(#EEEEEE)};
+    --leftShelfItem_background--hover:       #{theme(#EEEEEE)};
+    --leftShelfItemName_color:               #{theme(#111111)};
+
+    --content_background:                    #{theme($white)};
+}
+
+
+#{$theme--dark} {
+    --nav_background:                        #{theme(#232323)};
+    --nav_border-bottom-color:               #{theme(transparent)};
+    --nav_icon-color:                        #{theme($white)};
+    --nav_logo-image:                        #{theme(url('http://localhost:8000/vendor/images/logo-white.png'))};
+
+    --navSearchField_background:             #{theme(#111111)};
+    --navSearchField_color:                  #{theme(#E3E3E3)};
+    --navSearchField_border-color:           #{theme(#303030)};
+    --navSearchField_border-color--focussed: #{theme(#1C62B9)};
+    --navSearchButton_background:            #{theme(#343434)};
+    --navSearchButton_background--hover:     #{theme(#343434)};
+    --navSearchButton_icon-color:            #{theme(#717171)};
+    --navSearchButton_icon-color--hover:     #{theme(#999999)};
+
+    --leftShelf_background:                  #{theme(#1C1C1C)};
+    --leftShelf_border-color:                #{theme(#2E2E2E)};
+    --leftShelfItem_background--hover:       #{theme(#474747)};
+    --leftShelfItemName_color:               #{theme(#E4E4E4)};
+
+    --content_background:                    #{theme(#111111)};
+}

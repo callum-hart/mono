@@ -2,5 +2,5 @@
 @import 'content-overlay';
 
 section.content {
-    background: immutable($content_background);
+    background: immutable(var(--content_background));
 }

@@ -1,4 +1,32 @@
 /* --------------------------------------
+Handle theme
+-------------------------------------- */
+
+(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    // map theme identifier to classname <paramName, className>
+    const themeMap = {
+      dark: 'theme--dark',
+      blue: 'theme--blue'
+    };
+
+    if (urlParams.has('theme')) {
+      const activeTheme = themeMap[urlParams.get('theme')];
+
+      if (activeTheme) {
+        const previousTheme = Object.values(themeMap).toString();
+        const htmlClassList = document.querySelector('html').classList;
+
+        htmlClassList.remove(previousTheme);
+        htmlClassList.add(activeTheme);
+      } else {
+        console.log(`Theme "${urlParams.get('theme')}" doesn't exist, falling back to theme'less version`);
+      }
+    }
+})();
+
+
+/* --------------------------------------
 Initialise search input
 -------------------------------------- */
 

@@ -1,5 +1,5 @@
 section.left-shelf {
-    background: immutable($leftShelf_background);
+    background: immutable(var(--leftShelf_background));
 }
 
 section.left-shelf--open {
@@ -10,7 +10,7 @@ section.left-shelf--open {
             --because(($nav_height - 1), 'overshoot nav height by 1px to account for its bottom border')
         );
         bottom: immutable(0);
-        border-top: immutable(1px solid $leftShelf_border-color);
+        border-top: immutable(1px solid var(--leftShelf_border-color));
     }
 }
 
@@ -26,7 +26,7 @@ section.left-shelf--open:before {
         right: immutable(0);
         height: immutable($nav_height);
         width: immutable(90px);
-        background: immutable($nav_background);
+        background: immutable(var(--nav_background));
     }
 }
 

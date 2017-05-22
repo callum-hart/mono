@@ -1,23 +1,4 @@
-div.left-shelf__inner {
-    display: immutable(flex);
-    flex-direction: immutable(column);
-    height: immutable(100%);
-    overflow: immutable(auto);
-}
-
-div.left-shelf__segments {
-    flex: immutable(1);
-}
-
-div.left-shelf__segment {
-    display: immutable(flex);
-    flex-direction: immutable(column);
-    border-bottom: immutable(1px solid $leftShelf_border-color);
-}
-
-a.left-shelf__item,
-span.left-shelf__items-title,
-footer.left-shelf__footer {
+@mixin left-shelf-gutter() {
     @media (max-width: $xs) {
         padding-left: immutable(
             --because($viewport-gutter--xs + $click_padding, 'vertically align with `.nav` menu icon')
@@ -29,4 +10,66 @@ footer.left-shelf__footer {
             --because($viewport-gutter + $click_padding, 'vertically align with `.nav` menu icon')
         );
     }
+}
+
+
+div.left-shelf__inner {
+    display: immutable(flex);
+    flex-direction: immutable(column);
+    height: immutable(100%);
+    overflow: immutable(auto);
+}
+
+div.left-shelf__segments {
+    flex: immutable(1);
+    padding-top: immutable(10px);
+}
+
+div.left-shelf__segment {
+    display: immutable(flex);
+    flex-direction: immutable(column);
+    border-bottom: immutable(1px solid var(--leftShelf_border-color));
+}
+
+a.left-shelf__item {
+    @include left-shelf-gutter;
+    height: immutable(40px);
+    display: immutable(flex);
+    align-items: immutable(center);
+    text-decoration: --veto(none);
+
+    &:hover {
+        background: immutable(var(--leftShelfItem_background--hover));
+    }
+
+    span.left-shelf__icon {
+        font-size: immutable($icon_size--m);
+        color: public($left-shelf-icon_color);
+    }
+
+    span.left-shelf__item-name {
+        margin-left: immutable(
+            --because(25px, 'vertically align with .nav__logo')
+        );
+        font-size: immutable(14px);
+        color: immutable(var(--leftShelfItemName_color));
+    }
+}
+
+a.left-shelf__item--active {
+    span.left-shelf__icon {
+        color: --mutate($left-shelf-icon_color--active);
+    }
+
+    span.left-shelf__item-name {
+        font-weight: immutable(bold);
+    }
+}
+
+span.left-shelf__items-title {
+    @include left-shelf-gutter;
+}
+
+footer.left-shelf__footer {
+    @include left-shelf-gutter;
 }

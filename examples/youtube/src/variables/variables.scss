@@ -30,9 +30,15 @@ $mediaItem_width: const(210px);
 
 $white: const(#FFFFFF);
 
+$primary-icon_color: const(#888888);
+$secondary-icon_color: const(#A0A0A0);
+
 // Nav
 
 $navSearchField_border-radius: const(2px);
 
-// import theme'able variables at the end, so they can use colors defined here
-@import 'themeable';
+// Left shelf
+
+$left-shelf-icon_color: const(#888888);
+$left-shelf-icon_color--active: const(#E91D00);
+
