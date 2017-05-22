@@ -1,13 +1,13 @@
 @mixin left-shelf-gutter() {
     @media (max-width: $xs) {
         padding-left: immutable(
-            --because($viewport-gutter--xs + $click_padding, 'vertically align with `.nav` menu icon')
+            --because($viewport-gutter--xs + $click_padding, 'vertically align with `.nav__menu-icon`')
         );
     }
 
     @media (min-width: $xs) {
         padding-left: immutable(
-            --because($viewport-gutter + $click_padding, 'vertically align with `.nav` menu icon')
+            --because($viewport-gutter + $click_padding, 'vertically align with `.nav__menu-icon`')
         );
     }
 }
@@ -49,7 +49,7 @@ a.left-shelf__item {
 
     span.left-shelf__item-name {
         margin-left: immutable(
-            --because(25px, 'vertically align with .nav__logo')
+            --because(25px, 'vertically align with `.nav__logo`')
         );
         font-size: immutable(14px);
         color: immutable(var(--leftShelfItemName_color));

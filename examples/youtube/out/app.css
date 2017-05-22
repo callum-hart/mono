@@ -582,17 +582,17 @@ a.left-shelf__item {
   text-decoration: none /* --veto */; }
   @media (max-width: 660px) {
     a.left-shelf__item {
-      padding-left: 15px /* --because: vertically align with `.nav` menu icon */ /* immutable */; } }
+      padding-left: 15px /* --because: vertically align with `.nav__menu-icon` */ /* immutable */; } }
   @media (min-width: 660px) {
     a.left-shelf__item {
-      padding-left: 25px /* --because: vertically align with `.nav` menu icon */ /* immutable */; } }
+      padding-left: 25px /* --because: vertically align with `.nav__menu-icon` */ /* immutable */; } }
   a.left-shelf__item:hover {
     background: var(--leftShelfItem_background--hover) /* immutable */; }
   a.left-shelf__item span.left-shelf__icon {
     font-size: 16px /* const */ /* immutable */;
     color: #888888 /* const */ /* public */; }
   a.left-shelf__item span.left-shelf__item-name {
-    margin-left: 25px /* --because: vertically align with .nav__logo */ /* immutable */;
+    margin-left: 25px /* --because: vertically align with `.nav__logo` */ /* immutable */;
     font-size: 14px /* immutable */;
     color: var(--leftShelfItemName_color) /* immutable */; }
 
@@ -603,17 +603,17 @@ a.left-shelf__item--active span.left-shelf__item-name {
 
 @media (max-width: 660px) {
   span.left-shelf__items-title {
-    padding-left: 15px /* --because: vertically align with `.nav` menu icon */ /* immutable */; } }
+    padding-left: 15px /* --because: vertically align with `.nav__menu-icon` */ /* immutable */; } }
 @media (min-width: 660px) {
   span.left-shelf__items-title {
-    padding-left: 25px /* --because: vertically align with `.nav` menu icon */ /* immutable */; } }
+    padding-left: 25px /* --because: vertically align with `.nav__menu-icon` */ /* immutable */; } }
 
 @media (max-width: 660px) {
   footer.left-shelf__footer {
-    padding-left: 15px /* --because: vertically align with `.nav` menu icon */ /* immutable */; } }
+    padding-left: 15px /* --because: vertically align with `.nav__menu-icon` */ /* immutable */; } }
 @media (min-width: 660px) {
   footer.left-shelf__footer {
-    padding-left: 25px /* --because: vertically align with `.nav` menu icon */ /* immutable */; } }
+    padding-left: 25px /* --because: vertically align with `.nav__menu-icon` */ /* immutable */; } }
 
 section.media-items {
   margin: 0 auto /* immutable */; }

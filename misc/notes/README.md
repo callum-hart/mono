@@ -1,0 +1,1 @@
+Going to start putting related musings into seperate files. Makes it easier to digest & organise later on.
