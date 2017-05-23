@@ -22,6 +22,7 @@ $leftShelf_width: const(240px);
 
 $click_padding: 5px; // can't be const since it's used in a sass calculation
 
+$icon_size--xs: const(10px);
 $icon_size--s: const(12px);
 $icon_size--m: const(16px);
 $mediaItem_width: const(210px);

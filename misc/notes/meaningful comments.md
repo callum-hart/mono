@@ -28,7 +28,7 @@ a.someLink {
 }
 
 a.someLink:hover {
-    color: blue /* <@Override> */;
+    color: blue /* @Override */;
 }
 ```
 
@@ -57,7 +57,7 @@ span.childElement {
 }
 
 div.parentElement--active span.childElement {
-    background: blue /* <@Mutate> */;
+    background: blue /* @Mutate */;
 }
 ```
 

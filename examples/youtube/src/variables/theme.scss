@@ -22,6 +22,8 @@ $theme--blue: 'html.theme--blue:not(.theme--dark):root';
     --leftShelf_border-color:                #{theme(#EEEEEE)};
     --leftShelfItem_background--hover:       #{theme(#EEEEEE)};
     --leftShelfItemName_color:               #{theme(#111111)};
+    --leftShelfItemsTitle_color:             #{theme(#707070)};
+    --leftShelfItemFooterLabel_color:        #{theme(#707070)};
 
     --content_background:                    #{theme($white)};
 }
@@ -46,6 +48,8 @@ $theme--blue: 'html.theme--blue:not(.theme--dark):root';
     --leftShelf_border-color:                #{theme(#2E2E2E)};
     --leftShelfItem_background--hover:       #{theme(#474747)};
     --leftShelfItemName_color:               #{theme(#E4E4E4)};
+    --leftShelfItemsTitle_color:             #{theme(#A4A4A4)};
+    --leftShelfItemFooterLabel_color:        #{theme(#A4A4A4)};
 
     --content_background:                    #{theme(#111111)};
 }

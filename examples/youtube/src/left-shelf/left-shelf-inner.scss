@@ -18,16 +18,21 @@ div.left-shelf__inner {
     flex-direction: immutable(column);
     height: immutable(100%);
     overflow: immutable(auto);
+    padding-bottom: immutable(30px);
+    box-sizing: immutable(
+        --because(border-box, 'swallowPadding')
+    );
 }
 
 div.left-shelf__segments {
     flex: immutable(1);
-    padding-top: immutable(10px);
 }
 
 div.left-shelf__segment {
     display: immutable(flex);
     flex-direction: immutable(column);
+    padding-top: immutable(10px);
+    padding-bottom: immutable(10px);
     border-bottom: immutable(1px solid var(--leftShelf_border-color));
 }
 
@@ -47,6 +52,27 @@ a.left-shelf__item {
         color: public($left-shelf-icon_color);
     }
 
+    span.left-shelf__small-icon {
+        font-size: immutable($icon_size--xs);
+        color: immutable(#ABABAB);
+    }
+
+    span.left-shelf__red-icon {
+        margin-left: immutable(
+            --because(-4px, 'vertically align logo with logo in other segements (`.left-shelf__icon`)')
+        );
+        margin-right: immutable(
+            --because(-6px, 'vertically align text on the right with text in other segments')
+        );
+        padding: immutable(4px 5px 0px);
+        border-radius: immutable(15px);
+        font-size: immutable(15px);
+        background: immutable($left-shelf-icon_color--active);
+        color: immutable($white);
+        text-shadow: immutable(2px 2px 2px rgba(0,0,0,.3));
+    }
+
+    // todo: add ellipsis ...
     span.left-shelf__item-name {
         margin-left: immutable(
             --because(25px, 'vertically align with `.nav__logo`')
@@ -68,8 +94,42 @@ a.left-shelf__item--active {
 
 span.left-shelf__items-title {
     @include left-shelf-gutter;
+    margin-top: immutable(10px);
+    margin-bottom: immutable(6px);
+    text-transform: immutable(uppercase);
+    font-size: immutable(13px);
+    font-weight: immutable(bold);
+    color: immutable(var(--leftShelfItemsTitle_color));
 }
 
 footer.left-shelf__footer {
     @include left-shelf-gutter;
+    padding-top: immutable(14px);
+}
+
+div.left-shelf__footer-links {
+    margin-top: immutable(10px);
+
+    a {
+        margin-right: immutable(10px);
+        font-size: immutable(12px);
+        font-weight: immutable(600);
+        line-height: immutable(20px);
+        text-decoration: --veto(none);
+        color: immutable(#888888);
+    }
+}
+
+p.left-shelf__footer-vat {
+    margin-top: immutable(14px);
+    margin-bottom: --veto(0);
+    font-size: immutable(13px);
+    color: immutable(var(--leftShelfItemFooterLabel_color));
+}
+
+p.left-shelf__footer-copyright {
+    margin-top: immutable(30px);
+    margin-bottom: --veto(0);
+    font-size: immutable(13px);
+    color: immutable(var(--leftShelfItemFooterLabel_color));
 }
