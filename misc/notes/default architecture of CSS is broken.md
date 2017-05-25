@@ -24,7 +24,7 @@ The language seems to encourage this. Even from a clean slate browser defaults n
 
 CSS often suffers from high coupling and low cohesion, where reusable styles are tightly tied to those that aren't. This increases demand for overrides, since [unwanted] non-reusable styles need overriding.
 
-If overrides were removed CSS would be far more:
+If overrides were taken out of the equation CSS would be far more:
 
 - Robust
 - Predictable

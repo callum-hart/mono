@@ -1,3 +1,5 @@
+UPDATE: meaningful comments is an understatement! We can generate an **entity relationship model** showing how styles are connected now & in future interactions / states.
+
 Leverage the relationships formed by types & their modifiers to generate meaningful comments.
 *Idea orginally stemmed from `misc/screenshots/contextual comments.jpg`*
 

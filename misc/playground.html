@@ -263,7 +263,7 @@
 
         In mono modifiers provide not only an interface for controlled
         overrides, but depict how styles that often appear disparate
-        are interconnected.
+        are connected.
 
         Technically negation with pseudo selectors is possible
         (as seen above). But with it come new implications, especially
@@ -275,11 +275,11 @@
         span.child-span {
             font-size: 13px;
             font-weight: 200;
-            // not obvious what the color of the span is, or where it is set
+            // unaware what the color of the span is, or where it is set
         }
 
         div.parent-div:not(:hover) span.child-span {
-            color: grey; // setting default color of span feels strange from this context
+            color: grey; // setting default color of span feels strange from this context / is disjointed
         }
 
         div.parent-div:hover span.child-span {

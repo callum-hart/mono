@@ -27,7 +27,7 @@ Drawbacks:
 
 - Styling is coupled to JavaScript rendering.
 - Business logic / functional stuff highly coupled with presentation *(no seperation of concerns)*.
-- High barrier of entry - can't untilize a designer who knows HTML & CSS - they'd need to learn JS.
+- Higher barrier of entry - can't untilize a designer who knows HTML & CSS - they'd need to learn JS.
 - Styles tied into build process.
 - Anti-pattern. On the server-side it's considered bad practice to mix SQL with business logic, so why mix eveything up on the front-end?
 - Caching / performance implications?
@@ -53,8 +53,7 @@ Drawbacks:
 - Paradigm / design pattern *like Flux / Redux*
 - Annotations?
 - Macros, i.e extend of the CSS language
-- Dev tools
-    - Alerts you when immutable CSS property(s) are changed
+- Dev tools, i.e alerts you when immutable CSS property(s) are changed
 
 # What if CSS could be immutable?
 
@@ -824,7 +823,10 @@ preprocessor. It should be as agnostic as possible. Compatible with any CSS stra
     4. Predefined rules guide workflow -> less decision making
     5. Code feels more logical than abstract -> easier to reason with
     6. More confident to make changes -> less risk of side effects
-- More performant? Is it expensive for the CSSDOM to draw elements with duplicate property declarations? i.e draw h1 with font size 18px and then redraw h1 with font size 20px.
+- [Performance] More performant? Is it expensive for the CSSOM to draw elements with duplicate property declarations? i.e draw h1 with font size 18px and then redraw h1 with font size 20px. Yes it will be since CSS is a render blocking resource, so more CSS = slower page. Benchmarking: inspectror -> timeline -> event log -> parse stylesheet. Resources:
+    - https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css
+    - https://developers.google.com/web/fundamentals/performance/critical-rendering-path/constructing-the-object-model
+    - https://www.w3.org/TR/cssom-1/
 - [Motivation] Fed up of scrolling through inspectors style tab hunting down the 'winning' CSS rule. In some cases a property was set 10 times. And I just thought this has got to stop. Not only is tracking down styles difficult, changing them can be equally combersome: having to compete with specificity, cascade and importance. Often CSS rules only exist soley to overright unwanted inherited styles - differentiating between required styles and those that act as a bandaide is tricky. No wonder maintaing CSS is a nightmare! The problems are a **language** and **architectural** issue.
 - [Case studies] Look at the CSS for popular websites and see how often styles are overriden. For example the "What's happening" Netflix popup.
 - [Docs] When explaining concepts include a code example(s) demonstrating each concept in isolation. *Concept being a type / modifier / motive / pattern / principal*.
