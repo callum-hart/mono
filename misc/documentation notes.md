@@ -31,10 +31,11 @@ html body div.content p {
 ```
 
 - However becomes offensive when we want to override the color.
-- Override is a mutation. In other language mutation is handled via:
+- If we think of an override as a mutation we can look to other languages for guidance:
 	- Access modifiers - determine who & how a value can be modified.
 	- Setters - expose safe ways to modify otherwise inaccessible values.
 	- Data types - final in Java, const in ES6. Cannot change an object's reference. 
 	- Immutabiliy - a value that cannot be modifed after its creation. *(Subtly different to final; since you can change an immutable object's reference)*
-- All of which: provide a system for changing a value. Which doesn't exist in CSS & I'd suggest [the default architecture of CSS is broken]().
-- Key principle of mono: **change the overriding mechanism of CSS**. 
+- All of which: provide a system for changing a value. An equivalent system is missing from CSS - values can be changed from anywhere by everyone.
+- Key principle of mono: **change the overriding mechanism of CSS**, by enforcing restrictions on what styles can be changed, & who can change them - **controlled overrides**.
+- *Futher reading: [default architecture of CSS is broken]() and [no overrides vs controlled overrides]().*
