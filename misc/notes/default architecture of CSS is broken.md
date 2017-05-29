@@ -35,3 +35,5 @@ If overrides (in there current state) were taken out of the equation CSS would b
 Which begs the question:
 
 Can CSS be architected without adhering to its overriding nature?
+
+Overrides as a mechanism for reuse leads to spaghetti code.
