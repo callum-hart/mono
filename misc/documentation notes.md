@@ -9,12 +9,13 @@
 
 - Born out of my own fustration.
 - CSS development is expensive - it's labour intensive & time consuming.
-- CSS workflow:
+- Todays CSS workflow:
     - Hunting - locate where a style is set & who sets it.
     - Reasoning - why does a style exist? Is it even used?
     - Analyse - identifing what impact adding / changing / removing a style(s) will have.
     - Friction - now that we want to make a change have to compete with specificity, cascade & importance.
 - There must be a better way!
+	- *Further reading: current remedies (inline JS, pre-processors)*
 
 # Core concept
 
@@ -38,10 +39,10 @@ html body div.content p {
 - If we think of an override as a mutation we can look to other languages for guidance:
 	- Access modifiers - determine who & how a value can be modified.
 	- Setters - expose safe ways to modify otherwise inaccessible values.
-	- Data types - final in Java, const in ES6. Cannot change an object's reference. 
-	- Immutabiliy - a value that cannot be modifed after its creation. *(Subtly different to final; since you can change an immutable object's reference)*
-- All of which: provide a system for changing a value. An equivalent system is missing from CSS - values can be changed from anywhere by everyone.
-- Brings us to key principle of mono: **change the overriding mechanism of CSS**. How? By enforcing restrictions on what styles can be changed, & who can change them - **controlled overrides**.
+	- Data types - final in Java, const in ES6. Value cannot be modified through re-assignment.
+	- Immutabiliy - a value whose state cannot be modifed after its creation. *(Subtly different to final; since you can change an immutable object's reference)*
+- ^ All of which: provide a system for changing a value. An equivalent system is missing from CSS - values can be changed from anywhere by everyone. *Further reading: CSS compared with other languages.*
+- Brings us to key principle of mono: **change the overriding mechanism of CSS**. How? By enforcing restrictions on what styles can be changed, & who can change them - **controlled overrides**. By providing a coherent way to override styles.
 - *Futher reading: [default architecture of CSS is broken]() and [no overrides vs controlled overrides]().*
 - Secondary principle is **make CSS easier to reason with**. A CSS rule can exist for a range of reasons:
 	- Add a style
@@ -56,6 +57,7 @@ html body div.content p {
 .btn {
 	padding: 20px 10px;
 	font-size: 11px;
+	text-decoration: none;
 	border: 1px solid red;
 	border-radius: 0;
 	opacity: 1 !important;
@@ -68,16 +70,18 @@ html body div.content p {
 
 - No rationale behind why properties exist:
 	- Why is font-size set to 11px? *isn't broswer default 11px?*
+	- Why is text-decoration set to none?
 	- Why is the opacity set to 1? *isn't broswer default 1?*
 	- Why position relative? *can't think why that's needed...*
 - Yet at some point the rationale was there. Ah yes, after some hunting:
 	- font-size is set to 11px -> to override the font-size coming from bootstrap
+	- text-decoration set to none -> `.btn` can be a button or anchor; so override for the later.
 	- opacity is set to 1 -> because we still have that legacy script that sets button opacity to 0.
 	- can't see why position is set to relative... should be okay to remove ¯\_(ツ)_/¯
 - ^ Waste of time & energy.  
-- Benefits when code is easier to reason with:
+- Benefits of code that's easier to reason with:
 	- quicker to understand
-	- easier for others to understand (our code) 
+	- easier for others to understand
 	- quicker to debug 
 	- safer to add / change / remove
 	- reduces dead code
@@ -87,6 +91,83 @@ html body div.content p {
 
 # Guides
 
+- At its core mono is a design pattern. The core concepts *(change overriding mechanism of CSS & make CSS easier to reason with)* are achievable natively with CSS.
+- For convenience mono provides an implementation (via an API) & set of guidelines (via a design pattern).
+- API, composed of:
+	- Types
+	- Modifiers
+	- Motives
+	- *Futher reading: current vs future implementation*
+- Patterns, composed of:
+	- Negation
+	- Selector types
+	- Shorthand appropriately 
+	- Discrete breakpoints
+	- Universal entities
+
+## Types
+
+### Into
+
+- Set of data types for a CSS declaration.
+- Bound to the scope of a CSS rule-set.
+- Each property within a rule-set can have a type.
+- A type has a set of laws that govern how the declaration can subsequently be modified.
+
+### Data types
+
+**Immutable**
+
+Immutable properties can only be set once. They cannot be modified after creation. 
+
+```
+h3.title {
+	font-size<immutable>: 12px;
+}
+```
+
+- The font-size of `h3.title` is and always will be 12px.
+
+**Protected**
+
+Protected properties can only be modified by pseudo-classes derived from the same selector.
+
+```
+button.btn {
+	background<protected>: blue; 
+}
+
+button.btn:hover {
+	// allowed to modify background
+}
+```
+
+**Public**
+
+Public properties can only be modified by pseudo and modifier classes derived from descendant selectors.
+
+*Pseudo-class example:*
+
+```
+td {
+	color<public>: black;	
+}
+
+tr:hover td {
+	// allowed to modify color
+}
+```
+
+*Modifier class example:*
+
+```
+fieldset {
+	background<public>: white;
+}
+
+form.withError fieldset {
+	// allowed to modify background
+}
+```
+
 ...
-
-

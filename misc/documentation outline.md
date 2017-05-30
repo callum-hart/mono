@@ -36,7 +36,7 @@
 *Articles referenced in core (from the appropriate context)*
 
 - Default architecture of CSS is broken
-- JavaScript styles; inlining CSS with JavaScript
-- The case for immutable CSS *(CSS compared with other languages)*
+- Current remedies - inline JS, pre-processors
+- CSS compared with other languages
 - Controlled overrides vs no overrides
 - Entity relationship modeling with CSS
