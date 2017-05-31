@@ -107,14 +107,10 @@ html body div.content p {
 
 ## Types
 
-### Into
-
-- Set of data types for a CSS declaration.
+- Set of data types for CSS properties.
 - Bound to the scope of a CSS rule-set.
 - Each property within a rule-set can have a type.
 - A type has a set of laws that govern how the declaration can subsequently be modified.
-
-### Data types
 
 **Immutable**
 
@@ -150,7 +146,7 @@ Public properties can only be modified by pseudo and modifier classes derived fr
 
 ```
 td {
-	color<public>: black;	
+	color<public>: darkgray;	
 }
 
 tr:hover td {
@@ -170,4 +166,95 @@ form.withError fieldset {
 }
 ```
 
+## Modifiers
+
+- Mechanism to change the value of a CSS property.
+- Associated with a specific type - can only act on willing types.
+
+**Override**
+
+Can modify the value of CSS properties with the type Protected.
+
+```diff
+button.btn {
+	background<protected>: blue; 
+}
+
+button.btn:hover {
+-	// allowed to modify background
++   @override background: darkblue; 	
+}
+```
+
+**Mutate**
+
+Can modify the value of CSS properties with the type Public.
+
+```diff
+td {
+	color<public>: darkgray;	
+}
+
+tr:hover td {
+-	// allowed to modify color
++   @mutate color: black;
+}
+```
+
+## Motives
+
+- Add reasoning to CSS.
+- Goal of a motive is to off-load information about the code (from our brain) to the code itself.
+- As we have seen "A CSS rule can exist for a range of reasons". Motives capture the rational in the moment a property is declared. It's easy to forget why a property exists, which means once added it generally stays *(even when the reason for adding it is later nullified)*. This makes refactoring CSS rather dicey!
+- Externalizing information from our heads to artifacts not only frees our mind, but makes it easier for someone else to understand and work with.
+- Motives remove investing time and energy in justifying why a property exists.
+  
+**Overrule**
+
+Used when overriding inline CSS.
+
+```html
+<img src="path/to/cats.png"
+	alt="an awesome portrayal of cats"
+	class="pets" 
+	style="display: none;">
+```
+
+```
+img.pets {
+	@overrule display: block;
+}
+```
+
+**Overthrow**
+
+Used when overriding 3rd party CSS.
+
+For example the background color of [bootstrap]() buttons:
+
+```html
+<button type="button" class="btn btn-default">
+	Default
+</button>
+```
+
+```
+button.btn-default {
+	@overthrow background-color: honeydew;
+}
+```
+
+**Veto**
+
+Used when overriding user agent styles *(browser defaults)*.
+
 ...
+
+**Fallback**
+
+Used to denote a fallback properties for cross browser compatibility.
+
+**Because**
+
+Used to justify the usage of a property, or the reason for it's value.
+

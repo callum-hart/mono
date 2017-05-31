@@ -165,6 +165,33 @@
         font-size: 20px;
     }
 
+    ---
+
+    Flexibility of selectors without a type come at a cost.
+
+    .btn {
+        background: white;
+        border: 1px solid grey;
+        color: black;
+        text-decoration: none;
+    }
+
+    .btn can be a `button` or an `anchor`. `text-decoration` is only
+    needed for `anchor`.
+
+    Not to say can't use multiple selectors:
+
+    button.btn,
+    a.btn {
+        background: white;
+        border: 1px solid grey;
+        color: black;
+    }
+
+    a.btn {
+        text-decoration: none;
+    }
+
 */
 
 /**
