@@ -12,20 +12,20 @@
 - Todays CSS workflow:
     - Hunting - locate where a style is set & who sets it.
     - Reasoning - why does a style exist? Is it even used?
-    - Analyse - identifing what impact adding / changing / removing a style(s) will have.
-    - Friction - now that we want to make a change have to compete with specificity, cascade & importance.
+    - Analyse - identifing what impact adding / changing / removing a style will have.
+    - Friction - when making a change have to compete with specificity, cascade & importance.
 - There must be a better way!
-	- *Further reading: current remedies (inline JS, pre-processors)*
+	- *Further reading: current remedies (inline JS)*
 
 # Core concept
 
 - CSS painpoints:
     - Cause: global scope, cascade, specificity, importance.
     - Effect: brittle *(easy to break things)*, unpredictable *(no gaurentees / side affects)*, hard to maintain *(can't confidently add, edit, remove)*.
-- Worst offenders *(cascade, specificity, importance)* only become an issue when we have to work against them - i.e override styles.
+- Worst offenders *(cascade, specificity, importance)* only become an issue when we have to work against them - i.e override a style.
 - The following example is harmless in solitary:
 
-```
+```css
 html body div.content p {
     color: #ccc !important;
 }
@@ -35,25 +35,40 @@ html body div.content p {
 	- Use !important
 	- Use a selector with stronger specifity
 	- Use a selector with equal specifity & put overriding CSS later in the cascade
-- Fair amount of thought required just to override the color.
+- Fair amount of brainpower required just to override the color.
+
+**Override = mutation**
+
 - If we think of an override as a mutation we can look to other languages for guidance:
 	- Access modifiers - determine who & how a value can be modified.
 	- Setters - expose safe ways to modify otherwise inaccessible values.
 	- Data types - final in Java, const in ES6. Value cannot be modified through re-assignment.
-	- Immutabiliy - a value whose state cannot be modifed after its creation. *(Subtly different to final; since you can change an immutable object's reference)*
-- ^ All of which: provide a system for changing a value. An equivalent system is missing from CSS - values can be changed from anywhere by everyone. *Further reading: CSS compared with other languages.*
-- Brings us to key principle of mono: **change the overriding mechanism of CSS**. How? By enforcing restrictions on what styles can be changed, & who can change them - **controlled overrides**. By providing a coherent way to override styles.
+	- Immutabiliy - a value whose state cannot be modifed after its creation.
+- ^ All of which: **provide a system for changing a value**. An equivalent system is missing from CSS - values can be changed from anywhere by everyone. *Further reading: CSS compared with other languages.*
+
+**Key principle** 
+
+- Brings us to key principle of mono: **change the overriding mechanism of CSS**. 
+- How?:
+	- Enforcing restrictions on what styles can be changed, & who can change them - **controlled overrides**. 
+	- Providing a coherent way to override styles.
+- Easier to **analyse**, reduces **friction**.  
 - *Futher reading: [default architecture of CSS is broken]() and [no overrides vs controlled overrides]().*
-- Secondary principle is **make CSS easier to reason with**. A CSS rule can exist for a range of reasons:
+
+**Secondary principle**
+
+- Secondary principle is **make CSS easier to reason with**. 
+- Easier to **reason** & **analyse**.
+- A CSS rule can exist for a range of reasons:
 	- Add a style
 	- Override style
 	- Override style from a 3rd party (i.e bootstrap) 
 	- Provide a fallback (for older browsers)
 	- Undo user agent style
 	- Override an inline style 
-- This reasoning usually resides in our head. CSS offers no indication for it's purpose:
+- This reasoning usually resides in our head. CSS offers no indication of it's purpose:
 
-```
+```css
 .btn {
 	padding: 20px 10px;
 	font-size: 11px;
@@ -91,21 +106,46 @@ html body div.content p {
 
 # Guides
 
-- At its core mono is a design pattern. The core concepts *(change overriding mechanism of CSS & make CSS easier to reason with)* are achievable natively with CSS.
-- For convenience mono provides an implementation (via an API) & set of guidelines (via a design pattern).
-- API, composed of:
-	- Types
-	- Modifiers
-	- Motives
-	- *Futher reading: current vs future implementation*
-- Patterns, composed of:
-	- Negation
-	- Selector types
-	- Shorthand appropriately 
-	- Discrete breakpoints
-	- Universal entities
+- At its core mono is a design pattern - it's just as much an idea as it is a language.
+- It's selective, focussed on [core concepts](): 
+	- improving overriding mechanism of CSS
+	- making CSS easier to reason with
+- Two parts:
 
-## Types
+1. **Design pattern** - ways to architect naitive CSS
+2. **Language** - extending the CSS language
+
+- One of the [technical goals]() of mono is leverage naitive CSS as much as possible. Rule of thumb: only extend the language if it can't be achieved naitivly.
+- Look at design pattern first (since it's something you can start doing in CSS now, backbone for the mono language).
+
+## Design pattern
+
+**Selector types**
+
+All CSS selectors should include the element type.  
+
+Compare the following:
+
+```diff
+- .title {
++ h1.title {
+	font-size: 20px;
+}
+```
+
+- Without the element type the `title` class is obscure. We cannot make any gaurentee who the consumer is.
+- No control or insight into what other styles `title` has - other styles being user agent, our own, or 3rd party CSS.
+
+- **Shorthand appropriately**
+- **Negation** 
+- **Discrete breakpoints**
+- **Universal entities**
+
+## Language
+
+*Code samples - either use pseudo syntax / sass proof-of-concept syntax / future syntax. Using future syntax here could be misleading, and confusing? But do I want/expect people to use sass proof-of-concept?*
+
+### Types
 
 - Set of data types for CSS properties.
 - Bound to the scope of a CSS rule-set.
@@ -114,7 +154,7 @@ html body div.content p {
 
 **Immutable**
 
-Immutable properties can only be set once. They cannot be modified after creation. 
+Immutable properties can only be set once. They cannot be modified or more specically overriden. 
 
 ```
 h3.title {
@@ -137,6 +177,12 @@ button.btn:hover {
 	// allowed to modify background
 }
 ```
+
+- The background of `button.btn` can only be modified by:
+	- `button.btn:link`
+	- `button.btn:visited`
+	- `button.btn:hover`
+	- `button.btn:active` 
 
 **Public**
 
@@ -161,12 +207,12 @@ fieldset {
 	background<public>: white;
 }
 
-form.withError fieldset {
+form.form--withError fieldset {
 	// allowed to modify background
 }
 ```
 
-## Modifiers
+### Modifiers
 
 - Mechanism to change the value of a CSS property.
 - Associated with a specific type - can only act on willing types.
@@ -181,8 +227,7 @@ button.btn {
 }
 
 button.btn:hover {
--	// allowed to modify background
-+   @override background: darkblue; 	
++   background<@override>: darkblue; 	
 }
 ```
 
@@ -196,16 +241,16 @@ td {
 }
 
 tr:hover td {
--	// allowed to modify color
-+   @mutate color: black;
++   color<@mutate>: black;
 }
 ```
 
-## Motives
+### Motives
 
 - Add reasoning to CSS.
 - Goal of a motive is to off-load information about the code (from our brain) to the code itself.
-- As we have seen "A CSS rule can exist for a range of reasons". Motives capture the rational in the moment a property is declared. It's easy to forget why a property exists, which means once added it generally stays *(even when the reason for adding it is later nullified)*. This makes refactoring CSS rather dicey!
+- As we have seen "A CSS rule can exist for a range of reasons".
+- Motives capture the rational in the moment a property is declared. It's easy to forget why a property exists, which means once added it generally stays *(even when the reason for adding it is later nullified)*. This makes refactoring CSS rather dicey!
 - Externalizing information from our heads to artifacts not only frees our mind, but makes it easier for someone else to understand and work with.
 - Motives remove investing time and energy in justifying why a property exists.
   
@@ -222,7 +267,7 @@ Used when overriding inline CSS.
 
 ```
 img.pets {
-	@overrule display: block;
+	display<?overrule>: block;
 }
 ```
 
@@ -230,7 +275,7 @@ img.pets {
 
 Used when overriding 3rd party CSS.
 
-For example the background color of [bootstrap]() buttons:
+For example the background color of a [bootstrap]() button:
 
 ```html
 <button type="button" class="btn btn-default">
@@ -238,23 +283,54 @@ For example the background color of [bootstrap]() buttons:
 </button>
 ```
 
-```
+```css
 button.btn-default {
-	@overthrow background-color: honeydew;
+	background-color<?overthrow>: honeydew;
 }
 ```
+
+*If dependency (in this case bootstrap) is dropped we can confidently remove its overthrow rules.*
 
 **Veto**
 
 Used when overriding user agent styles *(browser defaults)*.
 
-...
+```css
+ul.contact-list {
+	margin-left<?veto>: 0;
+	padding-left<?veto>: 0;
+}
+```
 
 **Fallback**
 
-Used to denote a fallback properties for cross browser compatibility.
+Denote fallback properties used for cross browser compatibility.
+
+```css
+nav {
+	background<?fallback>: grey;
+	background: linear-gradient(white, black);
+}
+```
 
 **Because**
 
-Used to justify the usage of a property, or the reason for it's value.
+Used to justify the usage of a property, or reasoning behind   it's value.
+
+*For example `box-sizing` only exists to swallow the padding - (property usage):*
+
+```css
+section.news-feed {
+	padding<immutable>: 20px;
+	box-sizing<?because: padding)>: border-box;
+}
+```
+
+*And left margin is 20px to align the content with the nav - (value reasoning):*
+
+```css
+main.content {
+	margin-left<?because: align content with nav>: 20px;
+}
+```
 

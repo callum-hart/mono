@@ -930,3 +930,12 @@ Element: `<p class="heading"></p>`
 
 *High mutation count is bad. With Mono CSS mutation count should always be 1.*
 
+### Mono source comments
+
+Include reference to source file:line in compiled CSS:
+
+```
+nav.main-links {
+    _source: styles/nav/main.scss:20;
+}
+```

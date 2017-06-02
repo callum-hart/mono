@@ -1,0 +1,79 @@
+/*
+    Exploring ideas for mono syntax
+*/
+
+
+/*
+    Types
+*/
+
+fieldset {
+    background<public>: white;
+}
+
+fieldset {
+    public background: white;
+}
+
+// Types per rule-set.
+
+div.content<immutable> {
+    // property type is inferred by rule-set, in this case the background & border are immutable.
+    background: white;
+    border: 1px solid grey;
+}
+
+a.nav-link<immutable> {
+    font-size: 12px;
+    font-weight: bold;
+    color<protected>: grey; // properties can override the type inferred by rule-set.
+}
+
+/*
+    Modifiers
+*/
+
+form.withError fieldset {
+    background<@mutate>: red;
+}
+
+form.withError fieldset {
+    @mutate background: red;
+}
+
+/*
+    Motives
+*/
+
+button.btn-default {
+    background-color<@overthrow>: honeydew;
+}
+
+// <3 question mark notation, since motives explain usage
+button.btn-default {
+    background-color<?overthrow>: honeydew;
+}
+
+button.btn-default {
+    @overthrow background-color: honeydew;
+}
+
+// how to handle motives with parameters?
+
+div.content {
+    box-sizing<@because('swallowPadding')>: border-box;
+}
+
+div.content {
+    box-sizing<?because('swallowPadding')>: border-box;
+}
+
+a.sub-title {
+    color<?patch('ENG-123')>: grey; // possible new motive patch...
+}
+
+/*
+todo:
+- combinations - using a type with a motive
+- co-located media queries - see patterns.md:291
+*/

@@ -139,7 +139,7 @@
     - Improved scoping – styles are scoped to the elements that use them.
     - Encapsulation – styles are brought out of the global domain.
     - Better visibility – reduces ambiguity of consumers.
-    - Reduces conflicts – easier to avoid and track unwanted overides.
+    - Reduces conflicts – easier to avoid and track unwanted overrides.
 
     @problem:
 
@@ -294,8 +294,8 @@
         color: immutable(#ccc);
         font-family: immutable(operator);
         font-weight: immutable(300);
-        font-size:
-            switch(@meda) {
+        font-size<immutable>:
+            switch(@media) {
                 case width 0px -> 400px:
                     16px;
                 case width 400px -> 900px:
