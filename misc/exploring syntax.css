@@ -68,12 +68,16 @@ div.content {
     box-sizing<?because('swallowPadding')>: border-box;
 }
 
+div.content {
+    box-sizing<?because:swallowPadding>: border-box;
+}
+
 a.sub-title {
     color<?patch('ENG-123')>: grey; // possible new motive patch...
 }
 
 /*
 todo:
-- combinations - using a type with a motive
+- combinations - using a type with a motive, i.e `box-sizing<immutable, ?because:swallowPadding>`
 - co-located media queries - see patterns.md:291
 */

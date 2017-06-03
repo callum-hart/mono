@@ -122,7 +122,7 @@ html body div.content p {
 
 **Selector types**
 
-All CSS selectors should include the element type.  
+All selectors should include the element type.  
 
 Compare the following:
 
@@ -133,13 +133,318 @@ Compare the following:
 }
 ```
 
-- Without the element type the `title` class is obscure. We cannot make any gaurentee who the consumer is.
-- No control or insight into what other styles `title` has - other styles being user agent, our own, or 3rd party CSS.
+- Without the element type the `title` class is obscure. We cannot make any gaurentee who the consumer is. It doesn't have a predictable or concrete markup.
+- No control or insight into what other styles `title` can have - other styles being user agent, our own, or 3rd party CSS.
+- Easier to make connection between CSS & HTML.
+- Reduces conflicts by scoping styles to the elements that use them. Easier to avoid & track unintentional overrides. 
+- Not to say can't group selectors. For example:
 
-- **Shorthand appropriately**
-- **Negation** 
-- **Discrete breakpoints**
-- **Universal entities**
+```css
+button.btn,
+a.btn {
+	background: white;
+	border: 1px solid grey;
+	color: black;
+	text-decoration: none;
+}
+```
+
+- `text-decoration` only exists to override default for anchors. Doesn't need to apply to buttons (default `text-decoration` is already none). Better to eliminate dead code, and only apply required styles:
+
+```diff
+button.btn,
+a.btn {
+	background: white;
+	border: 1px solid grey;
+	color: black;
+-	text-decoration: none;
+}
+
++a.btn {
++	text-decoration: none;
++}
+```
+
+**Shorthand appropriately**
+
+Avoid using shorthand notation, unless property has multiple values.
+
+```css
+img.avatar {
+	margin: 10px 0 0 0;
+}
+
+nav img.avatar {
+	margin: 10px 0 0 15px;
+}
+```
+
+- The top margin of `.avatar` is concrete - it should always be 10px.
+- Issues with using shorthand for `.avatar` margin:
+ 	- **Illogical:** inside `nav` the top margin is re-applyed even though only the left margin is changed. Overriding value with the same value is illogical.
+ 	- **Error prone:** increases risk of accidentally overriding top margin to something other than 10px.
+ 	- **Maintenance:** if top margin is subsequently changed to 15px - there are more instances to update.
+ 	- **Unnecessary:** we can leverage browser defaults, margins are already 0.
+- Better to:
+
+```css
+img.avatar {
+	margin-top: 10px;
+}
+
+nav img.avatar {
+	margin-left: 15px;
+}
+```
+
+- Not only does this remove overrides, it also improves improves readability - since the property name describes where the value is applied.
+
+**Negation** 
+
+Negation uses the `:not` pseudo-class to avoid mutation amongst composable classes.
+
+*Example composable class is a [BEM modifier]().*
+
+```html
+<section>
+	<form class="form form--withError">
+	</form>
+</section>
+```
+
+```css
+form.form {
+	background: white;
+}
+
+form.form--withError {
+	background: red;
+}
+```
+*figure {n}*
+
+- With the class `.form--withError` the form background color is set twice. `.form--withError` overrides `.form`.
+- But this forces us to **respect the cascade**, the following produces a different outcome:
+
+```diff
+-form.form {
+-	background: white;
+-}
+
+form.form--withError {
+	background: red;
+}
+
++form.form {
++	background: white;
++}
+```
+- Even with the class `.form--withError` the form background will be always be white.
+- Couple of soultions:
+- Rely on **cascade** like in first example (fig n).
+- Or use **importance**:
+
+```diff
+form.form--withError {
++	background: red !important;
+}
+
+form.form {
+    background: white;
+}
+```
+- Or use **specificity:**
+
+```diff
++section form.form--withError {
+	background: red;
+}
+
+form.form {
+    background: white;
+}
+```
+- Demonstrates how: fickle CSS can be, unforgiving the cascade is, and the ease in which the worst offenders arise. *Those deeming this example fabricated: just think how many times you've had to fight the cascade.* 
+- **Solution with negation:**
+
+```css
+.form:not(.form--withError) {
+	background: white;
+}
+
+.form--withError {
+	background: red;
+}
+```
+
+- The background is set only once for each variation. Negation has removed the need to override the background color.
+- And since we're not relying on overrides we needn't worry about cascade, specificity nor importance.
+- Negation has bought us **portability** and **predictability**:
+
+```diff
+-.form:not(.form--withError) {
+-	background: white;
+-}
+
+.form--withError {
+	background: red;
+}
+
++.form:not(.form--withError) {
++	background: white;
++}
+```
+*figure {n} produces the same outcome.*
+
+- We can gaurentee the background color of `.form` is white, and `.form--withError` is red. We can gaurentee modifying styles in one rule won't bring unforeseen side-affects to the other. 
+ 
+**Discrete breakpoints**
+
+Breakpoint ranges need to be discrete. Which means styles within one media query cannot compete with styles in another.
+
+First lets look at indiscrete breakpoints (usually seen with mobile first):
+
+```css
+h3.heading {
+	font-size: 16px;
+}
+
+@media (min-width: 400px) {
+	h3.heading {
+		font-size: 18px;
+	}
+}
+
+@media (min-width: 900px) {
+	h3.heading {
+		font-size: 20px;
+	}
+}
+
+@media (min-width: 1200px) {
+	h3.heading {
+		font-size: 22px;
+	}
+}
+```
+
+- The styles within `min-width: 900px` override those in `min-width: 400px`, the styles within `min-width: 1200px` override those in `min-width: 400px` and `min-width: 900px`.
+- Without a max-width we are **dependent on the cascade.** As we've seen with negation relying on cascade is brittle & unpredictable:
+
+```diff
+-h3.heading {
+-	font-size: 16px;
+-}
+
+-@media (min-width: 400px) {
+-	h3.heading {
+-		font-size: 18px;
+-	}
+-}
+
+@media (min-width: 900px) {
+	h3.heading {
+		font-size: 20px;
+	}
+}
+
++h3.heading {
++	font-size: 16px;
++}
+
++@media (min-width: 400px) {
++	h3.heading {
++		font-size: 18px;
++	}
++}
+
+@media (min-width: 1200px) {
+	h3.heading {
+		font-size: 22px;
+	}
+}
+```
+*figure {n} order of styles changes the outcome*
+
+
+- It's better to **encapsulate styles** within discrete breakpoints:
+
+```css
+@media (max-width: 400px) {
+	h3.heading {
+		font-size: 16px;
+	}
+}
+
+@media (min-width: 400px) and (max-width: 900px) {
+	h3.heading {
+		font-size: 18px;
+	}
+}
+
+@media (min-width: 900px) and (max-width: 1200px) {
+	h3.heading {
+		font-size: 20px;
+	}
+}
+
+@media (min-width: 1200px) {
+	h3.heading {
+		font-size: 22px;
+	}
+}
+```
+
+- With discrete breakpoints the `font-size` of `h3.heading` is no longer overriden. 
+- At any given screen-size the `font-size` will have 1 definition.
+- This buys us portability & predictability:
+ 
+```css
+-@media (max-width: 400px) {
+-	h3.heading {
+-		font-size: 16px;
+-	}
+-}
+
+-@media (min-width: 400px) and (max-width: 900px) {
+-	h3.heading {
+-		font-size: 18px;
+-	}
+-}
+
+@media (min-width: 900px) and (max-width: 1200px) {
+	h3.heading {
+		font-size: 20px;
+	}
+}
+
++@media (max-width: 400px) {
++	h3.heading {
++		font-size: 16px;
++	}
++}
+
++@media (min-width: 400px) and (max-width: 900px) {
++	h3.heading {
++		font-size: 18px;
++	}
++}
+
+@media (min-width: 1200px) {
+	h3.heading {
+		font-size: 22px;
+	}
+}
+```
+*figure {n} produces the same outcome*
+ 
+- Just like negation, cascade, specicifity and importance no longer determine the winning style.
+- We can gaurentee styles within one media block won't be overriden by those in another. 
+
+**Universal entities**
+
+...
+
 
 ## Language
 
