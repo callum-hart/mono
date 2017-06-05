@@ -223,7 +223,7 @@ form.form--withError {
 ```
 *figure {n}*
 
-- With the class `.form--withError` the form background color is set twice. `.form--withError` overrides `.form`.
+- With the class `.form--withError` the form background is set twice (`.form--withError` overrides `.form`).
 - But this forces us to **respect the cascade**, the following produces a different outcome:
 
 ```diff
@@ -253,7 +253,7 @@ form.form {
     background: white;
 }
 ```
-- Or use **specificity:**
+- Or use **a higher specificity:**
 
 ```diff
 +section form.form--withError {
@@ -264,7 +264,7 @@ form.form {
     background: white;
 }
 ```
-- Demonstrates how: fickle CSS can be, unforgiving the cascade is, and the ease in which the worst offenders arise. *Those deeming this example fabricated: just think how many times you've had to fight the cascade.* 
+- Demonstrates how: fickle CSS can be, unforgiving the cascade is, and the ease in which the worst offenders arise. *Those deeming this example fabricated: just think how many times you've had to fight against the cascade.* 
 - **Solution with negation:**
 
 ```css
@@ -296,11 +296,12 @@ form.form {
 ```
 *figure {n} produces the same outcome.*
 
-- We can gaurentee the background color of `.form` is white, and `.form--withError` is red. We can gaurentee modifying styles in one rule won't bring unforeseen side-affects to the other. 
+- We can gaurentee the background color of `.form` is white, and `.form--withError` is red. 
+- We can gaurentee modifying styles in one rule won't bring unforeseen side-affects to the other. 
  
 **Discrete breakpoints**
 
-Breakpoint ranges need to be discrete. Which means styles within one media query cannot compete with styles in another.
+Breakpoint ranges need to be discrete. This means styles within one media query cannot compete with styles in another.
 
 First lets look at indiscrete breakpoints (usually seen with mobile first):
 
@@ -396,10 +397,10 @@ h3.heading {
 ```
 
 - With discrete breakpoints the `font-size` of `h3.heading` is no longer overriden. 
-- At any given screen-size the `font-size` will have 1 definition.
+- At any given screen-size the `font-size` will have one definition.
 - This buys us portability & predictability:
  
-```css
+```diff
 -@media (max-width: 400px) {
 -	h3.heading {
 -		font-size: 16px;
@@ -438,13 +439,71 @@ h3.heading {
 ```
 *figure {n} produces the same outcome*
  
-- Just like negation, cascade, specicifity and importance no longer determine the winning style.
-- We can gaurentee styles within one media block won't be overriden by those in another. 
+- Just like negation cascade no longer determines the winning style.
+- Just like negation the CSS property is set once for each variation; the variation being screen-size.
+- And since overrides have been omitted, we no longer need to orchestrate the cascade, nor resort to specificity or importance to override unwanted styles.
+- We can gaurentee what the `font-size` will be at different screen-sizes.
+- We can gaurentee the `font-size` within a given breakpoint won't get overriden by another.
 
 **Universal entities**
 
-...
+- Elements that always look the same, regardless of where they are used.
+- High usage - used frequently throughout project. A'la a common/global/core components. Examples: button, avatar, heading.
+- Styles are decoupled from their context - the same styles apply in every instance.
 
+### Problem
+
+```html
+<button class="btn">
+	Save
+</button>
+```
+
+```css
+button.btn {
+	padding: 8px 12px;
+	background: ivory;
+	border: 1px solid slategrey; 	
+	color: darkslategray;
+}
+```
+
+- What we want and what we get are different.
+	- We want the button to always look the same.
+	- However we cannot gaurentee this will be the case.
+- CSS **classes are brittle** - it's easy to override `btn` styles. 
+- **Lacks identity** nothing to differentiate `.btn` from other classes. Can't identify `btn` is a global component *(other than intuition)*.
+- Makes **reasoning more difficult**:  where & how often is this used, what is the impact of modifying it, where should I make changes. *(Todays CSS workflow)*
+- Increases risk of **unintentional overrides**, since the language & us *(the unassuming developer)* don't know any better.
+
+### Solution
+
+- Universal entities use a naming convention for their classnames.
+- They are prefixed with an asterix:
+
+```diff
++<button class="*btn">
+-<button class="btn">
+	Save
+</button>
+```
+
+```diff
++button.\*btn {
+-button.btn {
+	padding: 10px;
+	background: ivory;
+	border: 1px solid slategrey; 
+}
+```
+
+- Prefixing the class with a special character is a subtle change, but buys us a few things:
+	- **Protection:** adds a layer of protection. It's harder to accidentally override, since the selector is more verbose. (`div.\*box` vs `div.box`).
+	- **Identity:** easier to indentify & thus differentiate in both HTML & CSS.
+
+*Todo:*
+- contextual styles
+- child elements
 
 ## Language
 
