@@ -10,18 +10,18 @@
 - Born out of my own fustration.
 - CSS development is expensive - it's labour intensive & time consuming.
 - Todays CSS workflow:
-    - Hunting - locate where a style is set & who sets it.
-    - Reasoning - why does a style exist? Is it even used?
-    - Analyse - identifing what impact adding / changing / removing a style will have.
-    - Friction - when making a change have to compete with specificity, cascade & importance.
+    - **Hunting** - locate where a style is set & who sets it.
+    - **Reasoning** - why does a style exist? Is it even used?
+    - **Analyse** - identifing what impact adding / changing / removing a style will have.
+    - **Friction** - when making a change have to compete with specificity, cascade & importance.
 - There must be a better way!
-	- *Further reading: current remedies (inline JS)*
+- CSS is neglected, especially compared to it's partner in crime: JavaScript! 
 
 # Core concept
 
 - CSS painpoints:
     - Cause: global scope, cascade, specificity, importance.
-    - Effect: brittle *(easy to break things)*, unpredictable *(no gaurentees / side affects)*, hard to maintain *(can't confidently add, edit, remove)*.
+    - Effect: fragile *(easy to break things)*, unpredictable *(no gaurentees / side affects)*, hard to maintain *(can't confidently add, edit, remove)*.
 - Worst offenders *(cascade, specificity, importance)* only become an issue when we have to work against them - i.e override a style.
 - The following example is harmless in solitary:
 
@@ -53,6 +53,7 @@ html body div.content p {
 	- Enforcing restrictions on what styles can be changed, & who can change them - **controlled overrides**. 
 	- Providing a coherent way to override styles.
 - Easier to **analyse**, reduces **friction**.  
+- In essense JS styles are proving popular because they reduce the painpoints of overrides. *Further reading: current remedies (inline JS)*
 - *Futher reading: [default architecture of CSS is broken]() and [no overrides vs controlled overrides]().*
 
 **Secondary principle**
@@ -115,7 +116,7 @@ html body div.content p {
 1. **Design pattern** - ways to architect naitive CSS
 2. **Language** - extending the CSS language
 
-- One of the [technical goals]() of mono is leverage naitive CSS as much as possible. Rule of thumb: only extend the language if it can't be achieved naitivly.
+- One of the [technical goals]() of mono is **leverage naitive CSS** as much as possible. Rule of thumb: only extend the language if it can't be achieved naitivly.
 - Look at design pattern first (since it's something you can start doing in CSS now, backbone for the mono language).
 
 ## Design pattern
@@ -330,7 +331,7 @@ h3.heading {
 ```
 
 - The styles within `min-width: 900px` override those in `min-width: 400px`, the styles within `min-width: 1200px` override those in `min-width: 400px` and `min-width: 900px`.
-- Without a max-width we are **dependent on the cascade.** As we've seen with negation relying on cascade is brittle & unpredictable:
+- Without a max-width we are **dependent on the cascade.** As we've seen with negation relying on cascade is fragile & unpredictable:
 
 ```diff
 -h3.heading {
@@ -440,14 +441,14 @@ h3.heading {
 *figure {n} produces the same outcome*
  
 - Just like negation cascade no longer determines the winning style.
-- Just like negation the CSS property is set once for each variation; the variation being screen-size.
+- Just like negation the CSS property is set once for each variation; the variation here being screen-size.
 - And since overrides have been omitted, we no longer need to orchestrate the cascade, nor resort to specificity or importance to override unwanted styles.
 - We can gaurentee what the `font-size` will be at different screen-sizes.
 - We can gaurentee the `font-size` within a given breakpoint won't get overriden by another.
 
-**Universal entities**
+**Universals**
 
-- Elements that always look the same, regardless of where they are used.
+- Entities that always look the same, regardless of where they are used.
 - High usage - used frequently throughout project. A'la a common/global/core components. Examples: button, avatar, heading.
 - Styles are decoupled from their context - the same styles apply in every instance.
 
@@ -472,14 +473,13 @@ button.btn {
 	- We want the button to always look the same.
 	- However we cannot gaurentee this will be the case.
 - CSS **classes are brittle** - it's easy to override `btn` styles. 
-- **Lacks identity** nothing to differentiate `.btn` from other classes. Can't identify `btn` is a global component *(other than intuition)*.
-- Makes **reasoning more difficult**:  where & how often is this used, what is the impact of modifying it, where should I make changes. *(Todays CSS workflow)*
+- **Lacks identity** nothing to differentiate `.btn` from other classes. Can't identify `btn` is a global entity *(other than intuition)*.
+- Makes **reasoning more difficult**:  where & how often is `btn` used, what is the impact of modifying it, where should I make changes. *(Todays CSS workflow)*
 - Increases risk of **unintentional overrides**, since the language & us *(the unassuming developer)* don't know any better.
 
 ### Solution
 
-- Universal entities use a naming convention for their classnames.
-- They are prefixed with an asterix:
+- Universals use the following naming convention for their classname: `class="*[universalClass]"`, (they are prefixed with an asterix):
 
 ```diff
 +<button class="*btn">
@@ -498,12 +498,91 @@ button.btn {
 ```
 
 - Prefixing the class with a special character is a subtle change, but buys us a few things:
-	- **Protection:** adds a layer of protection. It's harder to accidentally override, since the selector is more verbose. (`div.\*box` vs `div.box`).
-	- **Identity:** easier to indentify & thus differentiate in both HTML & CSS.
+	- **Protection:** adds a layer of protection. It's harder to accidentally override, since the selector is more verbose. (`button.\*btn` vs `button.btn`).
+	- **Identity:** easier to indentify & thus differentiate in both HTML & CSS. Reduces risk of intensional overrides.
 
-*Todo:*
-- contextual styles
-- child elements
+##### Contextual styles
+
+- Universals can have contextual styles - CSS tied to a specific usage.
+- Contextual styles are applied using a seperate identifier class: `class="*[universalClass] [contextualClass]"`
+- This avoids polluting universal styles with those only relevant in specific use cases.
+- For example:
+
+```html
+<nav>
+	<button class="*btn nav__btn">
+		Save
+	</button>
+</nav
+```
+
+```css
+button.nav__btn {
+	margin-top: 20px;
+}
+```
+
+- Styles specific to the button in the `nav` should be applied using the class `.nav__btn`.
+
+##### Universal children
+
+- Some universals have child elements. These too should enjoy the benfits (protection & identity) of their parents.
+- Universal children use the following naming convention for their classname: `class="^[universalChildClass]"`, (they are prefixed with an caret):
+
+```html
+<section class="*chatBox">
+	<div class="^chatBox__header"></div>
+	<div class="^chatBox__footer"></div>
+</section>
+```
+
+```css
+div.\^chatBox__header {
+	background: seashell;
+}
+
+div.\^chatBox__footer {
+	border:	1px solid seagreen;
+}
+```
+
+- Again the prefix protects styles from the outside world, whilst providing an identity.
+- Universal children can have contextual styles, which [like universals] use an identifier class: `class="*[universalChildClass] [contextualClass]"`:
+
+```html
+<aside>
+	<section class="*chatBox">
+		<div class="^chatBox__header aside__chatBox__header"></div>
+		<div class="^chatBox__footer aside__chatBox__footer"></div>
+	</section>
+</aside>	
+```
+
+```css
+div.aside__chatBox__header {}
+
+div.aside__chatBox__footer {}
+```
+*Styles specific to the chat box within aside.*
+
+**Symbiotic**
+
+- Whilst presented seperately it's important to note the patterns work just as well together, as they do alone.
+- You may have noticed each [example] used **selector types**, and where appropriate the **shorthand notation**.
+- The following example demonstrates **negation**, **discrete breakpoints** & **universals** working in conjunction. Each focussed on their own role in omitting unessessary overrides. 
+
+
+```html
+<img class="*avatar *avatar--s" src="...">
+<img class="*avatar *avatar--m" src="...">
+<img class="*avatar *avatar--l" src="...">
+<img class="*avatar *avatar--l *avatar--square" src="...">
+```
+
+```css
+... todo
+```
+
 
 ## Language
 
