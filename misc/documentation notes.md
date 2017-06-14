@@ -107,7 +107,7 @@ html body div.content p {
 
 # Guides
 
-- At its core mono is a design pattern - it's just as much an idea as it is a language.
+- At its core mono is a programming paradigm - it's just as much an idea as it is a language.
 - It's selective, focussed on [core concepts](): 
 	- improving overriding mechanism of CSS
 	- making CSS easier to reason with
@@ -136,7 +136,7 @@ Compare the following:
 
 - Without the element type the `title` class is obscure. We cannot make any gaurentee who the consumer is. It doesn't have a predictable or concrete markup.
 - No control or insight into what other styles `title` can have - other styles being user agent, our own, or 3rd party CSS.
-- Easier to make connection between CSS & HTML.
+- With the element type it's easier to make connection between CSS & HTML.
 - Reduces conflicts by scoping styles to the elements that use them. Easier to avoid & track unintentional overrides. 
 - Not to say can't group selectors. For example:
 
@@ -304,7 +304,7 @@ form.form {
 
 Breakpoint ranges need to be discrete. This means styles within one media query cannot compete with styles in another.
 
-First lets look at indiscrete breakpoints (usually seen with mobile first):
+First lets look at indiscrete breakpoints (usually seen amongst mobile first design):
 
 ```css
 h3.heading {
@@ -331,7 +331,7 @@ h3.heading {
 ```
 
 - The styles within `min-width: 900px` override those in `min-width: 400px`, the styles within `min-width: 1200px` override those in `min-width: 400px` and `min-width: 900px`.
-- Without a max-width we are **dependent on the cascade.** As we've seen with negation relying on cascade is fragile & unpredictable:
+- Without a max-width we are **dependent on the cascade.** As we've seen with negation relying on cascade is **fragile & unpredictable**:
 
 ```diff
 -h3.heading {
@@ -473,12 +473,13 @@ button.btn {
 	- We want the button to always look the same.
 	- However we cannot gaurentee this will be the case.
 - CSS **classes are brittle** - it's easy to override `btn` styles. 
-- **Lacks identity** nothing to differentiate `.btn` from other classes. Can't identify `btn` is a global entity *(other than intuition)*.
+- **Lacks identity** nothing to differentiate `.btn` from other classes. Can't identify `btn` is a global entity *(other than intuition / speculation)*.
 - Makes **reasoning more difficult**:  where & how often is `btn` used, what is the impact of modifying it, where should I make changes. *(Todays CSS workflow)*
 - Increases risk of **unintentional overrides**, since the language & us *(the unassuming developer)* don't know any better.
 
 ### Solution
 
+- Partition & encapsulate universal styles.
 - Universals use the following naming convention for their classname: `class="*[universalClass]"`, (they are prefixed with an asterix):
 
 ```diff
@@ -547,7 +548,7 @@ div.\^chatBox__footer {
 ```
 
 - Again the prefix protects styles from the outside world, whilst providing an identity.
-- Universal children can have contextual styles, which [like universals] use an identifier class: `class="*[universalChildClass] [contextualClass]"`:
+- Universal children can have contextual styles, which [like universals] are denoted with an identifier class: `class="*[universalChildClass] [contextualClass]"`:
 
 ```html
 <aside>
@@ -583,16 +584,22 @@ div.aside__chatBox__footer {}
 ... todo
 ```
 
-
 ## Language
 
-*Code samples - either use pseudo syntax / sass proof-of-concept syntax / future syntax. Using future syntax here could be misleading, and confusing? But do I want/expect people to use sass proof-of-concept?*
+> Note: the mono language is still under development. This section contains the specification - defining standards, whilst providing an insight into what's to come.
+
+> You can find the [proposed syntax here](), although it's recommended to read the language specification first.
+
+- The mono language goes places where the design pattern can't. 
+- Composed of 3 parts:
+	- Types
+	- Modifiers
+	- Motives
 
 ### Types
 
 - Set of data types for CSS properties.
 - Bound to the scope of a CSS rule-set.
-- Each property within a rule-set can have a type.
 - A type has a set of laws that govern how the declaration can subsequently be modified.
 
 **Immutable**
@@ -629,7 +636,7 @@ button.btn:hover {
 
 **Public**
 
-Public properties can only be modified by pseudo and modifier classes derived from descendant selectors.
+Public properties can only be modified by pseudo and modifier classes derived from ancestor selectors.
 
 *Pseudo-class example:*
 
@@ -693,7 +700,7 @@ tr:hover td {
 - Add reasoning to CSS.
 - Goal of a motive is to off-load information about the code (from our brain) to the code itself.
 - As we have seen "A CSS rule can exist for a range of reasons".
-- Motives capture the rational in the moment a property is declared. It's easy to forget why a property exists, which means once added it generally stays *(even when the reason for adding it is later nullified)*. This makes refactoring CSS rather dicey!
+- Motives capture the rational in the moment a property is declared. It's easy to forget why a property exists, which means once added it generally stays *(even when the reason for adding it is later nullified)*.
 - Externalizing information from our heads to artifacts not only frees our mind, but makes it easier for someone else to understand and work with.
 - Motives remove investing time and energy in justifying why a property exists.
   
