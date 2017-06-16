@@ -820,7 +820,10 @@ a.sub-title {
 - The mono language is an extension of the [design pattern]().
 - Soley focussed on the [core concepts]() (improve overriding mechanism of CSS & make CSS easier to reason with).
 - As small as it can be - bloated projects are harder to consume!
-- Language designed to be unobtrusive. Simple / familiar is better.
+- Language designed to be: 
+	- Unobtrusive
+	- Familiar
+	- Consistent
 
 ## Compiled
 
@@ -828,16 +831,19 @@ a.sub-title {
 - Brings several benefits:
 	- Enforce the design pattern
 	- Enforce the type system
-	- Assist the developer
+	- Assist the developer. *The elm folks are visibily enjoying [compilers as assistants](). Both in terms of onboarding beginners, and providing a delightful developer experience.*
 
 ## Proposed syntax
 
-- Types, modifiers and motives share the same construct:
-	- Type: `property<Type>: value;`
-	- Modifier: `property<Modifier>: value;`
-	- Motive: `property<Motive>: value;`
+- Types, modifiers and motives share the same construct. 
+- Each notion is wrapped in croccodiles, between the CSS property name, and the colon (before the CSS property value):
+- `cssProperty<notion>: cssValue;`
+- It's important each notion is easy to identify, and thus differentiate.
+- **Type:** `property<Type>: value;` - just the type keyword 
+- **Modifier:** `property<@Modifier>: value;` - modifier keyword prefixed with @
+- **Motive:** `property<?Motive>: value;` - motive keyword prefixed with ?
 
-### Types 
+### Types
 
 ```css
 img.avatar {
@@ -850,4 +856,91 @@ img.avatar {
 }
 ```
 
+- Whilst types belong to individual CSS properties they can also be applied at the rule-set level - providing a less verbose alternative:
+
+```css
+img.avatar<immutable> {
+	height: 40px;
+	width: 40px;
+	border-style: solid;
+  	border-width: 2px;
+}
+```
+
+- The type is inferred by the rule-set. The `height`, `width`, `border-style` and `border-width` have the type immutable.
+- Properties can opt out of the inferred type at the property level:
+
+```diff
+img.avatar<immutable> {
+	height: 40px;
+	width: 40px;
+	border-style: solid;
+  	border-width: 2px;
++  	border-color<protected>: deepskyblue;
++	display<public>: flex;  	
+}
+```
+
+- `border-color` and `display` opt out of the inferred type, choosing to specifiy their own.
+
 ### Modifiers
+
+- Modifiers are prefixed with the **@** symbol.
+- `property<@Modifier>: value;`
+- *Those familiar with Java will recognise the @ symbol from [annotations]().*
+
+```css
+img.avatar:hover {
+  	border-color<@override>: dodgerblue;
+}
+
+nav.unauthenticated img.avatar {
+	display<@mutate>: none;
+}
+```
+
+### Motives
+
+- Motives are prefixed with the **?** symbol.
+- `property<?Motive>: value;`
+- I ❤️ the question mark notation, since motives explain usage. The ? asks why a property exists, and the motive provides an answer.
+
+```css
+button.btn-default {
+	background-color<?overthrow>: honeydew;
+}
+```
+
+- Some motives accept a parameter. 
+- For example the `patch` motive accepts a pointer to where more information can be found. *In this example the ID of JIRA ticket.*
+
+```css
+a.sub-title {
+	color<?patch: 'ENG-123456'>: cadetblue;
+}
+```
+
+- When ticket ENG-123456 has been resolved this declaration can be removed.
+
+## Combinations
+
+- There are times when types and motives are used in conjunction.
+- In these cases the notions are seperated with a comma:
+
+```css
+ul.todoList {
+	box-sizing<immutable, ?because:swallowPadding>
+}
+```
+
+## Revisions
+
+- The mono syntax is still a working draft.
+- Readability, easy to scan and read properties, since property names remain at the start of the line, and property values remain at the end of the line.
+- You can see the evolution of the syntax [here](). 
+
+## Add ons
+
+- Co-located media queries...
+
+
