@@ -848,6 +848,7 @@ preprocessor. It should be as agnostic as possible. Compatible with any CSS stra
 - Think of ways to visualize property mutations.
 - Could be represented as a timeline.
 - If a property for a given element mutates N times show each change. Almost like a debugger breakpoint at each mutation.
+- https://stackoverflow.com/questions/25724166/acessing-the-render-tree
 
 Example:
 

@@ -1,8 +1,21 @@
+# Notes for mono docs
+
+- [x] Introduction
+- [x] Motivation
+- [x] Core concepts
+- [] Case studies
+- [x] Guides
+	- [x] Design pattern
+	- [x] Mono language
+- [] Mono language
+	- Proposed Syntax
+	- Compiler specification
+
 # Introduction
 
 - Mono is a language that aims to reduce the difficulties of CSS development.
 - Based on established convensions from traditional programming languages *(data types, access modifiers & immutabiliy)*.
-- It makes CSS robust, predictable, & easy to reason with.
+- Mono makes CSS **robust**, **predictable**, & **easy to reason with**.
 - This improves maintainabiliy, developer confidence, & reduces side affects - resulting in faster development time, a happier developer experience, & ultimately fewer bugs.
 
 # Motivation
@@ -109,8 +122,8 @@ html body div.content p {
 
 - At its core mono is a programming paradigm - it's just as much an idea as it is a language.
 - It's selective, focussed on [core concepts](): 
-	- improving overriding mechanism of CSS
-	- making CSS easier to reason with
+	- improve overriding mechanism of CSS
+	- make CSS easier to reason with
 - Two parts:
 
 1. **Design pattern** - ways to architect naitive CSS
@@ -586,11 +599,13 @@ div.aside__chatBox__footer {}
 
 ## Language
 
+***Note to self:** I wonder whether it's more appropriate & relatable to refer to mono as a preprocessor...?*
+
 > Note: the mono language is still under development. This section contains the specification - defining standards, whilst providing an insight into what's to come.
 
-> You can find the [proposed syntax here](), although it's recommended to read the language specification first.
+> You can find the [proposed syntax here](), although it's recommended to read the language specification first. *IMO it's better to understand what's happening at a higher level, before deleving into semantics & syntx*.
 
-- The mono language goes places where the design pattern can't. 
+- The mono language goes places where the design pattern can't.
 - Composed of 3 parts:
 	- Types
 	- Modifiers
@@ -772,7 +787,7 @@ Used to justify the usage of a property, or reasoning behind   it's value.
 ```css
 section.news-feed {
 	padding<immutable>: 20px;
-	box-sizing<?because: padding)>: border-box;
+	box-sizing<?because: swallowPadding)>: border-box;
 }
 ```
 
@@ -780,7 +795,59 @@ section.news-feed {
 
 ```css
 main.content {
-	margin-left<?because: align content with nav>: 20px;
+	margin-left<?because: 'align content with nav'>: 20px;
 }
 ```
 
+**Patch**
+
+Used to denote temporary styles. 
+
+Usually related to a known bug, or feature that hasn't been finished yet.
+
+When the bug is fixed / feature is finished patchs associated with it can be removed.
+
+```css
+a.sub-title {
+	color<?patch: 'ENG-123456'>: cadetblue;
+}
+```
+
+# Mono language
+
+> Note: the mono language is still under development.
+
+- The mono language is an extension of the [design pattern]().
+- Soley focussed on the [core concepts]() (improve overriding mechanism of CSS & make CSS easier to reason with).
+- As small as it can be - bloated projects are harder to consume!
+- Language designed to be unobtrusive. Simple / familiar is better.
+
+## Compiled
+
+- Mono is a compiled language. 
+- Brings several benefits:
+	- Enforce the design pattern
+	- Enforce the type system
+	- Assist the developer
+
+## Proposed syntax
+
+- Types, modifiers and motives share the same construct:
+	- Type: `property<Type>: value;`
+	- Modifier: `property<Modifier>: value;`
+	- Motive: `property<Motive>: value;`
+
+### Types 
+
+```css
+img.avatar {
+	height<immutable>: 40px;
+	width<immutable>: 40px;
+	border-style<immutable>: solid;
+  	border-width<immutable>: 2px;
+  	border-color<protected>: deepskyblue;
+	display<public>: flex;
+}
+```
+
+### Modifiers
