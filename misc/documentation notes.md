@@ -8,8 +8,10 @@
 	- [x] Design pattern
 	- [x] Mono language
 - [] Mono language
-	- Proposed Syntax
-	- Compiler specification
+	- [x] Proposed Syntax
+	- [...] Compiler specification
+
+***Note to self:** Need to decide where examples should be mentioned*
 
 # Introduction
 
@@ -28,7 +30,7 @@
     - **Analyse** - identifing what impact adding / changing / removing a style will have.
     - **Friction** - when making a change have to compete with specificity, cascade & importance.
 - There must be a better way!
-- CSS is neglected, especially compared to it's partner in crime: JavaScript! 
+- CSS is neglected, especially compared to it's partner in crime: JavaScript!
 
 # Core concept
 
@@ -40,7 +42,7 @@
 
 ```css
 html body div.content p {
-    color: #ccc !important;
+	color: #ccc !important;
 }
 ```
 
@@ -59,27 +61,27 @@ html body div.content p {
 	- Immutabiliy - a value whose state cannot be modifed after its creation.
 - ^ All of which: **provide a system for changing a value**. An equivalent system is missing from CSS - values can be changed from anywhere by everyone. *Further reading: CSS compared with other languages.*
 
-**Key principle** 
+**Key principle**
 
-- Brings us to key principle of mono: **change the overriding mechanism of CSS**. 
+- Brings us to key principle of mono: **change the overriding mechanism of CSS**.
 - How?:
-	- Enforcing restrictions on what styles can be changed, & who can change them - **controlled overrides**. 
+	- Enforcing restrictions on what styles can be changed, & who can change them - **controlled overrides**.
 	- Providing a coherent way to override styles.
-- Easier to **analyse**, reduces **friction**.  
+- Easier to **analyse**, reduces **friction**.
 - In essense JS styles are proving popular because they reduce the painpoints of overrides. *Further reading: current remedies (inline JS)*
 - *Futher reading: [default architecture of CSS is broken]() and [no overrides vs controlled overrides]().*
 
 **Secondary principle**
 
-- Secondary principle is **make CSS easier to reason with**. 
+- Secondary principle is **make CSS easier to reason with**.
 - Easier to **reason** & **analyse**.
 - A CSS rule can exist for a range of reasons:
 	- Add a style
 	- Override style
-	- Override style from a 3rd party (i.e bootstrap) 
+	- Override style from a 3rd party (i.e bootstrap)
 	- Provide a fallback (for older browsers)
 	- Undo user agent style
-	- Override an inline style 
+	- Override an inline style
 - This reasoning usually resides in our head. CSS offers no indication of it's purpose:
 
 ```css
@@ -107,21 +109,21 @@ html body div.content p {
 	- text-decoration set to none -> `.btn` can be a button or anchor; so override for the later.
 	- opacity is set to 1 -> because we still have that legacy script that sets button opacity to 0.
 	- can't see why position is set to relative... should be okay to remove ¯\_(ツ)_/¯
-- ^ Waste of time & energy.  
+- ^ Waste of time & energy.
 - Benefits of code that's easier to reason with:
 	- quicker to understand
 	- easier for others to understand
-	- quicker to debug 
+	- quicker to debug
 	- safer to add / change / remove
 	- reduces dead code
 	- robust
-	- faster onboarding 
+	- faster onboarding
 	- happier developers!
 
 # Guides
 
 - At its core mono is a programming paradigm - it's just as much an idea as it is a language.
-- It's selective, focussed on [core concepts](): 
+- It's selective, focussed on [core concepts]():
 	- improve overriding mechanism of CSS
 	- make CSS easier to reason with
 - Two parts:
@@ -136,7 +138,7 @@ html body div.content p {
 
 **Selector types**
 
-All selectors should include the element type.  
+All selectors should include the element type.
 
 Compare the following:
 
@@ -150,7 +152,7 @@ Compare the following:
 - Without the element type the `title` class is obscure. We cannot make any gaurentee who the consumer is. It doesn't have a predictable or concrete markup.
 - No control or insight into what other styles `title` can have - other styles being user agent, our own, or 3rd party CSS.
 - With the element type it's easier to make connection between CSS & HTML.
-- Reduces conflicts by scoping styles to the elements that use them. Easier to avoid & track unintentional overrides. 
+- Reduces conflicts by scoping styles to the elements that use them. Easier to avoid & track unintentional overrides.
 - Not to say can't group selectors. For example:
 
 ```css
@@ -213,7 +215,7 @@ nav img.avatar {
 
 - Not only does this remove overrides, it also improves improves readability - since the property name describes where the value is applied.
 
-**Negation** 
+**Negation**
 
 Negation uses the `:not` pseudo-class to avoid mutation amongst composable classes.
 
@@ -275,10 +277,10 @@ form.form {
 }
 
 form.form {
-    background: white;
+  background: white;
 }
 ```
-- Demonstrates how: fickle CSS can be, unforgiving the cascade is, and the ease in which the worst offenders arise. *Those deeming this example fabricated: just think how many times you've had to fight against the cascade.* 
+- Demonstrates how: fickle CSS can be, unforgiving the cascade is, and the ease in which the worst offenders arise. *Those deeming this example fabricated: just think how many times you've had to fight against the cascade.*
 - **Solution with negation:**
 
 ```css
@@ -310,9 +312,9 @@ form.form {
 ```
 *figure {n} produces the same outcome.*
 
-- We can gaurentee the background color of `.form` is white, and `.form--withError` is red. 
-- We can gaurentee modifying styles in one rule won't bring unforeseen side-affects to the other. 
- 
+- We can gaurentee the background color of `.form` is white, and `.form--withError` is red.
+- We can gaurentee modifying styles in one rule won't bring unforeseen side-affects to the other.
+
 **Discrete breakpoints**
 
 Breakpoint ranges need to be discrete. This means styles within one media query cannot compete with styles in another.
@@ -410,10 +412,10 @@ h3.heading {
 }
 ```
 
-- With discrete breakpoints the `font-size` of `h3.heading` is no longer overriden. 
+- With discrete breakpoints the `font-size` of `h3.heading` is no longer overriden.
 - At any given screen-size the `font-size` will have one definition.
 - This buys us portability & predictability:
- 
+
 ```diff
 -@media (max-width: 400px) {
 -	h3.heading {
@@ -452,7 +454,7 @@ h3.heading {
 }
 ```
 *figure {n} produces the same outcome*
- 
+
 - Just like negation cascade no longer determines the winning style.
 - Just like negation the CSS property is set once for each variation; the variation here being screen-size.
 - And since overrides have been omitted, we no longer need to orchestrate the cascade, nor resort to specificity or importance to override unwanted styles.
@@ -477,7 +479,7 @@ h3.heading {
 button.btn {
 	padding: 8px 12px;
 	background: ivory;
-	border: 1px solid slategrey; 	
+	border: 1px solid slategrey;
 	color: darkslategray;
 }
 ```
@@ -485,7 +487,7 @@ button.btn {
 - What we want and what we get are different.
 	- We want the button to always look the same.
 	- However we cannot gaurentee this will be the case.
-- CSS **classes are brittle** - it's easy to override `btn` styles. 
+- CSS **classes are brittle** - it's easy to override `btn` styles.
 - **Lacks identity** nothing to differentiate `.btn` from other classes. Can't identify `btn` is a global entity *(other than intuition / speculation)*.
 - Makes **reasoning more difficult**:  where & how often is `btn` used, what is the impact of modifying it, where should I make changes. *(Todays CSS workflow)*
 - Increases risk of **unintentional overrides**, since the language & us *(the unassuming developer)* don't know any better.
@@ -507,7 +509,7 @@ button.btn {
 -button.btn {
 	padding: 10px;
 	background: ivory;
-	border: 1px solid slategrey; 
+	border: 1px solid slategrey;
 }
 ```
 
@@ -569,7 +571,7 @@ div.\^chatBox__footer {
 		<div class="^chatBox__header aside__chatBox__header"></div>
 		<div class="^chatBox__footer aside__chatBox__footer"></div>
 	</section>
-</aside>	
+</aside>
 ```
 
 ```css
@@ -583,7 +585,7 @@ div.aside__chatBox__footer {}
 
 - Whilst presented seperately it's important to note the patterns work just as well together, as they do alone.
 - You may have noticed each [example] used **selector types**, and where appropriate the **shorthand notation**.
-- The following example demonstrates **negation**, **discrete breakpoints** & **universals** working in conjunction. Each focussed on their own role in omitting unessessary overrides. 
+- The following example demonstrates **negation**, **discrete breakpoints** & **universals** working in conjunction. Each focussed on their own role in omitting unessessary overrides.
 
 
 ```html
@@ -599,9 +601,9 @@ div.aside__chatBox__footer {}
 
 ## Language
 
-***Note to self:** I wonder whether it's more appropriate & relatable to refer to mono as a preprocessor...?*
+**Note to self:** *I wonder whether it's more appropriate & relatable to refer to mono as a preprocessor...?*
 
-> Note: the mono language is still under development. This section contains the specification - defining standards, whilst providing an insight into what's to come.
+> Note: the mono language is still under development. This section contains the language specification - defining standards, whilst providing an insight into what's to come.
 
 > You can find the [proposed syntax here](), although it's recommended to read the language specification first. *IMO it's better to understand what's happening at a higher level, before deleving into semantics & syntx*.
 
@@ -619,7 +621,7 @@ div.aside__chatBox__footer {}
 
 **Immutable**
 
-Immutable properties can only be set once. They cannot be modified or more specically overriden. 
+Immutable properties can only be set once. They cannot be modified or more specically overriden.
 
 ```
 h3.title {
@@ -635,7 +637,7 @@ Protected properties can only be modified by pseudo-classes derived from the sam
 
 ```
 button.btn {
-	background<protected>: blue; 
+	background<protected>: blue;
 }
 
 button.btn:hover {
@@ -647,7 +649,7 @@ button.btn:hover {
 	- `button.btn:link`
 	- `button.btn:visited`
 	- `button.btn:hover`
-	- `button.btn:active` 
+	- `button.btn:active`
 
 **Public**
 
@@ -657,7 +659,7 @@ Public properties can only be modified by pseudo and modifier classes derived fr
 
 ```
 td {
-	color<public>: darkgray;	
+	color<public>: darkgray;
 }
 
 tr:hover td {
@@ -688,11 +690,11 @@ Can modify the value of CSS properties with the type Protected.
 
 ```diff
 button.btn {
-	background<protected>: blue; 
+	background<protected>: blue;
 }
 
 button.btn:hover {
-+   background<@override>: darkblue; 	
++	background<@override>: darkblue;
 }
 ```
 
@@ -702,11 +704,11 @@ Can modify the value of CSS properties with the type Public.
 
 ```diff
 td {
-	color<public>: darkgray;	
+	color<public>: darkgray;
 }
 
 tr:hover td {
-+   color<@mutate>: black;
++	color<@mutate>: black;
 }
 ```
 
@@ -718,7 +720,7 @@ tr:hover td {
 - Motives capture the rational in the moment a property is declared. It's easy to forget why a property exists, which means once added it generally stays *(even when the reason for adding it is later nullified)*.
 - Externalizing information from our heads to artifacts not only frees our mind, but makes it easier for someone else to understand and work with.
 - Motives remove investing time and energy in justifying why a property exists.
-  
+
 **Overrule**
 
 Used when overriding inline CSS.
@@ -726,7 +728,7 @@ Used when overriding inline CSS.
 ```html
 <img src="path/to/cats.png"
 	alt="an awesome portrayal of cats"
-	class="pets" 
+	class="pets"
 	style="display: none;">
 ```
 
@@ -801,7 +803,7 @@ main.content {
 
 **Patch**
 
-Used to denote temporary styles. 
+Used to denote temporary styles.
 
 Usually related to a known bug, or feature that hasn't been finished yet.
 
@@ -820,28 +822,18 @@ a.sub-title {
 - The mono language is an extension of the [design pattern]().
 - Soley focussed on the [core concepts]() (improve overriding mechanism of CSS & make CSS easier to reason with).
 - As small as it can be - bloated projects are harder to consume!
-- Language designed to be: 
+- Language designed to be:
 	- Unobtrusive
 	- Familiar
 	- Consistent
 
-## Compiled
-
-- Mono is a compiled language. 
-- Brings several benefits:
-	- Enforce the design pattern
-	- Enforce the type system
-	- Assist the developer. *The elm folks are visibily enjoying [compilers as assistants](). Both in terms of onboarding beginners, and providing a delightful developer experience.*
-
 ## Proposed syntax
 
-- Types, modifiers and motives share the same construct. 
-- Each notion is wrapped in croccodiles, between the CSS property name, and the colon (before the CSS property value):
-- `cssProperty<notion>: cssValue;`
-- It's important each notion is easy to identify, and thus differentiate.
-- **Type:** `property<Type>: value;` - just the type keyword 
-- **Modifier:** `property<@Modifier>: value;` - modifier keyword prefixed with @
-- **Motive:** `property<?Motive>: value;` - motive keyword prefixed with ?
+- Types, modifiers and motives share the same construct.
+
+`cssProperty<notion>: cssValue;`
+
+- Notions are wrapped in croccodiles <> (between the CSS property name, and the colon that follows).
 
 ### Types
 
@@ -850,20 +842,20 @@ img.avatar {
 	height<immutable>: 40px;
 	width<immutable>: 40px;
 	border-style<immutable>: solid;
-  	border-width<immutable>: 2px;
-  	border-color<protected>: deepskyblue;
+  border-width<immutable>: 2px;
+  border-color<protected>: deepskyblue;
 	display<public>: flex;
 }
 ```
 
-- Whilst types belong to individual CSS properties they can also be applied at the rule-set level - providing a less verbose alternative:
+- Whilst types belong to each CSS property they can also be applied at the rule-set level - providing a less verbose alternative:
 
 ```css
 img.avatar<immutable> {
 	height: 40px;
 	width: 40px;
 	border-style: solid;
-  	border-width: 2px;
+  border-width: 2px;
 }
 ```
 
@@ -875,9 +867,9 @@ img.avatar<immutable> {
 	height: 40px;
 	width: 40px;
 	border-style: solid;
-  	border-width: 2px;
-+  	border-color<protected>: deepskyblue;
-+	display<public>: flex;  	
+  border-width: 2px;
++ border-color<protected>: deepskyblue;
++	display<public>: flex;
 }
 ```
 
@@ -891,7 +883,7 @@ img.avatar<immutable> {
 
 ```css
 img.avatar:hover {
-  	border-color<@override>: dodgerblue;
+  border-color<@override>: dodgerblue;
 }
 
 nav.unauthenticated img.avatar {
@@ -911,7 +903,7 @@ button.btn-default {
 }
 ```
 
-- Some motives accept a parameter. 
+- Some motives accept a parameter.
 - For example the `patch` motive accepts a pointer to where more information can be found. *In this example the ID of JIRA ticket.*
 
 ```css
@@ -920,7 +912,7 @@ a.sub-title {
 }
 ```
 
-- When ticket ENG-123456 has been resolved this declaration can be removed.
+*When ticket ENG-123456 has been resolved this declaration can be removed.*
 
 ## Combinations
 
@@ -933,14 +925,60 @@ ul.todoList {
 }
 ```
 
-## Revisions
+## Design desisions
 
-- The mono syntax is still a working draft.
-- Readability, easy to scan and read properties, since property names remain at the start of the line, and property values remain at the end of the line.
-- You can see the evolution of the syntax [here](). 
+- **Consistent:** Mono notions are wrapped in croccodiles <>.
+- **Distinguishable:** Each notion is easy to identify, and thus differentiate. Types consisting of the keyword, modifiers prefixed with @, and motives prefixed with ?.
+- **Readability:** Notions are unobtrusive which makes it easy to scan & read CSS declations. *Property names remain at the beginning of a line, and property values at the end.*
+- **WIP:** mono syntax is still a working draft. You can see its evolution [here](exploring syntax.css).
 
-## Add ons
+## Co-located media queries
 
-- Co-located media queries...
+- Another addition mono brings to naitive CSS is **co-located media queries**.
+- Often media queries are scattered around a project, which makes CSS harder to reason with.
+- One pre-processor delight is [nested media queries](http://sass-lang.com/documentation/file.SASS_REFERENCE.html#media).
 
+> "[nested media queris] make it easy to add media-specific styles without having to repeat selectors or break the flow of the stylesheet." - SASS docs
 
+- Mono builds upon this idea.
+- Rather than repeating declations (for each media query) a single property can declare multiple values for different media features.
+- This conforms to monos ideology, whilst making media-specific styles declarative & easy to read.
+- Take the following:
+
+```css
+aside.contextualInfo {
+  font-family<immutable>: 'operator mono';
+  font-weight<immutable>: 300;
+  font-size<immutable>:
+  switch(@media screen) {
+	  case width 0px -> 400px:
+      16px;
+    case width 400px -> 900px:
+      14px;
+    default:
+      12px;
+    }
+}
+```
+
+- Benefits of co-location:
+	- **Readability:** easy to identify the value of `font-size` changes depending on screen-size.
+	- **Maintenance:** one place to add / edit styles.
+	- **Omits cascade:** orchestrating where to put media-queries no longer a concern.
+
+# Compiler specification
+
+> Note: mono is still under development. This section contains the compiler specification - defining standards, and test-cases.
+
+- Mono is a compiled language.
+- Brings several benefits:
+	- Enforce the design pattern
+	- Enforce the type system
+	- Assist the developer. *The elm folks are visibily enjoying [compilers as assistants](). Both in terms of onboarding beginners, and providing a delightful developer experience.*
+
+- design patterns
+	- missing element type
+	- indiscrete breakpoints
+	- shorthand misuse?
+- type system
+	- illegal modifiers (i.e trying to @override an immutable property)
