@@ -319,7 +319,7 @@ form.form {
 
 Breakpoint ranges need to be discrete. This means styles within one media query cannot compete with styles in another.
 
-First lets look at indiscrete breakpoints (usually seen amongst mobile first design):
+First lets look at **indiscrete breakpoints** (usually seen amongst mobile first design):
 
 ```css
 h3.heading {
@@ -457,7 +457,7 @@ h3.heading {
 
 - Just like negation cascade no longer determines the winning style.
 - Just like negation the CSS property is set once for each variation; the variation here being screen-size.
-- And since overrides have been omitted, we no longer need to orchestrate the cascade, nor resort to specificity or importance to override unwanted styles.
+- And since overrides have been omitted, we no longer need to orchestrate the cascade, nor resort to specificity or importance to override unsavoury styles.
 - We can gaurentee what the `font-size` will be at different screen-sizes.
 - We can gaurentee the `font-size` within a given breakpoint won't get overriden by another.
 
@@ -920,7 +920,7 @@ a.sub-title {
 - In these cases the notions are seperated with a comma:
 
 ```css
-ul.todoList {
+ul.todo-list {
 	box-sizing<immutable, ?because:swallowPadding>
 }
 ```
@@ -976,9 +976,133 @@ aside.contextualInfo {
 	- Enforce the type system
 	- Assist the developer. *The elm folks are visibily enjoying [compilers as assistants](). Both in terms of onboarding beginners, and providing a delightful developer experience.*
 
-- design patterns
-	- missing element type
-	- indiscrete breakpoints
-	- shorthand misuse?
+## Errors
+
+*Design pattern errors*
+
+**Missing element type**
+
+Occurs when a CSS selector is missing element type.
+
+*Source:*
+
+```css
+.guest-list {
+	margin-left<?veto>: 0;
+	padding-left<?veto>: 0;
+}
+```
+
+*Error:*
+
+```bash
+-- Missing element type --------------------------------- app.css
+
+The selector `.guest-list` is missing an element type.
+
+12| .guest-list {
+	^^^
+	
+`.guest-list` needs to be scoped to a HTML element(s).
+
+For example:
+
+`div.guest-list {`
+```
+
+**Inappropriate shorthand**
+
+Occurs when shorthand notation is misused.
+
+*Source:*
+
+```css
+div.nav__links {
+	margin<immutable>: 10px 0 0 0;
+}
+```
+
+*Error:*
+
+```bash
+-- Inappropriate shorthand ------------------------------ nav.css
+
+`div.nav__links` unnecessarily uses shorthand notation for the property `margin`.
+
+3| div.nav__links {
+4|   margin<immutable>: 10px 0 0 0;
+							 ^^^^^
+
+Only the top margin needs to be applied.
+
+For example:
+
+div.nav__links {
+  margin-top<immutable>: 10px;
+```
+
+**Indiscrete breakpoints**
+
+Occurs when...
+
+*Source:*
+
+```css
+@media (min-width: 400px) {
+ h3.heading {
+  font-size: 16px;
+ }
+}
+
+@media (min-width: 900px) {
+ h3.heading {
+  font-size: 18px;
+ }
+}
+
+@media (min-width: 1200px) {
+ h3.heading {
+  font-size: 20px;
+ }
+}
+```
+
+*Error:*
+
+```bash
+-- Indiscrete breakpoints ------------------------ typography.css
+
+The breakpoints for ` h3.heading` are conflicting.
+
+1| @media (min-width: 400px) {		
+2|  h3.heading {
+
+7| @media (min-width: 900px) {
+8|  h3.heading {
+
+13| @media (min-width: 1200px) {
+14|  h3.heading {
+
+Breakpoints should be discrete. Those for `h3.heading` are missing a `max-width`.
+ 
+May I suggest:
+
+@media (min-width: 400px) and (max-width: 900px) {
+						  ^^^^^^^^^^^^^^^^^^^^^^			
+ h3.heading {
+
+@media (min-width: 900px) and (max-width: 1200px) {
+						  ^^^^^^^^^^^^^^^^^^^^^^^
+ h3.heading {
+```
+
+*Type system errors*
+
 - type system
 	- illegal modifiers (i.e trying to @override an immutable property)
+- parsing
+	- unrecognised type
+	- unrecognised modifier
+	- unrecognised motive
+
+
