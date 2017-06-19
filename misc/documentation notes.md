@@ -1043,7 +1043,7 @@ div.nav__links {
 
 **Indiscrete breakpoints**
 
-Occurs when...
+Occurs when indiscrete breakpoints are detected.
 
 *Source:*
 
@@ -1072,7 +1072,7 @@ Occurs when...
 ```bash
 -- Indiscrete breakpoints ------------------------ typography.css
 
-The breakpoints for ` h3.heading` are conflicting.
+The breakpoints for ` h3.heading` are indiscrete.
 
 1| @media (min-width: 400px) {		
 2|  h3.heading {
@@ -1082,6 +1082,23 @@ The breakpoints for ` h3.heading` are conflicting.
 
 13| @media (min-width: 1200px) {
 14|  h3.heading {
+
+The styles in: 
+
+1| @media (min-width: 400px)
+
+Can be overriden by:
+
+7| @media (min-width: 900px)
+13| @media (min-width: 1200px)
+
+The styles in:
+
+7| @media (min-width: 900px)
+
+Can be overriden by:
+
+13| @media (min-width: 1200px)
 
 Breakpoints should be discrete. Those for `h3.heading` are missing a `max-width`.
  
@@ -1098,11 +1115,127 @@ May I suggest:
 
 *Type system errors*
 
-- type system
-	- illegal modifiers (i.e trying to @override an immutable property)
-- parsing
-	- unrecognised type
-	- unrecognised modifier
-	- unrecognised motive
+**Missing modifier**
 
+When a typed property is changed without a modifier.
 
+*Source:*
+
+```css
+fieldset {
+	background<public>: white;
+}
+
+form.form--withError fieldset {
+	background: lightpink;
+}
+```
+
+*Error:*
+
+```bash
+-- Missing modifier ------------------------------------ form.css
+
+The property `background` is missing a modifier.
+
+14| form.form--withError fieldset
+15|  background: mistyrose;
+
+The background of 'fieldset' has the type: public.
+
+10| fieldset {
+11|  background<public>: ivory;
+				^^^^^^
+
+May I suggest:
+
+Using the modifier `mutate`:
+
+16| form.form--withError fieldset
+17|  background<@mutate>: mistyrose;
+
+```
+
+**Type modifier mismatch**
+
+When a modifier acts on the wrong type.
+
+*Source:*
+
+```css
+a {
+	color<immutable>: aquamarine;
+}
+
+a:hover {
+	color<@override>: mediumaquamarine;
+}
+```
+
+*Error:*
+
+```bash
+-- Type modifier mismatch ---------------------------- common.css
+
+The modifier `@override` cannot change properties with the type `immutable`.
+
+4| a {
+5|  color<immutable>: aquamarine;
+		  ^^^^^^^^^	
+	
+8| a:hover {
+9|  color<@override>: mediumaquamarine;
+		  ^^^^^^^^^
+
+The color has the type: immutable
+But the modifier used is: @override
+
+May I suggest:
+
+Changing the color type to `protected`:
+
+4| a {
+5|  color<protected>: aquamarine;
+
+```
+
+*Parsing errors*
+
+**Unknown type**
+
+When an unknown type is used.
+
+*Source:*
+
+```css
+nav {
+	border-bottom-color<foo>: teal;
+}
+```
+
+*Error:*
+
+```bash
+-- Unkown type ------------------------------------------ nav.css
+
+The type `lock` is unrecognized.
+
+1| nav {
+2|  border-bottom-color<lock>: teal;
+						^^^^	
+
+Available types are:
+
+immutable
+protected
+public
+
+```
+
+**Unknown modifier**
+
+<@unlock>
+
+**Unknown motive**
+
+<?itsFriday>
