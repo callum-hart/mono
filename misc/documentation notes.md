@@ -3,13 +3,12 @@
 - [x] Introduction
 - [x] Motivation
 - [x] Core concepts
-- [] Case studies
 - [x] Guides
 	- [x] Design pattern
 	- [x] Mono language
-- [] Mono language
+- [x] Mono language
 	- [x] Proposed Syntax
-	- [...] Compiler specification
+	- [x] Compiler specification
 
 ***Note to self:** Need to decide where examples should be mentioned*
 
@@ -30,27 +29,29 @@
     - **Analyse** - identifing what impact adding / changing / removing a style will have.
     - **Friction** - when making a change have to compete with specificity, cascade & importance.
 - There must be a better way!
-- CSS is neglected, especially compared to it's partner in crime: JavaScript!
+- CSS is neglected, especially compared to it's buddy JavaScript!
 
 # Core concept
 
 - CSS painpoints:
-    - Cause: global scope, cascade, specificity, importance.
-    - Effect: fragile *(easy to break things)*, unpredictable *(no gaurentees / side affects)*, hard to maintain *(can't confidently add, edit, remove)*.
+    - **Cause**: global scope, cascade, specificity, importance.
+    - **Effect**: fragile *(easy to break things)*, unpredictable *(no gaurentees / side affects)*, hard to maintain *(can't confidently add, edit, remove)*.
 - Worst offenders *(cascade, specificity, importance)* only become an issue when we have to work against them - i.e override a style.
 - The following example is harmless in solitary:
 
 ```css
 html body div.content p {
-	color: #ccc !important;
+ color: #ccc !important;
 }
+// end of file
 ```
 
-- However becomes offensive when we want to override the color. Need to:
+- Yet has high specifity, uses !important, and is the last CSS rule in the cascade.
+- These traits only become offensive when we want to override a style; in this case the color. Need to:
 	- Use !important
 	- Use a selector with stronger specifity
 	- Use a selector with equal specifity & put overriding CSS later in the cascade
-- Fair amount of brainpower required just to override the color.
+- Fair amount of cogitation required just to override the color.
 
 **Override = mutation**
 
@@ -76,11 +77,11 @@ html body div.content p {
 - Secondary principle is **make CSS easier to reason with**.
 - Easier to **reason** & **analyse**.
 - A CSS rule can exist for a range of reasons:
-	- Add a style
+	- Apply a style
 	- Override style
 	- Override style from a 3rd party (i.e bootstrap)
 	- Provide a fallback (for older browsers)
-	- Undo user agent style
+	- Remove user agent style
 	- Override an inline style
 - This reasoning usually resides in our head. CSS offers no indication of it's purpose:
 
@@ -104,7 +105,7 @@ html body div.content p {
 	- Why is text-decoration set to none?
 	- Why is the opacity set to 1? *isn't broswer default 1?*
 	- Why position relative? *can't think why that's needed...*
-- Yet at some point the rationale was there. Ah yes, after some hunting:
+- Yet at some point the rationale was there... Ah yes, after some hunting:
 	- font-size is set to 11px -> to override the font-size coming from bootstrap
 	- text-decoration set to none -> `.btn` can be a button or anchor; so override for the later.
 	- opacity is set to 1 -> because we still have that legacy script that sets button opacity to 0.
@@ -239,7 +240,7 @@ form.form--withError {
 ```
 *figure {n}*
 
-- With the class `.form--withError` the form background is set twice (`.form--withError` overrides `.form`).
+- When the form has the class `.form--withError` the background is set twice (`.form--withError` overrides `.form`).
 - But this forces us to **respect the cascade**, the following produces a different outcome:
 
 ```diff
@@ -293,7 +294,7 @@ form.form {
 }
 ```
 
-- The background is set only once for each variation. Negation has removed the need to override the background color.
+- The background is only set once for each variation. Negation has removed the need to override the background color.
 - And since we're not relying on overrides we needn't worry about cascade, specificity nor importance.
 - Negation has bought us **portability** and **predictability**:
 
@@ -413,8 +414,8 @@ h3.heading {
 ```
 
 - With discrete breakpoints the `font-size` of `h3.heading` is no longer overriden.
-- At any given screen-size the `font-size` will have one definition.
-- This buys us portability & predictability:
+- At any given screen-size the `font-size` is only set once.
+- *Again* this buys us portability & predictability:
 
 ```diff
 -@media (max-width: 400px) {
@@ -538,7 +539,7 @@ button.nav__btn {
 }
 ```
 
-- Styles specific to the button in the `nav` should be applied using the class `.nav__btn`.
+- Styles specific to the button inside `nav` should be applied using the class `.nav__btn`.
 
 ##### Universal children
 
@@ -1209,7 +1210,7 @@ When an unknown type is used.
 
 ```css
 nav {
-	border-bottom-color<foo>: teal;
+	border-bottom-color<lock>: teal;
 }
 ```
 
@@ -1218,7 +1219,7 @@ nav {
 ```bash
 -- Unkown type ------------------------------------------ nav.css
 
-The type `lock` is unrecognized.
+`lock` is not a valid type.
 
 1| nav {
 2|  border-bottom-color<lock>: teal;
@@ -1234,8 +1235,66 @@ public
 
 **Unknown modifier**
 
-<@unlock>
+When an unknown modifier is used.
+
+*Source:*
+
+```css
+btn.payNow:hover {
+	transform<@unlock>: scale(1.2);
+}
+```
+
+*Error:*
+
+```bash
+-- Unkown modifier ---------------------------------- buttons.css
+
+`@unlock` is not a valid modifier.
+
+10| btn.payNow:hover {
+11|  transform<@unlock>: scale(1.2);						
+			   ^^^^^^^
+
+Available modifiers are:
+
+@override
+@mutate
+
+```
 
 **Unknown motive**
 
-<?itsFriday>
+When an unknown motive is used.
+
+*Source:*
+
+```css
+span.heading--uppercase {
+	text-transform<?itsFriday>: lowercase;
+}
+```
+
+*Error:*
+
+```bash
+-- Unkown motive ----------------------------------- headings.css
+
+`?itsFriday` is not a valid motive.
+
+8| span.heading--uppercase {
+9|  text-transform<?itsFriday>: lowercase;
+				   ^^^^^^^^^^
+
+Available motives are:
+
+?overrule
+?overthrow
+?veto
+?fallback
+?because
+?patch
+
+```
+
+
