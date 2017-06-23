@@ -9,8 +9,12 @@
 - [x] Mono language
 	- [x] Proposed Syntax
 	- [x] Compiler specification
+- [...] Examples 
 
-***Note to self:** Need to decide where examples should be mentioned*
+**Notes to self:**
+ 
+- Decide where examples fit in
+- Are case studies needed?
 
 # Introduction
 
@@ -601,8 +605,6 @@ div.aside__chatBox__footer {}
 ```
 
 ## Language
-
-**Note to self:** *I wonder whether it's more appropriate & relatable to refer to mono as a preprocessor...?*
 
 > Note: the mono language is still under development. This section contains the language specification - defining standards, whilst providing an insight into what's to come.
 
@@ -1297,4 +1299,28 @@ Available motives are:
 
 ```
 
+# Examples
 
+- Wanted to test my assumptions before building the compiler. 
+	- Save time. 
+	- Allow ideas to fully develop.
+	- Not be held back by implementation details / constraignts. 
+- Mocked language using Sass.
+- Pretended design patterns & language constructs were being enforced by monos compiler. 
+- Not only did this test intial assumptions, it also exposed early flaws & unearthed new use-cases.
+- So far I've built 3 projects this way. *If you only checkout one I'd reccomend YouTube*. Listed in order of when they were done.
+
+1. **[Facebook]()** good example of types & modifiers
+2. **[Grid]()** good example of discrete breakpoints
+2. **[YouTube]()** good example of everything! Includes themes, responsive layout / UI, state, interactions.
+
+### Findings
+
+- Dipping in and out of building example projects I found it easier and quicker to jump back into the project and continue where I left off. 
+- Think this is due to a number of reasons:
+    1. Code is expressive / has clarity -> easier to understand
+    2. Patterns promote consistency -> which buys familiarity (reduces onboarding time)
+    3. Constraints limit uncertainly -> narrows scope of potential problems
+    4. Predefined rules guide workflow -> less decision making, more consistency
+    5. Code feels more logical than abstract -> easier to reason with
+    6. More confident to make changes -> less risk of side effects
