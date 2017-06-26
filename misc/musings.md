@@ -838,6 +838,7 @@ preprocessor. It should be as agnostic as possible. Compatible with any CSS stra
 - [Interop] Some motives are for interop; working with non-mono code, i.e --overthrow, --overrule.
 - [Mono format] Would an enforced format be useful? *low priority*.
 - Shouldn't confuse reusue with overrides.
+- [Origins] Mono started as a thought experiment. Simple goal: make CSS better. Open minded - idea creation vs predetermined bias.
 
 
 ### Tooling / Ecosystem

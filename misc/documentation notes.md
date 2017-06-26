@@ -1301,26 +1301,64 @@ Available motives are:
 
 # Examples
 
-- Wanted to test my assumptions before building the compiler. 
+- Wanted to test my assumptions before building the compiler.
 	- Save time. 
-	- Allow ideas to fully develop.
+	- Allow ideas to develop.
 	- Not be held back by implementation details / constraignts. 
-- Mocked language using Sass.
-- Pretended design patterns & language constructs were being enforced by monos compiler. 
-- Not only did this test intial assumptions, it also exposed early flaws & unearthed new use-cases.
-- So far I've built 3 projects this way. *If you only checkout one I'd reccomend YouTube*. Listed in order of when they were done.
+- Mocked language using [Sass](). 
+	- Tangible way of testing theories in practice.
+	- Pretended design patterns & language constructs were being enforced by monos compiler. *When in actual fact my brain was acting on behalf of the compiler*.
+- So far I've built 3 proof of concepts (POC) using the Sass implementation. *If you only checkout one I'd reccomend YouTube*.
 
-1. **[Facebook]()** good example of types & modifiers
-2. **[Grid]()** good example of discrete breakpoints
-2. **[YouTube]()** good example of everything! Includes themes, responsive layout / UI, state, interactions.
+**Facebook**
 
-### Findings
+![Facebook](/path/to/img.jpg "Facebook")
 
-- Dipping in and out of building example projects I found it easier and quicker to jump back into the project and continue where I left off. 
-- Think this is due to a number of reasons:
-    1. Code is expressive / has clarity -> easier to understand
-    2. Patterns promote consistency -> which buys familiarity (reduces onboarding time)
-    3. Constraints limit uncertainly -> narrows scope of potential problems
-    4. Predefined rules guide workflow -> less decision making, more consistency
-    5. Code feels more logical than abstract -> easier to reason with
-    6. More confident to make changes -> less risk of side effects
+- First project built with mono.
+- Intricate UI, good test of types & modifiers.
+- *Credit:* Ben Hartley for the [awesome design](https://dribbble.com/shots/1666016-Facebook-redesign).
+
+ **Grid**
+ 
+ ![Gird](/path/to/img.jpg "Gird")
+ 
+ - Second project built with mono.
+ - Responsive, good test of discrete breakpoints.
+
+**YouTube** 
+
+ ![YouTube](/path/to/img.jpg "YouTube")
+ 
+ - Latest project built with mono. *Not yet finished.*
+ - Good example of everything, includes:
+		- Themes
+		- Responsive layout / UI
+		- State
+		- Interactions
+
+# Findings
+
+- Not only did each example help test assumptions, they also: 
+	- Exposed early flaws.
+	- Trimmed the fat - highlighted what was / wasn't useful.
+	- Unearthed new featurss / use-cases.
+- Provided an insight into how mono could improve CSS development. Findings:
+	- CSS was tonnes easier to reason with.
+	- Not worrying about cascade, specificity & importance is so liberating!
+	- No overrides yields better reuse.
+	- Development time felt quicker. Less time spent reasoning with / fixing things.
+- Most notably: I found it easier, quicker & safer (less error prone) to jump back in and continue where I left off. Attribute this to:
+
+1. Code is expressive / has clarity -> easier to understand
+2. Patterns promote consistency -> which buys familiarity (reduces onboarding time)
+3. Constraints limit uncertainly -> narrows scope of potential problems
+4. Predefined rules guide workflow -> less decision making, more consistency
+5. Code is more logical than abstract -> easier to reason with
+6. More confident to make changes -> less risk of side effects
+
+# Outcome / What's next
+
+- The POCs acted as a great testing ground for mono. 
+- Took a scientific / unbiased approach - where instead of proving things right, tried to see what was wrong.
+- Conclusion: mono is definetly worth persuing. From looking at the findings & my experience of writing mono vs regular CSS it looks promising. 
+- I'm very excited to see where mono can go!
