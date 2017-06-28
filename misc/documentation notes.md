@@ -9,12 +9,7 @@
 - [x] Mono language
 	- [x] Proposed Syntax
 	- [x] Compiler specification
-- [...] Examples 
-
-**Notes to self:**
- 
-- Decide where examples fit in
-- Are case studies needed?
+- [x] Examples
 
 # Introduction
 
@@ -970,6 +965,8 @@ aside.contextualInfo {
 	- **Omits cascade:** orchestrating where to put media-queries no longer a concern.
 
 # Compiler specification
+
+**Note to self:** not sure whether the compiler spec should live elsewhere?
 
 > Note: mono is still under development. This section contains the compiler specification - defining standards, and test-cases.
 
