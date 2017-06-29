@@ -18,7 +18,7 @@ Issue with overrides is the complexity of [...] CSS grows exponentially. *[...] 
 - removing
 - modifying
 
-I would argue that overrides are self-perpetuating. The more overrides exist the more overriding you do. In my experience it's preferable (and somehow safer) to override unwanted styles vs remove them.
+I would argue that overrides are self-perpetuating. The more overrides exist the more overriding you do. In my experience it's preferable (and somewhat safer) to override unwanted styles vs remove them - it's easier to see a fix, than spot a regression.
 
 The language seems to encourage this. Even from a clean slate browser defaults need to be overriden.
 
