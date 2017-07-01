@@ -832,7 +832,7 @@ preprocessor. It should be as agnostic as possible. Compatible with any CSS stra
 - [Docs] When explaining concepts include a code example(s) demonstrating each concept in isolation. *Concept being a type / modifier / motive / pattern / principal*.
 - [mono is agnostic / flexible] In the fb example I use the BEM naming convension. This isn't integral to mono, and neither is how you architect your CSS files.
 - [Technical goals] want the mono api to be as small as it can be. Bloated projects are harder to consume.
-- [Think] What todo about inherited properties... if anything? i.e `<li><span>hey</span></li>`, `li { font-size: 12px; }` (span inherits font-size from li).
+- [Think] What todo about inherited properties... if anything? i.e `<li><span>hey</span></li>`, `li { font-size: 12px; }` (span inherits font-size from li). Could prevent inherited styles using `initial` on child elements: https://jsfiddle.net/8nddo8b0/
 - The premise of mono is a CSS property for a given element should have 1 definition.
 - [No overrides] don't have to spend time & energy on specificity battles, order of styles in the cascade, fighting with !important. No overrides makes a large proportion of the work we do in CSS redundant - there's no need to undo unwanted styles. This 1 constraint *(no overrides)* removes **3 of the worst painpoints of CSS** (specificity, cascade, !important). No overrides is also possible with pseudo classes *(i.e :hover)* -> see "Using negation for pseudo classes" in `playground.html`. One could argue that an **override indicates improper reuse**. Mono discourages / prevents improper reuse.
 - [Interop] Some motives are for interop; working with non-mono code, i.e --overthrow, --overrule.
