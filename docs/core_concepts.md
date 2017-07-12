@@ -1,30 +1,23 @@
-# Core concept
+# Key principles
 
-**Note to self:** CSS painpoints doesn't fit in with core concepts. It related (since the concepts address them), but maybe should live elsewhere... part of / after motivation...
+Mono has two key principles:
 
-- Introduce overring nature of CSS. *(Set's scene)*
-- Worst offenders of CSS pitfalls *(cascade, specificity, importance)*
-- Worst offenders example
-- Override equals mutation
-- Key principle
-- Secondary principle
+1. Change the overriding mechanism of CSS
+2. Make CSS easier to reason with
 
-Mono identifies two areas of CSS in need of improvement: 
+### Change the overriding mechanism of CSS
 
+An overriding architecture becomes self-perpetuating. **The more overrides exist the more overriding you do**. The language overtly encourages this - even from a clean slate browser defaults are overriden. Variation & reusability are instinctively achieved by overriding styles.
 
+Cascade order, high specificity & importance only become offensive when overriding a style.
 
-At its core mono pinpoints the **overrding nature of CSS** as the problem. Variation & reusability is instinctively achieved by overridng styles. The language overtly encourages this. Even from a clean slate browser defaults are overriden.
+<p align="center">&ast;&ast;&ast;</p>
 
-An overiding architecture becomes self-perpetuating. **The more overrides exist the more overriding you do**. In my experience it's preferable (and somewhat safer) to override unwanted styles vs remove them. It's easier to see a fix, than spot a regression.
+If we think of **overrides as mutation** we can look to other languages for guidance. There are many practices that **provide a system for changing a value:**
 
-Managing overrides proves difficult. Global scope allows anyone to override. Influencers cascade, specificity & importance determine who the winning style is. Yet in isolation these traits are harmless:
+- **Access modifiers** - determine who & how a value can be modified.
+- **Data types** - a value cannot be modified through re-assignment (final in Java / const in ES6).
+- **Immutability** - a value whose state cannot be modifed after its creation.
+- **Setters** - expose safe ways to modify otherwise inaccessible values.
 
-```css
-html body div#main h1.title {
- color: #ccc !important;
-}
-``` 
-
-Cascade order, high specificity & importance only become offensive when overriding a style, in this case the color of `h1.title`.
-
-Ommiting / controlling overrides makes CSS **robust**, **predictable** & **maintainable**. It also reduces the cognition used to reason with CSS, and removes friction from   
+An equivalent system is missing from CSS. A style can be changed by anyone from anywhere.
