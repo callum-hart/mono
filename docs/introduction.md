@@ -1,12 +1,10 @@
 # Introduction
 
-Mono is a paradigm & language that aims to reduce the difficulties of CSS development. 
+Mono is a design pattern & language that reduces the difficulties of CSS development. 
 
-Based on established convensions (from traditional programming languages) mono brings concepts such as **data types**, **access modifiers** & **immutability** to CSS. 
+Mono brings concepts based on established traditional programming language conventions to CSS, including; **data types**, **access modifiers** & **immutability**
 
 With a small footprint & focus on it's [core concepts]() mono makes CSS **robust**, **predictable** & **easy to reason with**.
-
-
 
 
 
