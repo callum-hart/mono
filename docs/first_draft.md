@@ -19,6 +19,8 @@
 - This improves maintainabiliy, developer confidence, & reduces side affects - resulting in faster development time, a happier developer experience, & ultimately fewer bugs.
 
 
+
+
 # Core concept
 
 Mono is a design pattern & language. It has two core concepts:
@@ -34,7 +36,7 @@ Overrides are: [uncontrolled, unreliable and self-perpetuating](blog post pain f
 
 In a word, yes.
 
-If we view **overrides as mutation** we can look to other languages for guidance. Many of which include techniques that **provide a system for changing a value:**
+If we view **overrides as mutation** we can look to other languages for guidance. Many of which include techniques that **provide a system for changing a value**, these include things such as:
 
 - **Access modifiers** - determine who & how a value can be modified.
 - **Data types** - a value cannot be modified through re-assignment (final in Java / const in ES6).
@@ -43,11 +45,16 @@ If we view **overrides as mutation** we can look to other languages for guidance
 
 An equivalent system is missing from CSS - a style can be modified by anyone from anywhere. 
 
-Mono denounces this liberal attitude to overrides.
+Mono denounces this liberal attitude to overrides. Instead, it imposes restrictions on what styles can change, who is allowed to change them, & how they can be changed - a system mono calls **controlled overrides**.
 
-- prevents unnessessary overrides & provides a system to control overrides.
 
-Mono imposes restrictions on what styles can change, who is allowed to change them, & how they can be changed - a system mono calls **controlled overrides**.
+#### Give CSS a unified expressive implementation
+
+
+
+
+
+
 
 Controlled overrides encompass traits common in functional & OO lanaguages.
 Controlled overrides consist of types & modifiers. Types have a set of laws that govern how a style can subsequently be modified.
@@ -74,14 +81,8 @@ html body div.content p {
 	- Use a selector with equal specifity & put overriding CSS later in the cascade
 - Fair amount of cogitation required just to override the color.
 
-**Override = mutation**
 
-- If we think of an override as a mutation we can look to other languages for guidance:
-	- Access modifiers - determine who & how a value can be modified.
-	- Setters - expose safe ways to modify otherwise inaccessible values.
-	- Data types - final in Java, const in ES6. Value cannot be modified through re-assignment.
-	- Immutabiliy - a value whose state cannot be modifed after its creation.
-- ^ All of which: **provide a system for changing a value**. An equivalent system is missing from CSS - values can be changed from anywhere by everyone. *Further reading: CSS compared with other languages.*
+
 
 **Key principle**
 
