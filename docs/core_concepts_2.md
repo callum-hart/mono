@@ -31,7 +31,7 @@ Mono denounces this liberal attitude to overrides. Instead mono imposes constrai
 
 It is **hard to understand the behaviour of CSS**.
 
-A CSS declaration can exist for a range of reasons. The rationale behind a declaration usually resides in our (or someone elses) head. Since **CSS lacks intent** (offers no indication of its purpose) it's hard to understand why a property exists & rationale behind its value.
+A CSS declaration can exist for a range of reasons. The rationale behind a declaration usually resides in our (or someone elses) head. Since **[CSS lacks intent](code-snippet)** (offers no indication of its purpose) it's hard to understand why a property exists & fathom the rationale behind its value.
 
 This means time & mental energy is spent reasoning with CSS. "Why is opactity set to 1", "What happens if I remove position relative". We make changes without confidently foreseeing the outcome & any side-affects that come with it.
 

@@ -1,5 +1,6 @@
 > **Principle:**a fundamental truth or proposition that serves as the foundation for a system of belief or behaviour or for a chain of reasoning.
 
+*Notes:*
 
 **Avoid needless overrides**
 
@@ -8,32 +9,11 @@
 
 *Example of needless override vs avoided override?*
 
----
-
-# Avoid needless overrides
-
-The best CSS override is one that doesn't happen in the first place! Overrides should not be the goto solution for achieving variation or reusability. Despite being the default architecture of CSS there are better alternatives to overriding styles.
-
----
-
 **Rules govern overrides**
 
 - Pre-defined rules determine when an override is allowed.
 - An override can only happen in certain circumstances.
 - Any override that violates a rule is not allowed.
-
----
-
-# Rules govern overrides
-
-There are certain circumstances in which overrides cannot be avoided - however this doesn't mean we can ignore the first principle.
-
-Instead a set of pre-defined conditions identify all possible use cases in which an override is needed. A set of pre-defined rules determine the laws in which an override is allowed to happen. This helps reduce needless overrides, whilst providing a framework for overrides.
-
-An override without a viable use case, or an override which violates a rule is not permitted.
-
----
-
 
 **Overrides must be systematic**
 
@@ -41,45 +21,56 @@ An override without a viable use case, or an override which violates a rule is n
 - The system abides to the rules & must provide a mechanism to override.
 - Any override operating outside the system is not allowed.
 
+**One way to override styles**
+
+- There must be one way in which a style can be overriden.
+- With mono an override is expressed using a [modifier]().
+- When a style is overriden using a modifier we can pinpoint exactly where & why it happened. 
+- Compared to regular CSS, where overrides inconspicuously happen all over the place.
+
+**CSS should be easy to understand**
+
+- It should be easy to understand CSS.
+- Property usage should not be ambiguous - it should be easy to justify why a style exists.
+- Property values should not use magic numbers - it should be easy to identify the reasoning behind a value.
+
 ---
+# Key principles
 
-# Overrides must be systematic
+Mono has five key principles:
 
-Overrides must operate within a regulated system. The system must be aware of the rules that govern overrides & be able to recognize whether an override is permitted or not.
+### Avoid needless overrides
 
-The system provides a mechanism to override whilst offering a coherent way to override styles. An override is expressed using a [modifier](). If a style is overriden we can pinpoint where & why it happened.
+The best CSS override is one that doesn't happen in the first place! Overrides should not be the goto solution for achieving variation or reusability. Despite being the [default architecture of CSS]() there are better alternatives to overriding styles.
 
-An override operating outside the system (without a modifer) is not allowed.
+### Rules govern overrides
 
----
+There are certain circumstances in which overrides cannot be avoided - however this doesn't mean we can ignore the first principle.
 
-**Access modifiers regulate overrides**
+Instead we must identify all possible use cases in which an override is required, and then establish the laws & conditions in which an override is allowed to happen.
 
-- CSS declarations use access modifiers to control who can override them.
-- Each access modifier has a set of laws that govern how the declaration can subsequently be modified.
+Limiting the circumstances in which styles can be overriden helps reduce needless overrides, whilst providing a framework to work with. Mono uses a type system to keep overrides in check - an override that violates a rule is not permitted.
 
-*example of access modifier?*
+### Overrides must be systematic
 
-**Overrides are made using modifiers**
+Overrides must operate within a regulated system. 
 
-- All CSS overrides must use a modifier.
-- A modifier can only override a style when a certain set of conditions are met.
+The system must provide a mechanism to override whilst enforcing the rules that govern overrides. 
 
-*example of modifier?*
+An override operating outside the system is not allowed. 
 
-**No abiguity**
+### One way to override styles
 
-- Property usage should not be ambiguous.
-- It should be easy to justify why a CSS property exists.
+There must only be one way to override a style. 
 
-*example of --veto motive?*
+A single implementation guarantees consistency and clarity. With mono an override is expressed using a [modifier](). A modifier is the only way to override a style.
 
-**No obscurity**
+When a style is overriden (using modifiers) we can pinpoint exactly where & why the override happened. This is a stark contrast to regular CSS - where overrides are inconspicuously scattered accross different parts of code.
 
-- Property values should not use magic numbers.
-- It should be easy to identify why a CSS value exists.
+### CSS should be easy to understand
 
-*example of --because motive?* 
+It should be easy to understand & predict the behaviour of CSS. 
 
+It should be easy to articulate & identify what styles do, why they are used, & what role they play in our code. Mono uses [motives]() that empower CSS to communicate its purpose. 
 
-
+This reduces ambiguity & obscurity which means developers are less likely to break things since changes are more predictable.
