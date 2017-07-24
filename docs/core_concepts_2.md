@@ -9,7 +9,7 @@ Mono is a design pattern & language. It has two core concepts:
 
 In my opinion a high propertion of CSS painpoints come from it's overriding architecture.
  
-Overrides are: [brittle, unreliable and self-perpetuating](blog-post-pain-from-overrides). Hinged on unstable structures *(cascade, specificity, importance)* overrides often feel uncontrollable.  Can they be tamed?
+Overrides are: [brittle, unreliable and self-perpetuating](blog-post-pain-from-overrides). Built on unstable foundations *(cascade, specificity, importance)* overrides often feel uncontrollable.  Can they be tamed?
 
 In a word, yes.
 

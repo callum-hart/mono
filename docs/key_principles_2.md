@@ -15,7 +15,7 @@
 - An override can only happen in certain circumstances.
 - Any override that violates a rule is not allowed.
 
-**Overrides must be systematic**
+**Overrides must be controlled**
 
 - All overrides must operate within a regulated system.
 - The system abides to the rules & must provide a mechanism to override.
@@ -51,9 +51,9 @@ Instead we must identify all possible use cases in which an override is required
 
 Limiting the circumstances in which styles can be overriden helps reduce needless overrides, whilst providing a framework to work with. Mono uses a type system to keep overrides in check - an override that violates a rule is not permitted.
 
-### Overrides must be systematic
+### Overrides must be controlled
 
-Overrides must operate within a regulated system. 
+Overrides must operate within a controlled & regulated system. 
 
 The system must provide a mechanism to override whilst enforcing the rules that govern overrides. 
 
