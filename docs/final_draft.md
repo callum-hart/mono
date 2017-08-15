@@ -170,7 +170,6 @@ It’s easy to identify what elements use the class .btn - we can clearly see .b
 This also makes it easier to separate reusable styles from those specific to a certain element type. Text-decoration none is only needed for anchors so is moved out into a rule-set of its own.
 
 Not only does this separate concerns, it helps organise styles into smaller, manageable, distinct chunks. I know where to add or remove styles for anchors, and better still if anchors stop using the .btn class I can safely remove styles specific to them.
-
 Shorthand appropriately
 
 Avoid using shorthand notation, unless property has multiple values.
@@ -216,3 +215,66 @@ nav img.avatar {
 Negation
 
 Use negation to avoid overrides among composable classes.
+
+Composable CSS classes can be used on their own, or in conjunction with other classes. When composed (with other CSS classes) the outcome is often different.
+
+An example of composable classes can be seen in bootstrap:
+
+<span class="badge badge-light">Light</span>
+
+.badge {
+    color: #fff;
+}
+
+.badge-light {
+    color: #111;
+}
+
+The color of .badge is #fff and when .badge and .badge-light are used together the expected color is #111 (since the color in .badge-light overrides the color in .badge).
+
+The color of .badge-light is expected to be #111 but this isn’t a guarantee. This is because the outcome (in this case the color) is dependant on respecting the laws of cascade - .badge-light must follow .badge. If not the outcome is different:
+
+.badge-light {
+    color: #111;
+}
+
+.badge {
+    color: #fff;
+}
+
+Color of .badge-light is overridden by .badge.
+
+Introducing negation removes the dependency on the cascade and the need to override.
+
+.badge:not(.badge-light) {
+    color: #fff;
+}
+
+.badge-light {
+    color: #111;
+}
+
+The color has one declaration per variant no matter if the classes (.badge and .badge-light) are used on their own or used in conjunction. Negation has brought us portability and predictability. The order of declarations in the cascade no longer matters:
+
+.badge-light {
+    color: #111;
+}
+
+.badge:not(.badge-light) {
+    color: #fff;
+}
+
+Color of .badge-light is still #111.
+
+Negation buys guarantees. We can guarantee the color of .badge is #fff and the color of .badge-light is #111. We can guarantee the color when the classes are composed is #111. And we can guarantee modifying styles in one rule-set won’t bring unforeseen side-effects to the other.
+
+
+
+
+
+Discrete breakpoints
+
+Styles in one media query should not compete with styles in another.
+
+
+
