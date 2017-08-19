@@ -277,9 +277,11 @@ Negation buys guarantees. We can guarantee the color of .badge is black and the 
 
 Discrete breakpoints
 
-Styles in one media query should not compete with styles in another.
+Styles in one media query should not override styles in another.
 
-Media queries compete with one-another when their breakpoints clash. This can be seen in some implementations of “mobile first”:
+
+
+This can be seen in some implementations of “mobile first”:
 
 <nav>
   <a href="" class="logo">Logo</a>
@@ -301,7 +303,9 @@ a.logo {
     }
 }
 
-In this example the media queries rely on their position in the cascade to produce the expected behaviour. On screens larger than 1000px all 3 rule-sets will apply with the last in the cascade taking effect (the font-size of a.logo will be 18px).
+Figure 1
+
+In this example the media queries rely on their position in the cascade to produce the expected behaviour. On screens larger than 1000px all 3 rule-sets will apply with the last in the cascade taking effect (the font-size of a.logo will be 18px). It overrides the other font-size declarations.
 
 
 
@@ -312,10 +316,7 @@ In this example the media queries rely on their position in the cascade to produ
 
 
 
-
-
-
-Reshuffling the rule-sets produces a different result:
+Reshuffling the order of rule-sets produces a different result:
 
 a.logo {
     font-size: 14px;
@@ -333,6 +334,73 @@ a.logo {
     }
 }
 
-Again on screens larger than 1000px all 3 rule-sets apply. And since min-width of 500px evaluates to true, and is later in the cascade the font-size of a.logo is 16px. Unintuitively it is the cascade and not the breakpoint width that determines the font-size.
+Again on screens larger than 1000px all 3 rule-sets apply. And since a min-width of 500px evaluates to true, and is later in the cascade the font-size of a.logo is 16px. Unintuitively it is the cascade and not the breakpoint value that determines the font-size.
 
-Indiscrtete media queries also rely on specificity...
+Indiscrete breakpoints are also dependent on specificity. In the following example the rule-set with the strongest specificity out-competes the others; regardless of their position in the cascade or breakpoint value:
+
+nav a.logo {
+  font-size: 14px;
+}
+
+@media (min-width: 1000px) {
+    a.logo {
+      font-size: 18px;
+    }
+}
+
+@media (min-width: 500px) {
+    a.logo {
+      font-size: 16px;
+    }
+}
+
+At all screen widths the font-size of a.logo will be 14px, since the selector has the strongest specificity.
+
+
+Figure 2 and 3 are examples of how indiscrete breakpoints are dependent and influenced by cascade and specificity.
+
+***
+
+Discrete breakpoints encapsulate styles by bounding media queries. A bounded media query is one that doesn’t affect or override styles outside of its boundary.
+
+The example below produces the same outcome as figure 1 without the weaknesses seen in figure 2 and 3:
+
+@media (max-width: 499px) {
+  a.logo {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 500px) and (max-width: 999px) {
+    a.logo {
+      font-size: 16px;
+    }
+}
+
+@media (min-width: 1000px) {
+    a.logo {
+      font-size: 18px;
+    }
+}
+
+Reshuffling the order of rule-sets no longer changes the outcome, nor does using a selector with stronger specificity:
+
+@media (max-width: 499px) {
+  nav a.logo {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1000px) {
+    a.logo {
+      font-size: 18px;
+    }
+}
+
+@media (min-width: 500px) and (max-width: 999px) {
+    a.logo {
+      font-size: 16px;
+    }
+}
+
+
