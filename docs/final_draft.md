@@ -140,7 +140,7 @@ Take the following CSS rule-set:
     color: ivory;
 }
 
-Without an element type the .btn class is obscure. We cannot guarantee who the consumers (the HTML elements) are.
+Without an element type the .btn class is obscure. We cannot guarantee who the consumers (the HTML elements that use the .btn class) are.
 
 This means we cannot confidently predict all elements with the class .btn will look the same, since we have no control or insight into what other (user agent, our own, 3rd party) CSS the element will have.
 
@@ -195,11 +195,11 @@ Firstly it’s illogical. Inside the nav the top margin is re-applied even thoug
 
 Secondly the margin shorthand is error prone. There is an increased risk of accidentally overriding the top margin with a value other than 10px. Which means we have to keep track and maintain every concrete value in our system. If the top margin of img.avatar is subsequently changed to 15px there are more instances to update.
 
-Lastly shorthand notations can be unnecessary, often re-applying values that already exist. We can leverage browser default (user agent) styles. The default margin for an image is already 0px.
+Lastly shorthand notations can be unnecessary, often re-applying values that already exist or need to be reset later. We can leverage browser default (user agent) styles. The default margin for an image is already 0px.
 
 
 
-Omitting the margin shorthand not only removes unnecessary (same value) overrides it also improves readability. The property name describes where the value applies, seen in the revised example below:
+Omitting the margin shorthand not only removes unnecessary (same value) overrides it also improves readability. The property name now describes where the value applies, seen in the revised example below:
 
 img.avatar {
     margin-top: 10px;
@@ -234,12 +234,14 @@ The color of .badge is #fff and when .badge and .badge-light are used together t
 
 The color of .badge-light is expected to be #111 but this isn’t a guarantee. This is because the outcome (in this case the color) is dependant on respecting the laws of cascade - .badge-light must follow .badge. If not the outcome is different:
 
+
+
 .badge-light {
-    color: #111;
+    color: grey;
 }
 
 .badge {
-    color: #fff;
+    color: black;
 }
 
 Color of .badge-light is overridden by .badge.
@@ -247,26 +249,27 @@ Color of .badge-light is overridden by .badge.
 Introducing negation removes the dependency on the cascade and the need to override.
 
 .badge:not(.badge-light) {
-    color: #fff;
+    color: black;
 }
 
 .badge-light {
-    color: #111;
+    color: grey;
 }
 
 The color has one declaration per variant no matter if the classes (.badge and .badge-light) are used on their own or used in conjunction. Negation has brought us portability and predictability. The order of declarations in the cascade no longer matters:
 
 .badge-light {
-    color: #111;
+    color: grey;
 }
 
 .badge:not(.badge-light) {
-    color: #fff;
+    color: black;
 }
 
-Color of .badge-light is still #111.
+Color of .badge-light is still grey.
 
-Negation buys guarantees. We can guarantee the color of .badge is #fff and the color of .badge-light is #111. We can guarantee the color when the classes are composed is #111. And we can guarantee modifying styles in one rule-set won’t bring unforeseen side-effects to the other.
+Negation buys guarantees. We can guarantee the color of .badge is black and the color of .badge-light is grey. We can guarantee the color when the classes are composed is grey. And we can guarantee modifying styles in one rule-set won’t bring unforeseen side-effects to the other.
+
 
 
 
@@ -276,5 +279,60 @@ Discrete breakpoints
 
 Styles in one media query should not compete with styles in another.
 
+Media queries compete with one-another when their breakpoints clash. This can be seen in some implementations of “mobile first”:
+
+<nav>
+  <a href="" class="logo">Logo</a>
+</nav>
+
+a.logo {
+    font-size: 14px;
+}
+
+@media (min-width: 500px) {
+    a.logo {
+      font-size: 16px;
+    }
+}
+
+@media (min-width: 1000px) {
+    a.logo {
+      font-size: 18px;
+    }
+}
+
+In this example the media queries rely on their position in the cascade to produce the expected behaviour. On screens larger than 1000px all 3 rule-sets will apply with the last in the cascade taking effect (the font-size of a.logo will be 18px).
 
 
+
+
+
+
+
+
+
+
+
+
+
+Reshuffling the rule-sets produces a different result:
+
+a.logo {
+    font-size: 14px;
+}
+
+@media (min-width: 1000px) {
+    a.logo {
+      font-size: 18px;
+    }
+}
+
+@media (min-width: 500px) {
+    a.logo {
+      font-size: 16px;
+    }
+}
+
+Again on screens larger than 1000px all 3 rule-sets apply. And since min-width of 500px evaluates to true, and is later in the cascade the font-size of a.logo is 16px. Unintuitively it is the cascade and not the breakpoint width that determines the font-size.
+
+Indiscrtete media queries also rely on specificity...
