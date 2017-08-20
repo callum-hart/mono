@@ -1,0 +1,34 @@
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.figure {
+  display: flex;
+}
+
+.figure__src {
+  flex: 1;
+}
+
+.figure__out {
+  flex: 1;
+}
+
+.figure__css code {
+  cursor: move;
+}
+
+.diff\+ {
+  background: rgba(0, 128, 0, 0.2);
+}
+
+.diff\- {
+  background: rgba(255, 0, 0, 0.2);
+}
+
+.sortable-ghost {
+  background: rgba(128, 128, 128, 0.2);
+  color: transparent;
+}

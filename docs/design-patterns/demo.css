@@ -1,0 +1,149 @@
+/***************************************
+Selector types
+****************************************/
+
+/*bad*/
+/*.btn {
+  font-size: 14px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  background: cadetblue;
+  color: ivory;
+}*/
+
+/*good*/
+a.btn,
+button.btn {
+  font-size: 14px;
+  background: cadetblue;
+  color: ivory;
+}
+
+a.btn {
+  text-decoration: none;
+}
+
+button.btn {
+  border: none;
+  cursor: pointer;
+}
+
+/****************************************
+Negation
+****************************************/
+
+/*bad*/
+/*.badge {
+  color: black;
+}
+
+.badge-light {
+  color: grey;
+}*/
+
+/*good*/
+.badge-light {
+  color: grey;
+}
+
+.badge:not(.badge-light) {
+  color: black;
+}
+
+/****************************************
+Negation
+****************************************/
+
+/*bad*/
+
+/* reliant on cascade */
+/*a.logo {
+  font-size: 14px;
+}
+
+@media (min-width: 500px) {
+  a.logo {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1000px) {
+  a.logo {
+    font-size: 18px;
+  }
+}*/
+
+/* bad: reliant on cascade order */
+/*a.logo {
+  font-size: 14px;
+}
+
+@media (min-width: 1000px) {
+    a.logo {
+      font-size: 18px;
+    }
+}
+
+@media (min-width: 500px) {
+    a.logo {
+      font-size: 16px;
+    }
+}*/
+
+/* bad: reliant on specificity */
+
+/*nav a.logo {
+  font-size: 14px;
+}
+
+@media (min-width: 1000px) {
+    a.logo {
+      font-size: 18px;
+    }
+}
+
+@media (min-width: 500px) {
+    a.logo {
+      font-size: 16px;
+    }
+}*/
+
+/* good: */
+
+/*@media (max-width: 499px) {
+  a.logo {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 500px) and (max-width: 999px) {
+    a.logo {
+      font-size: 16px;
+    }
+}
+
+@media (min-width: 1000px) {
+    a.logo {
+      font-size: 18px;
+    }
+}*/
+
+/* good: cascade nor specificity no longer change the outcome */
+@media (max-width: 499px) {
+  nav a.logo {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1000px) {
+    a.logo {
+      font-size: 18px;
+    }
+}
+
+@media (min-width: 500px) and (max-width: 999px) {
+    a.logo {
+      font-size: 16px;
+    }
+}
