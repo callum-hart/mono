@@ -1,10 +1,16 @@
 const getCSS = (figure) => {
   let css = '';
+  const nameSpace = `#${figure.getAttribute('id')} `;
 
   figure.querySelectorAll('[data-lang="CSS"] code').forEach(declaration => {
-    // todo: prefix selectors with figure ID to prevent styles from different
-    // examples conflicting
+    debugger;
+
     css += declaration.innerText;
+
+    // todo: prefix selectors with figure ID to prevent styles from different examples conflicting, i.e:
+    // css += nameSpace + declaration.innerText.trim(); // doesn't work for selectors nested in @media queries
+    // (#|\.|[a-zA-Z])(.*?)(?=\s{)
+    // (#|\.|[a-zA-Z])(.+?(?={))
   });
 
   return css;

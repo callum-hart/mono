@@ -223,11 +223,11 @@ An example of composable classes can be seen in bootstrap:
 <span class="badge badge-light">Light</span>
 
 .badge {
-    color: #fff;
+  color: #fff;
 }
 
 .badge-light {
-    color: #111;
+  color: #111;
 }
 
 The color of .badge is #fff and when .badge and .badge-light are used together the expected color is #111 (since the color in .badge-light overrides the color in .badge).
@@ -237,11 +237,11 @@ The color of .badge-light is expected to be #111 but this isn’t a guarantee. T
 
 
 .badge-light {
-    color: grey;
+  color: grey;
 }
 
 .badge {
-    color: black;
+  color: black;
 }
 
 Color of .badge-light is overridden by .badge.
@@ -249,21 +249,21 @@ Color of .badge-light is overridden by .badge.
 Introducing negation removes the dependency on the cascade and the need to override.
 
 .badge:not(.badge-light) {
-    color: black;
+  color: black;
 }
 
 .badge-light {
-    color: grey;
+  color: grey;
 }
 
 The color has one declaration per variant no matter if the classes (.badge and .badge-light) are used on their own or used in conjunction. Negation has brought us portability and predictability. The order of declarations in the cascade no longer matters:
 
 .badge-light {
-    color: grey;
+  color: grey;
 }
 
 .badge:not(.badge-light) {
-    color: black;
+  color: black;
 }
 
 Color of .badge-light is still grey.
@@ -361,7 +361,9 @@ Figure 2 and 3 are examples of how indiscrete breakpoints are dependent and infl
 
 ***
 
-Discrete breakpoints encapsulate styles by bounding media queries. A bounded media query is one that doesn’t affect or override styles outside of its boundary.
+Discrete breakpoints encapsulate styles within boundaries. Each boundary is partitioned so styles in one boundary cannot override styles in another.
+
+This removes the need to override.
 
 The example below produces the same outcome as figure 1 without the weaknesses seen in figure 2 and 3:
 
@@ -383,6 +385,10 @@ The example below produces the same outcome as figure 1 without the weaknesses s
     }
 }
 
+Figure 4
+
+The rule-sets no longer compete with one another. At each breakpoint the font-size only has one declaration.
+
 Reshuffling the order of rule-sets no longer changes the outcome, nor does using a selector with stronger specificity:
 
 @media (max-width: 499px) {
@@ -403,4 +409,12 @@ Reshuffling the order of rule-sets no longer changes the outcome, nor does using
     }
 }
 
+The example above produces the same outcome as figure 4, despite changing cascade order and specificity.
 
+This makes media queries far more predictable, since there’s no need to orchestrate overrides. Omitting overrides has made the order of media queries and their specificity irrelevant. Only the breakpoint size determines what styles apply (at different screen sizes) which is far more intuitive and deterministic.
+
+Just like negation this pattern buys guarantees. We can guarantee what the font-size will be at different screen-sizes. We can guarantee that changing the order of media queries won’t affect the outcome. We can guarantee a change in specificity won’t sidestep the cascade and override subsequent rule-sets. And we can guarantee the font-size in one media query won’t get overridden by another.
+
+Constants
+
+Constants are elements that always look the same.
