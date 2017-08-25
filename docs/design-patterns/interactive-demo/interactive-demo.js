@@ -1,23 +1,22 @@
-const getCSS = (figure) => {
-  let css = '';
-  const nameSpace = `#${figure.getAttribute('id')} `;
+const parseCSS = (figure) => {
+  let res = '';
+  const nameSpace = `#${figure.getAttribute('id')}`;
 
-  figure.querySelectorAll('[data-lang="CSS"] code').forEach(declaration => {
-    debugger;
+  figure.querySelectorAll('[data-lang="CSS"] code').forEach(block => {
+    let css = block.innerText;
 
-    css += declaration.innerText;
+    css.match(/([a-zA-Z]|@)(.*?){/g)
+      .filter(match => !match.startsWith('@'))
+      .forEach(selector => css = css.replace(selector, `${nameSpace} ${selector}`));
 
-    // todo: prefix selectors with figure ID to prevent styles from different examples conflicting, i.e:
-    // css += nameSpace + declaration.innerText.trim(); // doesn't work for selectors nested in @media queries
-    // (#|\.|[a-zA-Z])(.*?)(?=\s{)
-    // (#|\.|[a-zA-Z])(.+?(?={))
+    res += css;
   });
 
-  return css;
+  return res;
 }
 
-const setCSS = (styleTag, css) => {
-  styleTag.innerHTML = css;
+const setCSS = (styleTag, figure) => {
+  styleTag.innerHTML = parseCSS(figure);
 }
 
 const render = (figure) => {
@@ -25,20 +24,19 @@ const render = (figure) => {
   const html = figure.querySelector('[data-lang="HTML"]');
   const styleTag = document.createElement('style');
 
-  // insert HTML and CSS
+  // insert HTML and style tag
 
   out.innerHTML = html.innerText;
-  setCSS(styleTag, getCSS(figure));
   out.appendChild(styleTag);
+  setCSS(styleTag, figure);
 
   // make CSS declarations sortable
 
   new Sortable(figure.querySelector('[data-lang="CSS"]'), {
-    onUpdate: (evt) => setCSS(styleTag, getCSS(figure)),
+    onUpdate: (evt) => setCSS(styleTag, figure),
   });
 }
 
 const init = (() => {
   document.querySelectorAll("[id^='figure-']").forEach(figure => render(figure));
-
 })();

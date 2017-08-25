@@ -9,6 +9,7 @@
 </head>
 <body>
 
+<!-- Example 1 -->
 
 <section id="figure-1" class="figure">
 
@@ -23,8 +24,53 @@
 
 <pre data-lang="CSS" class="figure__css">
 <code>
-<!-- <span class="diff+">nav </span>a.logo { -->
 a.logo {
+    font-size: 14px;
+    background: lightcoral;
+}
+</code>
+<code>
+@media (min-width: 500px) {
+    a.logo {
+      font-size: 16px;
+      background: lightblue;
+    }
+}
+</code>
+<code>
+@media (min-width: 1000px) {
+    a.logo {
+      font-size: 18px;
+      background: lightgray;
+    }
+}
+</code>
+</pre>
+</div>
+
+<div class="figure__out">
+</div>
+
+</section>
+<hr>
+
+
+<!-- Example 2 -->
+
+<section id="figure-2" class="figure">
+
+<div class="figure__src">
+<pre data-lang="HTML">
+<code>
+&lt;nav&gt;
+  &lt;a href="" class="logo"&gt;Logo&lt;/a&gt;
+&lt;/nav&gt;
+</code>
+</pre>
+
+<pre data-lang="CSS" class="figure__css">
+<code>
+<span class="diff+">nav </span>a.logo {
     font-size: 14px;
     background: lightcoral;
 }
