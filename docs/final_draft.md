@@ -93,7 +93,7 @@ The best override is one that doesn't happen in the first place!
 Overrides should not be the goto solution for achieving variation or reusability. Despite being the default architecture of CSS there are better alternatives to overriding styles.
 #2 Rules govern overrides
 
-Pre-defined rules determine when an override is allowed.
+Predefined rules determine when an override is allowed.
 
 There are certain circumstances in which overrides cannot be avoided (however this doesn't mean we can ignore the first principle).
 
@@ -532,11 +532,236 @@ Note on design patterns
 
 Whilst presented separately it’s important to note that the design patterns work just as well together and they do alone. Patterns can work in conjunction, each focussed on their own role in helping to avoid needless overrides.
 
+
 Language
+Note: the mono language is still under development. This section contains the language specification. It defines standards whilst providing an insight of what’s to come.
+
+The mono language goes places the design pattern can’t.
+
+Mono is a compiled, statically typed language. It uses a type system to control overrides and uses descriptive markup to express intent.
+
+Mono is composed of 3 concepts:
+
+Types
+Modifiers
+Motives
+
+Types
+
+In mono each CSS declaration has a type.
+
+A type has a set of laws that determine how the declaration can be overridden.
+
+In total there are 3 types: immutable, protected & public.
+
+Immutable
+
+Immutable declarations can never be overridden.
+
+h3.subTitle {
+  font-size<immutable>: 16px;
+}
+
+The font size of h3.subTitle is and always will be 16px. This value cannot be overridden, any attempt to do so will throw an error.
+
+Protected
+
+Protected declarations can only be overridden by pseudo-classes derived from the same selector.
+
+button.btn {
+  background-color<protected>: blue;
+}
 
 
 
 
 
+The .btn background color can only be overridden by pseudo-classes derived from .btn:
+
+button.btn:link {
+  // can modify background-color
+}
+
+button.btn:visited  {
+  // can modify background-color
+}
+
+button.btn:hover {
+  // can modify background-color
+}
+
+button.btn:active {
+  // can modify background-color
+}
+
+Public
+
+Public declarations can only be overridden by pseudo classes derived from ancestry selectors:
+
+td {
+  color<public>: darkgray;
+}
+
+The td color can only be overridden by pseudo-classes of parent elements:
+
+tr:hover td {
+  // can modify color
+}
+
+***
+
+Whilst types belong to each CSS declaration they can also be applied at the rule-set level; proving a less verbose alternative:
+
+img.avatar<immutable> {
+height: 40px;
+width: 40px;
+border: 2px solid deepskyblue;
+}
+
+The type is inferred by the rule-set. All declarations within img.avatar are immutable.
+Declarations can opt out of the inferred type at the property level:
+
+img.avatar<immutable> {
+      height: 40px;
+width: 40px;
+border<protected>: 2px solid deepskyblue;
+}
+Modifiers
+
+Modifiers provide a single mechanism to override a CSS declaration. Modifiers are the only way  a style can be overridden.
+
+Each modifier is paired with a type. A modifier is only allowed to override a declaration if the type and modifier are compatible.
+
+Since the type immutable cannot be overridden we are left with two modifiers, one for protected and one for public types.
+
+Override
+
+Can only override CSS declarations with the type protected.
+
+button.btn {
+  background-color<protected>: blue;
+}
+
+button.btn:hover  {
+  background-color<@override>: blue;
+}
+
+Mutate
+
+Can only override CSS declarations with the type public.
+
+td {
+  color<public>: darkgray;
+}
+
+tr:hover td {
+  color<@mutate>: black;
+}
+
+Motives
+
+Motives add reasoning to CSS, they help express intent.
+
+The goal of a motive is to off-load information from our brain to the code itself. Externalizing information not only frees our mind, but makes collaboration easier.
+
+Motives capture the rationale in the moment a declaration is declared. This rationale helps explain the reason why a property exists, or justify its value.
+
+Motives remove investing time & energy into understanding CSS, whilst indicating what impact changing / removing a declaration will have.
+
+There are 6 kinds of motive:
+
+
+Overrule
+
+Used to override inline CSS; inlined in the HTML or set by JavaScript.
+
+<p class=”status” style=”display:none”>
+  Saving…
+</p>
+
+form.loading p.status {
+  display<?overrule>: block;
+}
+
+Overthrow
+
+Used to override 3rd party CSS.
+
+For example the background color of a bootstrap button.
+
+<button type="button" class="btn btn-default">
+    Buy
+</button>
+
+button.btn-default {
+    background-color<?overthrow>: honeydew;
+}
+
+If the dependency (in this case bootstrap) is dropped we can confidently remove its overthrow rules.
+
+Veto
+
+Used to override user agent / browser default styles.
+
+ul.contactList {
+    margin-left<?veto>: 0;
+    padding-left<?veto>: 0;
+}
+
+Fallback
+
+Used to denote fallback properties used for cross browser compatibility.
+
+nav {
+    background<?fallback>: grey;
+    background: linear-gradient(white, black);
+}
+
+Because
+
+Used to justify the usage of a property, or reasoning behind its value.
+
+The box sizing of section.newsFeed only exists to swallow its padding:
+
+section.newsFeed {
+    padding<immutable>: 20px;
+    box-sizing<?because: swallowPadding)>: border-box;
+}
+
+The left margin of main.content should match the left padding of nav:
+
+nav {
+  padding-left : 20px;
+}
+
+main.content {
+    margin-left<?because: 'align content with nav'>: 20px;
+}
+
+The because motive is powerful since it helps depict and maintain dependencies between properties and or elements.
+
+For example if the padding of section.news-feed is removed we can remove box-sizing. Likewise if the left padding of nav changes we know to change the left margin of main.content.
+
+Patch
+
+Used to denote temporary styles; usually related to a bug or feature that’s in progress.
+
+The patch motive accepts a pointer to where more information is located. For example a JIRA ticket ID:
+
+a.signIn {
+    color<?patch: 'ENG-123456'>: cadetblue;
+}
+
+When the ticket ENG-123456 is resolved this declaration can safely be removed.
+
+
+
+Combinators
+
+There are times when a type or modifier can be using in conjunction with a motive. In these case notions are separated with a comma:
+
+ul.contactList {
+    box-sizing<immutable, ?because:swallowPadding>;
+}
 
 

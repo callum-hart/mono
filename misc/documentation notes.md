@@ -720,7 +720,7 @@ tr:hover td {
 - As we have seen "A CSS rule can exist for a range of reasons".
 - Motives capture the rational in the moment a property is declared. It's easy to forget why a property exists, which means once added it generally stays *(even when the reason for adding it is later nullified)*.
 - Externalizing information from our heads to artifacts not only frees our mind, but makes it easier for someone else to understand and work with.
-- Motives remove investing time and energy in justifying why a property exists.
+- Motives remove investing time and energy in justifying why a declaration exists, whilst acting as an indicator of what changing/removing it will do.
 
 **Overrule**
 
