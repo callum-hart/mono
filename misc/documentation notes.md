@@ -463,10 +463,9 @@ h3.heading {
 
 **Constants**
 
-Constants are elements that always look the same, regardless of where they are used. Use constants for common constructs.
-
+- Constants are elements that always look the same, regardless of where they are used. Use constants for common constructs.
 - High usage - used frequently throughout project. A'la a common/global/core components. Examples: button, avatar, heading.
-- Styles are decoupled from their context - the same styles apply in every instance.
+- Styles are decoupled from their context - the same styles apply in every instance. Deterministic.
 
 ### Problem
 
@@ -835,7 +834,7 @@ a.sub-title {
 
 `cssProperty<notion>: cssValue;`
 
-- Notions are wrapped in croccodiles <> (between the CSS property name, and the colon that follows).
+- Notions are wrapped in croccodiles <> (between the CSS property name, and the following colon).
 
 ### Types
 

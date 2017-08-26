@@ -122,7 +122,7 @@ It should be easy to articulate and identify what styles do, why they are used, 
 
 This reduces ambiguity and obscurity which means developers are less likely to break things since changes are more predictable.
 
-Design pattern
+Design patterns
 
 Selector types
 
@@ -281,7 +281,7 @@ Styles in one media query should not override styles in another.
 
 
 
-This can be seen in some implementations of “mobile first”:
+Indiscrete breakpoints can often be seen in “mobile first” implementations:
 
 <nav>
   <a href="" class="logo">Logo</a>
@@ -361,7 +361,7 @@ Figure 2 and 3 are examples of how indiscrete breakpoints are dependent and infl
 
 ***
 
-Discrete breakpoints encapsulate styles within boundaries. Each boundary is partitioned so styles in one boundary cannot override styles in another.
+Discrete breakpoints encapsulate styles within boundaries. Each boundary is partitioned so that styles in one boundary cannot override styles in another.
 
 This removes the need to override.
 
@@ -387,7 +387,7 @@ The example below produces the same outcome as figure 1 without the weaknesses s
 
 Figure 4
 
-The rule-sets no longer compete with one another. At each breakpoint the font-size only has one declaration.
+The styles within each breakpoint no longer compete with one another. At each breakpoint the font-size only has one declaration.
 
 Reshuffling the order of rule-sets no longer changes the outcome, nor does using a selector with stronger specificity:
 
@@ -409,7 +409,7 @@ Reshuffling the order of rule-sets no longer changes the outcome, nor does using
     }
 }
 
-The example above produces the same outcome as figure 4, despite changing cascade order and specificity.
+The example above produces the same outcome as figure 4, despite a change to cascade order and specificity.
 
 This makes media queries far more predictable, since there’s no need to orchestrate overrides. Omitting overrides has made the order of media queries and their specificity irrelevant. Only the breakpoint size determines what styles apply (at different screen sizes) which is far more intuitive and deterministic.
 
@@ -417,4 +417,126 @@ Just like negation this pattern buys guarantees. We can guarantee what the font-
 
 Constants
 
-Constants are elements that always look the same.
+A constant is an element whose appearance cannot be altered.
+
+Constants always look the same, regardless of where they are used. Styles are decoupled from their context and “hidden” from the outside world.
+
+Constants are best suited to common components (such as buttons, avatars, icons, et cetera), especially those with a high usage. For example the following button:
+
+<button class=”btn”>
+Save
+</button>
+
+button.btn {
+  padding: 8px 12px;
+  background: ivory;
+  border: 1px solid slategrey;
+  color: darkslategray;
+}
+
+As it currently stands .btn suffers a few problems:
+
+Firstly it lacks identity. It isn’t obvious that .btn is a common component (other than intuition telling us it probably is). Nothing differentiates .btn from other classes which means it isn’t clear what impact modifying its styles will have, nor where these modifications should happen.
+
+Secondly it’s far too easy to override .btn styles both technically and in terms of developer awareness.
+
+Technically .btn styles can be overridden from anywhere because CSS offers no means to protect nor encapsulate them. And since .btn lacks identity we are unaware what impact overriding it’s styles have.
+
+***
+
+Constants look to solve these problems by partitioning and encapsulating styles, whilst also providing an identity.
+
+This is achieved using the following class naming convention:
+
+class=”*className”
+
+Classes are prefixed with an asterix (*)
+
+The previous button example becomes:
+
+<button class=”*btn”>
+Save
+</button>
+
+button.\*btn {
+  padding: 8px 12px;
+  background: ivory;
+  border: 1px solid slategrey;
+  color: darkslategray;
+}
+
+Prefixing the class with a special character is a subtle change, but buys us a few things. Firstly it’s easy to identify and thus differentiate *btn from other classes. It’s clear that *btn is a common component and modifications should be made carefully.
+
+Secondly it adds a layer of protection. The special character needs to be escaped, which makes it harder to accidentally override btn since its selector is more verbose: button.\*btn vs button.btn.
+
+***
+
+Constants can have contextual styles which are styles tied to a specific usage.
+
+Contextual styles are applied using a separate class. This avoids polluting common styles (in *btn) with those only relevant to specific usages. For example:
+
+<nav>
+  <button class="*btn nav__btn">
+    Log out
+  </button>
+</nav>
+
+button.nav__btn {
+  margin-top: 20px;
+}
+
+Styles specific to the *btn inside the navigation are applied using the class nav__button.
+
+***
+
+So far the examples have consisted of only one HTML element (a single button). However constants can have nested elements. These are called child constant(s).
+
+It is just as important that child constants enjoy the same benefits (protection and identity) that their parents have.
+
+This is achieved using the following class naming convention:
+
+class=”^className”
+
+Classes are prefixed with an caret (^)
+
+
+
+
+
+
+
+An example is a chat widget:
+
+<section class="*chatBox">
+  <div class="^chatBox__header"></div>
+  <div class="^chatBox__footer"></div>
+</section>
+
+div.\*chatBox {
+  background: ivory;
+}
+
+div.\^chatBox__header {
+  background: seashell;
+}
+
+div.\^chatBox__footer {
+  border: 1px solid seagreen;
+}
+
+Again prefixing the class with a special character makes child constants easy to identify, and harder to override.
+
+Using a different prefix [for child constants] also reinforces their identity. They can easily be distinguished from other CSS classes and recognised as belonging to a constant. Both of which help understanding what the class is, where it’s used, and what impact modifying or overriding it will have.
+
+Note on design patterns
+
+Whilst presented separately it’s important to note that the design patterns work just as well together and they do alone. Patterns can work in conjunction, each focussed on their own role in helping to avoid needless overrides.
+
+Language
+
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-const parseCSS = (figure) => {
+const transformCSS = (figure) => {
   let res = '';
   const nameSpace = `#${figure.getAttribute('id')}`;
 
@@ -15,8 +15,8 @@ const parseCSS = (figure) => {
   return res;
 }
 
-const setCSS = (styleTag, figure) => {
-  styleTag.innerHTML = parseCSS(figure);
+const applyCSS = (styleTag, figure) => {
+  styleTag.innerHTML = transformCSS(figure);
 }
 
 const render = (figure) => {
@@ -28,12 +28,12 @@ const render = (figure) => {
 
   out.innerHTML = html.innerText;
   out.appendChild(styleTag);
-  setCSS(styleTag, figure);
+  applyCSS(styleTag, figure);
 
   // make CSS declarations sortable
 
   new Sortable(figure.querySelector('[data-lang="CSS"]'), {
-    onUpdate: (evt) => setCSS(styleTag, figure),
+    onUpdate: (evt) => applyCSS(styleTag, figure),
   });
 }
 
