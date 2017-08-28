@@ -802,6 +802,7 @@ role in the project, it isn't the only thing. Ideas:
 - Immutable CSS - abolish specificity wars & cascading conflicts
 - Language that improves CSS architecture
 - CSS with logic, data-types & immutability
+- CSS free from unwieldy overrides, specificity wars or cascading conflicts
 
 ### Notes
 

@@ -534,17 +534,54 @@ Whilst presented separately it’s important to note that the design patterns wo
 
 
 Language
-Note: the mono language is still under development. This section contains the language specification. It defines standards whilst providing an insight of what’s to come.
+Note: the mono language is still under development. This section contains the language specification, defining standards whilst providing an insight of what’s to come.
 
 The mono language goes places the design pattern can’t.
 
-Mono is a compiled, statically typed language. It uses a type system to control overrides and uses descriptive markup to express intent.
+Mono is a compiled, statically typed language. It uses a type system to control overrides and uses descriptive markup to help CSS express intent.
 
 Mono is composed of 3 concepts:
 
 Types
 Modifiers
 Motives
+
+
+
+Mono goes places its design patterns can’t.
+Small layer that sits on top of CSS
+Mono is a statically typed language.
+It uses a type system to control overrides.
+Designed to make CSS easier to understand.
+Mono is compiled which brings several benefits:
+Enforce the design patterns
+Enforce the type system
+Catch errors at compile-time
+Assist the developer. The elm folks are visibly enjoying compilers as assistants. Both in terms of onboarding beginners, and providing a delightful developer experience.
+The mono language is an extension of the design pattern.
+Soley focussed on the core concepts (improve overriding mechanism of CSS & make CSS easier to reason with).
+As small as it can be - bloated projects are harder to consume!
+Language designed to be:
+Unobtrusive
+Familiar
+Consistent
+
+
+
+The mono language is an extension of the design pattern, composed of three parts:
+
+Types
+Modifiers
+Motives
+
+The language is focussed purely on the core concepts. Types and modifiers provide a safe system for overrides, and motives help CSS express intent.
+
+Mono is a statically typed language that compiles to CSS. The compiler encourages design patterns, enforces the type system, and catches syntactical errors. The compiler design just as important as language design.
+
+
+Intentionally small by design. There are 3 types, 2 modifiers and 6 motives. All use the same notion: property<notion>: value;
+Mono has been designed to be complementary to those familiar with CSS.
+
 
 Types
 
@@ -562,7 +599,7 @@ h3.subTitle {
   font-size<immutable>: 16px;
 }
 
-The font size of h3.subTitle is and always will be 16px. This value cannot be overridden, any attempt to do so will throw an error.
+The font size of h3.subTitle is and always will be 16px. This value cannot be overridden, any attempt to do so will throw a compiler error.
 
 Protected
 
@@ -755,13 +792,17 @@ a.signIn {
 When the ticket ENG-123456 is resolved this declaration can safely be removed.
 
 
-
 Combinators
 
-There are times when a type or modifier can be using in conjunction with a motive. In these case notions are separated with a comma:
+There are times when a type or modifier can be using in conjunction with a motive. In these cases notions are separated with a comma:
 
 ul.contactList {
     box-sizing<immutable, ?because:swallowPadding>;
 }
 
 
+Remaining sections:
+
+Examples
+Findings
+Compiler spec?
