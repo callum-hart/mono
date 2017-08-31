@@ -547,9 +547,9 @@ Modifiers: offer a controlled system to override
 Motives: make CSS easier to understand
 
 
-Mono is a statically typed language that compiles to CSS. A friendly compiler encourages the design pattern whilst enforcing the type system.
+Mono is a statically typed language that compiles to CSS. A friendly compiler encourages the design pattern whilst enforcing monos type system.
 
-The language was designed to be unobtrusive and familiar to those already accustomed to writing CSS. Mono doesn’t change what it doesn’t need to. The notions (types, modifiers, motives) are connected to regular CSS using syntactic metadata (similar to Java annotations):
+The language was designed to be unobtrusive and familiar to those already accustomed to CSS. Mono doesn’t change what it doesn’t need to nor add unnecessary complexity. The notions (types, modifiers, motives) are connected to regular CSS using syntactic metadata (similar to Java annotations):
 
 a.selector {
   font-size<notion>: 16px;
@@ -788,11 +788,48 @@ ul.contactList {
 
 Examples
 
+Before building monos compiler I wanted to test my assumptions first. Not only did this save time it allowed ideas to develop further. It also prevented implementation details and constraints hindering design decisions.
+
+This was achieved by mocking the mono language using Sass, and then pretending the design patterns and language constructs were being enforced by an imaginary compiler. Sass provided enough syntax sugar to offer a tangible way of testing theories in practice.
+
+There are three proof of concepts (POC) that use the mocked language and demonstrate the design patterns. If you only look at one I’d recommend YouTube, since it includes the most.
+
+Facebook
+
+This was the first project built with mono. It has an intricate UI which provided a good testing ground for types and modifiers. Credit to Ben Hartley for the awesome design.
+
+Grid
+
+The grid is a good example of building responsive layouts using discrete breakpoints.
+YouTube
+
+This is the latest project built with mono. It is a good example of themes, responsiveness, interactions and stateful user interfaces.
+
+Findings
+
+The proof of concepts helped expose early flaws, highlight what was/wasn’t useful, and unearth new features / use-cases.
+
+They also provided an insight into how mono could improve CSS development, the key benefits being:
+
+Clarity: easier to track where styles derive from and why they exist.
+Predictable: easier to foresee what impact adding / changing / removing styles will have.
+Robust: styles independant of cascade, specificity and uncontrolled overrides make CSS resilient to change.
+Reusability: controlled overrides encourage better reuse.
+Speed: faster development time, since less time in the typical CSS workflow.
+Maintainable: easier to maintain (thanks to #predictable and #robust).
 
 
 
 
-Remaining sections:
+I also found it easier, quicker & safer (less error prone) to jump back in and continue where I left off. Attribute this to:
 
-Examples / findings (todo)
-Compiler spec? (leave in compiler repo)
+1. Code is expressive / has clarity -> easier to understand
+2. Patterns promote consistency -> which buys familiarity (reduces onboarding time)
+3. Constraints limit uncertainly -> narrows scope of potential problems
+4. Predefined rules guide workflow -> less decision making, more consistency
+5. More confident to make changes -> less risk of side effects
+
+
+
+
+

@@ -1353,8 +1353,7 @@ Available motives are:
 2. Patterns promote consistency -> which buys familiarity (reduces onboarding time)
 3. Constraints limit uncertainly -> narrows scope of potential problems
 4. Predefined rules guide workflow -> less decision making, more consistency
-5. Code is more logical than abstract -> easier to reason with
-6. More confident to make changes -> less risk of side effects
+5. More confident to make changes -> less risk of side effects
 
 # Outcome / What's next
 
