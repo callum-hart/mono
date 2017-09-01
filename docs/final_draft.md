@@ -790,7 +790,7 @@ Examples
 
 Before building monos compiler I wanted to test my assumptions first. Not only did this save time it allowed ideas to develop further. It also prevented implementation details and constraints hindering design decisions.
 
-This was achieved by mocking the mono language using Sass, and then pretending the design patterns and language constructs were being enforced by an imaginary compiler. Sass provided enough syntax sugar to offer a tangible way of testing theories in practice.
+This was achieved by mocking monos language using Sass, and then pretending the design patterns and language constructs were being enforced by an imaginary compiler. Sass provided enough syntax sugar to offer a tangible way of testing theories in practice.
 
 There are three proof of concepts (POC) that use the mocked language and demonstrate the design patterns. If you only look at one I’d recommend YouTube, since it includes the most.
 
@@ -807,29 +807,30 @@ This is the latest project built with mono. It is a good example of themes, resp
 
 Findings
 
-The proof of concepts helped expose early flaws, highlight what was/wasn’t useful, and unearth new features / use-cases.
-
-They also provided an insight into how mono could improve CSS development, the key benefits being:
+The proof of concepts helped expose early flaws, highlight what was/wasn’t useful, and unearth new features / use-cases. They also provided an insight into how mono improves CSS development, the key benefits being:
 
 Clarity: easier to track where styles derive from and why they exist.
 Predictable: easier to foresee what impact adding / changing / removing styles will have.
 Robust: styles independant of cascade, specificity and uncontrolled overrides make CSS resilient to change.
 Reusability: controlled overrides encourage better reuse.
 Speed: faster development time, since less time in the typical CSS workflow.
-Maintainable: easier to maintain (thanks to #predictable and #robust).
+Maintainable: easier to maintain (thanks to mono being predictable and robust).
 
+***
 
+An unexpected benefit also emerged. Since mono is a side project development time was disjointed. I’d jump in and out of building the example projects - 2 hour chunks of work spread over several weeks, at times days apart.
 
+I found it easier to resume from where I’d left off, and quicker to get back up to speed, since the styles were easier to understand. I also felt more confident to make changes, since the behavior of CSS was predictable and its side-effects suppressed.
 
-I also found it easier, quicker & safer (less error prone) to jump back in and continue where I left off. Attribute this to:
+I started thinking about other factors that helped mono escape the typical CSS workflow:
 
-1. Code is expressive / has clarity -> easier to understand
-2. Patterns promote consistency -> which buys familiarity (reduces onboarding time)
-3. Constraints limit uncertainly -> narrows scope of potential problems
-4. Predefined rules guide workflow -> less decision making, more consistency
-5. More confident to make changes -> less risk of side effects
+Code has clarity which makes it easier to understand.
+Patterns promote consistency which buys familiarity.
+Constraints limit uncertainty which narrows the scope of potential problems.
+Predefined rules guide workflow which reduces decision making & improves consistency.
 
+What’s next?
 
-
+Initial version of the compiler!
 
 
