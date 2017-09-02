@@ -8,7 +8,7 @@ They also provided an insight into how mono improves CSS development, the **key 
 - **Predictable:** easier to foresee what impact adding / changing / removing styles will have.
 - **Robust:** styles independant of cascade, specificity and uncontrolled overrides make CSS resilient to change.
 - **Reusable:** controlled overrides encourage better reuse.
-- **Speed:** faster development time, since less time in the typical CSS workflow.
+- **Speed:** faster development time, since less time lost in the typical CSS workflow.
 - **Maintainable:** easier to maintain (thanks to predictability and robustness).
 
 <p align="center">&ast;&ast;&ast;</p>

@@ -28,6 +28,8 @@ Secondly the margin shorthand is **error prone**. There is an increased risk of 
 
 Lastly shorthand notations can be **unnecessary**, often re-applying values that already exist or need to be reset later. We can leverage browser default (user agent) styles; the default margin for an image is already 0px.
 
+<p align="center">&ast;&ast;&ast;</p>
+
 Omitting the margin shorthand not only removes unnecessary (same value) overrides it also improves readability. The property name now describes where the value applies, seen in the revised example below:
 
 ```css
