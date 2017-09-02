@@ -175,7 +175,7 @@ Take the following CSS rule-set:
 
 Without an element type the .btn class is obscure. We cannot guarantee who the consumers (the HTML elements that use the .btn class) are.
 
-This means we cannot confidently predict all elements with the class .btn will look the same, since we have no control or insight into what other (user agent, our own, 3rd party) CSS the element will have.
+This means we cannot confidently predict all elements using the class .btn look the same. This is because we have no insight or control into what other styles the element will have (user agent, our own, 3rd party).
 
 Also styles specific to a certain element type are bundled into the .btn class; and therefore applied to all consumers, which introduces unnecessary bloat (deadcode). Text-decoration none is only required for anchors using the .btn class.
 
@@ -228,9 +228,7 @@ Firstly it’s illogical. Inside the nav the top margin is re-applied even thoug
 
 Secondly the margin shorthand is error prone. There is an increased risk of accidentally overriding the top margin with a value other than 10px. Which means we have to keep track and maintain every concrete value in our system. If the top margin of img.avatar is subsequently changed to 15px there are more instances to update.
 
-Lastly shorthand notations can be unnecessary, often re-applying values that already exist or need to be reset later. We can leverage browser default (user agent) styles. The default margin for an image is already 0px.
-
-
+Lastly shorthand notations can be unnecessary, often re-applying values that already exist or need to be reset later. We can leverage browser default (user agent) styles; the default margin for an image is already 0px.
 
 Omitting the margin shorthand not only removes unnecessary (same value) overrides it also improves readability. The property name now describes where the value applies, seen in the revised example below:
 
@@ -245,13 +243,15 @@ nav img.avatar {
     margin-left: 15px;
 }
 
+
+
 Negation
 
 Use negation to avoid overrides among composable classes.
 
-Composable CSS classes can be used on their own, or in conjunction with other classes. When composed (with other CSS classes) the outcome is often different.
+Composable classes are groups of styles that can be used independently, or combined to achieve a different result.
 
-An example of composable classes can be seen in bootstrap:
+An example can be seen with bootstrap badges:
 
 <span class="badge badge-light">Light</span>
 
@@ -263,9 +263,9 @@ An example of composable classes can be seen in bootstrap:
   color: #111;
 }
 
-The color of .badge is #fff and when .badge and .badge-light are used together the expected color is #111 (since the color in .badge-light overrides the color in .badge).
+The color of .badge is #fff. When .badge and .badge-light are used together the expected color is #111 (since the color in .badge-light overrides the color in .badge).
 
-The color of .badge-light is expected to be #111 but this isn’t a guarantee. This is because the outcome (in this case the color) is dependant on respecting the laws of cascade - .badge-light must follow .badge. If not the outcome is different:
+The color of .badge-light is expected to be #111 but this isn’t a guarantee. This is because the outcome (in this case the color) is dependant on respecting the laws of cascade: .badge-light must follow .badge. If not the outcome is different:
 
 
 
@@ -279,7 +279,7 @@ The color of .badge-light is expected to be #111 but this isn’t a guarantee. T
 
 Color of .badge-light is overridden by .badge.
 
-Introducing negation removes the dependency on the cascade and the need to override.
+Introducing negation removes the reliance on the cascade and the need to override.
 
 .badge:not(.badge-light) {
   color: black;
@@ -289,7 +289,7 @@ Introducing negation removes the dependency on the cascade and the need to overr
   color: grey;
 }
 
-The color has one declaration per variant no matter if the classes (.badge and .badge-light) are used on their own or used in conjunction. Negation has brought us portability and predictability. The order of declarations in the cascade no longer matters:
+The color has one declaration per variant no matter if the classes are used independently or in conjunction. Negation has brought us portability and predictability. The order of declarations in the cascade no longer matters:
 
 .badge-light {
   color: grey;
@@ -312,9 +312,11 @@ Discrete breakpoints
 
 Styles in one media query should not override styles in another.
 
+Discrete breakpoints are self-contained, in which styles are partitioned and encapsulated within ranges. Styles within one range do not affect nor override styles in another.
 
+Indiscrete breakpoints are the opposite. Styles from one range can affect and thus override styles in another.
 
-Indiscrete breakpoints can often be seen in “mobile first” implementations:
+A common usage of indiscrete breakpoints is "mobile first":
 
 <nav>
   <a href="" class="logo">Logo</a>
@@ -367,7 +369,7 @@ a.logo {
     }
 }
 
-Again on screens larger than 1000px all 3 rule-sets apply. And since a min-width of 500px evaluates to true, and is later in the cascade the font-size of a.logo is 16px. Unintuitively it is the cascade and not the breakpoint value that determines the font-size.
+Again on screens larger than 1000px all 3 rule-sets apply. Since all three conditions are true it is the last in the cascade that takes effect (font-size of a.logo will be 16px). Unintuitively it is the cascade and not the breakpoint value that determines the font-size.
 
 Indiscrete breakpoints are also dependent on specificity. In the following example the rule-set with the strongest specificity out-competes the others; regardless of their position in the cascade or breakpoint value:
 
@@ -394,9 +396,7 @@ Figure 2 and 3 are examples of how indiscrete breakpoints are dependent and infl
 
 ***
 
-Discrete breakpoints encapsulate styles within boundaries. Each boundary is partitioned so that styles in one boundary cannot override styles in another.
-
-This removes the need to override.
+Discrete breakpoints are not dependant on cascade or specificity. The need to override styles from other breakpoints is removed.
 
 The example below produces the same outcome as figure 1 without the weaknesses seen in figure 2 and 3:
 
@@ -444,7 +444,7 @@ Reshuffling the order of rule-sets no longer changes the outcome, nor does using
 
 The example above produces the same outcome as figure 4, despite a change to cascade order and specificity.
 
-This makes media queries far more predictable, since there’s no need to orchestrate overrides. Omitting overrides has made the order of media queries and their specificity irrelevant. Only the breakpoint size determines what styles apply (at different screen sizes) which is far more intuitive and deterministic.
+This makes media queries far more predictable, since there’s no need to orchestrate overrides. Omitting overrides has made the order of media queries and their specificity irrelevant. Only the breakpoint size determines what styles apply which is far more intuitive and deterministic.
 
 Just like negation this pattern buys guarantees. We can guarantee what the font-size will be at different screen-sizes. We can guarantee that changing the order of media queries won’t affect the outcome. We can guarantee a change in specificity won’t sidestep the cascade and override subsequent rule-sets. And we can guarantee the font-size in one media query won’t get overridden by another.
 
@@ -469,15 +469,13 @@ button.btn {
 
 As it currently stands .btn suffers a few problems:
 
-Firstly it lacks identity. It isn’t obvious that .btn is a common component (other than intuition telling us it probably is). Nothing differentiates .btn from other classes which means it isn’t clear what impact modifying its styles will have, nor where these modifications should happen.
+First it lacks identity. It isn’t obvious that .btn is a common component (other than intuition telling us it probably is). Nothing differentiates .btn from other classes which means it isn’t clear what impact modifying its styles will have, nor where these modifications should happen.
 
-Secondly it’s far too easy to override .btn styles both technically and in terms of developer awareness.
-
-Technically .btn styles can be overridden from anywhere because CSS offers no means to protect nor encapsulate them. And since .btn lacks identity we are unaware what impact overriding it’s styles have.
+Secondly it’s far too easy to override .btn styles. They can be overridden from anywhere, because CSS offers no means to protect or encapsulate them. And since .btn lacks identity we are unaware what impact overriding it’s styles will have.
 
 ***
 
-Constants look to solve these problems by partitioning and encapsulating styles, whilst also providing an identity.
+Constants look to solve these problems by encapsulating styles whilst providing an identity.
 
 This is achieved using the following class naming convention:
 
@@ -500,7 +498,7 @@ button.\*btn {
 
 Prefixing the class with a special character is a subtle change, but buys us a few things. Firstly it’s easy to identify and thus differentiate *btn from other classes. It’s clear that *btn is a common component and modifications should be made carefully.
 
-Secondly it adds a layer of protection. The special character needs to be escaped, which makes it harder to accidentally override btn since its selector is more verbose: button.\*btn vs button.btn.
+Secondly it adds a layer of protection. The special character in the selector needs escaping, which makes it harder to accidentally override since the selector is more verbose: button.\*btn vs button.btn.
 
 ***
 
@@ -522,7 +520,7 @@ Styles specific to the *btn inside the navigation are applied using the class na
 
 ***
 
-So far the examples have consisted of only one HTML element (a single button). However constants can have nested elements. These are called child constant(s).
+So far the example consists of one HTML element (a single button). However constants can have nested elements. These are called child constant(s).
 
 It is just as important that child constants enjoy the same benefits (protection and identity) that their parents have.
 
@@ -575,12 +573,12 @@ Note: the mono language is still under development. This section contains the la
 
 The mono language is an extension of the design pattern, composed of three parts:
 
-Types: set the rules that govern overrides
+Types: set rules that govern overrides
 Modifiers: offer a controlled system to override
 Motives: make CSS easier to understand
 
 
-Mono is a statically typed language that compiles to CSS. A friendly compiler encourages the design pattern whilst enforcing monos type system.
+Mono is a statically typed language that compiles to CSS. A friendly compiler encourages the design pattern whilst enforcing its type system.
 
 The language was designed to be unobtrusive and familiar to those already accustomed to CSS. Mono doesn’t change what it doesn’t need to nor add unnecessary complexity. The notions (types, modifiers, motives) are connected to regular CSS using syntactic metadata (similar to Java annotations):
 
@@ -836,7 +834,7 @@ Grid
 The grid is a good example of building responsive layouts using discrete breakpoints.
 YouTube
 
-This is the latest project built with mono. It is a good example of themes, responsiveness, interactions and stateful user interfaces.
+This is the latest project built with mono. It is a good example of theming, responsiveness, interactions and stateful user interfaces.
 
 Findings
 
@@ -851,7 +849,7 @@ Maintainable: easier to maintain (thanks to mono being predictable and robust).
 
 ***
 
-An unexpected benefit also emerged. Since mono is a side project development time was disjointed. I’d jump in and out of building the example projects - 2 hour chunks of work spread over several weeks, at times days apart.
+An unexpected benefit also emerged. Being a side project meant that monos development time was disjointed. I’d jump in and out of building the example projects - 2 hour chunks of work spread over several weeks, at times days apart.
 
 I found it easier to resume from where I’d left off, and quicker to get back up to speed, since the styles were easier to understand. I also felt more confident to make changes, since the behavior of CSS was predictable and its side-effects suppressed.
 
