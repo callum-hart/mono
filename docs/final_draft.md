@@ -1,11 +1,8 @@
 Introduction
 
-Mono is a design pattern & programming language that reduces the difficulties of CSS development.
+Mono is a design pattern & language that aims to improve CSS development.
 
-Mono brings concepts based on established programming language conventions to CSS, including: data types, access modifiers & immutability.
-
-With a small footprint & focus on its core concepts mono makes CSS robust, predictable and easy to reason with.
-
+Mono makes CSS predictable, robust, and easier to reason with. It allows developers to confidently make changes without introducing unwanted side-effects.
 Motivation
 
 Mono was born out of my own frustration.
@@ -23,19 +20,19 @@ Four steps to make one change is exhausting, and more importantly not scalable. 
 
 ***
 
-A cumbersome workflow isn't without reason - merely a symptom of  other issues. CSS is notoriously fragile and difficult to reason with.
+A cumbersome workflow isn't without reason, merely a symptom of other issues. CSS is notoriously fragile and difficult to reason with.
 
 Part of the difficulties lie with global scope & an unhealthy tolerance of overrides. Without separation of concerns, nor a means to encapsulate we often find styles compete against one another - so much so that the term "winning style" has been coined.
 
-Determining the "winning style" is unpredictable - with too many deciding factors at play. Global scope permits anyone to override. Influencers cascade, specificity and importance determine who is victorious. At any given time the victor can change (new styles added, old styles removed) which not only makes the outcome uncertain but fragile.
+Determining the "winning style" is unpredictable, with too many deciding factors at play. Global scope permits anyone to override. Influencers cascade, specificity and importance determine who is victorious. At any given time the victor can change (new styles added, old styles removed) which not only makes the outcome uncertain but fragile.
 
 The unpredictable and fragile nature of CSS make it easy to break and hard to maintain. The sheer volume of styles cohabiting in the same space quickly grows unmanageable. It's difficult to keep track of what styles are used & who uses them. It grows increasingly difficult to identify dependencies and relationships between styles, which means we cannot confidently make changes.
 
 ***
 
-After having these problems myself & witnessing others suffering I thought there must be a better way! Initially a thought experiment mono evolved from investigating [CSS issues](), examining why they were problematic, & exploring how they were solved elsewhere.
+After having these problems myself & witnessing others suffering I thought there must be a better way! Initially a thought experiment mono evolved from investigating CSS issues, examining why they were problematic, & exploring how they were solved elsewhere.
 
-With an open-minded approach & focus on understanding core problems before seeking solutions mono aims to make CSS robust, predictable, and easy to reason with. I'm extremely excited having watched mono mature & even more thrilled about it's future!
+With an open-minded approach & focus on understanding core problems before seeking solutions mono aims to make CSS robust, predictable, and easy to reason with. I'm extremely excited having watched mono mature & even more thrilled about its future!
 
 Core concepts
 
@@ -48,11 +45,17 @@ Change overriding mechanism of CSS
 
 In my opinion a high proportion of CSS pain points come from it's overriding architecture.
 
-Overrides are brittle, unreliable and self-perpetuating. Built on unstable foundations (cascade, specificity, importance) overrides often feel uncontrollable.  Can they be tamed?
+Overrides provide no guarantee. They are brittle since their effects depend on the cascade and specificity, both of which are vulnerable to change.
 
-In a word, yes.
+Overrides are also self-perpetuating. The more overrides exists the more overriding you do. CSS overtly encourages this, even from a clean slate browser defaults are overridden.
 
-If we view overrides as mutation we can look to other languages for guidance, many of which provide a system for changing a value. For example:
+In addition CSS can suffer from high coupling and low cohesion - where reusable styles are tightly mixed with those that aren't. This increases the demand for overrides since unwanted [non-reusable] styles need overriding.
+
+In the current climate a developer has little option but to override.
+
+***
+
+However if we view overrides as mutation we can look to other languages for guidance, many of which provide a system for changing a value. For example:
 
 Access modifiers: Determine who & how a value can be modified.
 Data types: A value cannot be modified through reassignment (final in Java / const in ES6).
@@ -67,9 +70,36 @@ Give CSS an expressive & unified implementation
 
 It is hard to understand the behaviour of CSS.
 
-A CSS declaration can exist for a range of reasons. The rationale behind a declaration usually resides in our (or someone else's) head. Since CSS offers no indication of its purpose (lacks intent) it's hard to understand why a property exists & fathom the rationale behind its value.
+A CSS declaration can exist for a range of reasons. The rationale behind a declaration usually resides in our (or someone else's) head.
 
-This means time & mental energy is spent reasoning with CSS. "Why is opacity set to 1", "What happens if I remove position relative". We make changes without confidently foreseeing the outcome and any side-effects that may come with it.
+It's hard to understand why a property exists & fathom the rationale behind its value since CSS offers no indication of its purpose (lacks intent). The comments below represent the thought process usually made interpreting CSS:
+
+.btn {
+  padding: 20px 10px;
+
+  /* Isn’t the browser default font size 11px? */
+  font-size: 11px;
+
+  /* I guess .btn can be an anchor */
+  text-decoration: none;
+
+  border: 1px solid red;
+
+  /* Must override an unwanted border radius */
+  border-radius: 0;
+
+  /* I assume opacity is set somewhere else, either with a higher specificity, or later in the cascade, or via JavaScript; hence the !important */
+  opacity: 1 !important;
+
+  background: #ccc;
+  color: #000;
+  cursor: pointer;
+
+  /* Can’t see why that’s needed… should be ok to remove ¯\(ツ)/¯ */
+  position: relative;
+}
+
+Time & mental energy is spent reasoning with CSS. "Why is opacity 1", "What happens position relative is removed". Rationale that once existed is lost. We make changes without confidently foreseeing the outcome or any side-effects that may come with it.
 
 Mono introduces systems that help CSS express intent. By making CSS expressive & easier to reason with it becomes more tangible and the process of understanding it becomes more immediate.
 

@@ -15,6 +15,7 @@ div.\*chat-box--visible {
     display: immutable(block);
 }
 
+// TODO: update child constants to use ^ instead of *
 div.\*chat-box__header {
     display: immutable(flex);
     align-items: immutable(center);

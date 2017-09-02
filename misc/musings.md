@@ -803,6 +803,7 @@ role in the project, it isn't the only thing. Ideas:
 - Language that improves CSS architecture
 - CSS with logic, data-types & immutability
 - CSS free from unwieldy overrides, specificity wars or cascading conflicts
+- CSS without unruly overrides, specificity wars or cascading conflicts
 
 ### Notes
 
@@ -841,6 +842,7 @@ preprocessor. It should be as agnostic as possible. Compatible with any CSS stra
 - Shouldn't confuse reusue with overrides.
 - [Origins] Mono started as a thought experiment. Simple goal: make CSS better. Open minded - idea creation vs predetermined bias.
 - [Blog] The case against CSS overrides.
+- [Compiler] escape special characters in constant selectors.
 
 
 ### Tooling / Ecosystem
