@@ -72,7 +72,7 @@ It is hard to understand the behaviour of CSS.
 
 A CSS declaration can exist for a range of reasons. The rationale behind a declaration usually resides in our (or someone else's) head.
 
-It's hard to understand why a property exists & fathom the rationale behind its value since CSS offers no indication of its purpose (lacks intent). The comments below represent the thought process usually made interpreting CSS:
+It's hard to understand why a property exists & fathom the rationale behind its value since CSS offers no indication of its purpose (lacks intent). The comments below represent a thought process made interpreting the CSS:
 
 .btn {
   padding: 20px 10px;
@@ -99,7 +99,7 @@ It's hard to understand why a property exists & fathom the rationale behind its 
   position: relative;
 }
 
-Time & mental energy is spent reasoning with CSS. "Why is opacity 1", "What happens position relative is removed". Rationale that once existed is lost. We make changes without confidently foreseeing the outcome or any side-effects that may come with it.
+Time and mental energy is spent reasoning with CSS. "Why is opacity 1", "What happens position relative is removed". Rationale that once existed is lost. We make changes without confidently foreseeing the outcome or any side-effects that may come with it.
 
 Mono introduces systems that help CSS express intent. By making CSS expressive & easier to reason with it becomes more tangible and the process of understanding it becomes more immediate.
 
@@ -107,50 +107,53 @@ Mono introduces systems that help CSS express intent. By making CSS expressive &
 
 CSS also lacks a consistent implementation.
 
-There are many ways to achieve the same thing and no formal implementation. This means developers frequently make design decisions on a case-by-case basis which fosters inconsistencies. This makes it hard to understand and work with our own CSS and that of others.
+CSS has many ways to achieve the same thing with no formal implementation.
+
+This means developers frequently make design decisions on a case-by-case basis which fosters inconsistency. In turn its hard to understand and work with our own CSS and that of others.
 
 In addition best practices such as BEM (aimed at promoting consistency) are difficult to enforce, which make them far too easy to ignore or misuse.
 
-Mono is a firm believer in convention over configuration. Design patterns & best practices are "baked into" the language and more importantly enforced by its compiler. It is this enforcement that brings consistency.
+Mono is a firm believer in convention over configuration. Design patterns and best practices are "baked into" the language which naturally nurtures consistency.
+
+
+
+
 
 Key principles
 
 Mono has five key principles:
-#1 Avoid needless overrides
+1) Avoid needless overrides
+The best override is one that doesn't happen in the first place
 
-The best override is one that doesn't happen in the first place!
+Overrides should not be the goto solution to achieve variation or reusability. Too many overrides indicate improper reuse.
 
-Overrides should not be the goto solution for achieving variation or reusability. Despite being the default architecture of CSS there are better alternatives to overriding styles.
-#2 Rules govern overrides
+Mono uses design patterns to limit unnecessary overrides.
+2) Rules govern overrides
+Predefined rules determine when an override is allowed
 
-Predefined rules determine when an override is allowed.
+Certain circumstances require overrides, however this does not revoke the first principle.
 
-There are certain circumstances in which overrides cannot be avoided (however this doesn't mean we can ignore the first principle).
+Instead each circumstance [to override] should be identified, whilst established laws govern the conditions in which an override is permitted.
 
-Instead we must identify all possible use cases in which an override is required, and then establish laws & conditions in which an override is allowed to happen.
+Mono uses a type system to govern overrides.
+3) Overrides must be controlled
+Overrides must operate within a controlled & regulated system
 
-Limiting the circumstances in which styles can be overridden helps reduce needless overrides, whilst providing a framework to work with. Mono uses a type system to keep overrides in check - an override that violates a rule is not permitted.
-#3 Overrides must be controlled
+An override that operates outside the system or violates a rule is not permitted.
 
-Overrides must operate within a controlled & regulated system.
+Mono uses a type system to control overrides.
+4) One way to override
+There must only be one way to override a style
 
-The system must provide a mechanism to override whilst enforcing the rules that govern overrides.
+Limiting overrides to a single implementation makes it easier to track and manage overrides.
 
-An override operating outside the system is not allowed.
-#4 One way to override
+With mono overrides are expressed using modifiers. Each modifier leaves a breadcrumb, allowing us to pinpoint exactly where and why an override happened. This is a stark contrast to CSS, where overrides are inconspicuously scattered across different parts of code.
+5) CSS should be easy to understand
+It should be easy to understand and predict the behaviour of CSS
 
-There must only be one way to override a style.
+It should be easy to articulate and identify what styles do, why they are used, and what role they have in our code.
 
-A single implementation guarantees consistency and clarity. With mono an override is expressed using a modifier]. A modifier is the only way to override a style.
-
-When a modifier overrides a style we can pinpoint exactly where & why the override happened. This is a stark contrast to regular CSS - where overrides are inconspicuously scattered across different parts of code.
-#5 CSS should be easy to understand
-
-It should be easy to understand and predict the behaviour of CSS.
-
-It should be easy to articulate and identify what styles do, why they are used, and what role they play in our code. Mono uses motives that empower CSS to communicate its purpose.
-
-This reduces ambiguity and obscurity which means developers are less likely to break things since changes are more predictable.
+Mono uses motives that allow CSS to communicate purpose. Reducing ambiguity / obscurity means developers are less likely to break things, since changes are more predictable.
 
 Design patterns
 

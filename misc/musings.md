@@ -843,6 +843,7 @@ preprocessor. It should be as agnostic as possible. Compatible with any CSS stra
 - [Origins] Mono started as a thought experiment. Simple goal: make CSS better. Open minded - idea creation vs predetermined bias.
 - [Blog] The case against CSS overrides.
 - [Compiler] escape special characters in constant selectors.
+- Too many overrides indicate improper reuse. Pushing a square peg into a round hole.
 
 
 ### Tooling / Ecosystem
