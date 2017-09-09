@@ -15,7 +15,7 @@ To **run** this example locally:
 To **edit** this example locally:
 
 - [Install Sass](http://sass-lang.com/install) *(if not already installed)*
-- Clone repo & navigate to example *(same as in run)*
+- Clone repo & navigate to example *(same as run)*
 - Start a server `python -m SimpleHTTPServer`
 - Open [localhost:8000/facebook.html](localhost:8000/facebook.html) in browser
 
