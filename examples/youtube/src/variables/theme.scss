@@ -7,7 +7,6 @@ $theme--blue: 'html.theme--blue:not(.theme--dark):root';
     --nav_border-bottom-color:               #{theme(#EEEEEE)};
     --nav_icon-color:                        #{theme(#888888)};
     --nav_logo-image:                        #{theme(url('http://localhost:8000/vendor/images/logo.png'))};
-    // todo: variable for domain, changes based on env. i.e url('#{$DOMAIN}/vendor/images/logo.png')
 
     --navSearchField_background:             #{theme($white)};
     --navSearchField_color:                  #{theme(#111111)};
@@ -36,7 +35,6 @@ $theme--blue: 'html.theme--blue:not(.theme--dark):root';
     --nav_border-bottom-color:               #{theme(transparent)};
     --nav_icon-color:                        #{theme($white)};
     --nav_logo-image:                        #{theme(url('http://localhost:8000/vendor/images/logo-white.png'))};
-    // todo: variable for domain, changes based on env. i.e url('#{$DOMAIN}/vendor/images/logo.png')
 
     --navSearchField_background:             #{theme(#111111)};
     --navSearchField_color:                  #{theme(#E3E3E3)};
