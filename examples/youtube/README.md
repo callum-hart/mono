@@ -2,11 +2,11 @@
 
 Light theme:
 
-[![YouTube Light Theme POC](../../examples/youtube/preview--light.png)](https://github.com/callum-hart/mono)
+[![YouTube Light Theme POC](../../examples/youtube/preview--light.png)](https://callum-hart.github.io/mono/examples/youtube/youtube.html)
 
 Dark theme:
 
-[![YouTube Dark Theme POC](../../examples/youtube/preview--dark.png)](https://github.com/callum-hart/mono)
+[![YouTube Dark Theme POC](../../examples/youtube/preview--dark.png)](https://callum-hart.github.io/mono/examples/youtube/youtube.html?theme=dark)
 
 ## Development
 

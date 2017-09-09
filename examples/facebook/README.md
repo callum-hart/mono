@@ -2,7 +2,7 @@
 
 Credit to **Ben Hartley** for his [awesome design](https://dribbble.com/shots/1666016-Facebook-redesign).
 
-[![Facebook POC](../../examples/facebook/preview.png)](https://github.com/callum-hart/mono)
+[![Facebook POC](../../examples/facebook/preview.png)](https://callum-hart.github.io/mono/examples/facebook/facebook.html)
 
 ## Development
 

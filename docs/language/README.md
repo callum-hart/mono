@@ -10,7 +10,7 @@ The mono language is an extension of the design pattern, composed of three parts
 
 Mono is a statically typed language that compiles to CSS. A friendly compiler encourages the design pattern whilst enforcing its type system.
 
-The language was designed to be **unobtrusive and familiar** to those already accustomed to CSS. Mono doesn’t change what it doesn’t need to nor add unnecessary complexity. The notions (types, modifiers, motives) are connected to regular CSS using syntactic metadata (similar to Java annotations):
+The language is designed to be **unobtrusive and familiar** to those already accustomed to CSS. Mono doesn’t change what it doesn’t need to nor add unnecessary complexity. The notions (types, modifiers, motives) are connected to regular CSS using syntactic metadata (similar to Java annotations):
 
 ```css
 a.selector {

@@ -1,6 +1,6 @@
 # Responsive Grid
 
-[![Responsive Grid POC](../../examples/grid/preview.png)](https://github.com/callum-hart/mono)
+[![Responsive Grid POC](../../examples/grid/preview.png)](https://callum-hart.github.io/mono/examples/grid/grid.html)
 
 ## Development
 
