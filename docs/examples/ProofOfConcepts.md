@@ -1,6 +1,8 @@
 # Proof of Concepts
 
-There are three proof of concepts (POC) that use the mocked language and demonstrate the design patterns. If you only look at one I’d recommend YouTube, since it's the most comprehensive.
+There are three proof of concepts (POC) built using Sass. Each demonstrate mono design patterns, whilst providing a tangible way of exploring the language.
+
+If you only look at one [POC] I recommend YouTube, since it's the most comprehensive.
 
 ## Facebook
 
@@ -18,10 +20,12 @@ An example of using [discrete breakpoints]() to build responsive layouts.
 
 ## YouTube
 
-The latest project built with mono. A good example of theming, responsiveness, interactions and stateful user interfaces.
+The latest project built with mono. A good showcase of theming, responsiveness, interactions and stateful user interfaces.
 
-**Theme** light:
+Light theme:
+
 [![YouTube Light Theme POC](../../examples/youtube/preview--light.png)](https://github.com/callum-hart/mono)
 
-**Theme** dark:
+Dark theme:
+
 [![YouTube Dark Theme POC](../../examples/youtube/preview--dark.png)](https://github.com/callum-hart/mono)

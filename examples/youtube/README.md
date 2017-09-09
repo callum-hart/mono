@@ -1,8 +1,28 @@
-# Example UI - YouTube
+# YouTube
 
-- Build new YouTube design using mono
-- Light + dark theme
-- Responsive `bound`
-- XPs, see how mono handles XPs *(mock XPs using query params i.e localhost:8000/youtube.html?theme=dark&ads=disabled)*
-- Use Complete-Me for search input to demo `--overthrow` motive.
-- Build more interactions / functionality than fb example *(which is rather static)* - since this opens up more use|edge-cases.
+Light theme:
+
+[![YouTube Light Theme POC](../../examples/youtube/preview--light.png)](https://github.com/callum-hart/mono)
+
+Dark theme:
+
+[![YouTube Dark Theme POC](../../examples/youtube/preview--dark.png)](https://github.com/callum-hart/mono)
+
+## Development
+
+To **run** this example locally:
+
+- Clone repo `git clone https://github.com/callum-hart/mono.git`
+- Navigate to example `cd mono/examples/youtube`
+- Open `youtube.html` in browser
+
+To **edit** this example locally:
+
+- [Install Sass](http://sass-lang.com/install) *(if not already installed)*
+- Clone repo & navigate to example *(same as in run)*
+- Start a server `python -m SimpleHTTPServer`
+- Open [localhost:8000/youtube.html](localhost:8000/youtube.html) in browser
+
+## Further reading
+
+You can read more [here](../../docs/examples/README.md).

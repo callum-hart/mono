@@ -1,69 +1,22 @@
-# Example UI - Grid
+# Responsive Grid
 
-Testing RWD with mono using `bound` type.
+[![Responsive Grid POC](../../examples/grid/preview.png)](https://github.com/callum-hart/mono)
 
-**Findings:**
+## Development
 
-- Works as expected.
-- Discovered a new motive `--because`.
-- Prefer co-located media queries as they're easier to read, and keep related styles together. Examples:
+To **run** this example locally:
 
-Co-located approach:
+- Clone repo `git clone https://github.com/callum-hart/mono.git`
+- Navigate to example `cd mono/examples/grid`
+- Open `grid.html` in browser
 
-```
-section.content__block {
-    // styles for all screen-sizes here...
+To **edit** this example locally:
 
-    @media (max-width: $small)  {
-        flex-basis: bound(immutable(100%));
-    }
+- [Install Sass](http://sass-lang.com/install) *(if not already installed)*
+- Clone repo & navigate to example *(same as in run)*
+- Start a server `python -m SimpleHTTPServer`
+- Open [localhost:8000/grid.html](localhost:8000/grid.html) in browser
 
-    @media (min-width: $small) and (max-width: $medium)  {
-        flex-basis: bound(immutable(50%));
-    }
+## Further reading
 
-    @media (min-width: $medium) and (max-width: $large) {
-        flex-basis: bound(immutable(calc(100% / 3)));
-    }
-}
-```
-
-Advantages of co-located approach:
-
-- More concise.
-- Easier to read.
-- Less likely to remove required styles.
-- Easier maintenance.
-
-Seperate approach:
-
-```
-section.content__block {
-    // styles for all screen-sizes here...
-}
-
-@media (max-width: $small)  {
-    section.content__block {
-        flex-basis: bound(immutable(100%));
-    }
-}
-
-@media (min-width: $small) and (max-width: $medium)  {
-    section.content__block {
-        flex-basis: bound(immutable(50%));
-    }
-}
-
-@media (min-width: $medium) and (max-width: $large) {
-    section.content__block {
-        flex-basis: bound(immutable(calc(100% / 3)));
-    }
-}
-```
-
-Disadvantages of seperate approach:
-
-- Markup is more verbose.
-- Selector maintainability
-    - {n} number of selectors to maintain (where {n} corresponds to the number of breakpoints).
-    - error prone, more selectors increases chance of errors (typos)
+You can read more [here](../../docs/examples/README.md).
