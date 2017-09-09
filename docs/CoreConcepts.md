@@ -65,7 +65,7 @@ It's hard to understand why a property exists & fathom the rationale behind its 
 }
 ```
 
-Time and mental energy is spent reasoning with CSS. "Why is opacity 1", "What happens position relative is removed". Rationale that once existed is lost. We make changes without confidently foreseeing the outcome or any side-effects that may come with it.
+**Time and mental energy is spent reasoning with CSS**. "Why is opacity 1", "What happens position relative is removed". Rationale that once existed is lost. We make changes without confidently foreseeing the outcome or any side-effects that may come with it.
 
 Mono introduces systems that help CSS express intent. By making CSS expressive & easier to reason with it becomes more tangible and the process of understanding it becomes more immediate.
 
