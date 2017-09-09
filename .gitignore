@@ -2,3 +2,4 @@
 examples/*/node_modules/
 examples/*/.sass-cache/
 compiler
+_book

@@ -1,7 +1,6 @@
 # Table of Contents
 
-- [Prelude](/docs/README.md#prelude)
-- [Motivation](/docs/README.md#motivation)
+- [Motivation](/docs/Motivation.md)
 - [Core Concepts](/docs/CoreConcepts.md)
 - [Key Principles](/docs/KeyPrinciples.md)
 - [Design Patterns](/docs/patterns/README.md)

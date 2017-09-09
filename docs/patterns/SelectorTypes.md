@@ -48,4 +48,4 @@ It’s easy to identify what elements use the class `.btn` - we can clearly see 
 
 This also makes it easier to separate reusable styles from those specific to a certain element type. Text-decoration none is only needed for anchors so is moved out into a rule-set of its own.
 
-Not only does this separate concerns, it helps organise styles into smaller, manageable, distinct chunks. I know where to add or remove styles for anchors, and better still if anchors stop using the `.btn` class I can safely remove styles specific to them.
+Not only does this separate concerns, it helps organise styles into smaller, manageable, distinct chunks. Now I know where to add or remove styles for anchors, and better still if anchors stop using the `.btn` class I can safely remove styles specific to them.
