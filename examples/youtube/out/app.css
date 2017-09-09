@@ -133,7 +133,7 @@
         background: theme(immutable(@buttonBg));
     }
 
-    Decide how much value this type adds... if any? This could equally
+    Todo: Decide how much value this type adds... if any? This could equally
     be handled with a new variable type (see `variables.scss`), i.e:
 
     $buttonBg: theme(red);
@@ -318,7 +318,8 @@ html:not(.theme--dark):not(.theme--blue):root {
   --leftShelfItemName_color: #111111 /* theme */;
   --leftShelfItemsTitle_color: #707070 /* theme */;
   --leftShelfItemFooterLabel_color: #707070 /* theme */;
-  --content_background: #FFFFFF /* const */ /* theme */; }
+  --content_background: #FFFFFF /* const */ /* theme */;
+  --mediaItemInner_background: #EFEFEF /* theme */; }
 
 html.theme--dark:not(.theme--blue):root {
   --nav_background: #232323 /* theme */;
@@ -339,7 +340,8 @@ html.theme--dark:not(.theme--blue):root {
   --leftShelfItemName_color: #E4E4E4 /* theme */;
   --leftShelfItemsTitle_color: #A4A4A4 /* theme */;
   --leftShelfItemFooterLabel_color: #A4A4A4 /* theme */;
-  --content_background: #111111 /* theme */; }
+  --content_background: #111111 /* theme */;
+  --mediaItemInner_background: #232323 /* theme */; }
 
 html, body {
   margin: 0 /* --veto */;
@@ -666,7 +668,8 @@ p.left-shelf__footer-copyright {
   color: var(--leftShelfItemFooterLabel_color) /* immutable */; }
 
 section.media-items {
-  margin: 0 auto /* immutable */; }
+  margin-left: auto /* immutable */;
+  margin-right: auto /* immutable */; }
   @media (max-width: 875px) {
     section.media-items {
       max-width: calc(2 * 210px /* const */) /* immutable */; } }
@@ -686,8 +689,12 @@ section.media-items {
 div.media-item {
   float: left /* immutable */;
   width: 210px /* const */ /* immutable */;
-  border: 1px solid #ccc /* immutable */;
   box-sizing: border-box /* --because: Include padding in calculated width & height */; }
+
+div.media-item__inner {
+  margin: 10px /* immutable */;
+  height: 120px /* const */ /* immutable */;
+  background: var(--mediaItemInner_background) /* immutable */; }
 
 div.content-overlay:not(.content-overlay--visible) {
   display: none /* immutable */; }
@@ -706,6 +713,9 @@ div.content-overlay:not(.content-overlay--visible) {
     display: none /* immutable */; } }
 
 section.content {
+  overflow: auto /* immutable */;
+  padding-top: 20px /* immutable */;
+  padding-bottom: 20px /* immutable */;
   background: var(--content_background) /* immutable */; }
 
 /*# sourceMappingURL=app.css.map */

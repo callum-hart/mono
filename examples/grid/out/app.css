@@ -133,7 +133,7 @@
         background: theme(immutable(@buttonBg));
     }
 
-    Decide how much value this type adds... if any? This could equally
+    Todo: Decide how much value this type adds... if any? This could equally
     be handled with a new variable type (see `variables.scss`), i.e:
 
     $buttonBg: theme(red);
@@ -182,8 +182,14 @@
     By making CSS easier to reason with we make the process of
     understanding (it) more immediate.
 
-    Motives remove investing time and enery in justifying why
+    Motives remove investing time and energy in justifying why
     a property exists.
+
+    Motives capture the rational in the moment the property
+    is declared. It's easy to forget why a property exists,
+    which means once added it generally stays (even when
+    the reason for adding it is later nullified). This makes
+    refactoring CSS rather dicey!
 
     Motives are prefixed with a double dash --
 
@@ -297,9 +303,6 @@ html, body {
   margin: 0 /* --veto */;
   height: 100% /* --veto */; }
 
-body {
-  font-family: sans-serif /* --veto */; }
-
 main.content {
   display: flex /* immutable */;
   flex-flow: row wrap /* immutable */; }
@@ -308,7 +311,7 @@ section.content__block {
   flex: 1 /* immutable */;
   height: 200px /* immutable */;
   padding: 20px /* immutable */;
-  box-sizing: border-box /* --because: Include padding & border in calculated width & height */;
+  box-sizing: border-box /* --because: Include padding in calculated width & height */;
   background: #CCE6CC /* const */ /* immutable */; }
   @media (max-width: 600px) {
     section.content__block {
@@ -326,7 +329,7 @@ section.content__block {
 
 nav.nav {
   padding: 20px /* immutable */;
-  box-sizing: border-box /* --because: Include padding & border in calculated width & height */;
+  box-sizing: border-box /* --because: Include padding in calculated width & height */;
   background: #FFCCCC /* const */ /* immutable */; }
   @media (max-width: 600px) {
     nav.nav {
@@ -340,7 +343,7 @@ nav.nav {
 
 footer.footer {
   padding: 20px /* immutable */;
-  box-sizing: border-box /* --because: Include padding & border in calculated width & height */;
+  box-sizing: border-box /* --because: Include padding in calculated width & height */;
   background: #CCCCFF /* const */ /* immutable */; }
   @media (max-width: 600px) {
     footer.footer {
@@ -352,27 +355,25 @@ footer.footer {
     footer.footer {
       height: 100px /* const */ /* immutable */ /* bound */; } }
 
-/*
-    Might need another modifier?
-    Use case: set default property and override at different
-    breakpoints.
-
-    This could be avoided by explicitly setting the default
-    property at each breakpoint (see example at bottom).
-*/
-code {
-  display: none /* immutable */; }
-  @media (max-width: 600px) {
-    code.\$small {
-      display: block; } }
-  @media (min-width: 600px) and (max-width: 900px) {
-    code.\$small2\$medium {
-      display: block; } }
-  @media (min-width: 900px) and (max-width: 1200px) {
-    code.\$medium, code.\$medium2\$large {
-      display: block; } }
-  @media (min-width: 1200px) {
-    code.\$medium, code.\$large {
-      display: block; } }
+@media (max-width: 600px) {
+  code.\$small {
+    display: block; }
+  code.\$small2\$medium, code.\$medium, code.\$medium2\$large, code.\$large {
+    display: none; } }
+@media (min-width: 600px) and (max-width: 900px) {
+  code.\$small2\$medium {
+    display: block; }
+  code.\$small, code.\$medium, code.\$medium2\$large, code.\$large {
+    display: none; } }
+@media (min-width: 900px) and (max-width: 1200px) {
+  code.\$medium, code.\$medium2\$large {
+    display: block; }
+  code.\$small, code.\$small2\$medium, code.\$large {
+    display: none; } }
+@media (min-width: 1200px) {
+  code.\$medium, code.\$large {
+    display: block; }
+  code.\$small, code.\$small2\$medium, code.\$medium2\$large {
+    display: none; } }
 
 /*# sourceMappingURL=app.css.map */

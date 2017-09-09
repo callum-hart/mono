@@ -1,12 +1,3 @@
-/*
-    Status icons are global, they are not bound to a specific
-    component.
-
-    Universal status icons styles belong in here.
-
-    Universal classes could be prefixed with an asterix?
-*/
-
 $status_size: const(8px);
 $status_color--free: const(#84BD5D);
 $status_color--busy: const(#EF9F6B);

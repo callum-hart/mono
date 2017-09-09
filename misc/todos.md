@@ -1,8 +1,12 @@
 ### Todos
 
-- update README.md in lang
-- add README.md to examples
-- host example projects (GitHub pages)
-- take screenshots of example projects
-- update child constants in example projects (denoted using ^)
-- add to GitBook
+- examples
+  - host example projects on GitHub pages
+  - YouTube
+    - update logo URL when hosted (theme.scss)
+- docs
+  - add README.md to examples
+  - update README.md in lang
+  - check spelling & grammer
+  - add to GitBook
+  - add README.md to misc (misc is like a scrapbook of ideas)

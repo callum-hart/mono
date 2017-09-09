@@ -1,7 +1,6 @@
 section.media-items {
-    margin: immutable(0 auto);
-
-    // todo: grid isn't quite right around $leftShelf_breakpoint
+    margin-left: immutable(auto);
+    margin-right: immutable(auto);
 
     @media (max-width: $s) {
         max-width: immutable(calc(2 * #{$mediaItem_width}));
@@ -27,7 +26,12 @@ section.media-items {
 div.media-item {
     float: immutable(left);
     width: immutable($mediaItem_width);
-    border: immutable(1px solid #ccc); // temp
     box-sizing: --because(border-box, 'swallowPadding');
+}
+
+div.media-item__inner {
+    margin: immutable(10px);
+    height: immutable($mediaItem_height);
+    background: immutable(var(--mediaItemInner_background));
 }
 

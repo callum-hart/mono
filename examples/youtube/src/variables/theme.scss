@@ -26,6 +26,8 @@ $theme--blue: 'html.theme--blue:not(.theme--dark):root';
     --leftShelfItemFooterLabel_color:        #{theme(#707070)};
 
     --content_background:                    #{theme($white)};
+
+    --mediaItemInner_background:             #{theme(#EFEFEF)};
 }
 
 
@@ -34,6 +36,7 @@ $theme--blue: 'html.theme--blue:not(.theme--dark):root';
     --nav_border-bottom-color:               #{theme(transparent)};
     --nav_icon-color:                        #{theme($white)};
     --nav_logo-image:                        #{theme(url('http://localhost:8000/vendor/images/logo-white.png'))};
+    // todo: variable for domain, changes based on env. i.e url('#{$DOMAIN}/vendor/images/logo.png')
 
     --navSearchField_background:             #{theme(#111111)};
     --navSearchField_color:                  #{theme(#E3E3E3)};
@@ -52,4 +55,6 @@ $theme--blue: 'html.theme--blue:not(.theme--dark):root';
     --leftShelfItemFooterLabel_color:        #{theme(#A4A4A4)};
 
     --content_background:                    #{theme(#111111)};
+
+    --mediaItemInner_background:             #{theme(#232323)};
 }

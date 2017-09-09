@@ -20,9 +20,9 @@ section.right-bar {
     }
 
     ul.right-bar__list {
-        -webkit-padding-start: --veto(0);
-        -webkit-margin-before: --veto(0);
-        -webkit-margin-after: --veto(0);
+        padding-left: --veto(0);
+        margin-top: --veto(0);
+        margin-bottom: --veto(0);
 
         li {
             list-style: --veto(none);

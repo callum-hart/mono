@@ -8,3 +8,4 @@
 - `npm install`
 - `python -m SimpleHTTPServer`
 - `grunt watch`
+- open `localhost:8000/facebook.html`

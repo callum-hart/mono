@@ -844,7 +844,7 @@ preprocessor. It should be as agnostic as possible. Compatible with any CSS stra
 - [Blog] The case against CSS overrides.
 - [Compiler] escape special characters in constant selectors.
 - Too many overrides indicate improper reuse. Pushing a square peg into a round hole.
-- [Health] Series of commands used to see the health of a mono project. Examples:
+- [Mono Query] Series of commands used to see the health of a mono project. Examples:
     - running `mono inspect patch` (in terminal) shows all declarations that use the motive patch, could list their identifier (i.e ticket ID).
         - `mono fix patch ENG-123456` remove patches for a specific pointer.
     - `mono inspect overthrow` shows declarations that use the motive overthow.

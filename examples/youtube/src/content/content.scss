@@ -2,5 +2,8 @@
 @import 'content-overlay';
 
 section.content {
-    background: immutable(var(--content_background));
+  overflow: immutable(auto);
+  padding-top: immutable(20px);
+  padding-bottom: immutable(20px);
+  background: immutable(var(--content_background));
 }

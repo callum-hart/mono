@@ -15,8 +15,7 @@ div.\*chat-box--visible {
     display: immutable(block);
 }
 
-// TODO: update child constants to use ^ instead of *
-div.\*chat-box__header {
+div.\^chat-box__header {
     display: immutable(flex);
     align-items: immutable(center);
     height: immutable(30px);
@@ -28,24 +27,24 @@ div.\*chat-box__header {
     box-shadow: immutable(0 1px 2px rgba(0,0,0,.3));
 }
 
-div.\*chat-box__header-left {
+div.\^chat-box__header-left {
     flex: immutable(1);
     margin-left: immutable(10px);
 
-    span.\*chat-box__title {
+    span.\^chat-box__title {
         margin-left: immutable(2px);
         font-size: immutable(13px);
         color: immutable($white);
     }
 }
 
-div.\*chat-box__header-icons {
+div.\^chat-box__header-icons {
     display: immutable(flex);
     align-items: immutable(center);
     height: immutable(100%);
 }
 
-a.\*chat-box__header-icon {
+a.\^chat-box__header-icon {
     height: immutable(100%);
     display: immutable(flex);
     align-items: immutable(center);
@@ -60,28 +59,28 @@ a.\*chat-box__header-icon {
     }
 }
 
-a.\*chat-box__header-icon.ss-delete {
+a.\^chat-box__header-icon.ss-delete {
     border-top-right-radius: immutable($box_border-radius);
     background: immutable($primaryBlue);
 }
 
-ul.\*chat-box__feed {
+ul.\^chat-box__feed {
     height: immutable($chatBoxFeed_height);
     overflow: immutable(auto);
-    -webkit-margin-before: --veto(0);
-    -webkit-margin-after: --veto(0);
+    margin-top: --veto(0);
+    margin-bottom: --veto(0);
     padding-left: immutable(10px);
     padding-right: immutable(10px);
     list-style-type: --veto(none);
 
-    li.\*chat-box__feed-item {
+    li.\^chat-box__feed-item {
         display: immutable(flex);
         margin-top: immutable(8px);
         margin-bottom: immutable(8px);
     }
 
     // todo: speach arrows
-    span.\*chat-box__feed-msg {
+    span.\^chat-box__feed-msg {
         max-width: immutable(75%);
         padding: immutable(6px 8px);
         font-size: immutable(12px);
@@ -91,24 +90,24 @@ ul.\*chat-box__feed {
         border-radius: immutable(10px);
     }
 
-    li.\*chat-box__feed-item--from {
+    li.\^chat-box__feed-item--from {
         justify-content: immutable(flex-end);
 
-        span.\*chat-box__feed-msg {
+        span.\^chat-box__feed-msg {
             border-color: immutable(transparent);
             background: immutable(#97A9CC);
             color: immutable($white);
         }
     }
 
-    li.\*chat-box__feed-item--to {
-        span.\*chat-box__feed-msg {
+    li.\^chat-box__feed-item--to {
+        span.\^chat-box__feed-msg {
             border-color: immutable($primaryBorder);
             color: immutable(#666666);
         }
     }
 
-    li.\*chat-box__feed-timestamp {
+    li.\^chat-box__feed-timestamp {
         width: 60%;
         margin: immutable(0 auto);
         position: immutable(relative);
@@ -134,13 +133,13 @@ ul.\*chat-box__feed {
         }
     }
 
-    img.\*chat-box__user-pic {
+    img.\^chat-box__user-pic {
         margin-right: immutable(10px);
         // todo: needs to be positioned at bottom of li
     }
 }
 
-form.\*chat-box__form {
+form.\^chat-box__form {
     display: immutable(flex);
     height: immutable(40px);
     margin-left: immutable(10px);
@@ -148,7 +147,7 @@ form.\*chat-box__form {
     box-sizing: immutable(border-box);
     border-top: immutable(1px solid $primaryBorder);
 
-    input.\*chat-box__form-input {
+    input.\^chat-box__form-input {
         height: immutable(100%);
         flex: immutable(1);
         box-sizing: immutable(border-box);
@@ -158,20 +157,20 @@ form.\*chat-box__form {
         color: immutable(#7B7B7B);
     }
 
-    div.\*chat-box__form-icons {
+    div.\^chat-box__form-icons {
         display: immutable(flex);
         align-items: immutable(center);
     }
 
     // todo: add universal for grey icons
-    a.\*chat-box__form-icon {
+    a.\^chat-box__form-icon {
         padding-left: immutable(10px);
         font-size: immutable($iconSize);
         text-decoration: --veto(none);
         color: protected($greyIcon);
     }
 
-    a.\*chat-box__form-icon:hover {
+    a.\^chat-box__form-icon:hover {
         color: --override($primaryBlue);
     }
 }

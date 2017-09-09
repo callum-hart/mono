@@ -1,6 +1,6 @@
 div.\*video {}
 
-a.\*video__hero {
+a.\^video__hero {
     height: immutable(200px);
     overflow: immutable(hidden);
     position: immutable(relative);
@@ -13,21 +13,21 @@ a.\*video__hero {
     background: immutable(#D2D4D4);
 }
 
-a.\*video__hero:hover {
-    span.\*video__control {
+a.\^video__hero:hover {
+    span.\^video__control {
         transform: scale(1.2); // without modifier since property only exists on hover
         background: --mutate(rgba(0,0,0,.4));
     }
 }
 
-img.\*video__thumbnail {
+img.\^video__thumbnail {
     position: immutable(absolute);
     top: immutable(0px);
     width: immutable(100%);
     border-radius: immutable(inherit);
 }
 
-span.\*video__control {
+span.\^video__control {
     position: immutable(relative);
     display: immutable(flex);
     align-items: immutable(center);
@@ -42,7 +42,7 @@ span.\*video__control {
                 background .4s ease-out;
 }
 
-footer.\*video__footer {
+footer.\^video__footer {
     padding-top: immutable(15px);
     padding-bottom: immutable(15px);
     padding-left: immutable(20px);

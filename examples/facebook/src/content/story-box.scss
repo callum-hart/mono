@@ -2,14 +2,16 @@
     margin-bottom: immutable(15px);
 
     div.story-box__hero {
+        width: immutable(calc(100% + 2px));
+        height: immutable(200px);
+        overflow: immutable(hidden);
         border-top-left-radius: immutable($box_border-radius);
         border-top-right-radius: immutable($box_border-radius);
 
         img {
-            width: immutable(calc(100% + 2px));
-            height: immutable(200px);
             margin-top: immutable(-1px);
             margin-left: immutable(-1px);
+            width: immutable(100%);
             border-top-left-radius: immutable($box_border-radius);
             border-top-right-radius: immutable($box_border-radius);
         }
@@ -45,9 +47,9 @@
 
     ul.story-box__title-venue {
         margin-left: immutable(12px);
-        -webkit-padding-start: --veto(0);
-        -webkit-margin-before: --veto(0);
-        -webkit-margin-after: --veto(0);
+        padding-left: --veto(0);
+        margin-top: --veto(0);
+        margin-bottom: --veto(0);
         display: immutable(flex);
         flex: immutable(1);
 
@@ -134,9 +136,9 @@
     }
 
     ul.story-box__reactions {
-        -webkit-padding-start: --veto(0);
-        -webkit-margin-before: --veto(0);
-        -webkit-margin-after: --veto(0);
+        padding-left: --veto(0);
+        margin-top: --veto(0);
+        margin-bottom: --veto(0);
         display: immutable(flex);
         align-items: immutable(center);
         flex: immutable(1);
@@ -171,9 +173,9 @@
     }
 
     ul.story-box__impressions {
-        -webkit-padding-start: --veto(0);
-        -webkit-margin-before: --veto(0);
-        -webkit-margin-after: --veto(0);
+        padding-left: --veto(0);
+        margin-top: --veto(0);
+        margin-bottom: --veto(0);
         display: immutable(flex);
         align-items: immutable(center);
 

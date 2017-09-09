@@ -24,15 +24,15 @@
         <div class="nav__bits">
             <a href="#" class="ss-user"></a>
             <a href="#" class="ss-chat --active">
-                <span class="nav__count *count">2</span>
+                <span class="*count nav__count">2</span>
             </a>
             <a href="#" class="ss-globe"></a>
 
             <div class="nav__user">
                 <span class="nav__user-name">Callum Hart</span>
-                <img src="vendor/images/profile-pic.png"
+                <img src="vendor/images/user/profile.png"
                     alt=""
-                    class="nav__user-pic *gravatar *gravatar--s">
+                    class="*gravatar *gravatar--s nav__user-pic">
 
                 <!-- <span class="nav__user-pic ss-user *gravatar--fallback *gravatar--fallback--s"></span> -->
             </div>
@@ -46,7 +46,7 @@
 <main>
     <section class="left-bar">
         <div class="left-bar__user">
-            <img src="vendor/images/profile-pic.png"
+            <img src="vendor/images/user/profile.png"
                 alt=""
                 class="*gravatar *gravatar--m">
 
@@ -159,10 +159,10 @@
 
     <section class="content">
         <content class="content__feed">
-            <div class="post-box *box *box--borderless">
+            <div class="*box *box--borderless post-box">
                 <form>
                     <textarea class="post-box__input" name="" id="" rows="2" placeholder="Whats on your mind?"></textarea>
-                    <button class="post-box__button *button *button--primary *button--square">Post</button>
+                    <button class="*button *button--primary *button--square post-box__button">Post</button>
                 </form>
 
                 <footer class="post-box__footer">
@@ -188,94 +188,11 @@
                 </footer>
             </div>
 
-            <div class="story-box *box">
-                <div class="story-box__hero">
-                    <img src="vendor/images/rectangle-pic.png" alt="">
-                </div>
-
-                <div class="story-box__header story-box__header--inline">
-                    <img src="vendor/images/profile-pic.png" alt="" class="story-box__author-pic *gravatar *gravatar--l">
-
-                    <!-- <span class="story-box__author-pic ss-user *gravatar--fallback *gravatar--fallback--l"></span> -->
-
-                    <div class="story-box__title">
-                        <p class="story-box__title-text">
-                            <a href="">Carol Gilligan</a>
-                        </p>
-
-                        <ul class="story-box__title-venue">
-                            <li>
-                                <span class="venue__icon ss-clock"></span>
-                                <span class="venue__text">31 mins ago</span>
-                            </li>
-                            <li>
-                                <span class="venue__icon ss-location"></span>
-                                <span class="venue__text">Auckland</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="story-box__content">
-                    <p>
-                        In the different voice of women lies the truth of an ethic of care, the tie
-                        between relationship and responsibility, and the origins of aggression in
-                        the failure of connection.
-                    </p>
-                </div>
-
-                <div class="story-box__pre-footer">
-                    <ul class="story-box__reactions">
-                        <li>
-                            <a href="" class="story-box__action">Like</a>
-                        </li>
-                        <li>
-                            <a href="" class="story-box__action">Comment</a>
-                        </li>
-                        <li>
-                            <a href="" class="story-box__action">Share</a>
-                        </li>
-                    </ul>
-
-                    <ul class="story-box__impressions">
-                        <li>
-                            <span class="story-box__likon ss-like"></span>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="vendor/images/profile-pic.png" alt="" class="*gravatar *gravatar--xs">
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <span class="ss-user *gravatar--fallback *gravatar--fallback--xs"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <img src="vendor/images/profile-pic.png" alt="" class="*gravatar *gravatar--xs">
-                            </a>
-                        </li>
-                        <li>
-                            <span class="*tally">
-                                <span class="*tally__icon">+</span>
-                                8
-                            </span>
-                        </li>
-                    </ul>
-                </div>
-
-                <footer class="story-box__footer">
-                    <input type="text" class="comment__input" placeholder="Write a comment...">
-                    <a href="" class="comment__icon ss-picture"></a>
-                </footer>
-            </div>
-
-            <div class="story-box *box">
+            <div class="*box story-box">
                 <div class="story-box__header story-box__header--stacked">
-                    <!-- <img src="vendor/images/profile-pic.png" alt="" class="story-box__author-pic *gravatar *gravatar--l"> -->
-
-                    <span class="story-box__author-pic ss-user *gravatar--fallback *gravatar--fallback--l"></span>
+                    <img src="vendor/images/friends/1f.jpg"
+                        alt=""
+                        class="*gravatar *gravatar--l story-box__author-pic">
 
                     <div class="story-box__title">
                         <p class="story-box__title-text">
@@ -287,7 +204,7 @@
                         <ul class="story-box__title-venue">
                             <li>
                                 <span class="venue__icon ss-clock"></span>
-                                <span class="venue__text">2 hours ago</span>
+                                <span class="venue__text">31 mins ago</span>
                             </li>
                             <li>
                                 <span class="venue__icon ss-location"></span>
@@ -305,11 +222,13 @@
 
                     <div class="story-box__video">
                         <div class="*video">
-                            <a href="#" class="*video__hero">
-                                <img class="*video__thumbnail" src="vendor/images/square-pic.png" alt="">
-                                <span class="*video__control ss-play"></span>
+                            <a href="#" class="^video__hero">
+                                <img class="^video__thumbnail"
+                                    src="vendor/images/content/video-thumbnail.jpg"
+                                    alt="">
+                                <span class="^video__control ss-play"></span>
                             </a>
-                            <footer class="*video__footer">
+                            <footer class="^video__footer">
                                 <h2>
                                     Writings scatter to the winds blank checks fall in autumn.
                                 </h2>
@@ -337,13 +256,96 @@
                         </li>
                         <li>
                             <a href="">
-                                <img src="vendor/images/profile-pic.png" alt="" class="*gravatar *gravatar--xs">
+                                <img src="vendor/images/friends/2f.jpg" alt="" class="*gravatar *gravatar--xs">
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <img src="vendor/images/profile-pic.png" alt="" class="*gravatar *gravatar--xs">
+                                <img src="vendor/images/friends/7m.jpg" alt="" class="*gravatar *gravatar--xs">
                             </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <footer class="story-box__footer">
+                    <input type="text" class="comment__input" placeholder="Write a comment...">
+                    <a href="" class="comment__icon ss-picture"></a>
+                </footer>
+            </div>
+
+            <div class="*box story-box">
+                <div class="story-box__hero">
+                    <img src="vendor/images/content/post-hero.jpg" alt="">
+                </div>
+
+                <div class="story-box__header story-box__header--inline">
+                    <span class="*gravatar--fallback *gravatar--fallback--l story-box__author-pic ss-user"></span>
+
+                    <div class="story-box__title">
+                        <p class="story-box__title-text">
+                            <a href="">Carol Gilligan</a>
+                        </p>
+
+                        <ul class="story-box__title-venue">
+                            <li>
+                                <span class="venue__icon ss-clock"></span>
+                                <span class="venue__text">2 hours ago</span>
+                            </li>
+                            <li>
+                                <span class="venue__icon ss-location"></span>
+                                <span class="venue__text">Auckland</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="story-box__content">
+                    <p>
+                        Great weekend had by all 😄
+                    </p>
+                    <p>
+                        After picnicking in Tuolume Meadows in Yosemite national park we
+                        drove west to catch the sun, sand and waves.
+                    </p>
+                </div>
+
+                <div class="story-box__pre-footer">
+                    <ul class="story-box__reactions">
+                        <li>
+                            <a href="" class="story-box__action">Like</a>
+                        </li>
+                        <li>
+                            <a href="" class="story-box__action">Comment</a>
+                        </li>
+                        <li>
+                            <a href="" class="story-box__action">Share</a>
+                        </li>
+                    </ul>
+
+                    <ul class="story-box__impressions">
+                        <li>
+                            <span class="story-box__likon ss-like"></span>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="vendor/images/friends/5m.jpg" alt="" class="*gravatar *gravatar--xs">
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span class="*gravatar--fallback *gravatar--fallback--xs ss-user"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <img src="vendor/images/friends/5f.jpg" alt="" class="*gravatar *gravatar--xs">
+                            </a>
+                        </li>
+                        <li>
+                            <span class="*tally">
+                                <span class="^tally__icon">+</span>
+                                8
+                            </span>
                         </li>
                     </ul>
                 </div>
@@ -356,8 +358,8 @@
         </content>
 
         <aside class="content__aside">
-            <div class="aside__box *box">
-                <span class="aside__heading *heading">Birthdays</span>
+            <div class="*box aside__box">
+                <span class="*heading aside__heading">Birthdays</span>
 
                 <ul class="aside__list">
                     <li class="aside__item">
@@ -383,7 +385,7 @@
                     </li>
                 </ul>
 
-                <span class="aside__heading *heading">Events</span>
+                <span class="*heading aside__heading">Events</span>
 
                 <ul class="aside__list">
                     <li class="aside__item">
@@ -402,96 +404,96 @@
                     </li>
                 </ul>
 
-                <span class="aside__heading *heading">Recent photos</span>
+                <span class="*heading aside__heading">Recent photos</span>
 
                 <div class="aside__photos">
                     <a href=="#" class="aside__pic">
-                        <img src="vendor/images/square-pic.png" alt="">
+                        <img src="vendor/images/recent_photos/1.jpg" alt="">
                     </a>
                     <a href=="#" class="aside__pic">
-                        <img src="vendor/images/square-pic.png" alt="">
+                        <img src="vendor/images/recent_photos/2.jpg" alt="">
                     </a>
                     <a href=="#" class="aside__pic">
-                        <img src="vendor/images/square-pic.png" alt="">
+                        <img src="vendor/images/recent_photos/3.jpg" alt="">
                     </a>
                     <a href=="#" class="aside__pic">
-                        <img src="vendor/images/square-pic.png" alt="">
+                        <img src="vendor/images/recent_photos/4.jpg" alt="">
                     </a>
                     <a href=="#" class="aside__pic">
-                        <img src="vendor/images/square-pic.png" alt="">
+                        <img src="vendor/images/recent_photos/5.jpg" alt="">
                     </a>
                     <a href=="#" class="aside__pic">
-                        <img src="vendor/images/square-pic.png" alt="">
+                        <img src="vendor/images/recent_photos/6.jpg" alt="">
                     </a>
                     <a href=="#" class="aside__pic">
-                        <img src="vendor/images/square-pic.png" alt="">
+                        <img src="vendor/images/recent_photos/7.jpg" alt="">
                     </a>
                     <a href=="#" class="aside__pic">
-                        <img src="vendor/images/square-pic.png" alt="">
+                        <img src="vendor/images/recent_photos/8.jpg" alt="">
                     </a>
                 </div>
             </div>
         </aside>
 
-        <div class="content__chat-box *chat-box *chat-box--visible">
-            <div class="*chat-box__header">
-                <div class="*chat-box__header-left">
-                    <span class="*chat-box__status *status *status--free"></span>
-                    <span class="*chat-box__title">David Hume</span>
+        <div class="*chat-box *chat-box--visible content__chat-box">
+            <div class="^chat-box__header">
+                <div class="^chat-box__header-left">
+                    <span class="^chat-box__status *status *status--free"></span>
+                    <span class="^chat-box__title">David Chalmers</span>
                 </div>
 
-                <div class="*chat-box__header-icons">
-                    <a href="" class="*chat-box__header-icon ss-settings"></a>
-                    <a href="" class="*chat-box__header-icon ss-delete"></a>
+                <div class="^chat-box__header-icons">
+                    <a href="" class="^chat-box__header-icon ss-settings"></a>
+                    <a href="" class="^chat-box__header-icon ss-delete"></a>
                 </div>
             </div>
 
-            <ul class="*chat-box__feed">
-                <li class="*chat-box__feed-item *chat-box__feed-item--from">
-                    <span class="*chat-box__feed-msg">
+            <ul class="^chat-box__feed">
+                <li class="^chat-box__feed-item ^chat-box__feed-item--from">
+                    <span class="^chat-box__feed-msg">
                         What are your thoughts on the human condition?
                     </span>
                 </li>
-                <li class="*chat-box__feed-item *chat-box__feed-item--to">
-                    <img src="vendor/images/profile-pic.png"
+                <li class="^chat-box__feed-item ^chat-box__feed-item--to">
+                    <img src="vendor/images/friends/7m.jpg"
                         alt=""
-                        class="*chat-box__user-pic *gravatar *gravatar--s">
+                        class="^chat-box__user-pic *gravatar *gravatar--s">
 
-                    <span class="*chat-box__feed-msg">
+                    <span class="^chat-box__feed-msg">
                         Nothing is more suprising than the easiness with which
                         the many governed by the few
                     </span>
                 </li>
-                <li class="*chat-box__feed-timestamp">
+                <li class="^chat-box__feed-timestamp">
                     <span>Today</span>
                 </li>
-                <li class="*chat-box__feed-item *chat-box__feed-item--from">
-                    <span class="*chat-box__feed-msg">
+                <li class="^chat-box__feed-item ^chat-box__feed-item--from">
+                    <span class="^chat-box__feed-msg">
                         Very true Dave
                     </span>
                 </li>
-                <li class="*chat-box__feed-item *chat-box__feed-item--to">
-                    <img src="vendor/images/profile-pic.png"
+                <li class="^chat-box__feed-item ^chat-box__feed-item--to">
+                    <img src="vendor/images/friends/7m.jpg"
                         alt=""
-                        class="*chat-box__user-pic *gravatar *gravatar--s">
+                        class="^chat-box__user-pic *gravatar *gravatar--s">
 
-                    <span class="*chat-box__feed-msg">
+                    <span class="^chat-box__feed-msg">
                         The rules of morality are not the conclusion of our reason
                     </span>
                 </li>
-                <li class="*chat-box__feed-item *chat-box__feed-item--from">
-                    <span class="*chat-box__feed-msg">
+                <li class="^chat-box__feed-item ^chat-box__feed-item--from">
+                    <span class="^chat-box__feed-msg">
                         That's deep bro
                     </span>
                 </li>
             </ul>
 
-            <form class="*chat-box__form">
-                <input type="text" class="*chat-box__form-input">
+            <form class="^chat-box__form">
+                <input type="text" class="^chat-box__form-input">
 
-                <div class="*chat-box__form-icons">
-                    <a href="" class="*chat-box__form-icon ss-attach"></a>
-                    <a href="" class="*chat-box__form-icon ss-bearface"></a>
+                <div class="^chat-box__form-icons">
+                    <a href="" class="^chat-box__form-icon ss-attach"></a>
+                    <a href="" class="^chat-box__form-icon ss-bearface"></a>
                 </div>
             </form>
         </div>
@@ -499,101 +501,101 @@
 
     <section class="right-bar">
         <section class="right-bar__content">
-            <span class="right-bar__heading *heading">Online</span>
+            <span class="*heading right-bar__heading">Online</span>
 
             <ul class="right-bar__list">
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png"
+                        <img src="vendor/images/friends/1m.jpg"
                             alt=""
-                            class="right-bar__user-pic *gravatar *gravatar--s">
+                            class="*gravatar *gravatar--s right-bar__user-pic">
 
                         <span class="list__text">Thomas Hobbes</span>
-                        <span class="list__status *status *status--free"></span>
+                        <span class="*status *status--free list__status"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png"
+                        <img src="vendor/images/friends/2m.jpg"
                             alt=""
-                            class="right-bar__user-pic *gravatar *gravatar--s">
+                            class="*gravatar *gravatar--s right-bar__user-pic">
 
                         <span class="list__text">Emmanuel Kant</span>
-                        <span class="list__status *status *status--free"></span>
+                        <span class="*status *status--free list__status"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <span class="right-bar__user-pic ss-user *gravatar--fallback *gravatar--fallback--s"></span>
+                        <span class="*gravatar--fallback *gravatar--fallback--s right-bar__user-pic ss-user"></span>
 
                         <span class="list__text">John Locke</span>
-                        <span class="list__status *status *status--busy"></span>
+                        <span class="*status *status--busy list__status"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png"
+                        <img src="vendor/images/friends/2f.jpg"
                             alt=""
-                            class="right-bar__user-pic *gravatar *gravatar--s">
+                            class="*gravatar *gravatar--s right-bar__user-pic">
 
                         <span class="list__text">Charlotte Perkins Graham</span>
-                        <span class="list__status *status *status--free"></span>
+                        <span class="*status *status--free list__status"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png"
+                        <img src="vendor/images/friends/3f.jpg"
                             alt=""
-                            class="right-bar__user-pic *gravatar *gravatar--s">
+                            class="*gravatar *gravatar--s right-bar__user-pic">
 
                         <span class="list__text">Gertrude Anscombe</span>
-                        <span class="list__status *status *status--busy"></span>
+                        <span class="*status *status--busy list__status"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <span class="right-bar__user-pic ss-user *gravatar--fallback *gravatar--fallback--s"></span>
+                        <span class="*gravatar--fallback *gravatar--fallback--s right-bar__user-pic ss-user"></span>
 
                         <span class="list__text">Robert Persig</span>
-                        <span class="list__status *status *status--busy"></span>
+                        <span class="*status *status--busy list__status"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <span class="right-bar__user-pic ss-user *gravatar--fallback *gravatar--fallback--s"></span>
+                        <span class="*gravatar--fallback *gravatar--fallback--s right-bar__user-pic ss-user"></span>
 
                         <span class="list__text">Phillipa Foot</span>
-                        <span class="list__status *status *status--free"></span>
+                        <span class="*status *status--free list__status"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png"
+                        <img src="vendor/images/friends/3m.jpg"
                             alt=""
-                            class="right-bar__user-pic *gravatar *gravatar--s">
+                            class="*gravatar *gravatar--s right-bar__user-pic">
 
                         <span class="list__text">John Searle</span>
-                        <span class="list__status *status *status--free"></span>
+                        <span class="*status *status--free list__status"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png"
+                        <img src="vendor/images/friends/4m.jpg"
                             alt=""
-                            class="right-bar__user-pic *gravatar *gravatar--s">
+                            class="*gravatar *gravatar--s right-bar__user-pic">
 
                         <span class="list__text">Ludwig Wittenstein</span>
-                        <span class="list__status *status *status--away"></span>
+                        <span class="*status *status--away list__status"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png"
+                        <img src="vendor/images/friends/5m.jpg"
                             alt=""
-                            class="right-bar__user-pic *gravatar *gravatar--s">
+                            class="*gravatar *gravatar--s right-bar__user-pic">
 
                         <span class="list__text">Friedrich Nietzsche</span>
-                        <span class="list__status *status *status--free"></span>
+                        <span class="*status *status--free list__status"></span>
                     </a>
                 </li>
             </ul>
@@ -603,72 +605,70 @@
             <ul class="right-bar__list">
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png"
+                        <img src="vendor/images/friends/6m.jpg"
                             alt=""
-                            class="right-bar__user-pic *gravatar *gravatar--s">
+                            class="*gravatar *gravatar--s right-bar__user-pic">
 
                         <span class="list__text">Henri Bergson</span>
-                        <span class="list__status *status *status--offline"></span>
+                        <span class="*status *status--offline list__status"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png"
+                        <img src="vendor/images/friends/7m.jpg"
                             alt=""
-                            class="right-bar__user-pic *gravatar *gravatar--s">
+                            class="*gravatar *gravatar--s right-bar__user-pic">
 
                         <span class="list__text">David Chalmers</span>
-                        <span class="list__status *status *status--offline"></span>
+                        <span class="*status *status--offline list__status"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png"
+                        <img src="vendor/images/friends/8m.jpg"
                             alt=""
-                            class="right-bar__user-pic *gravatar *gravatar--s">
+                            class="*gravatar *gravatar--s right-bar__user-pic">
 
                         <span class="list__text">Karl Marx</span>
-                        <span class="list__status *status *status--offline"></span>
+                        <span class="*status *status--offline list__status"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png"
+                        <img src="vendor/images/friends/4f.jpg"
                             alt=""
-                            class="right-bar__user-pic *gravatar *gravatar--s">
+                            class="*gravatar *gravatar--s right-bar__user-pic">
 
                         <span class="list__text">Margaret Atwood</span>
-                        <span class="list__status *status *status--offline"></span>
+                        <span class="*status *status--offline list__status"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png"
+                        <img src="vendor/images/friends/5f.jpg"
                             alt=""
-                            class="right-bar__user-pic *gravatar *gravatar--s">
+                            class="*gravatar *gravatar--s right-bar__user-pic">
 
                         <span class="list__text">Hannah Arendt</span>
-                        <span class="list__status *status *status--offline"></span>
+                        <span class="*status *status--offline list__status"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png"
-                            alt=""
-                            class="right-bar__user-pic *gravatar *gravatar--s">
+                        <span class="*gravatar--fallback *gravatar--fallback--s right-bar__user-pic ss-user"></span>
 
                         <span class="list__text">Martin Heidegger</span>
-                        <span class="list__status *status *status--offline"></span>
+                        <span class="*status *status--offline list__status"></span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="list__item">
-                        <img src="vendor/images/profile-pic.png"
+                        <img src="vendor/images/friends/6f.jpg"
                             alt=""
-                            class="right-bar__user-pic *gravatar *gravatar--s">
+                            class="*gravatar *gravatar--s right-bar__user-pic">
 
                         <span class="list__text">Mary McCarthy</span>
-                        <span class="list__status *status *status--offline"></span>
+                        <span class="*status *status--offline list__status"></span>
                     </a>
                 </li>
             </ul>

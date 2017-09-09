@@ -9,7 +9,9 @@ span.\*count {
     color: immutable($white);
 
     /*
-        Would be cool if a universal object could enforce parent elements to have a property(s).
+        @note:
+
+        Would be cool if a constant could enforce parent elements to have a property(s).
         For example parent elements of *count should have `position: relative`.
 
         i.e:

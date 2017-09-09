@@ -1,0 +1,7 @@
+$heading_color: const(#B5BABC);
+
+span.\*heading {
+    font-size: immutable(12px);
+    text-transform: immutable(uppercase);
+    color: immutable($heading_color);
+}

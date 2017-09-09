@@ -21,7 +21,7 @@ section.left-bar {
     }
 
     ul.left-bar__list {
-        -webkit-padding-start: --veto(0);
+        padding-left: --veto(0);
         margin-top: immutable(10px);
         margin-bottom: immutable(14px);
         padding-bottom: immutable(10px);

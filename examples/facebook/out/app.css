@@ -133,7 +133,7 @@
         background: theme(immutable(@buttonBg));
     }
 
-    Decide how much value this type adds... if any? This could equally
+    Todo: Decide how much value this type adds... if any? This could equally
     be handled with a new variable type (see `variables.scss`), i.e:
 
     $buttonBg: theme(red);
@@ -182,8 +182,14 @@
     By making CSS easier to reason with we make the process of
     understanding (it) more immediate.
 
-    Motives remove investing time and enery in justifying why
+    Motives remove investing time and energy in justifying why
     a property exists.
+
+    Motives capture the rational in the moment the property
+    is declared. It's easy to forget why a property exists,
+    which means once added it generally stays (even when
+    the reason for adding it is later nullified). This makes
+    refactoring CSS rather dicey!
 
     Motives are prefixed with a double dash --
 
@@ -336,14 +342,6 @@ button.\*button--primary {
   button.\*button--primary:hover {
     background: #4A6598 /* const */ /* --override */; }
 
-/*
-    Gravatars are global, they are not bound to a specific
-    component.
-
-    Universal gravatar styles belong in here.
-
-    Universal classes could be prefixed with an asterix?
-*/
 img.\*gravatar {
   box-sizing: border-box /* immutable */; }
 
@@ -409,7 +407,9 @@ span.\*count {
   background: #EA6A5A /* const */ /* immutable */;
   color: #FFFFFF /* const */ /* immutable */;
     /*
-        Would be cool if a universal object could enforce parent elements to have a property(s).
+        @note:
+
+        Would be cool if a constant could enforce parent elements to have a property(s).
         For example parent elements of *count should have `position: relative`.
 
         i.e:
@@ -424,31 +424,15 @@ span.\*tally {
   box-shadow: 0 0 0 1px #5371AA /* const */ /* immutable */;
   color: #5371AA /* const */ /* immutable */; }
 
-span.\*tally__icon {
+span.\^tally__icon {
   margin-right: 1px /* immutable */;
   line-height: 10px /* immutable */; }
 
-/*
-    Headings are global, they are not bound to a specific
-    component.
-
-    Universal heading styles belong in here.
-
-    Universal classes could be prefixed with an asterix?
-*/
 span.\*heading {
   font-size: 12px /* immutable */;
   text-transform: uppercase /* immutable */;
   color: #B5BABC /* const */ /* immutable */; }
 
-/*
-    Status icons are global, they are not bound to a specific
-    component.
-
-    Universal status icons styles belong in here.
-
-    Universal classes could be prefixed with an asterix?
-*/
 span.\*status--free {
   width: 8px /* const */ /* immutable */;
   height: 8px /* const */ /* immutable */;
@@ -495,7 +479,7 @@ div.\*chat-box:not(.\*chat-box--visible) {
 div.\*chat-box--visible {
   display: block /* immutable */; }
 
-div.\*chat-box__header {
+div.\^chat-box__header {
   display: flex /* immutable */;
   align-items: center /* immutable */;
   height: 30px /* immutable */;
@@ -505,20 +489,20 @@ div.\*chat-box__header {
   background: #5371AA /* const */ /* immutable */;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) /* immutable */; }
 
-div.\*chat-box__header-left {
+div.\^chat-box__header-left {
   flex: 1 /* immutable */;
   margin-left: 10px /* immutable */; }
-  div.\*chat-box__header-left span.\*chat-box__title {
+  div.\^chat-box__header-left span.\^chat-box__title {
     margin-left: 2px /* immutable */;
     font-size: 13px /* immutable */;
     color: #FFFFFF /* const */ /* immutable */; }
 
-div.\*chat-box__header-icons {
+div.\^chat-box__header-icons {
   display: flex /* immutable */;
   align-items: center /* immutable */;
   height: 100% /* immutable */; }
 
-a.\*chat-box__header-icon {
+a.\^chat-box__header-icon {
   height: 100% /* immutable */;
   display: flex /* immutable */;
   align-items: center /* immutable */;
@@ -527,26 +511,26 @@ a.\*chat-box__header-icon {
   text-decoration: none /* --veto */;
   color: #97A9CC /* let */ /* protected */;
   font-size: 11px /* immutable */; }
-  a.\*chat-box__header-icon:hover {
+  a.\^chat-box__header-icon:hover {
     color: #FFFFFF /* set */ /* --mutate */; }
 
-a.\*chat-box__header-icon.ss-delete {
+a.\^chat-box__header-icon.ss-delete {
   border-top-right-radius: 3px /* const */ /* immutable */;
   background: #4A6598 /* const */ /* immutable */; }
 
-ul.\*chat-box__feed {
+ul.\^chat-box__feed {
   height: 240px /* const */ /* immutable */;
   overflow: auto /* immutable */;
-  -webkit-margin-before: 0 /* --veto */;
-  -webkit-margin-after: 0 /* --veto */;
+  margin-top: 0 /* --veto */;
+  margin-bottom: 0 /* --veto */;
   padding-left: 10px /* immutable */;
   padding-right: 10px /* immutable */;
   list-style-type: none /* --veto */; }
-  ul.\*chat-box__feed li.\*chat-box__feed-item {
+  ul.\^chat-box__feed li.\^chat-box__feed-item {
     display: flex /* immutable */;
     margin-top: 8px /* immutable */;
     margin-bottom: 8px /* immutable */; }
-  ul.\*chat-box__feed span.\*chat-box__feed-msg {
+  ul.\^chat-box__feed span.\^chat-box__feed-msg {
     max-width: 75% /* immutable */;
     padding: 6px 8px /* immutable */;
     font-size: 12px /* immutable */;
@@ -554,16 +538,16 @@ ul.\*chat-box__feed {
     border-width: 1px /* immutable */;
     border-style: solid /* immutable */;
     border-radius: 10px /* immutable */; }
-  ul.\*chat-box__feed li.\*chat-box__feed-item--from {
+  ul.\^chat-box__feed li.\^chat-box__feed-item--from {
     justify-content: flex-end /* immutable */; }
-    ul.\*chat-box__feed li.\*chat-box__feed-item--from span.\*chat-box__feed-msg {
+    ul.\^chat-box__feed li.\^chat-box__feed-item--from span.\^chat-box__feed-msg {
       border-color: transparent /* immutable */;
       background: #97A9CC /* immutable */;
       color: #FFFFFF /* const */ /* immutable */; }
-  ul.\*chat-box__feed li.\*chat-box__feed-item--to span.\*chat-box__feed-msg {
+  ul.\^chat-box__feed li.\^chat-box__feed-item--to span.\^chat-box__feed-msg {
     border-color: #DFE4E6 /* const */ /* immutable */;
     color: #666666 /* immutable */; }
-  ul.\*chat-box__feed li.\*chat-box__feed-timestamp {
+  ul.\^chat-box__feed li.\^chat-box__feed-timestamp {
     width: 60%;
     margin: 0 auto /* immutable */;
     position: relative /* immutable */;
@@ -571,29 +555,29 @@ ul.\*chat-box__feed {
     font-size: 10px /* immutable */;
     text-transform: uppercase /* immutable */;
     color: #B5BABC /* const */ /* immutable */; }
-    ul.\*chat-box__feed li.\*chat-box__feed-timestamp:before {
+    ul.\^chat-box__feed li.\^chat-box__feed-timestamp:before {
       content: "" /* immutable */;
       position: absolute /* immutable */;
       top: 6px /* immutable */;
       left: 0 /* immutable */;
       right: 0 /* immutable */;
       border-top: 1px solid #DFE4E6 /* const */ /* immutable */; }
-    ul.\*chat-box__feed li.\*chat-box__feed-timestamp span {
+    ul.\^chat-box__feed li.\^chat-box__feed-timestamp span {
       padding-left: 6px /* immutable */;
       padding-right: 6px /* immutable */;
       position: relative /* immutable */;
       background: #FFFFFF /* const */ /* immutable */; }
-  ul.\*chat-box__feed img.\*chat-box__user-pic {
+  ul.\^chat-box__feed img.\^chat-box__user-pic {
     margin-right: 10px /* immutable */; }
 
-form.\*chat-box__form {
+form.\^chat-box__form {
   display: flex /* immutable */;
   height: 40px /* immutable */;
   margin-left: 10px /* immutable */;
   margin-right: 10px /* immutable */;
   box-sizing: border-box /* immutable */;
   border-top: 1px solid #DFE4E6 /* const */ /* immutable */; }
-  form.\*chat-box__form input.\*chat-box__form-input {
+  form.\^chat-box__form input.\^chat-box__form-input {
     height: 100% /* immutable */;
     flex: 1 /* immutable */;
     box-sizing: border-box /* immutable */;
@@ -601,18 +585,18 @@ form.\*chat-box__form {
     font-size: 13px /* immutable */;
     outline: none /* --veto */;
     color: #7B7B7B /* immutable */; }
-  form.\*chat-box__form div.\*chat-box__form-icons {
+  form.\^chat-box__form div.\^chat-box__form-icons {
     display: flex /* immutable */;
     align-items: center /* immutable */; }
-  form.\*chat-box__form a.\*chat-box__form-icon {
+  form.\^chat-box__form a.\^chat-box__form-icon {
     padding-left: 10px /* immutable */;
     font-size: 18px /* const */ /* immutable */;
     text-decoration: none /* --veto */;
     color: #9B9FA0 /* const */ /* protected */; }
-  form.\*chat-box__form a.\*chat-box__form-icon:hover {
+  form.\^chat-box__form a.\^chat-box__form-icon:hover {
     color: #4A6598 /* const */ /* --override */; }
 
-a.\*video__hero {
+a.\^video__hero {
   height: 200px /* immutable */;
   overflow: hidden /* immutable */;
   position: relative /* immutable */;
@@ -624,17 +608,17 @@ a.\*video__hero {
   text-decoration: none /* --veto */;
   background: #D2D4D4 /* immutable */; }
 
-a.\*video__hero:hover span.\*video__control {
+a.\^video__hero:hover span.\^video__control {
   transform: scale(1.2);
   background: rgba(0, 0, 0, 0.4) /* --mutate */; }
 
-img.\*video__thumbnail {
+img.\^video__thumbnail {
   position: absolute /* immutable */;
   top: 0px /* immutable */;
   width: 100% /* immutable */;
   border-radius: inherit /* immutable */; }
 
-span.\*video__control {
+span.\^video__control {
   position: relative /* immutable */;
   display: flex /* immutable */;
   align-items: center /* immutable */;
@@ -647,7 +631,7 @@ span.\*video__control {
   color: white /* immutable */;
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.4s ease-out; }
 
-footer.\*video__footer {
+footer.\^video__footer {
   padding-top: 15px /* immutable */;
   padding-bottom: 15px /* immutable */;
   padding-left: 20px /* immutable */;
@@ -655,7 +639,7 @@ footer.\*video__footer {
   border-left: 1px solid #DFE4E6 /* const */ /* immutable */;
   border-right: 1px solid #DFE4E6 /* const */ /* immutable */;
   border-bottom: 1px solid #DFE4E6 /* const */ /* immutable */; }
-  footer.\*video__footer h2 {
+  footer.\^video__footer h2 {
     margin-top: 0 /* --veto */;
     margin-bottom: 0 /* --veto */;
     font-size: 18px /* immutable */;
@@ -666,8 +650,8 @@ footer.\*video__footer {
 nav {
   display: flex /* immutable */;
   height: 50px /* const */ /* immutable */;
-  position: relative /* immutable */ /* --because: Bring element to the foreground so it's box-shadow sits infront of content below */;
-  z-index: 2 /* immutable */ /* --because: Bring element to the foreground so it's box-shadow sits infront of content below */;
+  position: relative /* immutable */ /* --because: Bring element to foreground so it's box-shadow sits infront of content below */;
+  z-index: 2 /* immutable */ /* --because: Bring element to foreground so it's box-shadow sits infront of content below */;
   background: #5371AA /* const */ /* immutable */;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) /* immutable */; }
   nav div.nav__logo {
@@ -757,7 +741,7 @@ section.left-bar {
     font-weight: bold /* immutable */;
     color: #5F6464 /* const */ /* immutable */; }
   section.left-bar ul.left-bar__list {
-    -webkit-padding-start: 0 /* --veto */;
+    padding-left: 0 /* --veto */;
     margin-top: 10px /* immutable */;
     margin-bottom: 14px /* immutable */;
     padding-bottom: 10px /* immutable */; }
@@ -827,9 +811,9 @@ section.content {
       padding-left: 15px /* immutable */;
       background: #DFE4E6 /* immutable */; }
     section.content div.post-box ul.post-box__icons {
-      -webkit-padding-start: 0 /* --veto */;
-      -webkit-margin-before: 0 /* --veto */;
-      -webkit-margin-after: 0 /* --veto */;
+      padding-left: 0 /* --veto */;
+      margin-top: 0 /* --veto */;
+      margin-bottom: 0 /* --veto */;
       display: flex /* immutable */;
       flex: 1 /* immutable */; }
       section.content div.post-box ul.post-box__icons li {
@@ -855,13 +839,15 @@ section.content {
   section.content .story-box {
     margin-bottom: 15px /* immutable */; }
     section.content .story-box div.story-box__hero {
+      width: calc(100% + 2px) /* immutable */;
+      height: 200px /* immutable */;
+      overflow: hidden /* immutable */;
       border-top-left-radius: 3px /* const */ /* immutable */;
       border-top-right-radius: 3px /* const */ /* immutable */; }
       section.content .story-box div.story-box__hero img {
-        width: calc(100% + 2px) /* immutable */;
-        height: 200px /* immutable */;
         margin-top: -1px /* immutable */;
         margin-left: -1px /* immutable */;
+        width: 100% /* immutable */;
         border-top-left-radius: 3px /* const */ /* immutable */;
         border-top-right-radius: 3px /* const */ /* immutable */; }
     section.content .story-box img.story-box__author-pic,
@@ -884,9 +870,9 @@ section.content {
         color: #949798 /* immutable */; }
     section.content .story-box ul.story-box__title-venue {
       margin-left: 12px /* immutable */;
-      -webkit-padding-start: 0 /* --veto */;
-      -webkit-margin-before: 0 /* --veto */;
-      -webkit-margin-after: 0 /* --veto */;
+      padding-left: 0 /* --veto */;
+      margin-top: 0 /* --veto */;
+      margin-bottom: 0 /* --veto */;
       display: flex /* immutable */;
       flex: 1 /* immutable */; }
       section.content .story-box ul.story-box__title-venue li {
@@ -943,9 +929,9 @@ section.content {
       padding-left: 20px /* immutable */;
       background: #F7F8F9 /* immutable */; }
     section.content .story-box ul.story-box__reactions {
-      -webkit-padding-start: 0 /* --veto */;
-      -webkit-margin-before: 0 /* --veto */;
-      -webkit-margin-after: 0 /* --veto */;
+      padding-left: 0 /* --veto */;
+      margin-top: 0 /* --veto */;
+      margin-bottom: 0 /* --veto */;
       display: flex /* immutable */;
       align-items: center /* immutable */;
       flex: 1 /* immutable */; }
@@ -970,9 +956,9 @@ section.content {
       section.content .story-box ul.story-box__reactions a:hover {
         color: #4A6598 /* const */ /* --override */; }
     section.content .story-box ul.story-box__impressions {
-      -webkit-padding-start: 0 /* --veto */;
-      -webkit-margin-before: 0 /* --veto */;
-      -webkit-margin-after: 0 /* --veto */;
+      padding-left: 0 /* --veto */;
+      margin-top: 0 /* --veto */;
+      margin-bottom: 0 /* --veto */;
       display: flex /* immutable */;
       align-items: center /* immutable */; }
       section.content .story-box ul.story-box__impressions li {
@@ -1024,7 +1010,7 @@ section.content {
     section.content aside.content__aside ul.aside__list {
       margin-top: 6px /* immutable */;
       margin-bottom: 12px /* immutable */;
-      -webkit-padding-start: 0 /* --veto */; }
+      padding-left: 0 /* --veto */; }
       section.content aside.content__aside ul.aside__list li.aside__item {
         display: flex /* immutable */;
         align-items: center /* immutable */;
@@ -1091,9 +1077,9 @@ section.right-bar {
     margin-left: 12px /* immutable */;
     margin-bottom: 10px /* immutable */; }
   section.right-bar ul.right-bar__list {
-    -webkit-padding-start: 0 /* --veto */;
-    -webkit-margin-before: 0 /* --veto */;
-    -webkit-margin-after: 0 /* --veto */; }
+    padding-left: 0 /* --veto */;
+    margin-top: 0 /* --veto */;
+    margin-bottom: 0 /* --veto */; }
     section.right-bar ul.right-bar__list li {
       list-style: none /* --veto */; }
     section.right-bar ul.right-bar__list a.list__item {
