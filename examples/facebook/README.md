@@ -4,7 +4,7 @@ Credit to **Ben Hartley** for his [awesome design](https://dribbble.com/shots/16
 
 [![Facebook POC](../../examples/facebook/preview.png)](https://callum-hart.github.io/mono/examples/facebook/facebook.html)
 
-View live example [here](https://callum-hart.github.io/mono/examples/facebook/facebook.html).
+*View live example [here](https://callum-hart.github.io/mono/examples/facebook/facebook.html)*
 
 ## Development
 

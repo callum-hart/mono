@@ -12,7 +12,7 @@ Credit to **Ben Hartley** for his [awesome design](https://dribbble.com/shots/16
 
 [![Facebook POC](../../examples/facebook/preview.png)](https://callum-hart.github.io/mono/examples/facebook/facebook.html)
 
-View live example [here](https://callum-hart.github.io/mono/examples/facebook/facebook.html).
+*View live example [here](https://callum-hart.github.io/mono/examples/facebook/facebook.html)*
 
 ## Responsive Grid
 
@@ -20,7 +20,7 @@ An example of using **discrete breakpoints** to build responsive layouts.
 
 [![Responsive Grid POC](../../examples/grid/preview.png)](https://callum-hart.github.io/mono/examples/grid/grid.html)
 
-View live example [here](https://callum-hart.github.io/mono/examples/grid/grid.html).
+*View live example [here](https://callum-hart.github.io/mono/examples/grid/grid.html)*
 
 ## YouTube
 
@@ -30,10 +30,12 @@ Light theme:
 
 [![YouTube Light Theme POC](../../examples/youtube/preview--light.png)](https://callum-hart.github.io/mono/examples/youtube/youtube.html)
 
-View live example [here](https://callum-hart.github.io/mono/examples/youtube/youtube.html).
+*View live example [here](https://callum-hart.github.io/mono/examples/youtube/youtube.html)*
+
+<p align="center">&ast;&ast;&ast;</p>
 
 Dark theme:
 
 [![YouTube Dark Theme POC](../../examples/youtube/preview--dark.png)](https://callum-hart.github.io/mono/examples/youtube/youtube.html?theme=dark)
 
-View live example [here](https://callum-hart.github.io/mono/examples/youtube/youtube.html?theme=dark).
+*View live example [here](https://callum-hart.github.io/mono/examples/youtube/youtube.html?theme=dark)*

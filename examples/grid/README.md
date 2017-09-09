@@ -2,7 +2,7 @@
 
 [![Responsive Grid POC](../../examples/grid/preview.png)](https://callum-hart.github.io/mono/examples/grid/grid.html)
 
-View live example [here](https://callum-hart.github.io/mono/examples/grid/grid.html).
+*View live example [here](https://callum-hart.github.io/mono/examples/grid/grid.html)*
 
 ## Development
 
