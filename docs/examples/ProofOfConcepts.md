@@ -20,8 +20,8 @@ An example of using [discrete breakpoints]() to build responsive layouts.
 
 The latest project built with mono. A good example of theming, responsiveness, interactions and stateful user interfaces.
 
+**Theme** light:
 [![YouTube Light Theme POC](../../examples/youtube/preview--light.png)](https://github.com/callum-hart/mono)
-*Light Theme*
 
+**Theme** dark:
 [![YouTube Dark Theme POC](../../examples/youtube/preview--dark.png)](https://github.com/callum-hart/mono)
-*Dark Theme*
