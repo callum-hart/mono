@@ -1,6 +1,6 @@
 # Findings
 
-The [proof of concepts]() helped expose early flaws, highlight what was/wasn’t useful, and unearth new features / use-cases.
+The [proof of concepts](ProofOfConcepts.md) helped expose early flaws, highlight what was/wasn’t useful, and unearth new features / use-cases.
 
 They also provided an insight into how mono improves CSS development, the **key benefits** being:
 
@@ -17,7 +17,7 @@ An unexpected benefit also emerged. Being a side project meant that monos develo
 
 I found it easier to resume from where I’d left off, and quicker to get back up to speed, since the **styles were easier to understand**. I also felt more **confident to make changes**, since the behavior of CSS was predictable and its **side-effects suppressed**.
 
-I started to think what other factors helped mono escape the [typical CSS workflow](), and attribute this to:
+I started to think what other factors helped mono escape the typical CSS workflow, and attribute this to:
 
 - **Code is expressive** which makes it easier to understand.
 - **Patterns promote consistency** which buys familiarity.

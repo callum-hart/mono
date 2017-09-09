@@ -11,7 +11,7 @@ In my opinion a high proportion of CSS pain points come from it's overriding arc
 
 Overrides provide no guarantee. They are brittle since their effects **depend on the cascade and specificity**, both of which are vulnerable to change.
 
-Overrides are also self-perpetuating. The **more overrides exist the more overriding you do**. CSS overtly encourages this, even from a clean slate browser defaults are overridden.
+Overrides are self-perpetuating. The **more overrides exist the more overriding you do**. CSS overtly encourages this, even from a clean slate browser defaults are overridden.
 
 In addition CSS can suffer from high coupling and low cohesion - where reusable styles are tightly mixed with those that aren't. This increases the demand for overrides since unwanted [non-reusable] styles need overriding.
 
@@ -36,7 +36,9 @@ It is **hard to understand the behaviour of CSS**.
 
 A CSS declaration can exist for a range of reasons. The rationale behind a declaration usually resides in our (or someone else's) head.
 
-It's hard to understand why a property exists & fathom the rationale behind its value since CSS offers no indication of its purpose (lacks intent). The comments below represent a thought process made interpreting the CSS:
+It's hard to understand why a property exists & fathom the rationale behind its value since CSS offers no indication of its purpose (it lacks intent).
+
+The comments below represent a familiar thought process made interpreting CSS:
 
 ```css
 .btn {
@@ -65,7 +67,7 @@ It's hard to understand why a property exists & fathom the rationale behind its 
 }
 ```
 
-**Time and mental energy is spent reasoning with CSS**. "Why is opacity 1", "What happens position relative is removed". Rationale that once existed is lost. We make changes without confidently foreseeing the outcome or any side-effects that may come with it.
+Time and mental energy is spent reasoning with CSS. "Why is opacity 1", "What happens if position relative is removed". **Rationale that once existed is lost**. We make changes without confidently foreseeing the outcome or any side-effects that may come with it.
 
 Mono introduces systems that help CSS express intent. By making CSS expressive & easier to reason with it becomes more tangible and the process of understanding it becomes more immediate.
 

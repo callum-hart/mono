@@ -32,7 +32,7 @@ a.logo {
 ```
 *Figure 1*
 
-In this example the **media queries rely on their position in the cascade** to produce the expected behaviour. On screens larger than 1000px all 3 rule-sets will apply with the last in the cascade taking effect (the font-size of a.logo will be 18px). It overrides the other font-size declarations.
+In this example the **media queries rely on their position in the cascade** to produce the expected behaviour. On screens wider than 1000px all 3 rule-sets will apply with the last in the cascade taking effect (the font-size of a.logo will be 18px). It overrides the other font-size declarations.
 
 Reshuffling the order of rule-sets produces a different result:
 
@@ -55,7 +55,7 @@ a.logo {
 ```
 *Figure 2*
 
-Again on screens larger than 1000px all 3 rule-sets apply. All three conditions are true so it's the last in the cascade that takes effect (font-size of `a.logo` will be 16px). **Unintuitively it is the cascade and not the breakpoint value that determines the font-size**.
+Again on screens wider than 1000px all 3 rule-sets apply. All three conditions are true so it's the last in the cascade that takes effect (font-size of `a.logo` will be 16px). **Unintuitively it is the cascade and not the breakpoint value that determines the font-size**.
 
 Indiscrete breakpoints are also dependent on specificity. In the following example **the rule-set with the strongest specificity out-competes** the others; regardless of their position in the cascade or breakpoint value:
 
@@ -78,7 +78,7 @@ nav a.logo {
 ```
 *Figure 3*
 
-At all screen widths the font-size of `a.logo` will be 14px, since the selector has the strongest specificity.
+At all screen-sizes the font-size will be 14px, since the selector `nav a.logo` has the strongest specificity.
 
 Figure 2 and 3 are examples of how indiscrete breakpoints are dependent and influenced by cascade and specificity.
 
