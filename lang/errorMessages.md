@@ -40,6 +40,11 @@ For example:
 
 `div.guest-list {`
 
+
+Further reading:
+
+https://callum-hart.gitbooks.io/mono/docs/patterns/SelectorTypes.html
+
 ```
 
 ### Inappropriate shorthand
@@ -71,6 +76,11 @@ For example:
 
 div.nav__links {
   margin-top<immutable>: 10px;
+
+
+Further reading:
+
+https://callum-hart.gitbooks.io/mono/docs/patterns/ShorthandAppropriately.html
 
 ```
 
@@ -142,6 +152,11 @@ May I suggest:
 
 @media (min-width: 900px) and (max-width: 1200px) {
  h3.heading {
+
+
+Further reading:
+
+https://callum-hart.gitbooks.io/mono/docs/patterns/DiscreteBreakpoints.html
 
 ```
 
