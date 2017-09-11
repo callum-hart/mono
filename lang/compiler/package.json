@@ -1,0 +1,16 @@
+{
+  "name": "Mono",
+  "version": "0.1.0",
+  "description": "Compiler for the mono language",
+  "main": "index.js",
+  "repository": "https://github.com/callum-hart/mono",
+  "author": "Callum Hart",
+  "license": "MIT",
+  "preferGlobal": true,
+  "bin": {
+    "mono": "index.js"
+  },
+  "dependencies": {
+    "chokidar": "^1.7.0"
+  }
+}

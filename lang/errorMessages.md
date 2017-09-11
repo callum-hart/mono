@@ -2,12 +2,11 @@
 
 > Note: the mono language is still under development.
 
-Monos compiler should:
+There are 3 types of errors:
 
-- Enforce the design pattern
-- Enforce the type system
-- Catch parsing errors
-- Assist the developer
+1. [Design pattern errors](#design-pattern-errors)
+2. [Type system errors](#type-system-errors)
+3. [Parsing errors](#parsing-errors)
 
 ## Design pattern errors
 
