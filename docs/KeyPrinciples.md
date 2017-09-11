@@ -39,4 +39,6 @@ This is a stark contrast to CSS, where overrides are inconspicuously scattered a
 
 It should be easy to articulate and identify what styles do, why they are used, and what role they have in our code.
 
-Mono uses motives that allow CSS to communicate purpose. Reducing ambiguity / obscurity means developers are less likely to break things, since changes are more predictable.
+Mono uses motives that allow CSS to communicate purpose.
+
+Reducing ambiguity / obscurity means developers are less likely to break things, since changes are more predictable.

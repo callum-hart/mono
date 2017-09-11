@@ -15,11 +15,11 @@ Overrides are self-perpetuating. The **more overrides exist the more overriding 
 
 In addition CSS can suffer from high coupling and low cohesion - where reusable styles are tightly mixed with those that aren't. This increases the demand for overrides since unwanted [non-reusable] styles need overriding.
 
-In the current climate a developer has little option but to override.
+**In the current climate a developer has little option but to override**.
 
 <p align="center">&ast;&ast;&ast;</p>
 
-However if we view overrides as mutation we can look to other languages for guidance, many of which **provide a system for changing a value**. For example:
+If we however view overrides as mutation we can look to other languages for guidance - many of which **provide a system for changing a value**. For example:
 
 - **Access modifiers:** Determine who & how a value can be modified.
 - **Data types:** A value cannot be modified through reassignment (final in Java / const in ES6).

@@ -37,6 +37,8 @@ The color of `.badge-light` is expected to be #f8f9fa but this isn’t guarantee
 
 *Color of .badge-light is overridden by .badge*
 
+<p align="center">&ast;&ast;&ast;</p>
+
 Introducing **negation removes the dependency on the cascade** and thus the need to override:
 
 ```css

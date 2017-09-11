@@ -19,11 +19,13 @@ Without an element type the `.btn` class is obscure. We cannot guarantee who the
 
 This means we cannot confidently predict all elements using the class `.btn` look the same. This is because we have no insight or control into what other styles the element will have (user agent, our own, 3rd party).
 
-In addition styles specific to a certain element type are bundled into the `.btn` class; and therefore applied to all consumers, which introduces unnecessary bloat (deadcode). Text-decoration none is only required for anchors using the `.btn` class.
+In addition styles specific to a certain element type are bundled into the `.btn` class; and therefore applied to all consumers, which introduces unnecessary bloat (deadcode).
+
+In the example above text-decoration none is only required for anchors using the `.btn` class.
 
 <p align="center">&ast;&ast;&ast;</p>
 
-When selectors are bound to an element type(s) it's easier to make connection between CSS & HTML:
+When selectors include the element type it's easier to make connection between CSS & HTML:
 
 ```css
 a.btn,
@@ -48,4 +50,4 @@ It’s easy to identify what elements use the class `.btn` - we can clearly see 
 
 This also makes it easier to separate reusable styles from those specific to a certain element type. Text-decoration none is only needed for anchors so is moved out into a rule-set of its own.
 
-Not only does this separate concerns, it helps organise styles into smaller, manageable, distinct chunks. Now I know where to add or remove styles for anchors, and better still if anchors stop using the `.btn` class I can safely remove styles specific to them.
+Not only does this separate concerns, it helps organise styles into smaller, manageable, distinct chunks. Now I know where to add or remove styles for anchors, and better still if anchors stop consuming the `.btn` class I can safely remove styles specific to them.
