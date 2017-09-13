@@ -1,5 +1,25 @@
+const fs = require('fs');
+
+
+const CONFIG_PATH = `${process.cwd()}/monoConfig.json`;
+
+
 const isValid = () => {
-  console.log('todo: determine whether monoConfig is present');
+  getConfig().then(config => {
+    console.log(config);
+  }, error => {
+    console.log(`config not found, error: ${error}`);
+  });
+}
+
+const getConfig = () => {
+  return new Promise((resolve, reject) => {
+    try {
+      resolve(JSON.parse(fs.readFileSync(CONFIG_PATH)));
+    } catch(e) {
+      reject(e);
+    }
+  })
 }
 
 module.exports = { isValid };

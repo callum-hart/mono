@@ -1,10 +1,3 @@
-/*
-
-"src": list of mono src files. Position in array corressponds to position in cascade.
-"dest": specify CSS file mono src compiles to.
-
-*/
-
 {
   "src": [
     "app",
@@ -12,34 +5,3 @@
   ],
   "dest": "out/main.css"
 }
-
-/*
-
-In future src files could be bundled into seperate packages.
-
-Declarations within packages could be namespaced to avoid
-conflicting styles.
-
-Something like:
-
-{
-  "src": {
-    "foo": "../foo.css",
-    "bar": "../bar.css"
-  },
-}
-
-Styles could then be namespaced with package name, i.e:
-
-foo.css:
-
-.foo h1 {}
-.foo body .main {}
-.foo div.heading {}
-
-bar.css:
-
-.bar p {}
-.bar div.heading {}
-
-*/

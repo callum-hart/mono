@@ -19,7 +19,7 @@ const isValid = () => {
   return !_.isEmpty(USER_ARGS);
 }
 
-const processArgs = () => {
+const getArgs = () => {
   const monoArg = _.head(USER_ARGS);
 
   switch (monoArg) {
@@ -28,8 +28,9 @@ const processArgs = () => {
     case WATCH:
       return console.log('watch project files');
     default:
-      return console.log(`unrecognized monoArg: ${monoArg}`);
+      console.log(`unrecognized monoArg: ${monoArg}`);
+      return process.exit();
   }
 }
 
-module.exports = { isValid, processArgs };
+module.exports = { isValid, getArgs };

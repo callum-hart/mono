@@ -4,10 +4,16 @@
 const CLI = require('./cli');
 const CONFIG = require('./config');
 
+
 if (CLI.isValid()) {
-  CLI.processArgs();
+  CLI.getArgs();
 } else {
   // handle errors
 }
 
-CONFIG.isValid();
+if (CONFIG.isValid()) {
+  CONFIG.getConfig();
+} else {
+  // handle errors
+}
+
