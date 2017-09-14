@@ -10,27 +10,36 @@
 const _ = require('lodash');
 
 
+const log = require('./log').cli;
+
+
 const MAKE = 'make';
 const WATCH = 'watch';
+const INIT = 'init';
 const USER_ARGS = process.argv.slice(2);
 
 
-const isValid = () => {
+const argsPresent = () => {
   return !_.isEmpty(USER_ARGS);
 }
 
-const getArgs = () => {
-  const monoArg = _.head(USER_ARGS);
+const getCmd = () => {
+  const firstArg = _.head(USER_ARGS);
 
-  switch (monoArg) {
-    case MAKE:
-      return console.log('make project');
-    case WATCH:
-      return console.log('watch project files');
-    default:
-      console.log(`unrecognized monoArg: ${monoArg}`);
-      return process.exit();
+  if (argsPresent()) {
+    switch (firstArg) {
+      case MAKE:
+        return MAKE;
+      case WATCH:
+        return WATCH;
+      case INIT:
+        return INIT;
+      default:
+        return log.UNRECOGNIZED_ARGUMENT(firstArg);
+    }
+  } else {
+    log.NO_ARGUMENT();
   }
 }
 
-module.exports = { isValid, getArgs };
+module.exports = { MAKE, WATCH, INIT, getCmd };
