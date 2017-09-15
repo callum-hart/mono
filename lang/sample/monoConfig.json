@@ -1,7 +1,1 @@
-{
-  "src": [
-    "app",
-    "nav"
-  ],
-  "dest": "out/main.css"
-}
+{"src":["list-of-mono-source-files"],"dest":"path-to-compiled-css","_bootstrapped":true}

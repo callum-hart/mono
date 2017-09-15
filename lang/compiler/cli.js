@@ -10,7 +10,7 @@
 const _ = require('lodash');
 
 
-const log = require('./log').cli;
+const Log = require('./log').cli;
 
 
 const MAKE = 'make';
@@ -35,10 +35,10 @@ const getCmd = () => {
       case INIT:
         return INIT;
       default:
-        return log.UNRECOGNIZED_ARGUMENT(firstArg);
+        return Log.UNRECOGNIZED_ARGUMENT(firstArg);
     }
   } else {
-    log.NO_ARGUMENT();
+    Log.NO_ARGUMENT();
   }
 }
 

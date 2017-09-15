@@ -12,7 +12,6 @@ module.exports = {
   config: {
     CONFIG_ERROR: (e) => {
       console.log(`Config error: ${e}`);
-      process.exit();
     }
   }
 };

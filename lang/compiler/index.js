@@ -1,23 +1,28 @@
 #! /usr/bin/env node
 
+const Cli = require('./cli');
+const Config = require('./config');
 
-const CLI = require('./cli');
-const CONFIG = require('./config');
 
-
-if (CONFIG.isValid()) {
-  switch (CLI.getCmd()) {
-    case CLI.MAKE:
-      // parse mono files
-      return console.log("make");
-    case CLI.WATCH:
-      return console.log('watch');
-    case CLI.INIT:
-      // add bootstrap monoConfig.json file (if not present)
-      return console.log('init');
-    default:
-      return false;
+const make = () => {
+  if (Config.isValid()) {
+    console.log('cmd: make');
   }
-} else {
-  console.log('config not valid');
+}
+
+const watch = () => {
+  if (Config.isValid()) {
+    console.log('cmd: watch');
+  }
+}
+
+switch (Cli.getCmd()) {
+  case Cli.MAKE:
+    return make();
+  case Cli.WATCH:
+    return watch()
+  case Cli.INIT:
+    return Config.bootstrap();
+  default:
+    return false;
 }
