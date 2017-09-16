@@ -2,7 +2,33 @@ body {
   background: ivory;
 }
 
-ul {
+ul{
   margin-left: 0;
   padding-left: 0;
+}
+
+p.pow {
+  color: slategrey;
+}
+
+div.title,
+span.label {
+  color: cadetblue;
+}
+
+p.foo, span.bar {
+  line-height: 20px;
+}
+
+
+div.hey,
+span.hey,
+p.hey {
+  color: cadetblue;
+}
+
+@media (min-width:300px) and (max-width:600px) {
+  .something {
+    display: none;
+  }
 }
