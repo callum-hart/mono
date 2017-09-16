@@ -1,7 +1,8 @@
 {
   "src": [
-    "list-of-mono-source-files"
+    "src/app",
+    "src/nav.mono",
+    "src/sub_dir/typography"
   ],
-  "dest": "path-to-compiled-css",
-  "_bootstrapped": true
+  "dest": "dest/out.css"
 }

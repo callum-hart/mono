@@ -20,11 +20,17 @@ module.exports = {
       process.exit();
     },
     CONFIG_SAMPLE_CREATED: (fileName, location) => {
-      console.log(`Successfully created ${fileName} \n => Located: ${location}`);
+      console.log(`Added ${fileName} to project \n => Located: ${location}`);
       process.exit();
     },
     CONFIG_SAMPLE_FAILED: (fileName, err) => {
       console.log(`Failed to create ${fileName} \n => ${err}`);
+      process.exit();
+    }
+  },
+  parser: {
+    SOURCE_ERROR: (err) => {
+      console.log(`Error with mono source file \n => ${err} `);
       process.exit();
     }
   }

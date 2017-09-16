@@ -1,0 +1,5 @@
+nav {
+  display: flex;
+  height: 60px;
+  background: slategrey;
+}

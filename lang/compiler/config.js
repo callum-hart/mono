@@ -54,20 +54,20 @@ const configValid = () => {
 }
 
 const bootstrap = () => {
-  ifConfigExists()
+  ifConfigAlreadyExists()
     .then(() => {
-      shouldReplaceExistingConfig()
+      shouldReplaceConfig()
         .then(() => {
           generateConfig()
         }, () => {
           process.exit();
-        }).catch(() => console.log(`shouldReplaceExistingConfig promise caught`));
+        }).catch(() => console.log(`shouldReplaceConfig promise caught`));
     }, () => {
       generateConfig();
-    }).catch (() => console.log(`ifConfigExists promise caught`));
+    }).catch (() => console.log(`ifConfigAlreadyExists promise caught`));
 }
 
-const ifConfigExists = () => {
+const ifConfigAlreadyExists = () => {
   return new Promise((resolve, reject) => {
     fs.access(CONFIG_PATH, fs.constants.R_OK, (err) => {
       if (err) {
@@ -89,7 +89,7 @@ const generateConfig = () => {
   }
 }
 
-const shouldReplaceExistingConfig = () => {
+const shouldReplaceConfig = () => {
   const YES = 'y';
   const NO = 'n';
   const ask = `A ${CONFIG_FILE_NAME} file already exists in this project. \n => Located: ${CONFIG_PATH} \nWould you like to replace it? (${YES}/${NO}): `;
@@ -115,9 +115,13 @@ const shouldReplaceExistingConfig = () => {
   });
 }
 
-const getSrc = () => {}
+const getSrc = () => {
+  return config.src;
+}
 
-const getDest = () => {}
+const getDest = () => {
+  return config.dest;
+}
 
 module.exports = {
   initialize,

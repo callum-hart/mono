@@ -2,12 +2,13 @@
 
 const Cli = require('./cli');
 const Config = require('./config');
+const Parser = require('./parser');
 
 
 const make = () => {
   Config.initialize()
     .then(() => {
-      console.log('cmd: make');
+      Parser.run();
     }, () => {
       console.log('Config.initialize() failed');
     });
