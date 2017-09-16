@@ -8,7 +8,7 @@ const Log = require('./log').config;
 
 const CONFIG_FILE_NAME = 'monoConfig.json';
 const CONFIG_PATH = `${process.cwd()}/${CONFIG_FILE_NAME}`;
-const CONFIG_SAMPLE = require('./monoConfig.sample.json');
+const CONFIG_SAMPLE_PATH = './monoConfig.sample.json';
 let config;
 
 
@@ -35,12 +35,12 @@ const bootstrap = () => {
         .then(() => {
           generateConfig()
         }, () => {
-          console.log(`Don't replace existing ${CONFIG_FILE_NAME}`);
+          process.exit();
         });
     }, () => {
       generateConfig();
     }).catch (() => {
-
+      console.log(`ifConfigExists promise caught`);
     });
 }
 
@@ -61,17 +61,17 @@ const ifConfigExists = () => {
 */
 const generateConfig = () => {
   try {
-    fs.writeFileSync(CONFIG_PATH, JSON.stringify(CONFIG_SAMPLE));
-    console.log(`monoConfig.json created in: ${CONFIG_PATH}`);
+    fs.writeFileSync(CONFIG_PATH, JSON.stringify(require(CONFIG_SAMPLE_PATH), null, 2));
+    Log.CONFIG_SAMPLE_CREATED(CONFIG_FILE_NAME, CONFIG_PATH);
   } catch(e) {
-    console.log('Error generating config ', e);
+    Log.CONFIG_SAMPLE_FAILED(CONFIG_FILE_NAME, e);
   }
 }
 
 const shouldReplaceExistingConfig = () => {
   const YES = 'y';
   const NO = 'n';
-  const message = `Replace existing ${CONFIG_FILE_NAME} file (${YES}/${NO}): `;
+  const ask = `A ${CONFIG_FILE_NAME} file already exists in this project. \n => Located: ${CONFIG_PATH} \nWould you like to replace it? (${YES}/${NO}): `;
 
   return new Promise((resolve, reject) => {
     const rl = readline.createInterface({
@@ -79,7 +79,7 @@ const shouldReplaceExistingConfig = () => {
       output: process.stdout
     });
 
-    rl.question(message, (answer) => {
+    rl.question(ask, (answer) => {
       switch (answer) {
         case YES:
           return resolve();

@@ -10,8 +10,16 @@ module.exports = {
     }
   },
   config: {
-    CONFIG_ERROR: (e) => {
-      console.log(`Config error: ${e}`);
+    CONFIG_ERROR: (err) => {
+      console.log(`Config error: ${err}`);
+    },
+    CONFIG_SAMPLE_CREATED: (fileName, location) => {
+      console.log(`Successfully created ${fileName} \n => Located: ${location}`);
+      process.exit();
+    },
+    CONFIG_SAMPLE_FAILED: (fileName, err) => {
+      console.log(`Failed to create ${fileName} \n => ${err}`);
+      process.exit();
     }
   }
 };
