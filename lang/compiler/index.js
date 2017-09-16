@@ -5,15 +5,21 @@ const Config = require('./config');
 
 
 const make = () => {
-  if (Config.isValid()) {
-    console.log('cmd: make');
-  }
+  Config.initialize()
+    .then(() => {
+      console.log('cmd: make');
+    }, () => {
+      console.log('Config.initialize() failed');
+    });
 }
 
 const watch = () => {
-  if (Config.isValid()) {
-    console.log('cmd: watch');
-  }
+  Config.initialize()
+    .then(() => {
+      console.log('cmd: watch');
+    }, () => {
+      console.log('Config.initialize() failed');
+    });
 }
 
 switch (Cli.getCmd()) {

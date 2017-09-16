@@ -11,7 +11,13 @@ module.exports = {
   },
   config: {
     CONFIG_ERROR: (err) => {
-      console.log(`Config error: ${err}`);
+      console.log(`Error with config \n => ${err}`);
+      process.exit();
+    },
+    CONFIG_VALIDATION_ERRORS: (fileName, errors) => {
+      console.log(`Validation of ${fileName} failed`);
+      errors.forEach((err) => console.log(` => ${err}`));
+      process.exit();
     },
     CONFIG_SAMPLE_CREATED: (fileName, location) => {
       console.log(`Successfully created ${fileName} \n => Located: ${location}`);

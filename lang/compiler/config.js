@@ -12,20 +12,45 @@ const CONFIG_SAMPLE_PATH = './monoConfig.sample.json';
 let config;
 
 
-// todo: prevent init if cli cmd is `init`
+const initialize = () => {
+  return new Promise((resolve, reject) => {
+      try {
+        config = JSON.parse(fs.readFileSync(CONFIG_PATH));
 
-// const init = (() => {
-//   try {
-//     config = JSON.parse(fs.readFileSync(CONFIG_PATH));
-//   } catch(e) {
-//     Log.CONFIG_ERROR(e);
-//   }
-// })();
+        if (configValid()) {
+          resolve();
+        } else {
+          reject();
+        }
+      } catch(e) {
+        Log.CONFIG_ERROR(e);
+        reject();
+      }
+  });
+}
 
-const isValid = () => {
-  // todo: add proper error handling, i.e missing src or missing dest
-  return _.has(config, 'src') &&
-         _.has(config, 'dest');
+const configValid = () => {
+  const MISSING_SRC = 'Missing property `src`';
+  const MISSING_DEST = 'Missing property `dest`';
+
+  let errors = [
+    MISSING_SRC,
+    MISSING_DEST
+  ];
+
+  if (_.has(config, 'src')) {
+    errors = errors.filter(err => err !== MISSING_SRC);
+  }
+
+  if (_.has(config, 'dest')) {
+    errors = errors.filter(err => err !== MISSING_DEST);
+  }
+
+  if (!_.isEmpty(errors)) {
+    Log.CONFIG_VALIDATION_ERRORS(CONFIG_FILE_NAME, errors);
+  }
+
+  return _.isEmpty(errors);
 }
 
 const bootstrap = () => {
@@ -36,12 +61,10 @@ const bootstrap = () => {
           generateConfig()
         }, () => {
           process.exit();
-        });
+        }).catch(() => console.log(`shouldReplaceExistingConfig promise caught`));
     }, () => {
       generateConfig();
-    }).catch (() => {
-      console.log(`ifConfigExists promise caught`);
-    });
+    }).catch (() => console.log(`ifConfigExists promise caught`));
 }
 
 const ifConfigExists = () => {
@@ -56,11 +79,9 @@ const ifConfigExists = () => {
   });
 }
 
-/*
-  When node v.8.5 is stable replace with `copyFileSync`
-*/
 const generateConfig = () => {
   try {
+    // When node v.8.5 is stable can use `copyFileSync`
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(require(CONFIG_SAMPLE_PATH), null, 2));
     Log.CONFIG_SAMPLE_CREATED(CONFIG_FILE_NAME, CONFIG_PATH);
   } catch(e) {
@@ -99,7 +120,7 @@ const getSrc = () => {}
 const getDest = () => {}
 
 module.exports = {
-  isValid,
+  initialize,
   bootstrap,
   getSrc,
   getDest
