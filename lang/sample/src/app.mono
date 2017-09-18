@@ -11,6 +11,16 @@ p.pow {
   color: slategrey;
 }
 
+.foo   {
+  background: red;
+}
+
+.hidden {display: none;} .shown {display: block;}
+
+
+
+.visible {visibility: visible;} #invisible {visibility: hidden;}
+
 div.title,
 span.label {
   color: cadetblue;

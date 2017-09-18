@@ -49,13 +49,27 @@ const parseFile = (file) => {
   console.log(chalk.blue.bold(`\nFile: ${file.name} --------------- \n`));
   console.log(chalk.gray(`${file.source}\n`));
 
-  console.log(chalk.blue(`Selectors (in ${file.name}) : --------------- \n`));
-  const selectors = file.source
-                      .replace(/ {/g, '{')   // remove space before opening brace
-                      .replace(/,\n/g, ', ') // put multiple selectors on single line
-                      .match(/^.*(?={)/gm);  // anything before opening brace
+  console.log(chalk.blue.bold(`\nFormatted file: ${file.name} --------------- \n`));
+  formatStyles(file.source);
 
-  console.log(selectors);
+  /*
+    Regex:
+    - `.match(/^.*(?={)/gm)` anything before opening brace (can be selector, media query, font-face, keyframe)
+  */
+}
+
+const formatStyles = (styles) => {
+  const formatted = styles
+                      .replace(/\s*{/g, '{')   // remove all whitespace before opening brace
+                      .replace(/,\n/g, ', ')   // put multiple selectors on single line
+                      .replace(/}(.\S)/g, foo)
+
+  // todo: put each declaration on single line .hidden {display: none;} .shown {display: block;}
+  // /}(.\S)/
+  // /}(.*\S)/g
+  // /(}.*\S)/g
+
+  console.log(formatted);
 }
 
 module.exports = {
