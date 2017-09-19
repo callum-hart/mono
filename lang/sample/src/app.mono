@@ -2,20 +2,20 @@ body {
   background: ivory;
 }
 
-ul{
-  margin-left: 0;
-  padding-left: 0;
+ul<immutable>{
+  margin-left<@mutate>: 0;
+  padding-left<@override>: 0;
 }
 
 p.pow {
-  color: slategrey;
+  color<?overthrow>: slategrey;
 }
 
 .foo   {
   background: red;
 }
 
-.hidden {display: none;} .shown {display: block;}
+.hidden {display<protected,?overrule>: none;} .shown {display: block;}
 
 
 
@@ -27,14 +27,14 @@ span.label {
 }
 
 p.foo, span.bar {
-  line-height: 20px;
+  line-height<immutable>: 20px;
 }
 
 
 div.hey,
 span.hey,
 p.hey {
-  color: cadetblue;
+  color<?motive('ENG-12345')>: cadetblue;
 }
 
 @media (min-width:300px) and (max-width:600px) {

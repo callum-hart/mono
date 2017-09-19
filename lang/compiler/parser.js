@@ -1,6 +1,7 @@
 const fs = require('fs');
 const _ = require('lodash');
 const chalk = require('chalk');
+const prettier = require('prettier');
 
 
 const Log = require('./log').parser;
@@ -46,30 +47,38 @@ const parseFile = (file) => {
     - rule-sets
   */
 
-  console.log(chalk.blue.bold(`\nFile: ${file.name} --------------- \n`));
-  console.log(chalk.gray(`${file.source}\n`));
-
   console.log(chalk.blue.bold(`\nFormatted file: ${file.name} --------------- \n`));
-  formatStyles(file.source);
+  console.log(chalk.gray(formatStyles(file.source)));
 
   /*
-    Regex:
-    - `.match(/^.*(?={)/gm)` anything before opening brace (can be selector, media query, font-face, keyframe)
+  `preOpenBrace`: anything before opening brace, can be:
+  - selector
+  - media query
+  - font face
+  - key frame
   */
+  const preOpenBrace = formatStyles(file.source).match(/^.*(?={)/gm);
+  console.log(chalk.blue(`preOpenBrace (anything before opening brace): --------------- \n`));
+  console.log(preOpenBrace);
 }
 
+/*
+Could either report code smells 👃, or reformat them before parsing.
+
+Trade off between flexibility (by supporing liberal formatting) and consistency
+(by enforcing formatting rules), either way need to be able to detect code smells.
+
+Currently outsourcing formatting to prettier. It appears to handle mono notions
+out of the box. Will need to keep an eye on this. Some observations:
+- spacing added either side of > by types inferred by rule-set, i.e:
+    - src: `ul<immutable> {`
+    - out: `ul<immutable >  {`
+*/
 const formatStyles = (styles) => {
-  const formatted = styles
-                      .replace(/\s*{/g, '{')   // remove all whitespace before opening brace
-                      .replace(/,\n/g, ', ')   // put multiple selectors on single line
-                      .replace(/}(.\S)/g, foo)
-
-  // todo: put each declaration on single line .hidden {display: none;} .shown {display: block;}
-  // /}(.\S)/
-  // /}(.*\S)/g
-  // /(}.*\S)/g
-
-  console.log(formatted);
+  return prettier.format(styles, { parser: 'postcss' })
+          .replace(/\s*{/g, '{')   // remove all whitespace before opening brace
+          .replace(/,\n/g, ', ')   // put multi-line selectors on single line
+          .replace(/^\s*\n/gm, '') // remove empty lines
 }
 
 module.exports = {
