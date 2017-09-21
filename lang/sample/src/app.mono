@@ -42,3 +42,33 @@ p.hey {
     display: none;
   }
 }
+
+.combinatorWithOutSpace {
+  color<protected,?overrule>: grey;
+}
+
+.combinatorWithSpace {
+  color<protected, ?overrule>: blue;
+  font-size<public,?because('some reason')>: 12px;
+}
+
+.combinatorWithSpace2 {
+  line-height <protected, ?overrule>: 20px;
+  font-size<public, ?because('some reason')>: 20px;
+  font-weight <protected, ?because('another-reason')> : bold;
+  color : red ;
+}
+
+.inferredRuleSet<  immutable  >   {
+  color: red;
+  line-height: 20px;
+  background-color: grey;
+}
+
+.inferredRuleSet2<protected> {
+  overflow: hidden;
+}
+
+.inferredRuleSet3<        public   > {
+  float: left;
+}
