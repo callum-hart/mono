@@ -3,6 +3,8 @@ const prettier = require('prettier');
 
 const Log = require('./log').formatter;
 
+// TODO: add tests
+
 
 /**
  * {Public} format
@@ -30,7 +32,8 @@ const format = ({name, source} = file) => {
  * @return {String} source code with mono notions reformatted
  */
 const formatMonoNotions = styles => {
-  let monoNotions = styles.match(/<\s*[^\n]+\s*>/g); // anything between crocodiles <>
+  // anything between crocodiles <>
+  let monoNotions = styles.match(/<\s*[^\n]+\s*>/g);
 
   if (!_.isEmpty(monoNotions)) {
     monoNotions.forEach(notion => styles = styles.replace(notion, formatMonoNotion(notion)));
@@ -50,7 +53,7 @@ const formatMonoNotions = styles => {
  * @return {String} reformatted mono notion
  */
 const formatMonoNotion = rawNotion => {
-  // whitespace not within single or double quotes
+  // remove whitespace not within single or double quotes
   return rawNotion.replace(/\s+(?=([^\'"]*[\'"][^\'"]*[\'"])*[^\'"]*$)/g, '');
 }
 

@@ -26,6 +26,9 @@ module.exports = {
     CONFIG_SAMPLE_FAILED: (fileName, err) => {
       console.log(`[Config] Failed to create ${fileName} \n └─ ${err}`);
       process.exit();
+    },
+    SHOULD_REPLACE_CONFIG: (configFileName, configFilePath, yes, no) => {
+      return `A config file (${configFileName}) already exists in this project. \n └─ Located: ${configFilePath} \nWould you like to replace it? (${yes}/${no}): `;
     }
   },
   parser: {

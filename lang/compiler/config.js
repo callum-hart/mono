@@ -92,7 +92,6 @@ const generateConfig = () => {
 const shouldReplaceConfig = () => {
   const YES = 'y';
   const NO = 'n';
-  const ask = `A ${CONFIG_FILE_NAME} file already exists in this project. \n => Located: ${CONFIG_PATH} \nWould you like to replace it? (${YES}/${NO}): `;
 
   return new Promise((resolve, reject) => {
     const rl = readline.createInterface({
@@ -100,7 +99,7 @@ const shouldReplaceConfig = () => {
       output: process.stdout
     });
 
-    rl.question(ask, (answer) => {
+    rl.question(Log.SHOULD_REPLACE_CONFIG(CONFIG_FILE_NAME, CONFIG_PATH, YES, NO), (answer) => {
       switch (answer) {
         case YES:
           return resolve();
