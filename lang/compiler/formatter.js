@@ -1,17 +1,24 @@
 const _ = require('lodash');
 const prettier = require('prettier');
 
+const Log = require('./log').formatter;
+
 
 /**
  * {Public} format
  *
  * Format mono source file.
  *
- * @param {String} styles - raw mono source code
+ * @param {String} name - name of mono source file
+ * @param {String} source - mono source code
  * @return {String} formatted mono source code
  */
-const format = styles => {
-  return formatPrettierOutput(prettier.format(formatMonoNotions(styles), { parser: 'postcss'}));
+const format = ({name, source} = file) => {
+  try {
+    return formatPrettierOutput(prettier.format(formatMonoNotions(source), { parser: 'postcss'}));
+  } catch (e) {
+    Log.INVALID_CSS(name, e);
+  }
 }
 
 /**
@@ -43,6 +50,7 @@ const formatMonoNotions = styles => {
  * @return {String} reformatted mono notion
  */
 const formatMonoNotion = rawNotion => {
+  // whitespace not within single or double quotes
   return rawNotion.replace(/\s+(?=([^\'"]*[\'"][^\'"]*[\'"])*[^\'"]*$)/g, '');
 }
 
@@ -56,10 +64,14 @@ const formatMonoNotion = rawNotion => {
  */
 const formatPrettierOutput = prettierOutput => {
   return prettierOutput
-          .replace(/^\s*\n/gm, '')                             // remove empty lines
-          .replace(/,\n/g, ', ')                               // put multi-line selectors on single line
-          .replace(/\s*{/g, '{')                               // remove space(s) before opening brace (added by prettier)
-          .replace(/<(immutable|protected|public)\s>/g,'<$1>') // remove space after inferred type (added by prettier)
+          // remove empty lines
+          .replace(/^\s*\n/gm, '')
+
+          // put multi-line selectors on single line
+          .replace(/,\n/g, ', ')
+
+          // remove space before & after closing > for rule-set types (spaces added by prettier)
+          .replace(/<(immutable|protected|public)\s>\s*{/g,'<$1> {')
 }
 
 module.exports = { format }

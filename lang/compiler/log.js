@@ -4,13 +4,13 @@ module.exports = {
       console.log('[Cli] No argument(s) present');
       process.exit();
     },
-    UNRECOGNIZED_ARGUMENT: (arg) => {
+    UNRECOGNIZED_ARGUMENT: arg => {
       console.log(`[Cli] Unrecognized argument: ${arg}`);
       process.exit();
     }
   },
   config: {
-    CONFIG_ERROR: (err) => {
+    CONFIG_ERROR: err => {
       console.log(`[Config] Error with config \n └─ ${err}`);
       process.exit();
     },
@@ -29,8 +29,15 @@ module.exports = {
     }
   },
   parser: {
-    SOURCE_ERROR: (err) => {
+    SOURCE_ERROR: err => {
       console.log(`[Parser] Error with mono source file \n └─ ${err} `);
+      process.exit();
+    }
+  },
+  formatter: {
+    INVALID_CSS: (fileName, err) => {
+      console.log(`[Format] Invalid CSS detected in: ${fileName} \n └─ ${err.name}: ${err.loc.start.reason} \n `);
+      console.log(err.codeFrame);
       process.exit();
     }
   }

@@ -47,7 +47,7 @@ const parseFile = file => {
     - rule-sets
   */
 
-  const formattedFile = Formatter.format(file.source);
+  const formattedFile = Formatter.format(file);
 
   console.log(chalk.blue.bold(`\nFormatted file: ${file.name} --------------- \n`));
   console.log(chalk.gray(formattedFile));
@@ -59,7 +59,7 @@ const parseFile = file => {
   - font face
   - key frame
   */
-  const preOpenBrace = formattedFile.match(/^.*(?={)/gm);
+  const preOpenBrace = formattedFile.match(/^.*(?= {)/gm);
   console.log(chalk.blue(`Anything preceding opening brace: --------------- \n`));
   console.log(preOpenBrace);
 }
