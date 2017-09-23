@@ -2,19 +2,24 @@ body {
   background: ivory;
 }
 
-ul<immutable>{
-  margin-left<@mutate>: 0;
+ul<     immutable    >{
+  margin-left<   @mutate
+
+  >: 0;
   padding-left<@override>: 0;
 }
 
-p.pow {
-  color<?overthrow>: slategrey;
+.bar < .foo           {}
+
+p.pow > .foo {
+  color<?overthrow    >: slategrey;
 }
 
 .foo   {
   background: red;
 }
 
+.hidden {display<protected,     ?overrule>: none;} .shown {display: block;}
 .hidden {display<protected,?overrule>: none;} .shown {display: block;}
 
 
@@ -34,7 +39,7 @@ p.foo, span.bar {
 div.hey,
 span.hey,
 p.hey {
-  color<?motive('ENG-12345')>: cadetblue;
+  color<?motive('ENG-12345d djdjdd')      >: cadetblue;
 }
 
 @media (min-width:300px) and (max-width:600px) {
@@ -50,6 +55,11 @@ p.hey {
 .combinatorWithSpace {
   color<protected, ?overrule>: blue;
   font-size<public,?because('some reason')>: 12px;
+  font-size<    public,   ?because('ANOTHER REASON FOR USAGE')
+
+
+
+  >: 12px;
 }
 
 .combinatorWithSpace2 {

@@ -1,11 +1,11 @@
 const fs = require('fs');
 const _ = require('lodash');
 const chalk = require('chalk');
-const prettier = require('prettier');
-
 
 const Log = require('./log').parser;
 const Config = require('./config');
+const Formatter = require('./formatter');
+
 const EXTENSION = '.mono';
 let ast = {
   files: [],
@@ -47,8 +47,10 @@ const parseFile = file => {
     - rule-sets
   */
 
+  const formattedFile = Formatter.format(file.source);
+
   console.log(chalk.blue.bold(`\nFormatted file: ${file.name} --------------- \n`));
-  console.log(chalk.gray(formatStyles(file.source)));
+  console.log(chalk.gray(formattedFile));
 
   /*
   `preOpenBrace`: anything before opening brace, can be:
@@ -57,54 +59,9 @@ const parseFile = file => {
   - font face
   - key frame
   */
-  const preOpenBrace = formatStyles(file.source).match(/^.*(?={)/gm);
-  console.log(chalk.blue(`preOpenBrace (anything before opening brace): --------------- \n`));
+  const preOpenBrace = formattedFile.match(/^.*(?={)/gm);
+  console.log(chalk.blue(`Anything preceding opening brace: --------------- \n`));
   console.log(preOpenBrace);
-}
-
-/*
-Could either report code smells 👃, or reformat them before parsing.
-
-Trade off between flexibility (by supporing liberal formatting) and consistency
-(by enforcing formatting rules), either way need to be able to detect code smells.
-
-Currently outsourcing formatting to prettier. It appears to handle mono notions
-out of the box. Will need to keep an eye on this. Some observations:
-- spacing added either side of > by types inferred by rule-set, i.e:
-    - src: `ul<immutable> {`
-    - out: `ul<immutable >  {`
-- space after comma in combinators doesn't work, i.e:
-    - `display<protected, ?overrule>: none;` => `display<protected,: none;`
-    - `display<protected,?overrule>: none;`  => `display<protected,?overrule>: none;` (no space works)
-*/
-const formatStyles = rawStyles => {
-  // todo: log prettier formatting errors to console
-  return postPrettier(prettier.format(prePrettier(rawStyles), { parser: 'postcss' }));
-}
-
-/**
- * Format styles before running prettier.
- *
- */
-const prePrettier = rawStyles => {
-  // Todo: remove whitespace after comma in combinators, i.e
-  // - src: display<protected, ?overrule>
-  // - out: display<protected,?overrule>
-
-  return rawStyles;
-}
-
-/**
- * Format styles after running prettier.
- */
-const postPrettier = formattedStyles => {
-  return formattedStyles
-          .replace(/\s*{/g, '{')                        // remove whitespace(s) before opening brace
-          .replace(/,\n/g, ', ')                        // put multi-line selectors on single line
-          .replace(/^\s*\n/gm, '')                      // remove empty lines
-          .replace(/<\s*immutable\s*>/g, `<immutable>`) // remove whitespace(s) before & after inferred rule-set type
-          .replace(/<\s*protected\s*>/g, `<protected>`) // remove whitespace(s) before & after inferred rule-set type
-          .replace(/<\s*public\s*>/g, `<public>`)       // remove whitespace(s) before & after inferred rule-set type
 }
 
 module.exports = {
