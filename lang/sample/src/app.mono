@@ -60,6 +60,7 @@ p.hey {
 
 
   >: 12px;
+  line-height<immutable,   ?patch("croccodiles < within string should> not break anything ")>: 20px;
 }
 
 .combinatorWithSpace2 {

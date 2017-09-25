@@ -54,7 +54,7 @@ const parseFile = file => {
 
   /*
   `preOpenBrace`: anything before opening brace, can be:
-  - selector
+  - selector (must have element type)
   - media query
   - font face
   - key frame
@@ -62,6 +62,8 @@ const parseFile = file => {
   const preOpenBrace = formattedFile.match(/^.*(?= {)/gm);
   console.log(chalk.blue(`Anything preceding opening brace: --------------- \n`));
   console.log(preOpenBrace);
+
+  // continue from here...
 }
 
 module.exports = {

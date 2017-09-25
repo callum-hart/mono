@@ -3,7 +3,14 @@ const prettier = require('prettier');
 
 const Log = require('./log').formatter;
 
-// TODO: add tests
+/**
+ * Transform mono source code into a unified format prior to parsing.
+ *
+ * The heavy lifting is outsourced to prettier - which formats mono
+ * source code as if it were CSS.
+ *
+ * TODO: add tests
+ */
 
 
 /**

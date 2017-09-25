@@ -39,8 +39,9 @@ module.exports = {
   },
   formatter: {
     INVALID_CSS: (fileName, err) => {
-      console.log(`[Format] Invalid CSS detected in: ${fileName} \n └─ ${err.name}: ${err.loc.start.reason} \n `);
-      console.log(err.codeFrame);
+      // console.log(`[Format] Invalid CSS detected in: ${fileName} \n └─ ${err.name}: ${err.loc.start.reason} \n `);
+      // console.log(err.codeFrame);
+      console.log(err);
       process.exit();
     }
   }
