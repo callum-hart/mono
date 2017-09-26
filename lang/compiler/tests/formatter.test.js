@@ -6,6 +6,7 @@ const mockFile = {
 
 /**
  * TODO:
+ * - rule-sets on same line .a{color: red} .b{color: blue}
  * - tests for CSS errors, ie double colon.
  *   - Formatter should throw appropriate errors (http://facebook.github.io/jest/docs/en/expect.html#tothrowerror)
  */

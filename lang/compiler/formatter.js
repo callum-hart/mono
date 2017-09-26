@@ -6,9 +6,10 @@ const Log = require('./log').formatter;
 /**
  * Transform mono source code into a unified format prior to parsing.
  *
- * Even though poor formatting is supported it isn't encouraged.
- * Re-formatting not only makes parsing easier it also reduces
- * friction for onboarding.
+ * Despite support for poor formatting it isn't encouraged. Formatting
+ * not only makes parsing easier it also reduces friction for onboarding.
+ * The focus [of new users] should be on mono design patterns & language
+ * features, not trivial things like indentation & spacing.
  *
  * The heavy lifting is outsourced to prettier - which formats mono
  * source code as if it were CSS. Since mono includes non-standard
