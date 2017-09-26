@@ -5,3 +5,7 @@
 **Initial Goal:**
 
 Compile & build a single `.mono` file.
+
+**Tests:**
+
+Run `npm test`
