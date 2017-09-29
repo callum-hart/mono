@@ -5,10 +5,6 @@ const mockFile = {
   name: 'mock mono file'
 }
 
-/**
- * TODO:
- * - rule-sets on same line .a{color: red} .b{color: blue} should go on multiple lines
- */
 
 test('Single rule-set formatting', () => {
   mockFile.source = `
@@ -126,6 +122,23 @@ test('Multi-line selectors should be on same line', () => {
 
   expect(Formatter.format(mockFile)).toBe(`h1, h2, h3, h4, h5 {
   color: lightslategray;
+}
+`);
+});
+
+
+test('One rule-set per line', () => {
+  mockFile.source = `
+
+  .show { display: flex }; .hide { display: none };
+
+  `;
+
+  expect(Formatter.format(mockFile)).toBe(`.show {
+  display: flex;
+}
+.hide {
+  display: none;
 }
 `);
 });
@@ -289,7 +302,7 @@ test('Space between notion combinators should be removed', () => {
 });
 
 
-test('Invalid CSS detected (double colon)', () => {
+test('Invalid CSS detected (double colon) should throw CSSException', () => {
   mockFile.source = `
   nav {
     height::80px;
@@ -301,7 +314,7 @@ test('Invalid CSS detected (double colon)', () => {
 });
 
 
-test('Invalid CSS detected (missing semicolon)', () => {
+test('Invalid CSS detected (missing semicolon) should throw CSSException', () => {
   mockFile.source = `
   footer {
     height: 400px

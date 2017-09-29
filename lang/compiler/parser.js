@@ -25,7 +25,7 @@ const run = () => {
       });
     });
   } catch (e) {
-    Log.SOURCE_ERROR(e);
+    Log.PARSER_ERROR(e);
     throw new ParserException('Failed to run parser');
   }
 

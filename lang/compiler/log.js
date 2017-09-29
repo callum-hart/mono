@@ -28,7 +28,7 @@ module.exports = {
     }
   },
   parser: {
-    SOURCE_ERROR: err => {
+    PARSER_ERROR: err => {
       console.log(`[Parser] Error with mono source file \n └─ ${err} `);
     }
   },
