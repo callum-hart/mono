@@ -9,15 +9,47 @@ ul<     immutable    >{
   padding-left<@override>: 0;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 .bar < .foo           {}
 
 p.pow > .foo {
-  color<?overthrow    >: slategrey;
+  color<?overthrow
+
+
+
+
+
+
+
+  >: slategrey;
 }
 
-.foo   {
-  background: red;
-}
+
+
+
+
+
+
+
+
+
+            .foo   {
+
+
+
+        background:: red;}
 
 .hidden {display<protected,     ?overrule>: none;} .shown {display: block;}
 .hidden {display<protected,?overrule>: none;} .shown {display: block;}

@@ -1,4 +1,12 @@
-// todo: decide whether logs should show in tests?
+/**
+ * Todos
+ * - decide whether logs should show in tests
+ * - make logs pretty with chalk
+ * - adding spinners / progress bars to slow logs
+ */
+
+const chalk = require('chalk');
+
 
 module.exports = {
   cli: {
@@ -33,9 +41,18 @@ module.exports = {
     }
   },
   formatter: {
-    INVALID_CSS: (fileName, err) => {
-      console.log(`[Format] Invalid CSS detected in: ${fileName} \n └─ ${err.name}: ${err.loc.start.reason}`);
-      console.log(err.codeFrame);
+    INVALID_CSS: (fileName, monoSource, prettierErr) => {
+      // Line number reported by prettier is after formatting, here we find the
+      // actual line number of the error in the mono source.
+
+      // todo: find actual column in mono source; for an even nicer error message.
+
+      const offendingCode = prettierErr.loc.start.source.split(/\n/)[prettierErr.loc.start.line - 1]; // minus 1 since first line has position 0 in array
+      const actualLineNumber = monoSource.split(/\n/).indexOf(offendingCode) + 1; // plus 1 since index begins at 0, whereas line number begins at 1
+
+      console.log(`\n${chalk.grey(`[Format] Invalid CSS detected in: ${fileName} (line: ${actualLineNumber})`)}`);
+      console.log(`└─ ${prettierErr.name}: ${prettierErr.loc.start.reason}`);
+      console.log(`\n${chalk.red(offendingCode)}\n`);
     }
   }
 };

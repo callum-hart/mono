@@ -31,7 +31,7 @@ const format = ({name, source} = file) => {
   try {
     return formatPrettierOutput(prettier.format(formatMonoNotions(source), { parser: 'postcss'}));
   } catch (e) {
-    Log.INVALID_CSS(name, e);
+    Log.INVALID_CSS(name, source, e);
     throw new CSSException('Invalid CSS detected');
   }
 }

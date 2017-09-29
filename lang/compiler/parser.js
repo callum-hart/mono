@@ -37,35 +37,92 @@ const parse = () => {
 }
 
 const parseFile = file => {
-  /*
-  todo: parse each file, adding to ast:
-  - rule-sets
-      selector
-      styles
-      order (in file)
-  - media queries
-    - breakpoints
-    - order (in file)
-    - rule-sets
-  */
-
   const formattedFile = Formatter.format(file);
 
   console.log(chalk.blue.bold(`\nFormatted file: ${file.name} --------------- \n`));
   console.log(chalk.gray(formattedFile));
 
+  const lexemes = formattedFile.match(/^.*(?= {)/gm);
+
+
+
   /*
-  `preOpenBrace`: anything before opening brace, can be:
-  - selector (must have element type)
+  determine each lexeme type, can be:
+  - selector
+    - must have element type, if not throw ParserException
+  - inferred selector
+    - must have element type, if not throw ParserException
+    - must have be a valid type, if not throw ParserException
+  - grouped selector
+    - each must have element type, if not throw ParserException
   - media query
   - font face
   - key frame
-  */
-  const preOpenBrace = formattedFile.match(/^.*(?= {)/gm);
-  console.log(chalk.blue(`Anything preceding opening brace: --------------- \n`));
-  console.log(preOpenBrace);
 
-  // continue from here...
+  example ast of file:
+
+  [
+    {
+      type: "RULE_SET",
+      selector: "body.main",
+      elementType: "body",
+      specificityScore: ,
+      cascadeOrder: 1,
+      declarations: []
+    },
+    {
+      type: "INFERRED_RULE_SET",
+      selector: "ul<immutable>",
+      elementType: "ul",
+      specificityScore: ,
+      cascadeOrder: 2,
+      inferredType: "immutable",
+      declarations: []
+    },
+    {
+      type: "GROUPED_RULE_SET",
+      selectors: [
+        "div.title",
+        "section.foo > a.bar",
+        "span#label"
+      ],
+      elementTypes: [
+        "div",
+        "a",
+        "span"
+      ],
+      cascadeOrder: 3,
+      specificityScores: [],
+      declarations: []
+    },
+    {
+      type: "MEDIA_QUERY",
+      ruleSets: [
+        {
+          type: "RULE_SET",
+          selector: "p.something",
+          elementType: "p",
+          specificityScore: ,
+          cascadeOrder: 5,
+          declarations: []
+        },
+        {
+          type: "INFERRED_RULE_SET",
+          selector: "h1<protected>",
+          elementType: "h1",
+          specificityScore: ,
+          cascadeOrder: 6,
+          inferredType: "immutable",
+          declarations: []
+        }
+      ]
+    }
+  ]
+  */
+
+  lexemes.forEach(lexeme => {
+    console.log(lexeme);
+  });
 }
 
 module.exports = {

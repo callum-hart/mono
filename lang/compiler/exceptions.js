@@ -1,10 +1,10 @@
-class ParserException {
+class CSSException {
   constructor(message) {
     this.message = message;
   }
 }
 
-class CSSException {
+class ParserException {
   constructor(message) {
     this.message = message;
   }
