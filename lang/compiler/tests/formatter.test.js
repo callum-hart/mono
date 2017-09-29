@@ -1,4 +1,5 @@
 const Formatter = require('../formatter');
+const { CSSException } = require('../exceptions');
 
 const mockFile = {
   name: 'mock mono file'
@@ -6,9 +7,7 @@ const mockFile = {
 
 /**
  * TODO:
- * - rule-sets on same line .a{color: red} .b{color: blue}
- * - tests for CSS errors, ie double colon.
- *   - Formatter should throw appropriate errors (http://facebook.github.io/jest/docs/en/expect.html#tothrowerror)
+ * - rule-sets on same line .a{color: red} .b{color: blue} should go on multiple lines
  */
 
 test('Single rule-set formatting', () => {
@@ -287,4 +286,29 @@ test('Space between notion combinators should be removed', () => {
   pointer-events<immutable,?overrule>: auto;
 }
 `);
+});
+
+
+test('Invalid CSS detected (double colon)', () => {
+  mockFile.source = `
+  nav {
+    height::80px;
+  }
+  `;
+
+  const doubleColon = () => Formatter.format(mockFile);
+  expect(doubleColon).toThrowError(CSSException);
+});
+
+
+test('Invalid CSS detected (missing semicolon)', () => {
+  mockFile.source = `
+  footer {
+    height: 400px
+    width: 100%
+  }
+  `;
+
+  const doubleColon = () => Formatter.format(mockFile);
+  expect(doubleColon).toThrow(CSSException);
 });

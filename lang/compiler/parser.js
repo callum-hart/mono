@@ -5,6 +5,7 @@ const chalk = require('chalk');
 const Log = require('./log').parser;
 const Config = require('./config');
 const Formatter = require('./formatter');
+const { ParserException } = require('./exceptions');
 
 const EXTENSION = '.mono';
 let ast = {
@@ -23,11 +24,12 @@ const run = () => {
         source
       });
     });
-
-    parse();
   } catch (e) {
     Log.SOURCE_ERROR(e);
+    throw new ParserException('Failed to run parser');
   }
+
+  parse();
 }
 
 const parse = () => {

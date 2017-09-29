@@ -9,18 +9,14 @@ const make = () => {
   Config.initialize()
     .then(() => {
       Parser.run();
-    }, () => {
-      console.log('Config.initialize() failed');
-    });
+    }).catch ((e) => {});
 }
 
 const watch = () => {
   Config.initialize()
     .then(() => {
       console.log('cmd: watch');
-    }, () => {
-      console.log('Config.initialize() failed');
-    });
+    }).catch ((e) => {});
 }
 
 switch (Cli.getCmd()) {

@@ -2,14 +2,15 @@ const _ = require('lodash');
 const prettier = require('prettier');
 
 const Log = require('./log').formatter;
+const { CSSException } = require('./exceptions');
 
 /**
  * Transform mono source code into a unified format prior to parsing.
  *
  * Despite support for poor formatting it isn't encouraged. Formatting
  * not only makes parsing easier it also reduces friction for onboarding.
- * The focus [of new users] should be on mono design patterns & language
- * features, not trivial things like indentation & spacing.
+ * The focus of newcomers should be on mono design patterns & language
+ * features; not trivial things like indentation & spacing.
  *
  * The heavy lifting is outsourced to prettier - which formats mono
  * source code as if it were CSS. Since mono includes non-standard
@@ -31,6 +32,7 @@ const format = ({name, source} = file) => {
     return formatPrettierOutput(prettier.format(formatMonoNotions(source), { parser: 'postcss'}));
   } catch (e) {
     Log.INVALID_CSS(name, e);
+    throw new CSSException('Invalid CSS detected');
   }
 }
 
