@@ -47,6 +47,8 @@ module.exports = {
 
       // todo: find actual column in mono source; for an even nicer error message.
 
+      // todo: NOT WORKING - see latest errors in `app.mono`
+
       const offendingCode = prettierErr.loc.start.source.split(/\n/)[prettierErr.loc.start.line - 1]; // minus 1 since first line has position 0 in array
       const actualLineNumber = monoSource.split(/\n/).indexOf(offendingCode) + 1; // plus 1 since index begins at 0, whereas line number begins at 1
 
