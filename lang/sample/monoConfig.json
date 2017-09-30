@@ -1,6 +1,6 @@
 {
   "src": [
-    "src/app",
+    "src/app.mono",
     "src/nav.mono",
     "src/sub_dir/typography"
   ],

@@ -161,6 +161,27 @@ test('Inferred type formatting', () => {
 });
 
 
+// Currently failing: mono notion whitespace in selectors needs removing
+test('Grouped rule-set containing inferred rule-sets', () => {
+  mockFile.source = `
+
+  .spacer {}
+
+  div.eins, span.zwei<    protected   > , #drei {
+    display: flex;
+    align-items: center;
+  }`;
+
+  expect(Formatter.format(mockFile)).toBe(`.spacer {
+}
+div.eins, span.zwei<protected> , #drei {
+  display: flex;
+  align-items: center;
+}
+`);
+});
+
+
 test('Single line mono notion formatting', () => {
   mockFile.source = `
 

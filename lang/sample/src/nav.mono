@@ -5,3 +5,24 @@ nav
   height: 60px;
   background: slategrey;
 }
+
+
+/* rule-sets in comments should be ignored by parser */
+
+/*.foo {
+  color: red;
+}*/
+
+/*
+.bar {
+  color: red;
+  display: block;
+}
+
+.pow {
+  line-height: 20px;
+  font-size: 20px;
+}
+
+
+*/
