@@ -1,3 +1,26 @@
+p.foo, span.bar {
+  line-height<immutable>: 20px;
+}
+
+p.one, span.two<immutable> {
+  line-height<immutable>: 20px;
+}
+
+
+
+p.three<  protected  >, span.two< immutable> {
+  line-height<immutable>: 20px;
+}
+
+
+
+
+
+
+
+
+
+
 body          {
   background: ivory;
 }
@@ -62,11 +85,6 @@ div.title,
 span.label {
   color: cadetblue;
 }
-
-p.foo, span.bar {
-  line-height<immutable>: 20px;
-}
-
 
 div.hey,
 span.hey<protected>,

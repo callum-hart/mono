@@ -4,7 +4,7 @@ Defining the mono AST - WIP.
 
 ## Rule-set
 
-**`geo`**: info about rule-set location. Contains:
+**`geo`**: rule-set location info. Contains:
 - cascadePosition: position of rule-set in the global cascade
 - startLine: line number where rule-set starts
 - endLine: line number where rule-set ends

@@ -86,8 +86,12 @@ const formatPrettierOutput = prettierOutput => {
           // put multi-line selectors on single line
           .replace(/,\n/g, ', ')
 
-          // remove space before & after closing > for rule-set types (spaces added by prettier)
-          .replace(/<(immutable|protected|public)\s>\s*{/g,'<$1> {')
+          // remove space(s) before opening brace
+          .replace(/\s*{/g, '{')
+
+          // remove space before & after closing > for inferred rule-sets & grouped rule-sets
+          // containing inferred rule-set(s) (spaces added by prettier)
+          .replace(/<(immutable|protected|public)\s>\s*/g,'<$1>')
 }
 
 module.exports = { format }

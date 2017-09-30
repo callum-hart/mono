@@ -19,7 +19,7 @@ test('Single rule-set formatting', () => {
 
   line-height: 20px;}`;
 
-  expect(Formatter.format(mockFile)).toBe(`.heading {
+  expect(Formatter.format(mockFile)).toBe(`.heading{
   font-size: 14px;
   font-weight: bold;
   font-familiy: Operator Mono;
@@ -42,16 +42,16 @@ test('Multiple rule-set formatting', () => {
 
   line-height: 20px;}`;
 
-  expect(Formatter.format(mockFile)).toBe(`h1 {
+  expect(Formatter.format(mockFile)).toBe(`h1{
   font-size: 30px;
 }
-h2 {
+h2{
   font-size: 24px;
 }
-h3 {
+h3{
   font-size: 20px;
 }
-.heading {
+.heading{
   font-size: 14px;
   font-weight: bold;
   font-familiy: Operator Mono;
@@ -71,7 +71,7 @@ test('Single space before opening brace', () => {
   }
   `;
 
-  expect(Formatter.format(mockFile)).toBe(`p {
+  expect(Formatter.format(mockFile)).toBe(`p{
   color: darkslategrey;
 }
 `);
@@ -95,13 +95,13 @@ test('Media query formatting', () => {
 
   `;
 
-  expect(Formatter.format(mockFile)).toBe(`@media (min-width: 600px) and (max-width: 900px) {
-  h1 {
+  expect(Formatter.format(mockFile)).toBe(`@media (min-width: 600px) and (max-width: 900px){
+  h1{
     font-size: 24px;
   }
 }
-@media (min-width: 900px) {
-  h1 {
+@media (min-width: 900px){
+  h1{
     font-size: 28px;
   }
 }
@@ -120,7 +120,7 @@ test('Multi-line selectors should be on same line', () => {
     color: lightslategray;
   }`;
 
-  expect(Formatter.format(mockFile)).toBe(`h1, h2, h3, h4, h5 {
+  expect(Formatter.format(mockFile)).toBe(`h1, h2, h3, h4, h5{
   color: lightslategray;
 }
 `);
@@ -134,10 +134,10 @@ test('One rule-set per line', () => {
 
   `;
 
-  expect(Formatter.format(mockFile)).toBe(`.show {
+  expect(Formatter.format(mockFile)).toBe(`.show{
   display: flex;
 }
-.hide {
+.hide{
   display: none;
 }
 `);
@@ -153,7 +153,7 @@ test('Inferred type formatting', () => {
     text-decoration: none;
   }`;
 
-  expect(Formatter.format(mockFile)).toBe(`.link<immutable> {
+  expect(Formatter.format(mockFile)).toBe(`.link<immutable>{
   color: cadetblue;
   text-decoration: none;
 }
@@ -161,7 +161,6 @@ test('Inferred type formatting', () => {
 });
 
 
-// Currently failing: mono notion whitespace in selectors needs removing
 test('Grouped rule-set containing inferred rule-sets', () => {
   mockFile.source = `
 
@@ -172,9 +171,9 @@ test('Grouped rule-set containing inferred rule-sets', () => {
     align-items: center;
   }`;
 
-  expect(Formatter.format(mockFile)).toBe(`.spacer {
+  expect(Formatter.format(mockFile)).toBe(`.spacer{
 }
-div.eins, span.zwei<protected> , #drei {
+div.eins, span.zwei<protected>, #drei{
   display: flex;
   align-items: center;
 }
@@ -190,7 +189,7 @@ test('Single line mono notion formatting', () => {
   }
   `;
 
-  expect(Formatter.format(mockFile)).toBe(`.hidden {
+  expect(Formatter.format(mockFile)).toBe(`.hidden{
   display<immutable>: none;
 }
 `);
@@ -209,7 +208,7 @@ test('Multi-line mono notion formatting', () => {
   }
   `;
 
-  expect(Formatter.format(mockFile)).toBe(`.hidden {
+  expect(Formatter.format(mockFile)).toBe(`.hidden{
   display<immutable>: none;
 }
 `);
@@ -225,7 +224,7 @@ test('Motive with reason', () => {
 
   `;
 
-  expect(Formatter.format(mockFile)).toBe(`.error {
+  expect(Formatter.format(mockFile)).toBe(`.error{
   color<?patch('eng-123456')>: indianred;
 }
 `);
@@ -240,7 +239,7 @@ test('Motive with whitespace in & around reason', () => {
 
   `;
 
-  expect(Formatter.format(mockFile)).toBe(`.error {
+  expect(Formatter.format(mockFile)).toBe(`.error{
   color<?because('make error obvious')>: indianred;
 }
 `);
@@ -262,13 +261,13 @@ test('Child combinators (in selectors) should not affect mono notion detection',
 
   `;
 
-  expect(Formatter.format(mockFile)).toBe(`a.link {
+  expect(Formatter.format(mockFile)).toBe(`a.link{
   color<protected>: deepskyblue;
 }
-div > span {
+div > span{
   display: block;
 }
-a.link:hover {
+a.link:hover{
   color<@override>: dodgerblue;
 }
 `);
@@ -288,10 +287,10 @@ test('Greater/Less than symbols in motives should not affect mono notion detecti
   }
   `;
 
-  expect(Formatter.format(mockFile)).toBe(`section.leftBar {
+  expect(Formatter.format(mockFile)).toBe(`section.leftBar{
   margin-left<?because('align with <...>')>: 20px;
 }
-footer {
+footer{
   background-color<immutable>: olivedrab;
   border-top<immutable>: darkolivegreen;
 }
@@ -314,7 +313,7 @@ test('Space between notion combinators should be removed', () => {
   }
   `;
 
-  expect(Formatter.format(mockFile)).toBe(`.toastMessage.showing {
+  expect(Formatter.format(mockFile)).toBe(`.toastMessage.showing{
   opacity<immutable,?overrule>: 1;
   visibility<immutable,?overrule>: visible;
   pointer-events<immutable,?overrule>: auto;
