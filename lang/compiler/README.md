@@ -4,7 +4,7 @@
 
 **Initial Goal:**
 
-Compile & build a single `.mono` file.
+Compile & build a mono project with `mono make`
 
 **Tests:**
 

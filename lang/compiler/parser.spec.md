@@ -1,6 +1,6 @@
 # Parser
 
-Defining the mono AST - WIP.
+Defining requirements for mono AST - WIP
 
 ## Rule-set
 
@@ -19,7 +19,7 @@ Defining the mono AST - WIP.
 - *rawSelector*: the selector i.e: `span.icon`
 - *specificityScore*: selectors specificity strength.
   - used for cases involving illegal overrides, this helps determine which rule-set is overriding the other.
-- *elementType:* type of HTML element the selector targets.
+- *elementType:* type of HTML element the selector targets i.e: `span`
 - *inferredType*: Used by INFERRED_RULE_SET. Contains type inferred by the rule-set i.e: `immutable`
 
 **`selectors`**: Used by GROUPED_RULE_SET. Array containing each {selector}
@@ -47,7 +47,7 @@ Defining the mono AST - WIP.
 
 **`ruleSets`**: array containing each {rule-set}
 
-### Comment
+## Comment
 
 **`geo`**: comment location info. Contains:
 - *startLine*: line number where rule-set starts
