@@ -1,8 +1,3 @@
-const _ = require('lodash');
-const prettier = require('prettier');
-
-const Log = require('./log').formatter;
-const { CSSException } = require('./exceptions');
 
 /**
  * Transform mono source code into a unified format prior to parsing.
@@ -15,7 +10,17 @@ const { CSSException } = require('./exceptions');
  * The heavy lifting is outsourced to prettier - which formats mono
  * source code as if it were CSS. Since mono includes non-standard
  * syntax custom formatting is required before & after prettier.
+ *
+ * Under the hood prettier uses postcss which provides CSS validation
+ * for free.
  */
+
+
+const _ = require('lodash');
+const prettier = require('prettier');
+
+const Log = require('./log').formatter;
+const { CSSException } = require('./exceptions');
 
 
 /**

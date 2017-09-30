@@ -2,7 +2,7 @@ nav
 
 {
   display: flex;
-  height: 60px;
+  height: 60px;  /* inlined comment */
   background: slategrey;
 }
 
@@ -12,6 +12,14 @@ nav
 /*.foo {
   color: red;
 }*/
+
+
+            /*     in line comment with spacing       */
+
+
+.foo {
+  color: red;
+}
 
 /*
 .bar {

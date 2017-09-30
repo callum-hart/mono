@@ -57,6 +57,20 @@
     {
       line: 6
     }
+  ],
+  [
+    'MEDIA_QUERY',
+    '@media (min-width: 300px) and (max-width: 600px)',
+    {
+      line: 7
+    }
+  ],
+  [
+    'OPEN_BRACE',
+    '{',
+    {
+      line: 7
+    }
   ]
 ]
 ```

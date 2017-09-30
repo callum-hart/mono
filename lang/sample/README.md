@@ -5,8 +5,8 @@ This is a sample mono project.
 ```
 .
 ├── monoConfig.json: contains project config
-├── src: contains mono source files
-└── dest: location where mono should compile to
+├── src: location of mono source files
+└── dest: location where mono compiles to
 
 ```
 

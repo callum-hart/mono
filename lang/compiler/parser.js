@@ -41,6 +41,7 @@ const parseFile = file => {
   const formattedFile = Formatter.format(file);
 
   console.log(chalk.blue.bold(`Formatted file: ${file.name} --------------- \n`));
+  console.log(chalk.grey(formattedFile));
   const tokens = Lexer.tokenize(formattedFile);
 
   // while (tokens.present()) {

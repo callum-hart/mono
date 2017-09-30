@@ -1,3 +1,14 @@
+@media (min-width:900px)  {
+  .somethingElse {
+    display: block;
+  }
+
+  .andAnother {
+    height: auto;
+  }
+}
+
+
 p.foo, span.bar {
   line-height<immutable>: 20px;
 }
