@@ -100,7 +100,15 @@ const getToken = (value, pos) => {
   // now handle lines containing multiple tokens --
 
   if (isMediaQuery(value)) {
-    return mediaQuery(pos, value);
+    return atRule(pos, MEDIA_QUERY, value);
+  }
+
+  if (isKeyFrame(value)) {
+    return atRule(pos, KEYFRAME, value);
+  }
+
+  if (isFontFace(value)) {
+    return atRule(pos, FONT_FACE, value);
   }
 }
 
@@ -127,13 +135,19 @@ const justInlineComment = value => {
 }
 
 const isMediaQuery = value => {
-  // line is a @media rule i.e: `@media (min-width: 300px){`
+  // line is a @media at-rule i.e: `@media (min-width: 300px){`
   return value.match(/^@media.*{$/);
 }
 
-const isKeyFrame = value => {}
+const isKeyFrame = value => {
+  // line is a @keyframes at-rule i.e: `@keyframes bounce {`
+  return value.match(/^@keyframes.*{$/);
+}
 
-const isFontFace = value => {}
+const isFontFace = value => {
+  // line is a @font-face at-rule i.e: `@font-face {`
+  return value.match(/^@font-face.*{$/);
+}
 
 
 // Tokens --
@@ -179,23 +193,29 @@ const inlineComment = (pos, comment) => {
 }
 
 /**
- * Get tokens for a given media query, which consist of 2 tokens:
+ * Get tokens for a given at-rule. Can be:
+ * - `@media`
+ * - `@keyframe`
+ * - `@font-face`
  *
- * 1. the first being the media query i.e: `@media (min-width: 300px)`
+ * An at-rule consists of 2 tokens:
+ *
+ * 1. the first being the rule i.e: `@keyframes bounce`
  * 2. the second being its opening brace i.e: `{`
  *
- * @param  {Number} pos        - index of current line in file
- * @param  {String} mediaQuery - fully qualified media query (including its open brace)
- * @return {Array}             - 2 tokens
+ * @param  {Number} pos   - index of current line in file
+ * @param  {String} type  - type of at-rule
+ * @param  {String} value - fully qualified at-rule (including its open brace)
+ * @return {Array}        - 2 tokens
  */
-const mediaQuery = (pos, mediaQuery) => {
+const atRule = (pos, type, value) => {
   const tokens = new Array();
   tokens.plural = true;
 
   tokens.push(
     [
-      MEDIA_QUERY,
-      mediaQuery.replace(/{/, ''),
+      type,
+      value.replace(/{/, ''),
       {
         line: pos + 1
       }
@@ -205,7 +225,7 @@ const mediaQuery = (pos, mediaQuery) => {
       '{',
       {
         line: pos + 1,
-        col: mediaQuery.indexOf('{') + 1
+        col: value.indexOf('{') + 1
       }
     ]
   );
