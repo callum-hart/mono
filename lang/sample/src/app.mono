@@ -1,3 +1,6 @@
+@charset "UTF-8";
+
+
 @media (min-width:900px)  {
   .somethingElse {
     display: block;
