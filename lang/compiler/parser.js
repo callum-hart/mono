@@ -4,7 +4,6 @@ const chalk = require('chalk');
 
 const Log = require('./log').parser;
 const Config = require('./config');
-const Formatter = require('./formatter');
 const Lexer = require('./lexer');
 const { ParserException } = require('./exceptions');
 
@@ -38,13 +37,9 @@ const parse = () => {
 }
 
 const parseFile = file => {
-  const formattedFile = Formatter.format(file);
+  const tokens = Lexer.tokenize(file);
 
-  console.log(chalk.blue.bold(`Formatted file: ${file.name} --------------- \n`));
-  console.log(chalk.grey(formattedFile));
-  const tokens = Lexer.tokenize(formattedFile);
-
-  // while (tokens.present()) {
+  // while (tokens.available()) {
   //   // const token = tokens.next();
   //   // switch (token[0]) {}
   // }
