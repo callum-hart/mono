@@ -88,15 +88,28 @@ const formatPrettierOutput = prettierOutput => {
           // remove empty lines
           .replace(/^\s*\n/gm, '')
 
+          // todo: put multi-line declarations on 1 line i.e:
+          // `filter: progid:DXImageTransform.Microsoft.gradient(
+          //     startColorstr="#000000",
+          //     endColorstr="#ffffff",
+          //     GradientType=0
+          //   );`
+          // should become:
+          // `filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#ffffff",GradientType=0);`
+          // regex: /\((?!\);)[^{<>/;]+\);/g
+
           // put multi-line selectors on single line
-          .replace(/,\n/g, ', ')
+          // .replace(/,\n/g, ', ')
+          // 👆this messes with the formatting of mult-line declarations.
+          // todo: update regex to select any newline following a comma that's before an open brace.
 
           // remove space(s) before opening brace
           .replace(/\s*{/g, '{')
 
           // remove space before & after closing > for inferred rule-sets & grouped rule-sets
           // containing inferred rule-set(s) (spaces added by prettier)
-          .replace(/<(immutable|protected|public)\s>\s*/g,'<$1>')
+          .replace(/<(\s*[^\n]+)\s>\s*/g,'<$1>')
+
 }
 
 module.exports = { format }

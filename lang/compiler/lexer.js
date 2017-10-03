@@ -120,6 +120,8 @@ const getToken = (value, pos) => {
     return declaration(pos, value);
   }
 
+  // todo: selectors (SINGLE_SELECTOR, MULTI_SELECTOR etc...)
+
   // todo: looks like formatter is appending empty line to each file.
   if (value === '') {
     console.log('EMPTY VALUE');
@@ -170,7 +172,7 @@ const isCharSet = value => {
 
 const isDeclaration = value => {
   // line is a CSS declaration i.e: `background-color: rgba(0,0,0,.1);`
-  return value.match(/[a-zA-Z]\s*[^\n]+\s*;/);
+  return value.match(/.\S*[^\n]+\s*;/);
 }
 
 
@@ -277,7 +279,7 @@ const atRule = (pos, type, value) => {
 const declaration = (pos, declaration) => {
   return [
     DECLARATION,
-    declaration,
+    declaration.trim(),
     {
       line: pos + 1
     }
