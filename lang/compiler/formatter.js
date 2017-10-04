@@ -88,20 +88,27 @@ const formatPrettierOutput = prettierOutput => {
           // remove empty lines
           .replace(/^\s*\n/gm, '')
 
-          // todo: put multi-line declarations on 1 line i.e:
-          // `filter: progid:DXImageTransform.Microsoft.gradient(
+          // put multi-line declarations onto single line i.e:
+          //
+          // filter: progid:DXImageTransform.Microsoft.gradient(
           //     startColorstr="#000000",
           //     endColorstr="#ffffff",
           //     GradientType=0
-          //   );`
-          // should become:
-          // `filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#ffffff",GradientType=0);`
-          // regex: /\((?!\);)[^{<>/;]+\);/g
+          //   );
+          //
+          // should become: filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#ffffff",GradientType=0);
+          //
+          // transition: color .3s ease-in,
+          //    background-color .3s ease-in,
+          //    transform .4s cubic-bezier(.17,.67,.83,.67),
+          //    height .3s ease-in;
+          //
+          // should become: color 0.3s ease-in, background-color 0.3s ease-in, transform 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67), height 0.3s ease-in;
+          .replace(/\:(?!;)[^{<>/;]+/g, match => match.replace(/\n|^\s+/gm, ''))
 
-          // put multi-line selectors on single line
+          // put multi-line selectors on single line, must follow multi-line declaration regex
+          // is this even worthwhile?
           // .replace(/,\n/g, ', ')
-          // 👆this messes with the formatting of mult-line declarations.
-          // todo: update regex to select any newline following a comma that's before an open brace.
 
           // remove space(s) before opening brace
           .replace(/\s*{/g, '{')
