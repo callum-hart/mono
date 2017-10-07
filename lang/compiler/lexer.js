@@ -2,18 +2,23 @@
 /**
  * Convert mono source into parser friendly tokens.
  *
- * A single token has the following shape:
- *
- * [
- *   type,
- *   value,
- *   locationInformation
- * ]
- *
  * It should be noted that pre-tokenization mono source is transformed
  * to a unified format. This allows us to safely assume the structure
  * of all mono source files are identical & contain valid CSS, enabling
  * easier & faster tokenization.
+ *
+ * A single token has the following shape:
+ *
+ * [
+ *   tokenType*,
+ *   tokenValue*,
+ *   locationData*,
+ *   notionData
+ * ]
+ *
+ * locationData: has the shape: [ line*, col ]
+ * notionData: (if present) has the shape: [ type, modifier, motive ]
+ *
  */
 
 const chalk = require('chalk'); // temp
@@ -23,28 +28,24 @@ const Formatter = require('./formatter');
 
 // token types
 
-const SINGLE_SELECTOR         = 'SINGLE_SELECTOR';   // body
-const MULTI_SELECTOR          = 'MULTI_SELECTOR';    // body, html
-const INFERRED_SELECTOR       = 'INFERRED_SELECTOR'; // h1.heading<immutable>
-const MULTI_INFERRED_SELECTOR = 'INFERRED_SELECTOR'; // h1<immutable>, h2<> || `h1, h2<protected>, h3`
-const ESCAPED_SELECTOR        = 'ESCAPED_SELECTOR';  // button.\*btn
-const BRACE_OPEN              = 'BRACE_OPEN';        // {
-const BRACE_CLOSE             = 'BRACE_CLOSE';       // }
-const MEDIA_QUERY             = 'MEDIA_QUERY';       // @media (min-width: 300px) and (max-width: 600px)
-const KEYFRAME                = 'KEYFRAME';          // @keyframes
-const FONT_FACE               = 'FONT_FACE';         // @font-face
-const CHARSET                 = 'CHARSET';           // @charset
-const COMMENT_OPEN            = 'COMMENT_OPEN';      // /*
-const COMMENT_CLOSE           = 'COMMENT_CLOSE';     // */
-const COMMENT                 = 'COMMENT';           // /* a comment */
-const DECLARATION             = 'DECLARATION';       // property: value || property<immutable>: value || property<public,?patch('ENG-123')>: value
-const LITERAL                 = 'LITERAL';           // most likey a comment
+const BRACE_OPEN              = 'BRACE_OPEN';    // {
+const BRACE_CLOSE             = 'BRACE_CLOSE';   // }
+const COMMENT_OPEN            = 'COMMENT_OPEN';  // /*
+const COMMENT_CLOSE           = 'COMMENT_CLOSE'; // */
+const COMMENT                 = 'COMMENT';       // /* a comment */
+const MEDIA_QUERY             = 'MEDIA_QUERY';   // @media (min-width: 300px) and (max-width: 600px)
+const KEYFRAME                = 'KEYFRAME';      // @keyframes
+const FONT_FACE               = 'FONT_FACE';     // @font-face
+const CHARSET                 = 'CHARSET';       // @charset
+const DECLARATION             = 'DECLARATION';   // property: value || property<immutable>: value || property<public,?patch('ENG-123')>: value
+const SELECTOR                = 'SELECTOR';      // a.link
+const LITERAL                 = 'LITERAL';       // most likey a comment
 
 
 const tokenize = file => {
   const formattedFile = Formatter.format(file);
 
-  console.log(chalk.blue.bold(`Formatted file: ${file.name} --------------- \n`));
+  console.log(chalk.blue.bold(`\nFormatted file: ${file.name} --------------- \n`));
   console.log(chalk.grey(formattedFile));
 
   let tokens = [];
@@ -55,29 +56,23 @@ const tokenize = file => {
     const token = getToken(lines[pos], pos);
 
     if (token) {
-      console.log('token:');
-      console.log(token);
-
       if (token.plural) {
         tokens.push(...token);
       } else {
         tokens.push(token);
       }
     } else {
-      console.log('token: in progress');
+      // console.log(`token for '${lines[pos]}' needed`);
     }
 
     pos++;
   }
 
-  console.log('\ntokens:\n')
-  console.log(tokens);
+  // console.log('\ntokens:\n')
+  // console.log(tokens);
 }
 
 const getToken = (value, pos) => {
-  console.log(`\nvalue: ${value}`);
-  console.log(`line: ${pos + 1}`);
-
 
   // start with the easy stuff, lines composed of a single token --
 
@@ -120,11 +115,9 @@ const getToken = (value, pos) => {
     return declaration(pos, value);
   }
 
-  // todo: selectors (SINGLE_SELECTOR, MULTI_SELECTOR etc...)
-
   // todo: looks like formatter is appending empty line to each file.
   if (value === '') {
-    console.log('EMPTY VALUE');
+    // console.log('EMPTY VALUE');
   }
 }
 
@@ -182,9 +175,7 @@ const closingBrace = pos => {
   return [
     BRACE_CLOSE,
     '}',
-    {
-      line: pos + 1
-    }
+    [ pos + 1 ]
   ];
 }
 
@@ -192,9 +183,7 @@ const openingComment = pos => {
   return [
     COMMENT_OPEN,
     '/*',
-    {
-      line: pos + 1
-    }
+    [ pos + 1 ]
   ];
 }
 
@@ -202,9 +191,7 @@ const closingComment = pos => {
   return [
     COMMENT_CLOSE,
     '*/',
-    {
-      line: pos + 1
-    }
+    [ pos + 1 ]
   ];
 }
 
@@ -212,9 +199,7 @@ const comment = (pos, comment) => {
   return [
     COMMENT,
     comment,
-    {
-      line: pos + 1
-    }
+    [ pos + 1 ]
   ];
 }
 
@@ -238,16 +223,13 @@ const comment = (pos, comment) => {
  */
 const atRule = (pos, type, value) => {
   const tokens = new Array();
-  const line = pos + 1;
 
   switch (type) {
     case CHARSET:
       tokens.push(
         CHARSET,
         value,
-        {
-          line
-        }
+        [ pos + 1 ]
       );
       break;
     default:
@@ -257,17 +239,15 @@ const atRule = (pos, type, value) => {
         [
           type,
           value.replace(/{/, ''),
-          {
-            line
-          }
+          [ pos + 1 ]
         ],
         [
           BRACE_OPEN,
           '{',
-          {
-            line,
-            col: value.indexOf('{') + 1
-          }
+          [
+            pos + 1,
+            value.indexOf('{') + 1
+          ]
         ]
       );
       break;
@@ -276,14 +256,48 @@ const atRule = (pos, type, value) => {
   return tokens;
 }
 
-const declaration = (pos, declaration) => {
+const declaration = (pos, value) => {
+  const declaration = value.trim();
+
+  // until first colon
+  const property = declaration.match(/.+?(?=:)/)[0];
+  extractMonoNotion(property);
+
   return [
     DECLARATION,
-    declaration.trim(),
-    {
-      line: pos + 1
-    }
+    declaration,
+    [ pos + 1 ],
+    // extractMonoNotion(property)
   ];
+}
+
+// take a string (declaration or inferred selector) & return notionData
+const extractMonoNotion = string => {
+  // anything within crocodiles <>
+  const notion = string.match(/<.+>/);
+
+  if (notion) {
+    console.log(`extract notion(s) from: '${string}' :`);
+
+    // notion can be plural.
+    const notions = notion[0]
+                      // remove crocodiles <>
+                      .replace(/^\<|\>$/g, '')
+
+                      // replace any comma not within single or double quotes with a guinea pig delimiter
+                      .replace(/,(?=(?:[^'"]*(['"])[^'"]*\1)*[^'"]*$)/, '🐹')
+                      .split('🐹');
+
+    notions.forEach(notion => {
+      identifyMonoNotion(notion);
+    });
+
+    console.log('\n-------------------------\n');
+  }
+}
+
+const identifyMonoNotion = prospect => {
+  console.log(` - ${prospect}`);
 }
 
 module.exports = { tokenize }

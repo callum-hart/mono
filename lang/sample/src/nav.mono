@@ -2,7 +2,7 @@ nav
 
 {
   display: flex;
-  height: 60px;  /* inlined comment */
+  height: 60px /* inlined comment */ ;
   background: slategrey;
 }
 
@@ -18,7 +18,7 @@ nav
 
 
 .foo {
-  color: red;
+  color<immutable>: red;
 }
 
 /*

@@ -72,7 +72,7 @@ const formatMonoNotions = styles => {
  */
 const formatMonoNotion = rawNotion => {
   // remove whitespace not within single or double quotes
-  return rawNotion.replace(/\s+(?=([^\'"]*[\'"][^\'"]*[\'"])*[^\'"]*$)/g, '');
+  return rawNotion.replace(/\s+(?=(?:[^'"]*(['"])[^'"]*\1)*[^'"]*$)/g, '');
 }
 
 /**

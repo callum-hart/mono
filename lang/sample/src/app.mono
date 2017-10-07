@@ -115,14 +115,18 @@ p.pow > .foo {
 .visible {visibility: visible;} #invisible {visibility: hidden;}
 
 div.title,
-span.label {
+    span.label {
   color: cadetblue;
 }
 
 div.hey,
 span.hey<protected>,
 p.hey {
-  color<?motive('ENG-12345d djdjdd')      >: cadetblue;
+  color<?motive('ENG-12345d djdjdd')
+
+
+
+     >: cadetblue;
 }
 
 @media (min-width:300px) and (max-width:600px) {
@@ -138,7 +142,7 @@ p.hey {
 .combinatorWithSpace {
   color<protected, ?overrule>: blue;
   font-size<public,?because('some reason')>: 12px;
-  font-size<    public,   ?because('ANOTHER REASON FOR USAGE')
+  font-size<    public,   ?because('ANOTHER REASON, FOR USAGE')
 
 
 
@@ -209,4 +213,5 @@ p.hey {
             transform .4s cubic-bezier(.17,.67,.83,.67),
             height .3s ease-in,
             width .3s ease-in-out;
+  background-image: url(data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7);
 }
