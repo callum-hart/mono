@@ -88,26 +88,10 @@ const formatPrettierOutput = prettierOutput => {
           // remove empty lines
           .replace(/^\s*\n/gm, '')
 
-          // put multi-line declarations onto single line i.e:
-          //
-          // filter: progid:DXImageTransform.Microsoft.gradient(
-          //     startColorstr="#000000",
-          //     endColorstr="#ffffff",
-          //     GradientType=0
-          //   );
-          //
-          // should become: filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#000000",endColorstr="#ffffff",GradientType=0);
-          //
-          // transition: color .3s ease-in,
-          //    background-color .3s ease-in,
-          //    transform .4s cubic-bezier(.17,.67,.83,.67),
-          //    height .3s ease-in;
-          //
-          // should become: color 0.3s ease-in, background-color 0.3s ease-in, transform 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67), height 0.3s ease-in;
-          .replace(/\:(?!;)[^{<>/;]+/g, match => match.replace(/\n|^\s+/gm, ''))
+          // put multi-line declarations onto single line
+          .replace(/\(\n\s+|,\n\s+|\s+(?=\);)/gm, match => match.replace(/\s+/gm, ''))
 
-          // put multi-line selectors on single line, must follow multi-line declaration regex
-          // is this even worthwhile?
+          // put multi-line selectors on single line, is this is even worthwhile?
           // .replace(/,\n/g, ', ')
 
           // remove space(s) before opening brace
