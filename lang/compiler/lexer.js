@@ -271,7 +271,7 @@ const declaration = (pos, value) => {
   ];
 }
 
-// take a string (declaration or inferred selector) & return notionData
+// take a string (CSS property or inferred selector) & return notionData
 const extractMonoNotion = string => {
   // anything within crocodiles <>
   const notion = string.match(/<.+>/);
@@ -288,16 +288,80 @@ const extractMonoNotion = string => {
                       .replace(/,(?=(?:[^'"]*(['"])[^'"]*\1)*[^'"]*$)/, '🐹')
                       .split('🐹');
 
-    notions.forEach(notion => {
-      identifyMonoNotion(notion);
-    });
-
+    notions.forEach(notion => identifyMonoNotion(notion));
     console.log('\n-------------------------\n');
   }
 }
 
 const identifyMonoNotion = prospect => {
-  console.log(` - ${prospect}`);
+  switch (prospect.charAt(0)) {
+    case '@':
+      isModidier(prospect);
+      break;
+    case '?':
+      isMotive(prospect);
+      break;
+    default:
+      isType(prospect);
+      break;
+  }
+}
+
+const isModidier = prospect => {
+  switch (prospect) {
+    case '@override':
+      console.log('OVERRIDE');
+      break;
+    case '@mutate':
+      console.log('MUTATE');
+      break;
+    default:
+      console.log(chalk.red(`'${prospect}' is not a valid modifier`));
+      break;
+  }
+}
+
+const isMotive = prospect => {
+  switch (prospect.match(/\?\w+/)[0]) {
+    case '?overrule':
+      console.log('OVERRULE');
+      break;
+    case '?overthrow':
+      console.log('OVERTHROW');
+      break;
+    case '?veto':
+      console.log('VETO');
+      break;
+    case '?fallback':
+      console.log('FALLBACK');
+      break;
+    case '?because':
+      console.log('BECAUSE');
+      break;
+    case '?patch':
+      console.log('PATCH');
+      break;
+    default:
+      console.log(chalk.red(`'${prospect}' is not a valid motive`));
+      break;
+  }
+}
+
+const isType = prospect => {
+  switch (prospect) {
+    case 'immutable':
+      console.log('IMMUTABLE');
+      break;
+    case 'protected':
+      console.log('PROTECTED');
+      break;
+    case 'public':
+      console.log('PUBLIC');
+      break;
+    default:
+      console.log(chalk.red(`'${prospect}' is not a valid type`));
+      break;
+  }
 }
 
 module.exports = { tokenize }
