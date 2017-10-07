@@ -167,7 +167,7 @@ p.hey {
   float: left;
 }
 
-/* lexer should throw error for invalid types, modifiers & motives */
+/* lexer should throw error for invalid types, modifiers & motives          */
 .invalidInferredRuleSet<        foo
 
    > {

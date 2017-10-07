@@ -36,7 +36,7 @@ const FONT_FACE               = 'FONT_FACE';         // @font-face
 const CHARSET                 = 'CHARSET';           // @charset
 const COMMENT_OPEN            = 'COMMENT_OPEN';      // /*
 const COMMENT_CLOSE           = 'COMMENT_CLOSE';     // */
-const INLINE_COMMENT          = 'INLINE_COMMENT';    // /* an inline comment */
+const COMMENT                 = 'COMMENT';           // /* a comment */
 const DECLARATION             = 'DECLARATION';       // property: value || property<immutable>: value || property<public,?patch('ENG-123')>: value
 const LITERAL                 = 'LITERAL';           // most likey a comment
 
@@ -93,8 +93,8 @@ const getToken = (value, pos) => {
     return closingComment(pos);
   }
 
-  if (justInlineComment(value)) {
-    return inlineComment(pos, value);
+  if (justComment(value)) {
+    return comment(pos, value);
   }
 
 
@@ -145,9 +145,9 @@ const justClosingComment = value => {
   return value.match(/^\*\/$/);
 }
 
-const justInlineComment = value => {
+const justComment = value => {
   // line only contains a comment i.e: `/* line is a just a comment */`
-  return value.match(/^\/\*.*\*\/$/);
+  return value.match(/^\/\*.*\*\/$|^\s+\/\*.*\*\/$/);
 }
 
 const isMediaQuery = value => {
@@ -208,9 +208,9 @@ const closingComment = pos => {
   ];
 }
 
-const inlineComment = (pos, comment) => {
+const comment = (pos, comment) => {
   return [
-    INLINE_COMMENT,
+    COMMENT,
     comment,
     {
       line: pos + 1
