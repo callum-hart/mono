@@ -17,7 +17,7 @@
  * ]
  *
  * locationData: has the shape: [ line*, col ]
- * notionData: (if present) has the shape: [ type, modifier, motive ]
+ * notionData: (if any notions present) has the shape: [ type, modifier, motive ]
  *
  */
 
@@ -40,6 +40,24 @@ const CHARSET                 = 'CHARSET';       // @charset
 const DECLARATION             = 'DECLARATION';   // property: value || property<immutable>: value || property<public,?patch('ENG-123')>: value
 const SELECTOR                = 'SELECTOR';      // a.link
 const LITERAL                 = 'LITERAL';       // most likey a comment
+
+// mono notions
+
+const IMMUTABLE               = 'IMMUTABLE';
+const PROTECTED               = 'PROTECTED';
+const PUBLIC                  = 'PUBLIC';
+
+const MODIFIER_PREFIX         = '@';
+const OVERRIDE                = 'OVERRIDE';
+const MUTATE                  = 'MUTATE';
+
+const MOTIVE_PREFIX           = '?';
+const OVERRULE                = 'OVERRULE';
+const OVERTHROW               = 'OVERTHROW';
+const VETO                    = 'VETO';
+const FALLBACK                = 'FALLBACK';
+const BECAUSE                 = 'BECAUSE';
+const PATCH                   = 'PATCH';
 
 
 const tokenize = file => {
@@ -261,13 +279,23 @@ const declaration = (pos, value) => {
 
   // until first colon
   const property = declaration.match(/.+?(?=:)/)[0];
-  extractMonoNotion(property);
+  let notionData;
+
+  try {
+    notionData = extractMonoNotion(property);
+  } catch (e) {
+    console.log(chalk.red(e.message));
+    throw new Error(); // NotionError
+  }
+
+  console.log(`notionData: ${notionData}`);
+  console.log('\n-------------------------\n');
 
   return [
     DECLARATION,
     declaration,
     [ pos + 1 ],
-    // extractMonoNotion(property)
+    notionData
   ];
 }
 
@@ -275,92 +303,101 @@ const declaration = (pos, value) => {
 const extractMonoNotion = string => {
   // anything within crocodiles <>
   const notion = string.match(/<.+>/);
+  console.log(`extract notions (if any) from: '${string}'\n`);
 
   if (notion) {
-    console.log(`extract notion(s) from: '${string}' :`);
+    const notionData = new Array(3);
 
     // notion can be plural.
     const notions = notion[0]
                       // remove crocodiles <>
                       .replace(/^\<|\>$/g, '')
 
-                      // replace any comma not within single or double quotes with a guinea pig delimiter
+                      // replace any comma not within single or double quotes with a delimiter for splitting
                       .replace(/,(?=(?:[^'"]*(['"])[^'"]*\1)*[^'"]*$)/, '🐹')
                       .split('🐹');
 
-    notions.forEach(notion => identifyMonoNotion(notion));
-    console.log('\n-------------------------\n');
+    notions.forEach(prospect => {
+      const notion = getNotionIfValid(prospect);
+
+      switch (notion) {
+        case IMMUTABLE:
+        case PROTECTED:
+        case PUBLIC:
+          notionData[0] = notion;
+          break;
+        case OVERRIDE:
+        case MUTATE:
+          notionData[1] = notion;
+          break;
+        case OVERRULE:
+        case OVERTHROW:
+        case VETO:
+        case FALLBACK:
+        case BECAUSE:
+        case PATCH:
+          notionData[2] = notion;
+          break;
+        default:
+          break;
+      }
+    });
+
+    return notionData;
   }
 }
 
-const identifyMonoNotion = prospect => {
+const getNotionIfValid = prospect => {
   switch (prospect.charAt(0)) {
-    case '@':
-      isModidier(prospect);
-      break;
-    case '?':
-      isMotive(prospect);
-      break;
+    case MODIFIER_PREFIX:
+      return getModidier(prospect);
+    case MOTIVE_PREFIX:
+      return getMotive(prospect);
     default:
-      isType(prospect);
-      break;
+      return getType(prospect);
   }
 }
 
-const isModidier = prospect => {
+const getModidier = prospect => {
   switch (prospect) {
-    case '@override':
-      console.log('OVERRIDE');
-      break;
-    case '@mutate':
-      console.log('MUTATE');
-      break;
+    case `${MODIFIER_PREFIX}override`:
+      return OVERRIDE;
+    case `${MODIFIER_PREFIX}mutate`:
+      return MUTATE;
     default:
-      console.log(chalk.red(`'${prospect}' is not a valid modifier`));
-      break;
+      throw new Error(`'${prospect}' is not a valid modifier`); // ModidierError
   }
 }
 
-const isMotive = prospect => {
+const getMotive = prospect => {
   switch (prospect.match(/\?\w+/)[0]) {
-    case '?overrule':
-      console.log('OVERRULE');
-      break;
-    case '?overthrow':
-      console.log('OVERTHROW');
-      break;
-    case '?veto':
-      console.log('VETO');
-      break;
-    case '?fallback':
-      console.log('FALLBACK');
-      break;
-    case '?because':
-      console.log('BECAUSE');
-      break;
-    case '?patch':
-      console.log('PATCH');
-      break;
+    case `${MOTIVE_PREFIX}overrule`:
+      return OVERRULE;
+    case `${MOTIVE_PREFIX}overthrow`:
+      return OVERTHROW;
+    case `${MOTIVE_PREFIX}veto`:
+      return VETO;
+    case `${MOTIVE_PREFIX}fallback`:
+      return FALLBACK;
+    case `${MOTIVE_PREFIX}because`:
+      return BECAUSE;
+    case `${MOTIVE_PREFIX}patch`:
+      return PATCH;
     default:
-      console.log(chalk.red(`'${prospect}' is not a valid motive`));
-      break;
+      throw new Error(`'${prospect}' is not a valid motive`); // MotiveError
   }
 }
 
-const isType = prospect => {
+const getType = prospect => {
   switch (prospect) {
     case 'immutable':
-      console.log('IMMUTABLE');
-      break;
+      return IMMUTABLE;
     case 'protected':
-      console.log('PROTECTED');
-      break;
+      return PROTECTED;
     case 'public':
-      console.log('PUBLIC');
-      break;
+      return PUBLIC;
     default:
-      console.log(chalk.red(`'${prospect}' is not a valid type`));
-      break;
+      throw new Error(`'${prospect}' is not a valid type`); // TypeError
   }
 }
 
