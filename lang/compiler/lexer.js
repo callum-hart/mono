@@ -61,8 +61,10 @@ const FALLBACK                = 'FALLBACK';
 const BECAUSE                 = 'BECAUSE';
 const PATCH                   = 'PATCH';
 
+let currentFile;
 
 const tokenize = file => {
+  currentFile = file;
   const formattedFile = Formatter.format(file);
 
   console.log(chalk.blue.bold(`\nFormatted file: ${file.name} --------------- \n`));
@@ -279,33 +281,16 @@ const atRule = (pos, type, value) => {
 const declaration = (pos, value) => {
   try {
     const declaration = value.trim();
-
     // until first colon
     const property = declaration.match(/.+?(?=:)/)[0];
-    const notionData = extractMonoNotion(property);
-
-    console.log(`notionData: ${notionData}`);
-    console.log('\n-------------------------\n');
 
     return [
       DECLARATION,
       declaration,
       [ pos + 1 ],
-      notionData
+      extractMonoNotion(property)
     ];
   } catch (e) {
-    switch (e.constructor) {
-      case TypeException:
-        Log.INVALID_TYPE('todo.mono', pos + 1, value, e.message);
-        break;
-      case ModifierException:
-        Log.INVALID_MODIFIER('todo.mono', pos + 1, value, e.message);
-        break;
-      case MotiveException:
-        Log.INVALID_MOTIVE('todo.mono', pos + 1, value, e.message);
-        break;
-    }
-
     throw new Error(e.message);
   }
 }
@@ -330,21 +315,6 @@ const extractMonoNotion = string => {
 
     notions.forEach(prospect => {
       const notionType = getNotionIfValid(prospect);
-
-      // todo: represent each notion as a class?
-      // Notion
-      //  type (byte representation)
-      //  value
-      // Type extends Notion
-      //  value: immutable, protected, public
-      //  type: IMMUTABLE, PROTECTED, PUBLIC
-      // Modifier extends Notion
-      //  value: @override, @mutate
-      //  type: OVERRIDE, MUTATE
-      // Motive extends Notion
-      //  value: ?overrule, ?overthrow, ?patch('eng-123456')
-      //  type: OVERRULE, OVERTHROW, PATCH etc...
-      //  reason: 'eng-123456'
 
       switch (notionType) {
         case IMMUTABLE:
@@ -372,6 +342,9 @@ const extractMonoNotion = string => {
       }
     });
 
+    console.log(`notionData: ${notionData}`);
+    console.log('\n-------------------------\n');
+
     return notionData;
   }
 }
@@ -394,6 +367,7 @@ const getModidier = prospect => {
     case `${MODIFIER_PREFIX}mutate`:
       return MUTATE;
     default:
+      Log.INVALID_MODIFIER(currentFile, prospect);
       throw new ModifierException(`'${prospect}' is not a valid modifier`);
   }
 }
@@ -415,6 +389,7 @@ const getMotive = prospect => {
     case `${MOTIVE_PREFIX}patch`:
       return PATCH;
     default:
+      Log.INVALID_MOTIVE(currentFile, motive);
       throw new MotiveException(`'${motive}' is not a valid motive`);
   }
 }
@@ -428,15 +403,18 @@ const getType = prospect => {
     case 'public':
       return PUBLIC;
     default:
+      Log.INVALID_TYPE(currentFile, prospect);
       throw new TypeException(`'${prospect}' is not a valid type`);
   }
 }
 
 const getMotiveReason = (motive) => {
   // content within open & close bracket i.e:
-  // `?patch("eng-123")`          -> "eng-123"
-  // `?because('align with nav')` -> 'align with nav'
-  return motive.replace(/\?\w+\(|\)/, '');
+  // `color<?patch("eng-123")>`           -> "eng-123"
+  // `margin<?because('align with nav')>` -> 'align with nav'
+
+  // Todo: validate whether motive has reason, if not throw error and log message - motive missing reason
+  return motive.replace(/\?\w+\(|\)>'$/, '');
 }
 
 module.exports = { tokenize }

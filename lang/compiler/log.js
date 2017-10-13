@@ -3,9 +3,24 @@
  * - decide whether logs should show in tests
  * - make logs pretty with chalk
  * - add spinners / progress bars to slow logs
+ * - add emojis (make this a config option - enabled / disabled)
  */
 
 const chalk = require('chalk');
+
+/**
+ * Generic log for a code error
+ *
+ * @param  {File<name, soruce>} file  - file containing problem code
+ * @param  {String} offender          - offending code snippet
+ * @return {String} error             - the error message
+ */
+const codeError = (file, offender, error) => {
+  // todo: get line number
+  console.log(` - ${file.name} \n`);
+  console.log(chalk.grey(` line# | code snippet \n`));
+  console.log(chalk.red(error));
+}
 
 
 module.exports = {
@@ -60,28 +75,19 @@ module.exports = {
     }
   },
   lexer: {
-    INVALID_TYPE: (fileName, line, offender, message) => {
-      // todo: line number corresponds to formatted file, not source file, fix.
-      console.log(`[Type error] Invalid type found`);
-      console.log(` └─ ${fileName} \n`);
-      console.log(chalk.grey(` ${line}| ${offender} \n`));
-      console.log(chalk.red(message));
+    INVALID_TYPE: (file, offender) => {
+      console.log(`[Type error] Unknown type`);
+      codeError(file, offender, `'${offender}' is not a valid type`);
       console.log(`\nExpected one of the following: \n - immutable\n - protected\n - public\n`);
     },
-    INVALID_MODIFIER: (fileName, line, offender, message) => {
-      // todo: line number corresponds to formatted file, not source file, fix.
-      console.log(`[Modifier error] Invalid modifier found`);
-      console.log(` └─ ${fileName} \n`);
-      console.log(chalk.grey(` ${line}| ${offender} \n`));
-      console.log(chalk.red(message));
+    INVALID_MODIFIER: (file, offender) => {
+      console.log(`[Modifier error] Unknown modifier`);
+      codeError(file, offender, `'${offender}' is not a valid modifier`);
       console.log(`\nExpected one of the following: \n - @override\n - @mutate\n`);
     },
-    INVALID_MOTIVE: (fileName, line, offender, message) => {
-      // todo: line number corresponds to formatted file, not source file, fix.
-      console.log(`[Motive error] Invalid motive found`);
-      console.log(` └─ ${fileName} \n`);
-      console.log(chalk.grey(` ${line}| ${offender} \n`));
-      console.log(chalk.red(message));
+    INVALID_MOTIVE: (file, offender) => {
+      console.log(`[Motive error] Unknown motive used`);
+      codeError(file, offender, `'${offender}' is not a valid motive`);
       console.log(`\nExpected one of the following: \n - ?overrule\n - ?overthrow\n - ?veto\n - ?fallback\n - ?because\n - ?patch\n`);
     }
   }

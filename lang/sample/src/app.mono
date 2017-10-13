@@ -108,7 +108,7 @@ p.pow > .foo {
         background: red;}
 
 .hidden {display<protected,     ?overrule>: none;} .shown {display: block;}
-.hidden {display<protected,?overrule>: none;} .shown {display: block;}
+.hidden {display<public,?overrule>: none;} .shown {display: block;}
 
 
 
