@@ -17,13 +17,15 @@
  * ]
  *
  * locationData: has the shape: [ line*, col ]
- * notionData: (if any notions present) has the shape: [ type, modifier, motive ]
+ * notionData: (if any notions present) has the shape: [ type, modifier, motive, contextualData ]
  *
  */
 
 const chalk = require('chalk'); // temp
 
 const Formatter = require('./formatter');
+const Log = require('./log').lexer;
+const { TypeException, ModifierException, MotiveException } = require('./exceptions');
 
 
 // token types
@@ -135,7 +137,7 @@ const getToken = (value, pos) => {
 
   // todo: looks like formatter is appending empty line to each file.
   if (value === '') {
-    // console.log('EMPTY VALUE');
+    console.log('EMPTY VALUE');
   }
 }
 
@@ -275,28 +277,37 @@ const atRule = (pos, type, value) => {
 }
 
 const declaration = (pos, value) => {
-  const declaration = value.trim();
-
-  // until first colon
-  const property = declaration.match(/.+?(?=:)/)[0];
-  let notionData;
-
   try {
-    notionData = extractMonoNotion(property);
+    const declaration = value.trim();
+
+    // until first colon
+    const property = declaration.match(/.+?(?=:)/)[0];
+    const notionData = extractMonoNotion(property);
+
+    console.log(`notionData: ${notionData}`);
+    console.log('\n-------------------------\n');
+
+    return [
+      DECLARATION,
+      declaration,
+      [ pos + 1 ],
+      notionData
+    ];
   } catch (e) {
-    console.log(chalk.red(e.message));
-    throw new Error(); // NotionError
+    switch (e.constructor) {
+      case TypeException:
+        Log.INVALID_TYPE('todo.mono', pos + 1, value, e.message);
+        break;
+      case ModifierException:
+        Log.INVALID_MODIFIER('todo.mono', pos + 1, value, e.message);
+        break;
+      case MotiveException:
+        Log.INVALID_MOTIVE('todo.mono', pos + 1, value, e.message);
+        break;
+    }
+
+    throw new Error(e.message);
   }
-
-  console.log(`notionData: ${notionData}`);
-  console.log('\n-------------------------\n');
-
-  return [
-    DECLARATION,
-    declaration,
-    [ pos + 1 ],
-    notionData
-  ];
 }
 
 // take a string (CSS property or inferred selector) & return notionData
@@ -306,7 +317,7 @@ const extractMonoNotion = string => {
   console.log(`extract notions (if any) from: '${string}'\n`);
 
   if (notion) {
-    const notionData = new Array(3);
+    const notionData = new Array(4);
 
     // notion can be plural.
     const notions = notion[0]
@@ -318,25 +329,43 @@ const extractMonoNotion = string => {
                       .split('🐹');
 
     notions.forEach(prospect => {
-      const notion = getNotionIfValid(prospect);
+      const notionType = getNotionIfValid(prospect);
 
-      switch (notion) {
+      // todo: represent each notion as a class?
+      // Notion
+      //  type (byte representation)
+      //  value
+      // Type extends Notion
+      //  value: immutable, protected, public
+      //  type: IMMUTABLE, PROTECTED, PUBLIC
+      // Modifier extends Notion
+      //  value: @override, @mutate
+      //  type: OVERRIDE, MUTATE
+      // Motive extends Notion
+      //  value: ?overrule, ?overthrow, ?patch('eng-123456')
+      //  type: OVERRULE, OVERTHROW, PATCH etc...
+      //  reason: 'eng-123456'
+
+      switch (notionType) {
         case IMMUTABLE:
         case PROTECTED:
         case PUBLIC:
-          notionData[0] = notion;
+          notionData[0] = notionType;
           break;
         case OVERRIDE:
         case MUTATE:
-          notionData[1] = notion;
+          notionData[1] = notionType;
           break;
         case OVERRULE:
         case OVERTHROW:
         case VETO:
         case FALLBACK:
+          notionData[2] = notionType;
+          break;
         case BECAUSE:
         case PATCH:
-          notionData[2] = notion;
+          notionData[2] = notionType;
+          notionData[3] = getMotiveReason(prospect);
           break;
         default:
           break;
@@ -365,12 +394,14 @@ const getModidier = prospect => {
     case `${MODIFIER_PREFIX}mutate`:
       return MUTATE;
     default:
-      throw new Error(`'${prospect}' is not a valid modifier`); // ModidierError
+      throw new ModifierException(`'${prospect}' is not a valid modifier`);
   }
 }
 
 const getMotive = prospect => {
-  switch (prospect.match(/\?\w+/)[0]) {
+  const motive = prospect.match(/\?\w+/)[0];
+
+  switch (motive) {
     case `${MOTIVE_PREFIX}overrule`:
       return OVERRULE;
     case `${MOTIVE_PREFIX}overthrow`:
@@ -384,7 +415,7 @@ const getMotive = prospect => {
     case `${MOTIVE_PREFIX}patch`:
       return PATCH;
     default:
-      throw new Error(`'${prospect}' is not a valid motive`); // MotiveError
+      throw new MotiveException(`'${motive}' is not a valid motive`);
   }
 }
 
@@ -397,8 +428,15 @@ const getType = prospect => {
     case 'public':
       return PUBLIC;
     default:
-      throw new Error(`'${prospect}' is not a valid type`); // TypeError
+      throw new TypeException(`'${prospect}' is not a valid type`);
   }
+}
+
+const getMotiveReason = (motive) => {
+  // content within open & close bracket i.e:
+  // `?patch("eng-123")`          -> "eng-123"
+  // `?because('align with nav')` -> 'align with nav'
+  return motive.replace(/\?\w+\(|\)/, '');
 }
 
 module.exports = { tokenize }

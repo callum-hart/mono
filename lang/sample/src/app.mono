@@ -119,31 +119,22 @@ div.title,
   color: cadetblue;
 }
 
-div.hey,
-span.hey<protected>,
-p.hey {
-  color<?motive('ENG-12345d djdjdd')
-
-
-
-     >: cadetblue;
-}
 
 @media (min-width:300px) and (max-width:600px) {
   .something {
-    display<@modify>: none;
+    display<@override>: none;
     color<?patch('ENG-123456')>: cadetblue;
   }
 }
 
 .combinatorWithOutSpace {
-  color<protected,?overrule>: grey;
+  color<public,?veto>: grey;
 }
 
 .combinatorWithSpace {
   color<protected, ?overrule>: blue;
   font-size<public,?because('some reason')>: 12px;
-  font-size<    public,   ?becaue('ANOTHER REASON, FOR USAGE')
+  font-size<    public,   ?because('ANOTHER REASON, FOR USAGE')
 
 
 

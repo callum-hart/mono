@@ -10,7 +10,28 @@ class ParserException {
   }
 }
 
+class TypeException {
+  constructor(message) {
+    this.message = message;
+  }
+}
+
+class ModifierException {
+  constructor(message) {
+    this.message = message;
+  }
+}
+
+class MotiveException {
+  constructor(message) {
+    this.message = message;
+  }
+}
+
 module.exports = {
   CSSException,
-  ParserException
+  ParserException,
+  TypeException,
+  ModifierException,
+  MotiveException
 }

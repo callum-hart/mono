@@ -2,7 +2,7 @@
  * Todos
  * - decide whether logs should show in tests
  * - make logs pretty with chalk
- * - adding spinners / progress bars to slow logs
+ * - add spinners / progress bars to slow logs
  */
 
 const chalk = require('chalk');
@@ -57,6 +57,32 @@ module.exports = {
 
       console.log(`[Format] Invalid CSS detected in: ${fileName} \n └─ ${prettierErr.name}: ${prettierErr.loc.start.reason}`);
       console.log(prettierErr.codeFrame);
+    }
+  },
+  lexer: {
+    INVALID_TYPE: (fileName, line, offender, message) => {
+      // todo: line number corresponds to formatted file, not source file, fix.
+      console.log(`[Type error] Invalid type found`);
+      console.log(` └─ ${fileName} \n`);
+      console.log(chalk.grey(` ${line}| ${offender} \n`));
+      console.log(chalk.red(message));
+      console.log(`\nExpected one of the following: \n - immutable\n - protected\n - public\n`);
+    },
+    INVALID_MODIFIER: (fileName, line, offender, message) => {
+      // todo: line number corresponds to formatted file, not source file, fix.
+      console.log(`[Modifier error] Invalid modifier found`);
+      console.log(` └─ ${fileName} \n`);
+      console.log(chalk.grey(` ${line}| ${offender} \n`));
+      console.log(chalk.red(message));
+      console.log(`\nExpected one of the following: \n - @override\n - @mutate\n`);
+    },
+    INVALID_MOTIVE: (fileName, line, offender, message) => {
+      // todo: line number corresponds to formatted file, not source file, fix.
+      console.log(`[Motive error] Invalid motive found`);
+      console.log(` └─ ${fileName} \n`);
+      console.log(chalk.grey(` ${line}| ${offender} \n`));
+      console.log(chalk.red(message));
+      console.log(`\nExpected one of the following: \n - ?overrule\n - ?overthrow\n - ?veto\n - ?fallback\n - ?because\n - ?patch\n`);
     }
   }
 };
