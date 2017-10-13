@@ -291,6 +291,7 @@ const declaration = (pos, value) => {
       extractMonoNotion(property)
     ];
   } catch (e) {
+    e.log.call(undefined, currentFile, value, e.offender);
     throw new Error(e.message);
   }
 }
@@ -367,8 +368,7 @@ const getModidier = prospect => {
     case `${MODIFIER_PREFIX}mutate`:
       return MUTATE;
     default:
-      Log.INVALID_MODIFIER(currentFile, prospect);
-      throw new ModifierException(`'${prospect}' is not a valid modifier`);
+      throw new ModifierException(`'${prospect}' is not a valid modifier`, prospect, Log.INVALID_MODIFIER);
   }
 }
 
@@ -389,8 +389,7 @@ const getMotive = prospect => {
     case `${MOTIVE_PREFIX}patch`:
       return PATCH;
     default:
-      Log.INVALID_MOTIVE(currentFile, motive);
-      throw new MotiveException(`'${motive}' is not a valid motive`);
+      throw new MotiveException(`'${motive}' is not a valid motive`, motive, Log.INVALID_MOTIVE);
   }
 }
 
@@ -403,8 +402,7 @@ const getType = prospect => {
     case 'public':
       return PUBLIC;
     default:
-      Log.INVALID_TYPE(currentFile, prospect);
-      throw new TypeException(`'${prospect}' is not a valid type`);
+      throw new TypeException(`'${prospect}' is not a valid type`, prospect, Log.INVALID_TYPE);
   }
 }
 

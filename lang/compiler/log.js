@@ -12,14 +12,32 @@ const chalk = require('chalk');
  * Generic log for a code error
  *
  * @param  {File<name, soruce>} file  - file containing problem code
- * @param  {String} offender          - offending code snippet
- * @return {String} error             - the error message
  */
-const codeError = (file, offender, error) => {
+const codeError = (file, code, fragment) => {
   // todo: get line number
+
+  // remove all whitespace(s)
+  const a = code.replace(/\s+/g, '');
+
+  const line = file.source
+                .split(/\n/)
+                .findIndex((line, index) => {
+                  // remove all whitespace(s)
+                  const b = line.replace(/\s+/g, '');
+
+                  console.log(`[Formatted] code: ${a}`);
+                  console.log(`[Formatted] line: ${b}`);
+                  console.log(`lineNumber: ${index + 1}`)
+                  console.log('------------------');
+
+                  // todo
+                  return false;
+
+                }) + 1;
+
   console.log(` - ${file.name} \n`);
-  console.log(chalk.grey(` line# | code snippet \n`));
-  console.log(chalk.red(error));
+  console.log(chalk.grey(` ${line} | ${code} \n`));
+  // todo: fragment will be used for carets (^^^)
 }
 
 
@@ -75,19 +93,22 @@ module.exports = {
     }
   },
   lexer: {
-    INVALID_TYPE: (file, offender) => {
+    INVALID_TYPE: (file, code, fragment) => {
       console.log(`[Type error] Unknown type`);
-      codeError(file, offender, `'${offender}' is not a valid type`);
+      codeError(file, code, fragment);
+      console.log(chalk.red(`'${fragment}' is not a valid type`));
       console.log(`\nExpected one of the following: \n - immutable\n - protected\n - public\n`);
     },
-    INVALID_MODIFIER: (file, offender) => {
+    INVALID_MODIFIER: (file, code, fragment) => {
       console.log(`[Modifier error] Unknown modifier`);
-      codeError(file, offender, `'${offender}' is not a valid modifier`);
+      codeError(file, code, fragment);
+      console.log(chalk.red(`'${fragment}' is not a valid modifier`));
       console.log(`\nExpected one of the following: \n - @override\n - @mutate\n`);
     },
-    INVALID_MOTIVE: (file, offender) => {
+    INVALID_MOTIVE: (file, code, fragment) => {
       console.log(`[Motive error] Unknown motive used`);
-      codeError(file, offender, `'${offender}' is not a valid motive`);
+      codeError(file, code, fragment);
+      console.log(chalk.red(`'${fragment}' is not a valid motive`));
       console.log(`\nExpected one of the following: \n - ?overrule\n - ?overthrow\n - ?veto\n - ?fallback\n - ?because\n - ?patch\n`);
     }
   }

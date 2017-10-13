@@ -11,20 +11,26 @@ class ParserException {
 }
 
 class TypeException {
-  constructor(message) {
+  constructor(message, offender, log) {
     this.message = message;
+    this.offender = offender;
+    this.log = log;
   }
 }
 
 class ModifierException {
-  constructor(message) {
+  constructor(message, offender, log) {
     this.message = message;
+    this.offender = offender;
+    this.log = log;
   }
 }
 
 class MotiveException {
-  constructor(message) {
+  constructor(message, offender, log) {
     this.message = message;
+    this.offender = offender;
+    this.log = log;
   }
 }
 

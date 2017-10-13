@@ -59,10 +59,10 @@ body          {
 }
 
 ul<     immutable    >{
-  margin-left<   @mutate
+  margin-left<   @mutte
 
   >: 0;
-  padding-left<@override>: 0;
+  padding-left<@ovide>: 0;
 }
 
 
