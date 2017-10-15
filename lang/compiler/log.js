@@ -4,42 +4,70 @@
  * - make logs pretty with chalk
  * - add spinners / progress bars to slow logs
  * - add emojis (make this a config option - enabled / disabled)
+ * - add more generic methods (like codeError) i.e: title();
  */
 
 const chalk = require('chalk');
 
 /**
- * Generic log for a code error
+ * Generic log for code errors.
+ *
+ * Normalise participants as much as possible for easier comparison.
+ * - remove whitespace(s)
+ * - make lowercase
  *
  * @param  {File<name, soruce>} file  - file containing problem code
+ * @param  {String} code              - loc containing the error (formatted)
+ * @param  {String} fragment          - offending part of `code`
  */
 const codeError = (file, code, fragment) => {
-  // todo: get line number
+  const needle = code
+                    .replace(/\s+/g, '')
+                    .toLowerCase();
 
-  // remove all whitespace(s)
-  const a = code.replace(/\s+/g, '');
+  const haystack = file.source.split(/\n/);
 
-  const line = file.source
-                .split(/\n/)
-                .findIndex((line, index) => {
-                  // remove all whitespace(s)
-                  const b = line.replace(/\s+/g, '');
+  const lineIndex = haystack.findIndex((source, index) => {
+    const loc = source
+                  .replace(/\s+/g, '')
+                  .toLowerCase();
 
-                  console.log(`[Formatted] code: ${a}`);
-                  console.log(`[Formatted] line: ${b}`);
-                  console.log(`lineNumber: ${index + 1}`)
-                  console.log('------------------');
+    if (loc.includes(fragment.toLowerCase())) {
+      // exact match
+      if (loc === needle) {
+        return true;
+      }
 
-                  // todo
-                  return false;
+      // partial match (loc is a subset of needle)
+      if (needle.includes(loc)) {
+        return true;
+      }
+    }
+  });
 
-                }) + 1;
+  const codeBlock = ` ${lineIndex + 1} | ${haystack[lineIndex]}`;
 
   console.log(` - ${file.name} \n`);
-  console.log(chalk.grey(` ${line} | ${code} \n`));
-  // todo: fragment will be used for carets (^^^)
+  console.log(chalk.grey(codeBlock));
+  addCarets(codeBlock, fragment);
 }
 
+/**
+ * Add carets underneath error.
+ *
+ * @param  {String} codeBlock - loc containing the error (including line number)
+ * @param  {String} fragment  - offending part of `codeBlock`
+ */
+const addCarets = (codeBlock, fragment) => {
+  const start = codeBlock
+                      .toLowerCase()
+                      .indexOf(fragment.toLowerCase());
+  const end = start + fragment.length;
+  const padding = ' '.repeat(start);
+  const carets = '^'.repeat(end-start);
+
+  console.log(chalk.red(`${padding}${carets}\n`));
+}
 
 module.exports = {
   cli: {
@@ -94,22 +122,22 @@ module.exports = {
   },
   lexer: {
     INVALID_TYPE: (file, code, fragment) => {
-      console.log(`[Type error] Unknown type`);
+      console.log(chalk.blue(`[Type error] Unknown type`));
       codeError(file, code, fragment);
       console.log(chalk.red(`'${fragment}' is not a valid type`));
-      console.log(`\nExpected one of the following: \n - immutable\n - protected\n - public\n`);
+      console.log(`\nTip: expected one of the following: \n - immutable\n - protected\n - public\n`);
     },
     INVALID_MODIFIER: (file, code, fragment) => {
-      console.log(`[Modifier error] Unknown modifier`);
+      console.log(chalk.blue(`[Modifier error] Unknown modifier`));
       codeError(file, code, fragment);
       console.log(chalk.red(`'${fragment}' is not a valid modifier`));
-      console.log(`\nExpected one of the following: \n - @override\n - @mutate\n`);
+      console.log(`\nTip: expected one of the following: \n - @override\n - @mutate\n`);
     },
     INVALID_MOTIVE: (file, code, fragment) => {
-      console.log(`[Motive error] Unknown motive used`);
+      console.log(chalk.blue(`[Motive error] Unknown motive used`));
       codeError(file, code, fragment);
       console.log(chalk.red(`'${fragment}' is not a valid motive`));
-      console.log(`\nExpected one of the following: \n - ?overrule\n - ?overthrow\n - ?veto\n - ?fallback\n - ?because\n - ?patch\n`);
+      console.log(`\nTip: expected one of the following: \n - ?overrule\n - ?overthrow\n - ?veto\n - ?fallback\n - ?because\n - ?patch\n`);
     }
   }
 };
