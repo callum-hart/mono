@@ -143,8 +143,7 @@ const getToken = (value, pos) => {
   }
 
   if (isSelector(value)) {
-    console.log(`value: ${value} is a keyframe selector`);
-    // return isKeySelector(pos, value);
+    return selector(pos, value);
   }
 
   // todo: looks like formatter is appending empty line to each file.
@@ -171,8 +170,8 @@ const justClosingComment = value => {
 }
 
 const justComment = value => {
-  // line only contains a comment i.e: `/* line is a just a comment */`
-  return value.match(/^\/\*.*\*\/$|^\s+\/\*.*\*\/$/);
+  // line is a comment i.e: `/* line is a just a comment */`
+  return value.match(/^\/\*|^\/\*.*\*\/$|^\s+\/\*.*\*\/$/);
 }
 
 const isMediaQuery = value => {
@@ -206,7 +205,8 @@ const isKeyFrameSelector = value => {
 }
 
 const isSelector = value => {
-  console.log(`is: ${value} a selector?`);
+  // line is a selector, canbe be part of multiple selector i.e: `a.link {` or `a.link,`
+  return value.match(/.+{|.+,/);
 }
 
 
@@ -307,7 +307,7 @@ const declaration = (pos, value) => {
       DECLARATION,
       declaration,
       [ pos + 1 ],
-      extractNotionIfAny(property) || null
+      getNotionIfAny(property)
     ];
   } catch (e) {
     e.log.call(undefined, currentFile, value, e.offender);
@@ -323,8 +323,48 @@ const keyFrameSelector = (pos, value) => {
   ];
 }
 
-// take a string (CSS property or inferred selector) & return notionData
-const extractNotionIfAny = string => {
+const selector = (pos, value) => {
+  try {
+    const selector = value
+                      .trim()
+                      .replace(/{/, '')
+                      .replace(/,/, '');
+
+    console.log(`todo: validate selector: '${selector}' (must be or contain HTML element)`);
+
+    return [
+      SELECTOR,
+      selector,
+      [ pos + 1 ],
+      getNotionIfAny(selector)
+    ];
+  } catch (e) {
+    e.log.call(undefined, currentFile, value, e.offender);
+    throw new Error(e.message);
+  }
+}
+
+
+// Helpers --
+
+
+/**
+ * Extract mono notion from string, where string can be:
+ *
+ * - Property
+ * - Selector
+ *
+ * @param  {String} string - string potentially containing a notion
+ * @return {(Array<notionData> |null)} notion data, or null when no notions found i.e:
+ *
+ *   - `font-size`                              -> null
+ *   - `color<immutable>`                       -> [ IMMUTABLE, , ,]
+ *   - `background-color<@override>`            -> [ , OVERRIDE, ,]
+ *   - `height<protected,?patch('eng-123')>`    -> [ PROTECTED , , PATCH, 'eng-123']
+ *   - `h3.title`                               -> null
+ *   - `div.inferredRuleSet<immutable>`         -> [ IMMUTABLE, , , ]
+ */
+const getNotionIfAny = string => {
   // anything within crocodiles <>
   const notion = string.match(/<.+>/);
 
@@ -370,6 +410,8 @@ const extractNotionIfAny = string => {
     });
 
     return notionData;
+  } else {
+    return null;
   }
 }
 

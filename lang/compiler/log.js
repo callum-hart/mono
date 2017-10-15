@@ -14,6 +14,7 @@ const chalk = require('chalk');
  *
  * Normalise participants as much as possible for easier comparison.
  * - remove whitespace(s)
+ * - remove comments (if any)
  * - make lowercase
  *
  * @param  {File<name, soruce>} file  - file containing problem code
@@ -30,6 +31,7 @@ const codeError = (file, code, fragment) => {
   const lineIndex = haystack.findIndex((source, index) => {
     const loc = source
                   .replace(/\s+/g, '')
+                  .replace(/\/\*.*\*\//, '')
                   .toLowerCase();
 
     if (loc.includes(fragment.toLowerCase())) {
@@ -40,6 +42,11 @@ const codeError = (file, code, fragment) => {
 
       // partial match (loc is a subset of needle)
       if (needle.includes(loc)) {
+        return true;
+      }
+
+      // partial match (needle is a subset of loc)
+      if (loc.includes(needle)) {
         return true;
       }
     }
@@ -144,7 +151,7 @@ module.exports = {
       codeError(file, code, fragment);
       console.log(chalk.red(`'${fragment}' is missing a reason`));
       console.log(`\nThe motive '${fragment}' requires a parameter explaining usage, for example:`);
-      console.log(chalk.grey(`\n width<${fragment}('some reason for usage')>: 100%;\n`));
+      console.log(chalk`\n {grey width<${fragment}(}{green 'a reason for usage'}{grey )>: 100%;}\n`);
     }
   }
 };

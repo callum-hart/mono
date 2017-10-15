@@ -1,15 +1,17 @@
+p.foo {}
+
 nav
 
 {
   display: flex;
-  height: 60px /* inlined comment */ ;
+  height<public>: 60px /* inlined comment */ ;
   background: slategrey;
 }
 
 
 /* rule-sets in comments should be ignored by parser */
 
-/*.foo {
+      /*.WAT {
   color: red;
 }*/
 
@@ -19,6 +21,7 @@ nav
 
 .foo {
   color<immutable>: red;
+  height<?because>: red     /* inlined comment */      ;
 }
 
 /*

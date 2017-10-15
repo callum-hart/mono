@@ -43,7 +43,8 @@ p.one, span.two<immutable> {
 }
 
 
-p.three<  protected  >, span.two< immutable> {
+p.three<  protected  >,
+    span.two< immutable> {
   line-height<immutable>: 20px;
 }
 
@@ -167,12 +168,12 @@ div.title,
   overflow: hidden;
 }
 
-.inferredRuleSet3<        public   > {
+.inferredRuleSet3<public> {
   float: left;
 }
 
 /* lexer should throw error for invalid types, modifiers & motives          */
-.invalidInferredRuleSet<        foo
+.invalidInferredRuleSet<immutable
 
    > {
   float: left;
