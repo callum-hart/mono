@@ -59,10 +59,10 @@ body          {
 }
 
 ul<     immutable    >{
-  margin-left<   @mutte
+  margin-left<   @mutate
 
   >: 0;
-  padding-left<@ovide>: 0;
+  padding-left<@override>: 0;
 }
 
 
@@ -133,7 +133,7 @@ div.title,
 
 .combinatorWithSpace {
   color<protected, ?overrule>: blue;
-  font-size<public,?because('some reason')>: 12px;
+  font-size<public,?because>: 12px;
   font-size<    public,   ?because('ANOTHER REASON, FOR USAGE')
 
 

@@ -137,6 +137,8 @@ const getToken = (value, pos) => {
     return declaration(pos, value);
   }
 
+  // todo: is selector
+
   // todo: looks like formatter is appending empty line to each file.
   if (value === '') {
     console.log('EMPTY VALUE');
@@ -300,7 +302,7 @@ const declaration = (pos, value) => {
 const extractMonoNotion = string => {
   // anything within crocodiles <>
   const notion = string.match(/<.+>/);
-  console.log(`extract notions (if any) from: '${string}'\n`);
+  // console.log(`extract notions (if any) from: '${string}'\n`);
 
   if (notion) {
     const notionData = new Array(4);
@@ -343,8 +345,8 @@ const extractMonoNotion = string => {
       }
     });
 
-    console.log(`notionData: ${notionData}`);
-    console.log('\n-------------------------\n');
+    // console.log(`notionData: ${notionData}`);
+    // console.log('\n-------------------------\n');
 
     return notionData;
   }
@@ -368,7 +370,7 @@ const getModidier = prospect => {
     case `${MODIFIER_PREFIX}mutate`:
       return MUTATE;
     default:
-      throw new ModifierException(`'${prospect}' is not a valid modifier`, prospect, Log.INVALID_MODIFIER);
+      throw new ModifierException(`'${prospect}' is not a valid modifier`, prospect, Log.UNKNOWN_MODIFIER);
   }
 }
 
@@ -389,7 +391,7 @@ const getMotive = prospect => {
     case `${MOTIVE_PREFIX}patch`:
       return PATCH;
     default:
-      throw new MotiveException(`'${motive}' is not a valid motive`, motive, Log.INVALID_MOTIVE);
+      throw new MotiveException(`'${motive}' is not a valid motive`, motive, Log.UNKNOWN_MOTIVE);
   }
 }
 
@@ -402,17 +404,29 @@ const getType = prospect => {
     case 'public':
       return PUBLIC;
     default:
-      throw new TypeException(`'${prospect}' is not a valid type`, prospect, Log.INVALID_TYPE);
+      throw new TypeException(`'${prospect}' is not a valid type`, prospect, Log.UNKNOWN_TYPE);
   }
 }
 
+/**
+ * Get user-inputted reason from motives:
+ *
+ * - `?because`
+ * - `?patch`
+ *
+ * @param  {String} motive - fully qualified motive
+ * @returns {String} the reason, i.e:
+ *   - `?because('align with nav')`  -> 'align with nav'
+ *   - `?patch("eng-123456")`        -> "eng-123456"
+ * @throws MotiveException when reason isn't provided.
+ */
 const getMotiveReason = (motive) => {
-  // content within open & close bracket i.e:
-  // `color<?patch("eng-123")>`           -> "eng-123"
-  // `margin<?because('align with nav')>` -> 'align with nav'
-
-  // Todo: validate whether motive has reason, if not throw error and log message - motive missing reason
-  return motive.replace(/\?\w+\(|\)>'$/, '');
+  if (motive.includes('(') && motive.includes(')')) {
+    // content within open and close bracket i.e:
+    return motive.replace(/\?\w+\(|\)$/g, '');
+  } else {
+    throw new MotiveException(`${motive} is missing reason`, motive, Log.MOTIVE_WITHOUT_REASON);
+  }
 }
 
 module.exports = { tokenize }
