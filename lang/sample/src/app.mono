@@ -34,6 +34,14 @@ p.one, span.two<immutable> {
 }
 
 
+@keyframes mymove {
+    0%   {top: 0px;}
+    25%  {top: 200px;}
+    50%  {top: 100px;}
+    75%  {top: 200px;}
+    100% {top: 0px;}
+}
+
 
 p.three<  protected  >, span.two< immutable> {
   line-height<immutable>: 20px;
@@ -123,7 +131,7 @@ div.title,
 @media (min-width:300px) and (max-width:600px) {
   .something {
     display<@override>: none;
-    color<?patch('ENG-123456')>: cadetblue;
+    color<?patch('ENG-12345')>: cadetblue;
   }
 }
 
@@ -133,7 +141,7 @@ div.title,
 
 .combinatorWithSpace {
   color<protected, ?overrule>: blue;
-  font-size<public,?because>: 12px;
+  font-size<public,?because('some reason')>: 12px;
   font-size<    public,   ?because('ANOTHER REASON, FOR USAGE')
 
 
@@ -168,8 +176,8 @@ div.title,
 
    > {
   float: left;
-  color<bar>: grey;
-  height<?itsFriday>: 100px;
+  color: grey;
+  height: 100px;
 }
 
 .declarationTypes {

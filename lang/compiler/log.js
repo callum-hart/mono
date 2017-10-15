@@ -122,25 +122,25 @@ module.exports = {
   },
   lexer: {
     UNKNOWN_TYPE: (file, code, fragment) => {
-      console.log(chalk.blue(`[Type error] Unknown type`));
+      console.log(chalk.blue(`\n[Type error] Unknown type`));
       codeError(file, code, fragment);
       console.log(chalk.red(`'${fragment}' is not a valid type`));
       console.log(`\nTip: expected one of the following: \n - immutable\n - protected\n - public\n`);
     },
     UNKNOWN_MODIFIER: (file, code, fragment) => {
-      console.log(chalk.blue(`[Modifier error] Unknown modifier`));
+      console.log(chalk.blue(`\n[Modifier error] Unknown modifier`));
       codeError(file, code, fragment);
       console.log(chalk.red(`'${fragment}' is not a valid modifier`));
       console.log(`\nTip: expected one of the following: \n - @override\n - @mutate\n`);
     },
     UNKNOWN_MOTIVE: (file, code, fragment) => {
-      console.log(chalk.blue(`[Motive error] Unknown motive used`));
+      console.log(chalk.blue(`\n[Motive error] Unknown motive used`));
       codeError(file, code, fragment);
       console.log(chalk.red(`'${fragment}' is not a valid motive`));
       console.log(`\nTip: expected one of the following: \n - ?overrule\n - ?overthrow\n - ?veto\n - ?fallback\n - ?because\n - ?patch\n`);
     },
     MOTIVE_WITHOUT_REASON: (file, code, fragment) => {
-      console.log(chalk.blue(`[Motive error] Missing reason`));
+      console.log(chalk.blue(`\n[Motive error] Missing reason`));
       codeError(file, code, fragment);
       console.log(chalk.red(`'${fragment}' is missing a reason`));
       console.log(`\nThe motive '${fragment}' requires a parameter explaining usage, for example:`);

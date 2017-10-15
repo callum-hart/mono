@@ -30,18 +30,19 @@ const { TypeException, ModifierException, MotiveException } = require('./excepti
 
 // token types
 
-const BRACE_OPEN              = 'BRACE_OPEN';    // {
-const BRACE_CLOSE             = 'BRACE_CLOSE';   // }
-const COMMENT_OPEN            = 'COMMENT_OPEN';  // /*
-const COMMENT_CLOSE           = 'COMMENT_CLOSE'; // */
-const COMMENT                 = 'COMMENT';       // /* a comment */
-const MEDIA_QUERY             = 'MEDIA_QUERY';   // @media (min-width: 300px) and (max-width: 600px)
-const KEYFRAME                = 'KEYFRAME';      // @keyframes
-const FONT_FACE               = 'FONT_FACE';     // @font-face
-const CHARSET                 = 'CHARSET';       // @charset
-const DECLARATION             = 'DECLARATION';   // property: value || property<immutable>: value || property<public,?patch('ENG-123')>: value
-const SELECTOR                = 'SELECTOR';      // a.link
-const LITERAL                 = 'LITERAL';       // most likey a comment
+const BRACE_OPEN              = 'BRACE_OPEN';         // {
+const BRACE_CLOSE             = 'BRACE_CLOSE';        // }
+const COMMENT_OPEN            = 'COMMENT_OPEN';       // /*
+const COMMENT_CLOSE           = 'COMMENT_CLOSE';      // */
+const COMMENT                 = 'COMMENT';            // /* a comment */
+const MEDIA_QUERY             = 'MEDIA_QUERY';        // @media (min-width: 300px) and (max-width: 600px)
+const KEYFRAME                = 'KEYFRAME';           // @keyframes
+const KEYFRAME_SELECTOR       = 'KEYFRAME_SELECTOR';  // from, to, 0-100%
+const FONT_FACE               = 'FONT_FACE';          // @font-face
+const CHARSET                 = 'CHARSET';            // @charset
+const DECLARATION             = 'DECLARATION';        // property: value || property<immutable>: value || property<public,?patch('ENG-123')>: value
+const SELECTOR                = 'SELECTOR';           // a.link
+const LITERAL                 = 'LITERAL';            // most likey a comment
 
 // mono notions
 
@@ -90,8 +91,8 @@ const tokenize = file => {
     pos++;
   }
 
-  // console.log('\ntokens:\n')
-  // console.log(tokens);
+  console.log('\ntokens:\n')
+  console.log(tokens);
 }
 
 const getToken = (value, pos) => {
@@ -137,11 +138,18 @@ const getToken = (value, pos) => {
     return declaration(pos, value);
   }
 
-  // todo: is selector
+  if (isKeyFrameSelector(value)) {
+    return keyFrameSelector(pos, value);
+  }
+
+  if (isSelector(value)) {
+    console.log(`value: ${value} is a keyframe selector`);
+    // return isKeySelector(pos, value);
+  }
 
   // todo: looks like formatter is appending empty line to each file.
   if (value === '') {
-    console.log('EMPTY VALUE');
+    console.log(`empty value found at pos: ${pos}`);
   }
 }
 
@@ -149,7 +157,7 @@ const getToken = (value, pos) => {
 
 const justClosingBrace = value => {
   // line only contains a closing brace i.e: `}`
-  return value.match(/^}$/);
+  return value.match(/}$/);
 }
 
 const justOpeningComment = value => {
@@ -190,6 +198,15 @@ const isCharSet = value => {
 const isDeclaration = value => {
   // line is a CSS declaration i.e: `background-color: rgba(0,0,0,.1);`
   return value.match(/.\S*[^\n]+\s*;/);
+}
+
+const isKeyFrameSelector = value => {
+  // line is a keyframe-selector (from, to, 0-100%) i.e: `from {`
+  return value.match(/from{|to{|\d{1,3}%{/);
+}
+
+const isSelector = value => {
+  console.log(`is: ${value} a selector?`);
 }
 
 
@@ -290,7 +307,7 @@ const declaration = (pos, value) => {
       DECLARATION,
       declaration,
       [ pos + 1 ],
-      extractMonoNotion(property)
+      extractNotionIfAny(property) || null
     ];
   } catch (e) {
     e.log.call(undefined, currentFile, value, e.offender);
@@ -298,11 +315,18 @@ const declaration = (pos, value) => {
   }
 }
 
+const keyFrameSelector = (pos, value) => {
+  return [
+    KEYFRAME_SELECTOR,
+    value.trim(),
+    [ pos + 1 ]
+  ];
+}
+
 // take a string (CSS property or inferred selector) & return notionData
-const extractMonoNotion = string => {
+const extractNotionIfAny = string => {
   // anything within crocodiles <>
   const notion = string.match(/<.+>/);
-  // console.log(`extract notions (if any) from: '${string}'\n`);
 
   if (notion) {
     const notionData = new Array(4);
@@ -344,9 +368,6 @@ const extractMonoNotion = string => {
           break;
       }
     });
-
-    // console.log(`notionData: ${notionData}`);
-    // console.log('\n-------------------------\n');
 
     return notionData;
   }
