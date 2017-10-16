@@ -1,3 +1,36 @@
+.inferredRuleSet<  immutable  >   {
+  color: red;
+  line-height: 20px;
+  background-color: grey;
+}
+
+.inferredRuleSet2<?veto> {
+  overflow: hidden;
+}
+
+.inferredRuleSet3<@mutate> {
+  float: left;
+}
+
+.inferredRuleSet4<?because('some reason')> {
+  overflow: hidden;
+}
+
+
+/* todo: formatting for multiple inferred notions */
+.inferredRuleSet5<?veto,@mutate> {
+  overflow: hidden;
+}
+
+/* lexer should throw error for invalid types, modifiers & motives          */
+.invalidInferredRuleSet<immutable
+
+   > {
+  float: left;
+  color: grey;
+  height: 100px;
+}
+
 @charset "UTF-8";
 
 
@@ -156,29 +189,6 @@ div.title,
   font-size<public, ?because('some reason')>: 20px;
   font-weight <protected, ?because('another-reason')> : bold;
   color : red ;
-}
-
-.inferredRuleSet<  immutable  >   {
-  color: red;
-  line-height: 20px;
-  background-color: grey;
-}
-
-.inferredRuleSet2<protected> {
-  overflow: hidden;
-}
-
-.inferredRuleSet3<public> {
-  float: left;
-}
-
-/* lexer should throw error for invalid types, modifiers & motives          */
-.invalidInferredRuleSet<immutable
-
-   > {
-  float: left;
-  color: grey;
-  height: 100px;
 }
 
 .declarationTypes {

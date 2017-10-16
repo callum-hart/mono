@@ -19,9 +19,13 @@ nav
             /*     in line comment with spacing       */
 
 
+/* multi-line
+
+    comment with text on last line  */
+
 .foo {
   color<immutable>: red;
-  height<?because>: red     /* inlined comment */      ;
+  /*height<?because>: red ;*/
 }
 
 /*

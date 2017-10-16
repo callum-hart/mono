@@ -152,6 +152,14 @@ module.exports = {
       console.log(chalk.red(`'${fragment}' is missing a reason`));
       console.log(`\nThe motive '${fragment}' requires a parameter explaining usage, for example:`);
       console.log(chalk`\n {grey width<${fragment}(}{green 'a reason for usage'}{grey )>: 100%;}\n`);
+    },
+    INFERRED_NOTION_MISUSE: (file, code, fragment) => {
+      const notion = fragment.toLowerCase();
+      console.log(chalk.blue(`\n[Inferred error] Rule-set notion mismatch`));
+      codeError(file, code, notion);
+      console.log(chalk.red(`The notion '${notion}' cannot be inferred by rule-sets`));
+      console.log(chalk`\nRule-sets can only infer a {bold type}, for example:`);
+      console.log(chalk`\n {grey a.link<{green immutable}> {}\n`);
     }
   }
 };

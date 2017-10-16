@@ -85,7 +85,7 @@ const tokenize = file => {
         tokens.push(token);
       }
     } else {
-      // console.log(`token for '${lines[pos]}' needed`);
+      console.log(`token for '${lines[pos]}' needed`);
     }
 
     pos++;
@@ -171,6 +171,7 @@ const justClosingComment = value => {
 
 const justComment = value => {
   // line is a comment i.e: `/* line is a just a comment */`
+  // todo: line ending with */
   return value.match(/^\/\*|^\/\*.*\*\/$|^\s+\/\*.*\*\/$/);
 }
 
@@ -336,7 +337,7 @@ const selector = (pos, value) => {
       SELECTOR,
       selector,
       [ pos + 1 ],
-      getNotionIfAny(selector)
+      getSelectorNotionIfAny(selector)
     ];
   } catch (e) {
     e.log.call(undefined, currentFile, value, e.offender);
@@ -344,19 +345,17 @@ const selector = (pos, value) => {
   }
 }
 
-
 // Helpers --
 
 
 /**
  * Extract mono notion from string, where string can be:
  *
- * - Property
- * - Selector
+ * - CSS property
+ * - CSS Selector
  *
  * @param  {String} string - string potentially containing a notion
  * @return {(Array<notionData> |null)} notion data, or null when no notions found i.e:
- *
  *   - `font-size`                              -> null
  *   - `color<immutable>`                       -> [ IMMUTABLE, , ,]
  *   - `background-color<@override>`            -> [ , OVERRIDE, ,]
@@ -376,7 +375,7 @@ const getNotionIfAny = string => {
                       // remove crocodiles <>
                       .replace(/^\<|\>$/g, '')
 
-                      // replace any comma not within single or double quotes with a delimiter for splitting
+                      // replace any comma (not within single or double quotes) with delimiter for splitting
                       .replace(/,(?=(?:[^'"]*(['"])[^'"]*\1)*[^'"]*$)/, '🐹')
                       .split('🐹');
 
@@ -413,6 +412,27 @@ const getNotionIfAny = string => {
   } else {
     return null;
   }
+}
+
+/**
+ * Extract type from inferred rule-set.
+ *
+ * @param  {String} selector - CSS selector potentially containing inferred notion
+ * @throws {(ModifierException | MotiveException)} If inferred notion is a modifier or motive
+ * @return {(Array<notionData> | null)} notion data, or null when no inferred type is found
+ */
+const getSelectorNotionIfAny = selector => {
+  const notionData = getNotionIfAny(selector);
+
+  if (notionData[1]) {
+    throw new ModifierException(`'${selector}' cannot infer modifiers`, `@${notionData[1]}`, Log.INFERRED_NOTION_MISUSE);
+  }
+
+  if (notionData[2]) {
+    throw new MotiveException(`'${selector}' cannot infer motives`, `?${notionData[2]}`, Log.INFERRED_NOTION_MISUSE);
+  }
+
+  return notionData;
 }
 
 const getNotionIfValid = prospect => {
@@ -478,7 +498,7 @@ const getType = prospect => {
  * - `?patch`
  *
  * @param  {String} motive - fully qualified motive
- * @returns {String} the reason, i.e:
+ * @return {String} the reason, i.e:
  *   - `?because('align with nav')`  -> 'align with nav'
  *   - `?patch("eng-123456")`        -> "eng-123456"
  * @throws MotiveException when reason isn't provided.
