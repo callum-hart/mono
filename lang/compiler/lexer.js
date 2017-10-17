@@ -30,19 +30,19 @@ const { TypeException, ModifierException, MotiveException } = require('./excepti
 
 // token types
 
-const BRACE_OPEN              = 'BRACE_OPEN';         // {
-const BRACE_CLOSE             = 'BRACE_CLOSE';        // }
-const COMMENT_OPEN            = 'COMMENT_OPEN';       // /*
-const COMMENT_CLOSE           = 'COMMENT_CLOSE';      // */
-const COMMENT                 = 'COMMENT';            // /* a comment */
-const MEDIA_QUERY             = 'MEDIA_QUERY';        // @media (min-width: 300px) and (max-width: 600px)
-const KEYFRAME                = 'KEYFRAME';           // @keyframes
-const KEYFRAME_SELECTOR       = 'KEYFRAME_SELECTOR';  // from, to, 0-100%
-const FONT_FACE               = 'FONT_FACE';          // @font-face
-const CHARSET                 = 'CHARSET';            // @charset
-const DECLARATION             = 'DECLARATION';        // property: value || property<immutable>: value || property<public,?patch('ENG-123')>: value
-const SELECTOR                = 'SELECTOR';           // a.link
-const LITERAL                 = 'LITERAL';            // most likey a comment
+const BRACE_OPEN              = 'BRACE_OPEN';             // {
+const BRACE_CLOSE             = 'BRACE_CLOSE';            // }
+const COMMENT_OPEN            = 'COMMENT_OPEN';           // /*
+const COMMENT_CLOSE           = 'COMMENT_CLOSE';          // */
+const SINGLE_LINE_COMMENT     = 'SINGLE_LINE_COMMENT';    // /* a comment */
+const MEDIA_QUERY             = 'MEDIA_QUERY';            // @media (min-width: 300px) and (max-width: 600px)
+const KEYFRAME                = 'KEYFRAME';               // @keyframes
+const KEYFRAME_SELECTOR       = 'KEYFRAME_SELECTOR';      // from, to, 0-100%
+const FONT_FACE               = 'FONT_FACE';              // @font-face
+const CHARSET                 = 'CHARSET';                // @charset
+const DECLARATION             = 'DECLARATION';            // property: value || property<immutable>: value || property<public,?patch('ENG-123')>: value
+const SELECTOR                = 'SELECTOR';               // a.link
+const LITERAL                 = 'LITERAL';                // most likey a comment
 
 // mono notions
 
@@ -97,22 +97,33 @@ const tokenize = file => {
 
 const getToken = (value, pos) => {
 
+  // todo: text within comments should be treated as a COMMENT_LITERAL,
+  // otherwise any code that is commented out code is validated. i.e:
+  //
+  // /*
+  //  color<?because>: cadetblue;
+  // */
+  //
+  // throws: 'MOTIVE_WITHOUT_REASON'
+
+
+
   // start with the easy stuff, lines composed of a single token --
 
-  if (justClosingBrace(value)) {
+  if (isSingleLineComment(value)) {
+    return singleLineComment(pos, value);
+  }
+
+  if (isOpeningComment(value)) {
+    return openingComment(pos, value);
+  }
+
+  if (isClosingComment(value)) {
+    return closingComment(pos, value);
+  }
+
+  if (isClosingBrace(value)) {
     return closingBrace(pos);
-  }
-
-  if (justOpeningComment(value)) {
-    return openingComment(pos);
-  }
-
-  if (justClosingComment(value)) {
-    return closingComment(pos);
-  }
-
-  if (justComment(value)) {
-    return comment(pos, value);
   }
 
 
@@ -154,25 +165,24 @@ const getToken = (value, pos) => {
 
 // Token identifiers --
 
-const justClosingBrace = value => {
+const isClosingBrace = value => {
   // line only contains a closing brace i.e: `}`
   return value.match(/}$/);
 }
 
-const justOpeningComment = value => {
-  // line only contains an opening comment i.e: `/*`
-  return value.match(/^\/\*$/);
-}
-
-const justClosingComment = value => {
-  // line only contains a closing comment i.e: `*/`
-  return value.match(/^\*\/$/);
-}
-
-const justComment = value => {
+const isSingleLineComment = value => {
   // line is a comment i.e: `/* line is a just a comment */`
-  // todo: line ending with */
-  return value.match(/^\/\*|^\/\*.*\*\/$|^\s+\/\*.*\*\/$/);
+  return value.match(/^\/\*.*\*\/$|^\s+\/\*.*\*\/$/);
+}
+
+const isOpeningComment = value => {
+  // line starts with an opening comment i.e: `/*`
+  return value.match(/^\/\*/);
+}
+
+const isClosingComment = value => {
+  // line ends with a closing comment i.e: `*/`
+  return value.match(/\*\/$/);
 }
 
 const isMediaQuery = value => {
@@ -213,34 +223,34 @@ const isSelector = value => {
 
 // Tokens --
 
+const singleLineComment = (pos, comment) => {
+  return [
+    SINGLE_LINE_COMMENT,
+    comment,
+    [ pos + 1 ]
+  ];
+}
+
+const openingComment = (pos, value) => {
+  return [
+    COMMENT_OPEN,
+    value,
+    [ pos + 1 ]
+  ];
+}
+
+const closingComment = (pos, value) => {
+  return [
+    COMMENT_CLOSE,
+    value,
+    [ pos + 1 ]
+  ];
+}
+
 const closingBrace = pos => {
   return [
     BRACE_CLOSE,
     '}',
-    [ pos + 1 ]
-  ];
-}
-
-const openingComment = pos => {
-  return [
-    COMMENT_OPEN,
-    '/*',
-    [ pos + 1 ]
-  ];
-}
-
-const closingComment = pos => {
-  return [
-    COMMENT_CLOSE,
-    '*/',
-    [ pos + 1 ]
-  ];
-}
-
-const comment = (pos, comment) => {
-  return [
-    COMMENT,
-    comment,
     [ pos + 1 ]
   ];
 }
@@ -340,6 +350,7 @@ const selector = (pos, value) => {
       getSelectorNotionIfAny(selector)
     ];
   } catch (e) {
+    console.log(`selector error: ${e}`);
     e.log.call(undefined, currentFile, value, e.offender);
     throw new Error(e.message);
   }
@@ -366,6 +377,8 @@ const selector = (pos, value) => {
 const getNotionIfAny = string => {
   // anything within crocodiles <>
   const notion = string.match(/<.+>/);
+
+  console.log(`getNotionIfAny called for ${string}`);
 
   if (notion) {
     const notionData = new Array(4);
@@ -424,12 +437,22 @@ const getNotionIfAny = string => {
 const getSelectorNotionIfAny = selector => {
   const notionData = getNotionIfAny(selector);
 
-  if (notionData[1]) {
-    throw new ModifierException(`'${selector}' cannot infer modifiers`, `@${notionData[1]}`, Log.INFERRED_NOTION_MISUSE);
-  }
+  if (notionData) {
+    if (notionData[1]) {
+      throw new ModifierException(
+        `'${selector}' cannot infer modifiers`,
+        `${MODIFIER_PREFIX}${notionData[1]}`,
+        Log.INFERRED_NOTION_MISUSE
+      );
+    }
 
-  if (notionData[2]) {
-    throw new MotiveException(`'${selector}' cannot infer motives`, `?${notionData[2]}`, Log.INFERRED_NOTION_MISUSE);
+    if (notionData[2]) {
+      throw new MotiveException(
+        `'${selector}' cannot infer motives`,
+        `${MOTIVE_PREFIX}${notionData[2]}`,
+        Log.INFERRED_NOTION_MISUSE
+      );
+    }
   }
 
   return notionData;
@@ -453,7 +476,11 @@ const getModidier = prospect => {
     case `${MODIFIER_PREFIX}mutate`:
       return MUTATE;
     default:
-      throw new ModifierException(`'${prospect}' is not a valid modifier`, prospect, Log.UNKNOWN_MODIFIER);
+      throw new ModifierException(
+        `'${prospect}' is not a valid modifier`,
+        prospect,
+        Log.UNKNOWN_MODIFIER
+      );
   }
 }
 
@@ -474,7 +501,11 @@ const getMotive = prospect => {
     case `${MOTIVE_PREFIX}patch`:
       return PATCH;
     default:
-      throw new MotiveException(`'${motive}' is not a valid motive`, motive, Log.UNKNOWN_MOTIVE);
+      throw new MotiveException(
+        `'${motive}' is not a valid motive`,
+        motive,
+        Log.UNKNOWN_MOTIVE
+      );
   }
 }
 
@@ -487,7 +518,11 @@ const getType = prospect => {
     case 'public':
       return PUBLIC;
     default:
-      throw new TypeException(`'${prospect}' is not a valid type`, prospect, Log.UNKNOWN_TYPE);
+      throw new TypeException(
+        `'${prospect}' is not a valid type`,
+        prospect,
+        Log.UNKNOWN_TYPE
+      );
   }
 }
 
@@ -508,7 +543,11 @@ const getMotiveReason = (motive) => {
     // content within open and close bracket i.e:
     return motive.replace(/\?\w+\(|\)$/g, '');
   } else {
-    throw new MotiveException(`${motive} is missing reason`, motive, Log.MOTIVE_WITHOUT_REASON);
+    throw new MotiveException(
+      `${motive} is missing reason`,
+      motive,
+      Log.MOTIVE_WITHOUT_REASON
+    );
   }
 }
 

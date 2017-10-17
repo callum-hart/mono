@@ -4,23 +4,23 @@
   background-color: grey;
 }
 
-.inferredRuleSet2<?veto> {
+/*.inferredRuleSet2<?veto> {
   overflow: hidden;
-}
+}*/
 
-.inferredRuleSet3<@mutate> {
+/*.inferredRuleSet3<@mutate> {
   float: left;
-}
+}*/
 
-.inferredRuleSet4<?because('some reason')> {
+/*.inferredRuleSet4<?veto> {
   overflow: hidden;
-}
+}*/
 
 
-/* todo: formatting for multiple inferred notions */
-.inferredRuleSet5<?veto,@mutate> {
+        /* todo: formatting for multiple inferred notions */
+/*.inferredRuleSet5<?veto,@mutate> {
   overflow: hidden;
-}
+}*/
 
 /* lexer should throw error for invalid types, modifiers & motives          */
 .invalidInferredRuleSet<immutable

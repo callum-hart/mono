@@ -12,7 +12,7 @@ nav
 /* rule-sets in comments should be ignored by parser */
 
       /*.WAT {
-  color: red;
+  color<?because>: red;
 }*/
 
 
