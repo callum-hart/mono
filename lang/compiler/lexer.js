@@ -32,9 +32,9 @@ const { TypeException, ModifierException, MotiveException } = require('./excepti
 
 const BRACE_OPEN              = 'BRACE_OPEN';             // {
 const BRACE_CLOSE             = 'BRACE_CLOSE';            // }
-const COMMENT_OPEN            = 'COMMENT_OPEN';           // /*
-const COMMENT_CLOSE           = 'COMMENT_CLOSE';          // */
-const SINGLE_LINE_COMMENT     = 'SINGLE_LINE_COMMENT';    // /* a comment */
+const COMMENT_OPEN            = 'COMMENT_OPEN';           // /*               @deprecate
+const COMMENT_CLOSE           = 'COMMENT_CLOSE';          // */               @deprecate
+const SINGLE_LINE_COMMENT     = 'SINGLE_LINE_COMMENT';    // /* a comment */  @deprecate
 const MEDIA_QUERY             = 'MEDIA_QUERY';            // @media (min-width: 300px) and (max-width: 600px)
 const KEYFRAME                = 'KEYFRAME';               // @keyframes
 const KEYFRAME_SELECTOR       = 'KEYFRAME_SELECTOR';      // from, to, 0-100%
@@ -97,15 +97,10 @@ const tokenize = file => {
 
 const getToken = (value, pos) => {
 
-  // todo: text within comments should be treated as a COMMENT_LITERAL,
-  // otherwise any code that is commented out code is validated. i.e:
-  //
-  // /*
-  //  color<?because>: cadetblue;
-  // */
-  //
-  // throws: 'MOTIVE_WITHOUT_REASON'
-
+  /**
+   * todo: remove comment related tokens since comments will be removed
+   * by formatter.
+   */
 
 
   // start with the easy stuff, lines composed of a single token --
@@ -170,16 +165,19 @@ const isClosingBrace = value => {
   return value.match(/}$/);
 }
 
+// @deprecate
 const isSingleLineComment = value => {
   // line is a comment i.e: `/* line is a just a comment */`
   return value.match(/^\/\*.*\*\/$|^\s+\/\*.*\*\/$/);
 }
 
+// @deprecate
 const isOpeningComment = value => {
   // line starts with an opening comment i.e: `/*`
   return value.match(/^\/\*/);
 }
 
+// @deprecate
 const isClosingComment = value => {
   // line ends with a closing comment i.e: `*/`
   return value.match(/\*\/$/);
@@ -223,6 +221,7 @@ const isSelector = value => {
 
 // Tokens --
 
+// @deprecate
 const singleLineComment = (pos, comment) => {
   return [
     SINGLE_LINE_COMMENT,
@@ -231,6 +230,7 @@ const singleLineComment = (pos, comment) => {
   ];
 }
 
+// @deprecate
 const openingComment = (pos, value) => {
   return [
     COMMENT_OPEN,
@@ -239,6 +239,7 @@ const openingComment = (pos, value) => {
   ];
 }
 
+// @deprecate
 const closingComment = (pos, value) => {
   return [
     COMMENT_CLOSE,
@@ -377,8 +378,6 @@ const selector = (pos, value) => {
 const getNotionIfAny = string => {
   // anything within crocodiles <>
   const notion = string.match(/<.+>/);
-
-  console.log(`getNotionIfAny called for ${string}`);
 
   if (notion) {
     const notionData = new Array(4);

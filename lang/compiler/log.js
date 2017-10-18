@@ -14,7 +14,7 @@ const chalk = require('chalk');
  *
  * Normalise participants as much as possible for easier comparison.
  * - remove whitespace(s)
- * - remove comments (if any)
+ * - remove comments (if any) todo: won't need this once formatter removes comments
  * - make lowercase
  *
  * @param  {File<name, soruce>} file  - file containing problem code
@@ -31,7 +31,7 @@ const codeError = (file, code, fragment) => {
   const lineIndex = haystack.findIndex((source, index) => {
     const loc = source
                   .replace(/\s+/g, '')
-                  .replace(/\/\*.*\*\//, '')
+                  .replace(/\/\*.*\*\//, '') // @deprecate
                   .toLowerCase();
 
     if (loc.includes(fragment.toLowerCase())) {

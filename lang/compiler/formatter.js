@@ -88,6 +88,8 @@ const formatPrettierOutput = prettierOutput => {
           // remove empty lines
           .replace(/^\s*\n/gm, '')
 
+          // todo: remove comments since they add no value (single & multi-line)
+
           // put multi-line declarations onto single line
           .replace(/\(\n\s+|,\n\s+|\s+(?=\);)/gm, match => match.replace(/\s+/gm, ''))
 

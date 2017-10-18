@@ -1,6 +1,8 @@
 const Formatter = require('../formatter');
 const { CSSException } = require('../exceptions');
 
+// todo: add tests for comment removal (single & multi-line)
+
 const mockFile = {
   name: 'mock mono file'
 }
