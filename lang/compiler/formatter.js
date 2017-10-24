@@ -91,18 +91,17 @@ const formatPrettierOutput = prettierOutput => {
           // remove empty lines
           .replace(/^\s*\n/gm, '')
 
-          // put multi-line declarations onto single line
-          .replace(/\(\n\s+|,\n\s+|\s+(?=\);)/gm, match => match.replace(/\s+/gm, ''))
-
           // remove space(s) before opening brace
           .replace(/\s*{/g, '{')
 
-          // todo: remove space before comma
+          // put multi-line declarations onto single line
+          .replace(/\(\n\s+|,\n\s+|\s+(?=\);)/gm, match => match.replace(/\s+/gm, ''))
 
-          // remove space(s) or new line(s) within crocodiles <>
-          // todo: make less greedy, only replace new lines(s) within crocodiles <> not whitespace(s)
-          .replace(/<([\s\S]*?)>/g, match => match.replace(/\s+/gm, ''))
+          // remove space(s) from inferred notions
+          .replace(/<\s+|\s+>{|\s+>.,/g, match => match.replace(/\s/g, ''))
 
+          // remove newline(s) from inferred notions
+          .replace(/<([\s\S]*?)>/g, match => match.replace(/\n/g, ''))
 }
 
 module.exports = { format }

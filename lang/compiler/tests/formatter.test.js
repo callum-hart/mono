@@ -465,3 +465,47 @@ test('Invalid CSS detected (missing semicolon) should throw CSSException', () =>
   const doubleColon = () => Formatter.format(mockFile);
   expect(doubleColon).toThrow(CSSException);
 });
+
+
+test('Remove spaces & newlines from inferred notions', () => {
+  mockFile.source = `
+
+            .eins<public,
+
+
+          ?because('some reason for usage')> {
+  overflow: hidden;
+}
+
+.zwei<  protected  >,
+
+    .drei<   immutable,
+
+    ?patch('eng-123')> {
+  line-height: 20px;
+}
+
+#vier<
+
+  immutable,
+
+@mutate
+
+> {
+  color: cadetblue;
+}
+
+  `;
+
+    expect(Formatter.format(mockFile)).toBe(`.eins<public,?because('some reason for usage')>{
+  overflow: hidden;
+}
+.zwei<protected>,
+.drei<immutable,?patch('eng-123')>{
+  line-height: 20px;
+}
+#vier<immutable,@mutate>{
+  color: cadetblue;
+}
+`);
+});

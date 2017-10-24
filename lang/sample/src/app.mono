@@ -23,7 +23,12 @@
 
 
 
-          .inferredRuleSet5<public, ?because('some reason for usage')> {
+          .inferredRuleSet5<
+
+          public,
+
+
+          ?because('some reason for usage')> {
   overflow: hidden;
 }
 
@@ -82,7 +87,9 @@ p.one, span.two<immutable> {
 
 
 p.three<  protected  >,
-    span.two< immutable> {
+    span.two<   immutable,
+
+    ?patch('eng-123')> {
   line-height<immutable>: 20px;
 }
 
