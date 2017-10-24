@@ -1,11 +1,80 @@
 const Formatter = require('../formatter');
 const { CSSException } = require('../exceptions');
 
-// todo: add tests for comment removal (single & multi-line)
 
 const mockFile = {
   name: 'mock mono file'
 }
+
+
+test('Single line comments should be removed', () => {
+  mockFile.source = `
+
+  /* single line comment */
+  footer {
+    height: 300px /* inline comment */;
+    width: 100%;
+
+    /* footer typography */
+    font-size: 12px;
+    font-familiy: Operator Mono   /*     assign to variable     */;
+
+    /* footer theme colors */
+    background: var(--footer_background) /* another inline comment */;
+  }
+  `;
+
+  expect(Formatter.format(mockFile)).toBe(`footer{
+  height: 300px;
+  width: 100%;
+  font-size: 12px;
+  font-familiy: Operator Mono;
+  background: var(--footer_background);
+}
+`);
+});
+
+
+test('Multi-line comments should be removed', () => {
+  mockFile.source = `
+
+  /*
+    Styles for nav
+  */
+
+  nav {
+    background: var(--nav_background);
+    height: 80px;
+    width: 100%;
+  }
+
+  /* Nav layout
+
+  */
+
+  /*
+
+        Company logo
+*/
+  nav .logo {
+    display: block;
+    float: left;
+    margin-left: 20px;
+  }
+  `;
+
+  expect(Formatter.format(mockFile)).toBe(`nav{
+  background: var(--nav_background);
+  height: 80px;
+  width: 100%;
+}
+nav .logo{
+  display: block;
+  float: left;
+  margin-left: 20px;
+}
+`);
+});
 
 
 test('Single rule-set formatting', () => {
@@ -63,7 +132,7 @@ h3{
 });
 
 
-test('Single space before opening brace', () => {
+test('No space before opening rule-set brace', () => {
   mockFile.source = `
   p
 

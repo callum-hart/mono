@@ -17,18 +17,13 @@
 }*/
 
 
-/*
-  todo: formatting for multiple inferred notions
+/*.inferredRuleSet6<?veto > {
+  font-size: 14px;
+}*/
 
-  `.inferredRuleSet5<?veto,@mutate>{`
 
-  is formatted to:
 
-  `.inferredRuleSet5<?veto,
-  @mutate>{`
-  ;
-*/
-.inferredRuleSet5<?veto,@mutate> {
+          .inferredRuleSet5<public, ?because('some reason for usage')> {
   overflow: hidden;
 }
 
@@ -130,7 +125,7 @@ ul<     immutable    >{
 
 
 
-.bar < .foo           {}
+.bar > .foo           {}
 
 p.pow > .foo {
   color<?overthrow

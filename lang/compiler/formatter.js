@@ -85,23 +85,23 @@ const formatMonoNotion = rawNotion => {
  */
 const formatPrettierOutput = prettierOutput => {
   return prettierOutput
+          // remove single & multi-line comments
+          .replace(/\/\*([\s\S]*?)\*\//gm, '')
+
           // remove empty lines
           .replace(/^\s*\n/gm, '')
-
-          // todo: remove comments since they add no value (single & multi-line)
 
           // put multi-line declarations onto single line
           .replace(/\(\n\s+|,\n\s+|\s+(?=\);)/gm, match => match.replace(/\s+/gm, ''))
 
-          // put multi-line selectors on single line, is this is even worthwhile?
-          // .replace(/,\n/g, ', ')
-
           // remove space(s) before opening brace
           .replace(/\s*{/g, '{')
 
-          // remove space before & after closing > for inferred rule-sets & grouped rule-sets
-          // containing inferred rule-set(s) (spaces added by prettier)
-          .replace(/<(\s*[^\n]+)\s>\s*/g,'<$1>')
+          // todo: remove space before comma
+
+          // remove space(s) or new line(s) within crocodiles <>
+          // todo: make less greedy, only replace new lines(s) within crocodiles <> not whitespace(s)
+          .replace(/<([\s\S]*?)>/g, match => match.replace(/\s+/gm, ''))
 
 }
 

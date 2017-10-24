@@ -14,27 +14,32 @@ const chalk = require('chalk');
  *
  * Normalise participants as much as possible for easier comparison.
  * - remove whitespace(s)
- * - remove comments (if any) todo: won't need this once formatter removes comments
  * - make lowercase
+ * - make all quotes double
  *
  * @param  {File<name, soruce>} file  - file containing problem code
  * @param  {String} code              - loc containing the error (formatted)
- * @param  {String} fragment          - offending part of `code`
+ * @param  {String} offender          - offending part of `code`
  */
-const codeError = (file, code, fragment) => {
+const codeError = (file, code, offender) => {
   const needle = code
                     .replace(/\s+/g, '')
-                    .toLowerCase();
+                    .toLowerCase()
+                    .replace(/'/g, '"');
+
+  const fragment = offender
+                    .toLowerCase()
+                    .replace(/'/g, '"');
 
   const haystack = file.source.split(/\n/);
 
   const lineIndex = haystack.findIndex((source, index) => {
     const loc = source
                   .replace(/\s+/g, '')
-                  .replace(/\/\*.*\*\//, '') // @deprecate
-                  .toLowerCase();
+                  .toLowerCase()
+                  .replace(/'/g, '"');
 
-    if (loc.includes(fragment.toLowerCase())) {
+    if (loc.includes(fragment)) {
       // exact match
       if (loc === needle) {
         return true;
@@ -68,7 +73,8 @@ const codeError = (file, code, fragment) => {
 const addCarets = (codeBlock, fragment) => {
   const start = codeBlock
                       .toLowerCase()
-                      .indexOf(fragment.toLowerCase());
+                      .replace(/'/g, '"')
+                      .indexOf(fragment);
   const end = start + fragment.length;
   const padding = ' '.repeat(start);
   const carets = '^'.repeat(end-start);
@@ -153,13 +159,17 @@ module.exports = {
       console.log(`\nThe motive '${fragment}' requires a parameter explaining usage, for example:`);
       console.log(chalk`\n {grey width<${fragment}(}{green 'a reason for usage'}{grey )>: 100%;}\n`);
     },
-    INFERRED_NOTION_MISUSE: (file, code, fragment) => {
-      const notion = fragment.toLowerCase();
-      console.log(chalk.blue(`\n[Inferred error] Rule-set notion mismatch`));
-      codeError(file, code, notion);
-      console.log(chalk.red(`The notion '${notion}' cannot be inferred by rule-sets`));
-      console.log(chalk`\nRule-sets can only infer a {bold type}, for example:`);
-      console.log(chalk`\n {grey a.link<{green immutable}> {}\n`);
+    CANNOT_INFER_MODIFIER: (file, code, fragment) => {
+      console.log(chalk.blue(`\n[Modifier error] Inferred modifier found`));
+      codeError(file, code, fragment);
+      console.log(chalk`{red Rule-set cannot infer a modifier (${fragment.toLowerCase()})}`);
+      console.log(chalk`\nTip: rule-sets can only infer a {bold type}, for example: \n - {grey a.link<{green immutable}> {}\n - {grey a.link<{green protected}> {}\n - {grey a.link<{green public}> {}\n`);
+    },
+    CANNOT_INFER_MOTIVE: (file, code, fragment) => {
+      console.log(chalk.blue(`\n[Motive error] Inferred motive found`));
+      codeError(file, code, fragment);
+      console.log(chalk`{red Rule-set cannot infer a motive (${fragment.toLowerCase()})}`);
+      console.log(chalk`\nTip: rule-sets can only infer a {bold type}, for example: \n - {grey a.link<{green immutable}> {}\n - {grey a.link<{green protected}> {}\n - {grey a.link<{green public}> {}\n`);
     }
   }
 };

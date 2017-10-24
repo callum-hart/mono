@@ -32,9 +32,6 @@ const { TypeException, ModifierException, MotiveException } = require('./excepti
 
 const BRACE_OPEN              = 'BRACE_OPEN';             // {
 const BRACE_CLOSE             = 'BRACE_CLOSE';            // }
-const COMMENT_OPEN            = 'COMMENT_OPEN';           // /*               @deprecate
-const COMMENT_CLOSE           = 'COMMENT_CLOSE';          // */               @deprecate
-const SINGLE_LINE_COMMENT     = 'SINGLE_LINE_COMMENT';    // /* a comment */  @deprecate
 const MEDIA_QUERY             = 'MEDIA_QUERY';            // @media (min-width: 300px) and (max-width: 600px)
 const KEYFRAME                = 'KEYFRAME';               // @keyframes
 const KEYFRAME_SELECTOR       = 'KEYFRAME_SELECTOR';      // from, to, 0-100%
@@ -97,32 +94,9 @@ const tokenize = file => {
 
 const getToken = (value, pos) => {
 
-  /**
-   * todo: remove comment related tokens since comments will be removed
-   * by formatter.
-   */
-
-
-  // start with the easy stuff, lines composed of a single token --
-
-  if (isSingleLineComment(value)) {
-    return singleLineComment(pos, value);
-  }
-
-  if (isOpeningComment(value)) {
-    return openingComment(pos, value);
-  }
-
-  if (isClosingComment(value)) {
-    return closingComment(pos, value);
-  }
-
   if (isClosingBrace(value)) {
     return closingBrace(pos);
   }
-
-
-  // now handle lines containing multiple tokens --
 
   if (isMediaQuery(value)) {
     return atRule(pos, MEDIA_QUERY, value);
@@ -165,24 +139,6 @@ const isClosingBrace = value => {
   return value.match(/}$/);
 }
 
-// @deprecate
-const isSingleLineComment = value => {
-  // line is a comment i.e: `/* line is a just a comment */`
-  return value.match(/^\/\*.*\*\/$|^\s+\/\*.*\*\/$/);
-}
-
-// @deprecate
-const isOpeningComment = value => {
-  // line starts with an opening comment i.e: `/*`
-  return value.match(/^\/\*/);
-}
-
-// @deprecate
-const isClosingComment = value => {
-  // line ends with a closing comment i.e: `*/`
-  return value.match(/\*\/$/);
-}
-
 const isMediaQuery = value => {
   // line is a @media at-rule i.e: `@media (min-width: 300px){`
   return value.match(/^@media.*{$/);
@@ -220,33 +176,6 @@ const isSelector = value => {
 
 
 // Tokens --
-
-// @deprecate
-const singleLineComment = (pos, comment) => {
-  return [
-    SINGLE_LINE_COMMENT,
-    comment,
-    [ pos + 1 ]
-  ];
-}
-
-// @deprecate
-const openingComment = (pos, value) => {
-  return [
-    COMMENT_OPEN,
-    value,
-    [ pos + 1 ]
-  ];
-}
-
-// @deprecate
-const closingComment = (pos, value) => {
-  return [
-    COMMENT_CLOSE,
-    value,
-    [ pos + 1 ]
-  ];
-}
 
 const closingBrace = pos => {
   return [
@@ -340,9 +269,9 @@ const selector = (pos, value) => {
     const selector = value
                       .trim()
                       .replace(/{/, '')
-                      .replace(/,/, '');
+                      .replace(/,$/, ''); // comma could exist in notion combinator i.e: `immutable,?veto`
 
-    console.log(`todo: validate selector: '${selector}' (must be or contain HTML element)`);
+    // todo: validate selector, (must be or have HTML element)
 
     return [
       SELECTOR,
@@ -351,7 +280,6 @@ const selector = (pos, value) => {
       getSelectorNotionIfAny(selector)
     ];
   } catch (e) {
-    console.log(`selector error: ${e}`);
     e.log.call(undefined, currentFile, value, e.offender);
     throw new Error(e.message);
   }
@@ -441,7 +369,7 @@ const getSelectorNotionIfAny = selector => {
       throw new ModifierException(
         `'${selector}' cannot infer modifiers`,
         `${MODIFIER_PREFIX}${notionData[1]}`,
-        Log.INFERRED_NOTION_MISUSE
+        Log.CANNOT_INFER_MODIFIER
       );
     }
 
@@ -449,7 +377,7 @@ const getSelectorNotionIfAny = selector => {
       throw new MotiveException(
         `'${selector}' cannot infer motives`,
         `${MOTIVE_PREFIX}${notionData[2]}`,
-        Log.INFERRED_NOTION_MISUSE
+        Log.CANNOT_INFER_MOTIVE
       );
     }
   }
