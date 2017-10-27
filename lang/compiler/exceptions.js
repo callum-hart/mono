@@ -10,6 +10,14 @@ class ParserException {
   }
 }
 
+class AbstractNotionException {
+  constructor(message, offender, log) {
+    this.message = message;
+    this.offender = offender;
+    this.log = log;
+  }
+}
+
 class TypeException {
   constructor(message, offender, log) {
     this.message = message;
@@ -37,6 +45,7 @@ class MotiveException {
 module.exports = {
   CSSException,
   ParserException,
+  AbstractNotionException,
   TypeException,
   ModifierException,
   MotiveException

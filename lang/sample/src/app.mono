@@ -1,6 +1,7 @@
 .inferredRuleSet<  immutable  >   {
   color: red;
-  line-height: 20px;
+  /*font-weight<public,>: bold;*/ /*throws Expected notion after comma*/
+  line-height<?because('some reason, with comma'),>: 20px; /*throws Expected notion after comma*/
   background-color: grey;
 }
 
@@ -23,22 +24,20 @@
 
 
 
-          .inferredRuleSet5<
+ /*         .inferredRuleSet5<
 
           public,
 
 
           ?because('some reason for usage')> {
   overflow: hidden;
-}
+}*/
 
 /* lexer should throw error for invalid types, modifiers & motives          */
-.invalidInferredRuleSet<immutable
-
-   > {
-  float: left;
-  color: grey;
-  height: 100px;
+.invalidInferredRuleSet<immutable> {
+  /*float<@override,?veto,@mutate>: somedirection;*/ /*throws multiple modifiers found*/
+  color<?veto, immutable>: grey;
+  height<?patch('1'),@override,public,?veto,immutable, @mutate>: 100px;
 }
 
 @charset "UTF-8";
@@ -62,8 +61,9 @@ p.foo, span.bar {
 
 @keyframes slidein {
   from {
-    margin-left: 100%;
-    width: 300%;
+    margin-left<@override>: 100%;
+    /*width<@mutate,@override>: 300%;*/
+    width<immutable,@override>: 300%;
   }
 
   to {
@@ -87,9 +87,7 @@ p.one, span.two<immutable> {
 
 
 p.three<  protected  >,
-    span.two<   immutable,
-
-    ?patch('eng-123')> {
+    span.four<   immutable> {
   line-height<immutable>: 20px;
 }
 

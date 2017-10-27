@@ -25,7 +25,12 @@ const chalk = require('chalk'); // temp
 
 const Formatter = require('./formatter');
 const Log = require('./log').lexer;
-const { TypeException, ModifierException, MotiveException } = require('./exceptions');
+const {
+  AbstractNotionException,
+  TypeException,
+  ModifierException,
+  MotiveException
+} = require('./exceptions');
 
 
 // token types
@@ -316,7 +321,7 @@ const getNotionIfAny = string => {
                       .replace(/^\<|\>$/g, '')
 
                       // replace any comma (not within single or double quotes) with delimiter for splitting
-                      .replace(/,(?=(?:[^'"]*(['"])[^'"]*\1)*[^'"]*$)/, '🐹')
+                      .replace(/,(?=(?:[^'"]*(['"])[^'"]*\1)*[^'"]*$)/g, '🐹')
                       .split('🐹');
 
     notions.forEach(prospect => {
@@ -326,11 +331,27 @@ const getNotionIfAny = string => {
         case IMMUTABLE:
         case PROTECTED:
         case PUBLIC:
-          notionData[0] = notionType;
+          if (notionData[0]) {
+            throw new TypeException(
+              `'${string}' already assigned a type '${notionData[0]}'`,
+              notionType,
+              Log.MULTIPLE_TYPES
+            );
+          } else {
+            notionData[0] = notionType;
+          }
           break;
         case OVERRIDE:
         case MUTATE:
-          notionData[1] = notionType;
+          if (notionData[1]) {
+            throw new ModifierException(
+              `'${string}' already assigned a modifier '${notionData[1]}'`,
+              `${MODIFIER_PREFIX}${notionType}`,
+              Log.MULTIPLE_MODIFIERS
+            );
+          } else {
+            notionData[1] = notionType;
+          }
           break;
         case OVERRULE:
         case OVERTHROW:
@@ -386,13 +407,21 @@ const getSelectorNotionIfAny = selector => {
 }
 
 const getNotionIfValid = prospect => {
-  switch (prospect.charAt(0)) {
-    case MODIFIER_PREFIX:
-      return getModidier(prospect);
-    case MOTIVE_PREFIX:
-      return getMotive(prospect);
-    default:
-      return getType(prospect);
+  if (prospect) {
+    switch (prospect.charAt(0)) {
+      case MODIFIER_PREFIX:
+        return getModidier(prospect);
+      case MOTIVE_PREFIX:
+        return getMotive(prospect);
+      default:
+        return getType(prospect);
+    }
+  } else {
+    throw new AbstractNotionException(
+      `'${prospect}' is empty`,
+      `${prospect},>`,
+      Log.MISSING_NOTION
+    );
   }
 }
 

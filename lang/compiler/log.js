@@ -134,6 +134,11 @@ module.exports = {
     }
   },
   lexer: {
+    MISSING_NOTION: (file, code, fragment) => {
+      console.log(chalk.blue(`\n[Notion error] Missing notion`));
+      codeError(file, code, fragment);
+      console.log(chalk.red(`Expected notion between comma and >\n`));
+    },
     UNKNOWN_TYPE: (file, code, fragment) => {
       console.log(chalk.blue(`\n[Type error] Unknown type`));
       codeError(file, code, fragment);
@@ -170,6 +175,14 @@ module.exports = {
       codeError(file, code, fragment);
       console.log(chalk`{red Rule-set cannot infer a motive (${fragment.toLowerCase()})}`);
       console.log(chalk`\nTip: rule-sets can only infer a {bold type}, for example: \n - {grey a.link<{green immutable}> {}\n - {grey a.link<{green protected}> {}\n - {grey a.link<{green public}> {}\n`);
+    },
+    MULTIPLE_TYPES: (file, code, fragment) => {
+      console.log(chalk.blue(`\n[Type error] Multiple types found`));
+      codeError(file, code, fragment);
+    },
+    MULTIPLE_MODIFIERS: (file, code, fragment) => {
+      console.log(chalk.blue(`\n[Modifier error] Multiple modifiers found`));
+      codeError(file, code, fragment);
     }
   }
 };
