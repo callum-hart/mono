@@ -335,7 +335,7 @@ const getNotionIfAny = string => {
             throw new TypeException(
               `'${string}' already assigned a type '${notionData[0]}'`,
               notionType,
-              Log.MULTIPLE_TYPES
+              Log.TYPE_ALREADY_DECLARED
             );
           } else {
             notionData[0] = notionType;
@@ -347,7 +347,7 @@ const getNotionIfAny = string => {
             throw new ModifierException(
               `'${string}' already assigned a modifier '${notionData[1]}'`,
               `${MODIFIER_PREFIX}${notionType}`,
-              Log.MULTIPLE_MODIFIERS
+              Log.MODIFIER_ALREADY_DECLARED
             );
           } else {
             notionData[1] = notionType;
