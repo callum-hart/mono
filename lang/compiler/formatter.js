@@ -24,8 +24,6 @@ const { CSSException } = require('./exceptions');
 
 
 /**
- * {Public} format
- *
  * Format mono source file.
  *
  * @param {String} name - name of mono source file
@@ -42,8 +40,6 @@ const format = ({name, source} = file) => {
 }
 
 /**
- * {Private} formatMonoNotions
- *
  * Cleanup mono notions (types, inferred types, modifiers, motives).
  *
  * @param  {String} styles - raw mono soruce code
@@ -61,8 +57,6 @@ const formatMonoNotions = styles => {
 }
 
 /**
- * {Private} formatMonoNotion
- *
  * Remove whitespace from mono notions, whilst preserving whitspace within quotes.
  * Motives such as `?because` can contain spaces as part of the reason. For example:
  * `<?because: 'align content with nav'>`.
@@ -76,8 +70,6 @@ const formatMonoNotion = rawNotion => {
 }
 
 /**
- * {Private} formatPrettierOutput
- *
  * Transform prettier output.
  *
  * @param  {String} prettierOutput - mono source code formatted by prettier as if it were CSS.

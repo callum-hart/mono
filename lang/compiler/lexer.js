@@ -276,7 +276,6 @@ const selector = (pos, value) => {
                       .replace(/{/, '')
                       .replace(/,$/, ''); // comma could exist in notion combinator i.e: `immutable,?veto`
 
-    // todo: add tests for lexer
     // todo: validate selector, (must be or have HTML element)
 
     return [
@@ -408,6 +407,13 @@ const getSelectorNotionIfAny = selector => {
   return notionData;
 }
 
+/**
+ * Extract notion from string.
+ *
+ * @param  {String} string - string containing a notion
+ * @throws {AbstractNotionException} If notion is missing
+ * @return {String} the notion type
+ */
 const getNotionIfValid = prospect => {
   if (prospect) {
     switch (prospect.charAt(0)) {
@@ -427,6 +433,13 @@ const getNotionIfValid = prospect => {
   }
 }
 
+/**
+ * Determine modifier type.
+ *
+ * @param  {String} prospect - string potentially containing a modifier
+ * @throws {ModifierException} If modifier is invalid
+ * @return {String} the modifier type
+ */
 const getModidier = prospect => {
   switch (prospect) {
     case `${MODIFIER_PREFIX}override`:
@@ -442,6 +455,13 @@ const getModidier = prospect => {
   }
 }
 
+/**
+ * Determine motive type.
+ *
+ * @param  {String} prospect - string potentially containing a motive
+ * @throws {MotiveException} If motive is invalid
+ * @return {String} the motive type
+ */
 const getMotive = prospect => {
   const motive = prospect.match(/\?\w+/)[0];
 
@@ -467,6 +487,13 @@ const getMotive = prospect => {
   }
 }
 
+/**
+ * Determine types type.
+ *
+ * @param  {String} prospect - string potentially containing a type
+ * @throws {TypeException} If type is invalid
+ * @return {String} the types type
+ */
 const getType = prospect => {
   switch (prospect) {
     case 'immutable':

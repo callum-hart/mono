@@ -11,6 +11,8 @@ const mockFile = {
   name: 'Lexer test mock file'
 }
 
+// todo: add tests for token generation, once lexer complete
+
 
 test('Detect unknown declaration type', () => {
   mockFile.source = `
