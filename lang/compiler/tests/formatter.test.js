@@ -3,7 +3,7 @@ const { CSSException } = require('../exceptions');
 
 
 const mockFile = {
-  name: 'mock mono file'
+  name: 'Fomatter test mock file'
 }
 
 

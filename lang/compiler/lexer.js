@@ -255,9 +255,9 @@ const declaration = (pos, value) => {
       [ pos + 1 ],
       getNotionIfAny(property)
     ];
-  } catch (e) {
-    e.log.call(undefined, currentFile, value, e.offender);
-    throw new Error(e.message);
+  } catch (error) {
+    error.log.call(undefined, currentFile, value, error.offender);
+    throw new error.constructor(error.message);
   }
 }
 
@@ -276,6 +276,7 @@ const selector = (pos, value) => {
                       .replace(/{/, '')
                       .replace(/,$/, ''); // comma could exist in notion combinator i.e: `immutable,?veto`
 
+    // todo: add tests for lexer
     // todo: validate selector, (must be or have HTML element)
 
     return [
@@ -284,9 +285,9 @@ const selector = (pos, value) => {
       [ pos + 1 ],
       getSelectorNotionIfAny(selector)
     ];
-  } catch (e) {
-    e.log.call(undefined, currentFile, value, e.offender);
-    throw new Error(e.message);
+  } catch (error) {
+    error.log.call(undefined, currentFile, value, error.offender);
+    throw new error.constructor(error.message);
   }
 }
 
@@ -333,7 +334,7 @@ const getNotionIfAny = string => {
         case PUBLIC:
           if (notionData[0]) {
             throw new TypeException(
-              `'${string}' already assigned a type '${notionData[0]}'`,
+              `${string} already assigned the type ${notionData[0]}`,
               notionType,
               Log.TYPE_ALREADY_DECLARED
             );
@@ -345,7 +346,7 @@ const getNotionIfAny = string => {
         case MUTATE:
           if (notionData[1]) {
             throw new ModifierException(
-              `'${string}' already assigned a modifier '${notionData[1]}'`,
+              `${string} already assigned the modifier ${notionData[1]}`,
               `${MODIFIER_PREFIX}${notionType}`,
               Log.MODIFIER_ALREADY_DECLARED
             );
@@ -387,8 +388,9 @@ const getSelectorNotionIfAny = selector => {
 
   if (notionData) {
     if (notionData[1]) {
+      console.log(`**Selector: ${selector}`);
       throw new ModifierException(
-        `'${selector}' cannot infer modifiers`,
+        `${selector} cannot infer modifiers`,
         `${MODIFIER_PREFIX}${notionData[1]}`,
         Log.CANNOT_INFER_MODIFIER
       );
@@ -396,7 +398,7 @@ const getSelectorNotionIfAny = selector => {
 
     if (notionData[2]) {
       throw new MotiveException(
-        `'${selector}' cannot infer motives`,
+        `${selector} cannot infer motives`,
         `${MOTIVE_PREFIX}${notionData[2]}`,
         Log.CANNOT_INFER_MOTIVE
       );
@@ -418,7 +420,7 @@ const getNotionIfValid = prospect => {
     }
   } else {
     throw new AbstractNotionException(
-      `'${prospect}' is empty`,
+      'Trailing comma found in combinator',
       `${prospect},>`,
       Log.MISSING_NOTION
     );
@@ -433,7 +435,7 @@ const getModidier = prospect => {
       return MUTATE;
     default:
       throw new ModifierException(
-        `'${prospect}' is not a valid modifier`,
+        `${prospect} is not a valid modifier`,
         prospect,
         Log.UNKNOWN_MODIFIER
       );
@@ -458,7 +460,7 @@ const getMotive = prospect => {
       return PATCH;
     default:
       throw new MotiveException(
-        `'${motive}' is not a valid motive`,
+        `${motive} is not a valid motive`,
         motive,
         Log.UNKNOWN_MOTIVE
       );
@@ -475,7 +477,7 @@ const getType = prospect => {
       return PUBLIC;
     default:
       throw new TypeException(
-        `'${prospect}' is not a valid type`,
+        `${prospect} is not a valid type`,
         prospect,
         Log.UNKNOWN_TYPE
       );
@@ -500,7 +502,7 @@ const getMotiveReason = (motive) => {
     return motive.replace(/\?\w+\(|\)$/g, '');
   } else {
     throw new MotiveException(
-      `${motive} is missing reason`,
+      `${motive} is missing a reason`,
       motive,
       Log.MOTIVE_WITHOUT_REASON
     );

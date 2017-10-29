@@ -134,11 +134,6 @@ module.exports = {
     }
   },
   lexer: {
-    MISSING_NOTION: (file, code, fragment) => {
-      console.log(chalk.blue(`\n[Notion error] Missing notion`));
-      codeError(file, code, fragment);
-      console.log(chalk.red(`Expected notion between comma and >\n`));
-    },
     UNKNOWN_TYPE: (file, code, fragment) => {
       console.log(chalk.blue(`\n[Type error] Unknown type`));
       codeError(file, code, fragment);
@@ -183,6 +178,12 @@ module.exports = {
     MODIFIER_ALREADY_DECLARED: (file, code, fragment) => {
       console.log(chalk.blue(`\n[Modifier error] Multiple modifiers found`));
       codeError(file, code, fragment);
+    },
+    MISSING_NOTION: (file, code, fragment) => {
+      // trailing comma in notion combinator
+      console.log(chalk.blue(`\n[Notion error] Missing notion`));
+      codeError(file, code, fragment);
+      console.log(chalk.red(`Expected notion between comma and >\n`));
     }
   }
 };
