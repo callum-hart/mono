@@ -179,23 +179,23 @@ test('Media query formatting', () => {
 `);
 });
 
-// @pending for now - depends on how multi-selectors are tokenized
-// test('Multi-line selectors should be on same line', () => {
-//   mockFile.source = `
 
-//   h1,
-//   h2,
-//   h3,
-//   h4,
-//   h5 {
-//     color: lightslategray;
-//   }`;
+test('Multiple selectors should be moved onto separate lines', () => {
+  mockFile.source = `
 
-//   expect(Formatter.format(mockFile)).toBe(`h1, h2, h3, h4, h5{
-//   color: lightslategray;
-// }
-// `);
-// });
+  h1, h2, h3, h4, h5 {
+    color: lightslategray;
+  }`;
+
+  expect(Formatter.format(mockFile)).toBe(`h1,
+h2,
+h3,
+h4,
+h5{
+  color: lightslategray;
+}
+`);
+});
 
 
 test('One rule-set per line', () => {
