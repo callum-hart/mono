@@ -1,0 +1,60 @@
+/* Elememt */
+span {}
+a {}
+
+/* Class */
+.spacious {}
+li.spacious {}
+div.classy {}
+
+/* ID */
+div#demo {}
+div#identified {}
+#foo {}
+
+/* Universal */
+* [lang^en] {}
+*.warning {}
+*#maincontent {}
+.floating + * {}
+
+/* Attribute */
+a[title] {}
+a[href="https://example.org"] {}
+a[href*="example"] {}
+a[href$=".org"] {}
+
+/* Combintator - adjacent */
+img + p {}
+li:first-of-type + li {}
+
+/* Combintator - general sibling */
+img ~ p {}
+p ~ span {}
+.foo ~ .bar {}
+p ~ .bar {}
+
+/* Combintator - direct child */
+ul.my-things > li {}
+div > span > a.foo {}
+div > .foo {}
+
+/* Combintator - descendant */
+div ul.my-things li {}
+section .my-things .bar {}
+div a {}
+
+/* Pseudo-classes */
+div:hover {}
+.foo:hover .bar {}
+.bar .foo:hover {}
+
+/* Pseudo-elements */
+.foo::after {}
+.foo .bar::before {}
+
+/* Invalid elements */
+
+foo.bar {}
+ola {}
+section pow.fakeElement {}

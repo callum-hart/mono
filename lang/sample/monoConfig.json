@@ -2,7 +2,8 @@
   "src": [
     "src/app.mono",
     "src/nav.mono",
-    "src/sub_dir/typography"
+    "src/sub_dir/typography",
+    "src/possibleSelectors"
   ],
   "dest": "dest/out.css"
 }

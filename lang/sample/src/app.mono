@@ -1,7 +1,7 @@
 .inferredRuleSet<  immutable  >   {
   color: red;
   /*font-weight<public,>: bold;*/ /*throws Expected notion after comma*/
-  line-height<?because('some reason, with comma'),>: 20px; /*throws Expected notion after comma*/
+  line-height<?because('some reason, with comma')>: 20px; /*throws Expected notion after comma*/
   background-color: grey;
 }
 
@@ -37,7 +37,7 @@
 .invalidInferredRuleSet<immutable> {
   /*float<@override,?veto,@mutate>: somedirection;*/ /*throws multiple modifiers found*/
   color<?veto, immutable>: grey;
-  height<?patch('1'),@override,public,?veto,immutable, @mutate>: 100px;
+  height<?patch('1'),@override,public,?veto>: 100px;
 }
 
 @charset "UTF-8";

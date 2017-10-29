@@ -25,11 +25,13 @@ const chalk = require('chalk'); // temp
 
 const Formatter = require('./formatter');
 const Log = require('./log').lexer;
+const HTML_ELEMENTS = require('./htmlElements');
 const {
   AbstractNotionException,
   TypeException,
   ModifierException,
-  MotiveException
+  MotiveException,
+  SelectorException
 } = require('./exceptions');
 
 
@@ -44,7 +46,6 @@ const FONT_FACE               = 'FONT_FACE';              // @font-face
 const CHARSET                 = 'CHARSET';                // @charset
 const DECLARATION             = 'DECLARATION';            // property: value || property<immutable>: value || property<public,?patch('ENG-123')>: value
 const SELECTOR                = 'SELECTOR';               // a.link
-const LITERAL                 = 'LITERAL';                // most likey a comment
 
 // mono notions
 
@@ -64,6 +65,8 @@ const FALLBACK                = 'FALLBACK';
 const BECAUSE                 = 'BECAUSE';
 const PATCH                   = 'PATCH';
 
+
+const BLANK                   = '';
 let currentFile;
 
 const tokenize = file => {
@@ -132,7 +135,7 @@ const getToken = (value, pos) => {
   }
 
   // todo: looks like formatter is appending empty line to each file.
-  if (value === '') {
+  if (value === BLANK) {
     console.log(`empty value found at pos: ${pos}`);
   }
 }
@@ -225,7 +228,7 @@ const atRule = (pos, type, value) => {
       tokens.push(
         [
           type,
-          value.replace(/{/, ''),
+          value.replace(/{/, BLANK),
           [ pos + 1 ]
         ],
         [
@@ -273,17 +276,17 @@ const selector = (pos, value) => {
   try {
     const selector = value
                       .trim()
-                      .replace(/{/, '')
-                      .replace(/,$/, ''); // comma could exist in notion combinator i.e: `immutable,?veto`
+                      .replace(/{/, BLANK)
+                      .replace(/,$/, BLANK); // comma could exist in notion combinator i.e: `immutable,?veto`
 
-    // todo: validate selector, (must be or have HTML element)
-
-    return [
-      SELECTOR,
-      selector,
-      [ pos + 1 ],
-      getSelectorNotionIfAny(selector)
-    ];
+    if (isSelectorValid(selector)) {
+      return [
+        SELECTOR,
+        selector,
+        [ pos + 1 ],
+        getSelectorNotionIfAny(selector)
+      ]
+    }
   } catch (error) {
     error.log.call(undefined, currentFile, value, error.offender);
     throw new error.constructor(error.message);
@@ -318,7 +321,7 @@ const getNotionIfAny = string => {
     // notion can be plural.
     const notions = notion[0]
                       // remove crocodiles <>
-                      .replace(/^\<|\>$/g, '')
+                      .replace(/^\<|\>$/g, BLANK)
 
                       // replace any comma (not within single or double quotes) with delimiter for splitting
                       .replace(/,(?=(?:[^'"]*(['"])[^'"]*\1)*[^'"]*$)/g, '🐹')
@@ -387,7 +390,6 @@ const getSelectorNotionIfAny = selector => {
 
   if (notionData) {
     if (notionData[1]) {
-      console.log(`**Selector: ${selector}`);
       throw new ModifierException(
         `${selector} cannot infer modifiers`,
         `${MODIFIER_PREFIX}${notionData[1]}`,
@@ -411,7 +413,7 @@ const getSelectorNotionIfAny = selector => {
  * Extract notion from string.
  *
  * @param  {String} string - string containing a notion
- * @throws {AbstractNotionException} If notion is missing
+ * @throws {AbstractNotionException} If notion is blank
  * @return {String} the notion type
  */
 const getNotionIfValid = prospect => {
@@ -526,7 +528,7 @@ const getType = prospect => {
 const getMotiveReason = (motive) => {
   if (motive.includes('(') && motive.includes(')')) {
     // content within open and close bracket i.e:
-    return motive.replace(/\?\w+\(|\)$/g, '');
+    return motive.replace(/\?\w+\(|\)$/g, BLANK);
   } else {
     throw new MotiveException(
       `${motive} is missing a reason`,
@@ -534,6 +536,44 @@ const getMotiveReason = (motive) => {
       Log.MOTIVE_WITHOUT_REASON
     );
   }
+}
+
+const isSelectorValid = (selector) => {
+  const fragments = selector
+                      .replace(/\+|\~|\>/g, BLANK) // remove characters used by combinators
+                      .replace(/\*/g, BLANK)       // remove universal selectors
+                      .trim()
+                      .split(/\s+/);
+
+  console.log(chalk`{grey selector: {bold ${selector}}}`);
+
+  fragments.forEach(fragment => {
+    if (HTML_ELEMENTS.includes(fragment)) {
+      console.log(chalk`fragment: {bold ${fragment}} is a HTML element`);
+    } else {
+      // word before a class, ID, attribute, pseudo-class, pseudo-element
+      const elementIfAny = fragment.match(/^\w+(?=\.)|^\w+(?=#)|^\w+(?=\[)|^\w+(?=:)/g);
+
+      if (elementIfAny) {
+        if (HTML_ELEMENTS.includes(elementIfAny[0])) {
+          console.log(chalk`fragment: {bold ${fragment}} begins with a valid HTML element`);
+        } else {
+          console.log(chalk`elementIfAny: {bold ${elementIfAny[0]}} isn't a valid element type`);
+        }
+      } else {
+        console.log(chalk`fragment: {bold ${fragment}} is missing element type`);
+      }
+    }
+  });
+
+  console.log(`------------------------------------------------------`);
+
+  // throw new SelectorException(
+  //   `${selector} missing HTML element`,
+  //   selector,
+  //   Log.SELECTOR_MISSING_ELEMENT
+  // );
+  return true;
 }
 
 module.exports = { tokenize }

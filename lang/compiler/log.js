@@ -172,18 +172,24 @@ module.exports = {
       console.log(chalk`\nTip: rule-sets can only infer a {bold type}, for example: \n - {grey a.link<{green immutable}> {}\n - {grey a.link<{green protected}> {}\n - {grey a.link<{green public}> {}\n`);
     },
     TYPE_ALREADY_DECLARED: (file, code, fragment) => {
+      // todo: improve description
       console.log(chalk.blue(`\n[Type error] Multiple types found`));
       codeError(file, code, fragment);
     },
     MODIFIER_ALREADY_DECLARED: (file, code, fragment) => {
+      // todo: improve description
       console.log(chalk.blue(`\n[Modifier error] Multiple modifiers found`));
       codeError(file, code, fragment);
     },
     MISSING_NOTION: (file, code, fragment) => {
-      // trailing comma in notion combinator
+      // todo: improve description
       console.log(chalk.blue(`\n[Notion error] Missing notion`));
       codeError(file, code, fragment);
       console.log(chalk.red(`Expected notion between comma and >\n`));
+    },
+    SELECTOR_MISSING_ELEMENT: (file, code, fragment) => {
+      console.log(chalk.blue(`\n[Selector error] Missing HTML element type`));
+      codeError(file, code, fragment);
     }
   }
 };

@@ -42,11 +42,20 @@ class MotiveException {
   }
 }
 
+class SelectorException {
+  constructor(message, offender, log) {
+    this.message = message;
+    this.offender = offender;
+    this.log = log;
+  }
+}
+
 module.exports = {
   CSSException,
   ParserException,
   AbstractNotionException,
   TypeException,
   ModifierException,
-  MotiveException
+  MotiveException,
+  SelectorException
 }
