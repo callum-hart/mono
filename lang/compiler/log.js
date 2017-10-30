@@ -71,6 +71,9 @@ const codeError = (file, code, offender) => {
  * @param  {String} fragment  - offending part of `codeBlock`
  */
 const addCarets = (codeBlock, fragment) => {
+  // console.log(`codeBlock: ${codeBlock}`);
+  // console.log(`fragment: ${fragment}`);
+
   const start = codeBlock
                       .toLowerCase()
                       .replace(/'/g, '"')
@@ -187,9 +190,18 @@ module.exports = {
       codeError(file, code, fragment);
       console.log(chalk.red(`Expected notion between comma and >\n`));
     },
-    SELECTOR_MISSING_ELEMENT: (file, code, fragment) => {
+    MISSING_ELEMENT_TYPE: (file, code, fragment) => {
       console.log(chalk.blue(`\n[Selector error] Missing HTML element type`));
       codeError(file, code, fragment);
+      console.log(chalk`{red {bold ${fragment}} is missing a HTML element type}\n`);
+      console.log(chalk`Tip: expected selector to include element type, for example: \n - {green div}{grey ${fragment}} \n - {green p}{grey ${fragment}} \n - {green section}{grey ${fragment}}\n`);
+      console.log(chalk`Futher reading:\n {grey - See https://developer.mozilla.org/en-US/docs/Web/HTML/Element for a comprehensive list of available HTML elements}\n`);
+    },
+    INVALID_ELEMENT_TYPE: (file, code, fragment) => {
+      console.log(chalk.blue(`\n[Selector error] Invalid HTML element type`));
+      codeError(file, code, fragment);
+      console.log(chalk`{red {bold ${fragment}} isn't a valid HTML element type}\n`);
+      console.log(chalk`Futher reading:\n {grey - See https://developer.mozilla.org/en-US/docs/Web/HTML/Element for a comprehensive list of valid HTML elements}\n`);
     }
   }
 };

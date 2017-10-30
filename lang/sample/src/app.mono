@@ -1,4 +1,8 @@
-.inferredRuleSet<  immutable  >   {
+nav .links {
+  color: red;
+}
+
+ola.inferredRuleSet<  immutable  >   {
   color: red;
   /*font-weight<public,>: bold;*/ /*throws Expected notion after comma*/
   line-height<?because('some reason, with comma')>: 20px; /*throws Expected notion after comma*/

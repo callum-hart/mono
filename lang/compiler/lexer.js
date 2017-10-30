@@ -540,39 +540,35 @@ const getMotiveReason = (motive) => {
 
 const isSelectorValid = (selector) => {
   const fragments = selector
+                      .replace(/<.+>/, BLANK)      // remove mono notions
                       .replace(/\+|\~|\>/g, BLANK) // remove characters used by combinators
                       .replace(/\*/g, BLANK)       // remove universal selectors
                       .trim()
                       .split(/\s+/);
 
-  console.log(chalk`{grey selector: {bold ${selector}}}`);
-
   fragments.forEach(fragment => {
-    if (HTML_ELEMENTS.includes(fragment)) {
-      console.log(chalk`fragment: {bold ${fragment}} is a HTML element`);
-    } else {
-      // word before a class, ID, attribute, pseudo-class, pseudo-element
-      const elementIfAny = fragment.match(/^\w+(?=\.)|^\w+(?=#)|^\w+(?=\[)|^\w+(?=:)/g);
+    // element or element before a: class, ID, attribute, pseudo-class or pseudo-element
+    const elementIfAny = fragment.match(/^\w+$|^\w+(?=\.)|^\w+(?=#)|^\w+(?=\[)|^\w+(?=:)/);
 
-      if (elementIfAny) {
-        if (HTML_ELEMENTS.includes(elementIfAny[0])) {
-          console.log(chalk`fragment: {bold ${fragment}} begins with a valid HTML element`);
-        } else {
-          console.log(chalk`elementIfAny: {bold ${elementIfAny[0]}} isn't a valid element type`);
-        }
+    if (elementIfAny) {
+      if (HTML_ELEMENTS.includes(elementIfAny[0])) {
+        console.log(chalk`fragment: {bold ${fragment}} is or contains a valid HTML element`);
       } else {
-        console.log(chalk`fragment: {bold ${fragment}} is missing element type`);
+        throw new SelectorException(
+          `${elementIfAny[0]}} isn't a valid element type`,
+          elementIfAny[0],
+          Log.INVALID_ELEMENT_TYPE
+        );
       }
+    } else {
+      throw new SelectorException(
+        `${fragment}} is missing element type`,
+        fragment,
+        Log.MISSING_ELEMENT_TYPE
+      );
     }
   });
 
-  console.log(`------------------------------------------------------`);
-
-  // throw new SelectorException(
-  //   `${selector} missing HTML element`,
-  //   selector,
-  //   Log.SELECTOR_MISSING_ELEMENT
-  // );
   return true;
 }
 
