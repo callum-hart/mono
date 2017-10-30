@@ -538,6 +538,15 @@ const getMotiveReason = (motive) => {
   }
 }
 
+/**
+ * Determine whether a CSS selector is valid.
+ *
+ * @param  {String} CSS selector
+ * @return {True} if selector contains valid HTML element type(s)
+ * @throws {SelectorException} When:
+ *  - HTML element is missing, or
+ *  - An invalid HTML element is used
+ */
 const isSelectorValid = (selector) => {
   const fragments = selector
                       .replace(/<.+>/, BLANK)      // remove mono notions
@@ -555,14 +564,14 @@ const isSelectorValid = (selector) => {
         console.log(chalk`fragment: {bold ${fragment}} is or contains a valid HTML element`);
       } else {
         throw new SelectorException(
-          `${elementIfAny[0]}} isn't a valid element type`,
+          `${elementIfAny[0]} is not a valid element type`,
           elementIfAny[0],
           Log.INVALID_ELEMENT_TYPE
         );
       }
     } else {
       throw new SelectorException(
-        `${fragment}} is missing element type`,
+        `${fragment} is missing element type`,
         fragment,
         Log.MISSING_ELEMENT_TYPE
       );
