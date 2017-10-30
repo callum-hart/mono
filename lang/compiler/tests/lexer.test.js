@@ -302,6 +302,19 @@ test('Detect pseudo-element missing element type', () => {
 });
 
 
+test('Detect missing element type in multiple selectors', () => {
+  mockFile.source = `
+  h1, h2, .heading {
+    -webkit-font-smoothing: antialiased;
+  }
+  `;
+
+  const missingElementType = () => Lexer.tokenize(mockFile);
+  expect(missingElementType).toThrow(SelectorException);
+  expect(missingElementType).toThrow('.heading is missing element type');
+});
+
+
 test('Detect invalid element type', () => {
   mockFile.source = `
   spinner {
@@ -390,5 +403,18 @@ test('Detect pseudo-element using invalid element type', () => {
   const invalidElementType = () => Lexer.tokenize(mockFile);
   expect(invalidElementType).toThrow(SelectorException);
   expect(invalidElementType).toThrow('spinner is not a valid element type');
+});
+
+
+test('Detect invalid element type in multiple selectors', () => {
+  mockFile.source = `
+  p.title, title {
+    -webkit-font-smoothing: antialiased;
+  }
+  `;
+
+  const invalidElementType = () => Lexer.tokenize(mockFile);
+  expect(invalidElementType).toThrow(SelectorException);
+  expect(invalidElementType).toThrow('title is not a valid element type');
 });
 
