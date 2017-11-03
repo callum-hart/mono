@@ -32,17 +32,22 @@ const chalk = require('chalk');
  *   the selector `.foo` (which throws MISSING_ELEMENT_TYPE) matches the first
  *   occurance of `.foo` regardless of context i.e: `h1.foo`. This happens
  *   due to the mismatch between the source code & the [formatted] code that's
- *   parsed. Is is reasonable to auto-format the source code?
- *   Benefits:
- *     - No longer need to maintain 'source-map' between source & formatted source
- *     - Easier / guaranteed error logging
- *     - All mono source would have a consistent format - better DX
- *   Drawbacks:
- *     - Performance hit? Adds an extra step / process to build. Although this
- *     would only affect initial build (formatting thereafter would only happen
- *     on files that changed).
- *     - Comments - currently comments are removed as part of formatting - they
- *     would need to be preserved.
+ *   parsed.
+ *   - Is is reasonable to auto-format the source code?
+ *       - Benefits:
+ *         - No longer need to maintain 'source-map' between source & formatted source
+ *         - Easier / guaranteed error logging
+ *         - All mono source would have a consistent format - better DX
+*        - Drawbacks:
+ *         - Performance hit? Adds an extra step / process to build. Although this
+ *           would only affect initial build (formatting thereafter would only happen
+ *           on files that changed).
+ *         - Comments - currently comments are removed as part of formatting - they
+ *           would need to be preserved.
+ *  - Or should `codeError` be better at searching? It could accept a regex param
+ *    that helps locate offender by providing more context. In the `.foo` example:
+ *    - If a top-level selector (`.foo {`) regex would be `^\.foo` (start of line)
+ *    - If part of a decendant selector (`div.bar > .foo{`) regex would be ` \.foo` (after space)
  */
 const codeError = (file, code, offender) => {
   const needle = code
