@@ -20,6 +20,29 @@ const chalk = require('chalk');
  * @param  {File<name, soruce>} file  - file containing problem code
  * @param  {String} code              - loc containing the error (formatted)
  * @param  {String} offender          - offending part of `code`
+ *
+ * Todo:
+ * - Make this testable (create object containing error details) i.e:
+ *   `{
+ *     line: {Number},
+ *     offender: {String},
+ *     codeFrame: {String}
+ *   }`
+ * - As it stands the search functionality isn't good enough. For example:
+ *   the selector `.foo` (which throws MISSING_ELEMENT_TYPE) matches the first
+ *   occurance of `.foo` regardless of context i.e: `h1.foo`. This happens
+ *   due to the mismatch between the source code & the [formatted] code that's
+ *   parsed. Is is reasonable to auto-format the source code?
+ *   Benefits:
+ *     - No longer need to maintain 'source-map' between source & formatted source
+ *     - Easier / guaranteed error logging
+ *     - All mono source would have a consistent format - better DX
+ *   Drawbacks:
+ *     - Performance hit? Adds an extra step / process to build. Although this
+ *     would only affect initial build (formatting thereafter would only happen
+ *     on files that changed).
+ *     - Comments - currently comments are removed as part of formatting - they
+ *     would need to be preserved.
  */
 const codeError = (file, code, offender) => {
   const needle = code

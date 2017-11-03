@@ -279,7 +279,7 @@ const selector = (pos, value) => {
                       .replace(/{/, BLANK)
                       .replace(/,$/, BLANK); // comma could exist in notion combinator i.e: `immutable,?veto`
 
-    if (isSelectorValid(selector)) {
+    if (selectorIsValid(selector)) {
       return [
         SELECTOR,
         selector,
@@ -547,7 +547,7 @@ const getMotiveReason = (motive) => {
  *  - HTML element is missing, or
  *  - An invalid HTML element is used
  */
-const isSelectorValid = (selector) => {
+const selectorIsValid = (selector) => {
   const fragments = selector
                       .replace(/<.+>/, BLANK)      // remove mono notions
                       .replace(/\+|\~|\>/g, BLANK) // remove characters used by combinators
@@ -555,9 +555,14 @@ const isSelectorValid = (selector) => {
                       .trim()
                       .split(/\s+/);
 
+  console.log(`selector: ${selector}`);
+  console.log(`fragments: ${fragments}`);
+
   fragments.forEach(fragment => {
-    // element or element before a: class, ID, attribute, pseudo-class or pseudo-element
+    // element or element preceding class, ID, attribute, pseudo-class or pseudo-element
     const elementIfAny = fragment.match(/^\w+$|^\w+(?=\.)|^\w+(?=#)|^\w+(?=\[)|^\w+(?=:)/);
+
+    console.log(`fragment: ${fragment}`);
 
     if (elementIfAny) {
       if (HTML_ELEMENTS.includes(elementIfAny[0])) {
@@ -577,6 +582,8 @@ const isSelectorValid = (selector) => {
       );
     }
   });
+
+  console.log(chalk`{grey ----------------------------}`);
 
   return true;
 }

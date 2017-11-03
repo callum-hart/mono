@@ -1,12 +1,12 @@
-h1 {
+h1.foo {
   font-size: 20px;
 }
 
-nav .links {
+nav ul.links {
   color: red;
 }
 
-ola.inferredRuleSet<  immutable  >   {
+div.inferredRuleSet<  immutable  >   {
   color: red;
   /*font-weight<public,>: bold;*/ /*throws Expected notion after comma*/
   line-height<?because('some reason, with comma')>: 20px; /*throws Expected notion after comma*/
@@ -42,7 +42,7 @@ ola.inferredRuleSet<  immutable  >   {
 }*/
 
 /* lexer should throw error for invalid types, modifiers & motives          */
-.invalidInferredRuleSet<immutable> {
+div.invalidInferredRuleSet<immutable> {
   /*float<@override,?veto,@mutate>: somedirection;*/ /*throws multiple modifiers found*/
   color<?veto, immutable>: grey;
   height<?patch('1'),@override,public,?veto>: 100px;
@@ -52,17 +52,17 @@ ola.inferredRuleSet<  immutable  >   {
 
 
 @media (min-width:900px)  {
-  .somethingElse {
+  div.somethingElse {
     display: block;
   }
 
-  .andAnother {
+  section.andAnother {
     height: auto;
   }
 }
 
 
-p.foo, span.bar {
+p.foo, p.bar {
   line-height<immutable>: 20px;
 }
 
@@ -137,10 +137,10 @@ ul<     immutable    >{
 
 
 
+/* todo: the missing element type on line 164 is reported as being here (because `.foo` exists in `div.bar > p.foo`) */
+div.bar > p.foo           {}
 
-.bar > .foo           {}
-
-p.pow > .foo {
+p.pow > span.foo {
   color<?overthrow
 
 
