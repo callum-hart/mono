@@ -20,14 +20,10 @@ const chalk = require('chalk');
  * @param  {File<name, soruce>} file  - file containing problem code
  * @param  {String} code              - loc containing the error (formatted)
  * @param  {String} offender          - offending part of `code`
+ * @return {Object}                   - error data with the shape { lineNumber, codeBlock }
+ *
  *
  * Todo:
- * - Make this testable (create object containing error details) i.e:
- *   `{
- *     line: {Number},
- *     offender: {String},
- *     codeFrame: {String}
- *   }`
  * - As it stands the search functionality isn't good enough. For example:
  *   the selector `.foo` (which throws MISSING_ELEMENT_TYPE) matches the first
  *   occurance of `.foo` regardless of context i.e: `h1.foo`. This happens
@@ -90,6 +86,11 @@ const codeError = (file, code, offender) => {
   console.log(` - ${file.name} \n`);
   console.log(chalk.grey(codeBlock));
   addCarets(codeBlock, fragment);
+
+  return {
+    lineNumber: lineIndex + 1,
+    codeBlock
+  }
 }
 
 /**
@@ -99,9 +100,6 @@ const codeError = (file, code, offender) => {
  * @param  {String} fragment  - offending part of `codeBlock`
  */
 const addCarets = (codeBlock, fragment) => {
-  // console.log(`codeBlock: ${codeBlock}`);
-  // console.log(`fragment: ${fragment}`);
-
   const start = codeBlock
                       .toLowerCase()
                       .replace(/'/g, '"')
@@ -114,6 +112,7 @@ const addCarets = (codeBlock, fragment) => {
 }
 
 module.exports = {
+  codeError, // export for testing purposes
   cli: {
     NO_ARGUMENT: () => {
       console.log('[Cli] No argument(s) present');
