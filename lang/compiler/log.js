@@ -21,29 +21,6 @@ const chalk = require('chalk');
  * @param  {String} code              - loc containing the error (formatted)
  * @param  {String} offender          - offending part of `code`
  * @return {Object}                   - error data with the shape { lineNumber, codeBlock }
- *
- *
- * Todo:
- * - As it stands the search functionality isn't good enough. For example:
- *   the selector `.foo` (which throws MISSING_ELEMENT_TYPE) matches the first
- *   occurance of `.foo` regardless of context i.e: `h1.foo`. This happens
- *   due to the mismatch between the source code & the [formatted] code that's
- *   parsed.
- *   - Is is reasonable to auto-format the source code?
- *       - Benefits:
- *         - No longer need to maintain 'source-map' between source & formatted source
- *         - Easier / guaranteed error logging
- *         - All mono source would have a consistent format - better DX
-*        - Drawbacks:
- *         - Performance hit? Adds an extra step / process to build. Although this
- *           would only affect initial build (formatting thereafter would only happen
- *           on files that changed).
- *         - Comments - currently comments are removed as part of formatting - they
- *           would need to be preserved.
- *  - Or should `codeError` be better at searching? It could accept a regex param
- *    that helps locate offender by providing more context. In the `.foo` example:
- *    - If a top-level selector (`.foo {`) regex would be `^\.foo` (start of line)
- *    - If part of a decendant selector (`div.bar > .foo{`) regex would be ` \.foo` (after space)
  */
 const codeError = (file, code, offender) => {
   const needle = code
@@ -55,8 +32,36 @@ const codeError = (file, code, offender) => {
                     .toLowerCase()
                     .replace(/'/g, '"');
 
+  // todo: remove single-line comments & remove multi-line comments (whilst preserving lines)
   const haystack = file.source.split(/\n/);
+  let lineNumber;
+  const exactMatchIfAny = findExactMatch(haystack, needle, fragment);
 
+  if (exactMatchIfAny) {
+    lineNumber = exactMatchIfAny;
+    console.log(`[exactMatchIfAny] lineNumber: ${lineNumber}`);
+  } else {
+    const partialMatchIfAny = findPartialMatch(haystack, needle, fragment);
+
+    if (partialMatchIfAny) {
+      lineNumber = partialMatchIfAny;
+      console.log(`[partialMatchIfAny] lineNumber: ${lineNumber}`);
+    }
+  }
+
+  const codeBlock = ` ${lineNumber} | ${haystack[lineNumber - 1]}`;
+
+  console.log(` - ${file.name} \n`);
+  console.log(chalk.grey(codeBlock));
+  addCarets(codeBlock, fragment);
+
+  return {
+    lineNumber,
+    codeBlock
+  }
+}
+
+const findExactMatch = (haystack, needle, fragment) => {
   const lineIndex = haystack.findIndex((source, index) => {
     const loc = source
                   .replace(/\s+/g, '')
@@ -64,11 +69,30 @@ const codeError = (file, code, offender) => {
                   .replace(/'/g, '"');
 
     if (loc.includes(fragment)) {
+      console.log(`[findExactMatch] line: ${index + 1}`);
+      console.log(`[findExactMatch] loc: ${loc}`);
+      console.log(`[findExactMatch] fragment: ${fragment}`);
+      console.log(`[findExactMatch] needle: ${needle}`);
+      console.log('------------------------------------------');
+
       // exact match
       if (loc === needle) {
         return true;
       }
+    }
+  });
 
+  return lineIndex + 1;
+}
+
+const findPartialMatch = (haystack, needle, fragment) => {
+  const lineIndex = haystack.findIndex((source, index) => {
+    const loc = source
+                  .replace(/\s+/g, '')
+                  .toLowerCase()
+                  .replace(/'/g, '"');
+
+    if (loc.includes(fragment)) {
       // partial match (loc is a subset of needle)
       if (needle.includes(loc)) {
         return true;
@@ -81,16 +105,7 @@ const codeError = (file, code, offender) => {
     }
   });
 
-  const codeBlock = ` ${lineIndex + 1} | ${haystack[lineIndex]}`;
-
-  console.log(` - ${file.name} \n`);
-  console.log(chalk.grey(codeBlock));
-  addCarets(codeBlock, fragment);
-
-  return {
-    lineNumber: lineIndex + 1,
-    codeBlock
-  }
+  return lineIndex + 1;
 }
 
 /**
