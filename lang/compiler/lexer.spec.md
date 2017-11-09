@@ -124,7 +124,7 @@ b) Create a token for each selector:
 
 And then in the parser selectors in a sequence are treated as multiple selectors.
 
-NOTE: Multiple selectors CANNOT contain inferred types. This would throw an error:
+**NOTE:** Grouped selectors CANNOT contain inferred types. This would throw an error:
 
 ```
 div.hey,

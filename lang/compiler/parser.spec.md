@@ -22,8 +22,6 @@ Defining requirements for mono AST - WIP
 - *elementType:* type of HTML element the selector targets i.e: `span`
 - *inferredType*: Used by INFERRED_RULE_SET. Contains type inferred by the rule-set i.e: `immutable`
 
-**`selectors`**: Used by GROUPED_RULE_SET. Array containing each {selector}
-
 **`declarations`**: array containing each {declaration}
 
 ## Media-query
@@ -43,7 +41,7 @@ Defining requirements for mono AST - WIP
 - max-width
 - min-height
 - max-height
-- ➕ plus [many more](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)
+- plus [many more](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)
 
 **`ruleSets`**: array containing each {rule-set}
 
@@ -78,7 +76,7 @@ Defining requirements for mono AST - WIP
 
 **`property`**: CSS property i.e `font-size`
 
-**`value`**: CSS value i.e `font-size`
+**`value`**: CSS value i.e `12px`
 
 **`notion`**: Mono notion (if any). Can be:
 - type i.e: `protected`

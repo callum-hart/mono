@@ -89,8 +89,6 @@ const tokenize = file => {
       } else {
         tokens.push(token);
       }
-    } else {
-      console.log(`token for '${lines[pos]}' needed`);
     }
 
     pos++;
@@ -251,6 +249,8 @@ const declaration = (pos, value) => {
     const declaration = value.trim();
     // until first colon
     const property = declaration.match(/.+?(?=:)/)[0];
+
+    // todo: declarationIsValid - check for inappropriate shorthand usage
 
     return [
       DECLARATION,
@@ -555,19 +555,12 @@ const selectorIsValid = (selector) => {
                       .trim()
                       .split(/\s+/);
 
-  console.log(`selector: ${selector}`);
-  console.log(`fragments: ${fragments}`);
-
   fragments.forEach(fragment => {
     // element or element preceding class, ID, attribute, pseudo-class or pseudo-element
     const elementIfAny = fragment.match(/^\w+$|^\w+(?=\.)|^\w+(?=#)|^\w+(?=\[)|^\w+(?=:)/);
 
-    console.log(`fragment: ${fragment}`);
-
     if (elementIfAny) {
-      if (HTML_ELEMENTS.includes(elementIfAny[0])) {
-        console.log(chalk`fragment: {bold ${fragment}} is or contains a valid HTML element`);
-      } else {
+      if (!HTML_ELEMENTS.includes(elementIfAny[0])) {
         throw new SelectorException(
           `${elementIfAny[0]} is not a valid element type`,
           elementIfAny[0],
@@ -582,8 +575,6 @@ const selectorIsValid = (selector) => {
       );
     }
   });
-
-  console.log(chalk`{grey ----------------------------}`);
 
   return true;
 }
