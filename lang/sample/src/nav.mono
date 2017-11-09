@@ -23,7 +23,7 @@ nav
 
     comment with text on last line  */
 
-.foo {
+div.foo {
   color<immutable>: red;
   /*height<?because>: red ;*/
 }

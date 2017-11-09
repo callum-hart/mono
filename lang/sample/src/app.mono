@@ -1,6 +1,22 @@
+/*h1.locked {
+  font-size: 20px;
+}
+div.title<
+
+locked
+
+> {
+  color: red;
+}*/
+
+
 h1.foo {
   font-size: 20px;
 }
+
+  /*.foo {
+  color: red;
+}*/
 
 nav ul.links {
   color: red;
@@ -42,8 +58,8 @@ div.inferredRuleSet<  immutable  >   {
 }*/
 
 /* lexer should throw error for invalid types, modifiers & motives          */
-div.invalidInferredRuleSet<immutable> {
-  /*float<@override,?veto,@mutate>: somedirection;*/ /*throws multiple modifiers found*/
+div.inferredRuleSet2<immutable> {
+  /*float<@override,?veto,@mutate>: somedirection;*/
   color<?veto, immutable>: grey;
   height<?patch('1'),@override,public,?veto>: 100px;
 }
@@ -56,15 +72,18 @@ div.invalidInferredRuleSet<immutable> {
     display: block;
   }
 
-  section.andAnother {
-    height: auto;
+  section.hidden {
+    display: none;
   }
 }
 
-
-p.foo, p.bar {
-  line-height<immutable>: 20px;
+/*.hidden, .notVisible {
+  display: none;
 }
+
+p.foo,.hidden {
+  line-height<immutable>: 20px;
+}*/
 
 
 @keyframes slidein {
@@ -161,18 +180,18 @@ p.pow > span.foo {
 
 
 
-            .foo   {
+            div.foo   {
 
 
 
         background: red;}
 
-.hidden {display<protected,     ?overrule>: none;} .shown {display: block;}
-.hidden {display<public,?overrule>: none;} .shown {display: block;}
+/*.hidden {display<protected,     ?overrule>: none;} .shown {display: block;}
+.hidden {display<public,?overrule>: none;} .shown {display: block;}*/
 
 
 
-.visible {visibility: visible;} #invisible {visibility: hidden;}
+p.visible {visibility: visible;} div#invisible {visibility: hidden;}
 
 div.title,
     span.label {
@@ -181,17 +200,17 @@ div.title,
 
 
 @media (min-width:300px) and (max-width:600px) {
-  .something {
+  p.something {
     display<@override>: none;
     color<?patch('ENG-12345')>: cadetblue;
   }
 }
 
-.combinatorWithOutSpace {
+div.combinatorWithOutSpace {
   color<public,?veto>: grey;
 }
 
-.combinatorWithSpace {
+div.combinatorWithSpace {
   color<protected, ?overrule>: blue;
   font-size<public,?because('some reason')>: 12px;
   font-size<    public,   ?because('ANOTHER REASON, FOR USAGE')
@@ -202,14 +221,14 @@ div.title,
   line-height<immutable,   ?patch("croccodiles < within string should> not break anything ")>: 20px;
 }
 
-.combinatorWithSpace2 {
+p.combinatorWithSpace2 {
   line-height <protected, ?overrule>: 20px;
   font-size<public, ?because('some reason')>: 20px;
   font-weight <protected, ?because('another-reason')> : bold;
   color : red ;
 }
 
-.declarationTypes {
+span.declarationTypes {
   background: -webkit-gradient(
                 linear,
                 left top,

@@ -21,31 +21,34 @@ const chalk = require('chalk');
  * @param  {String} code              - loc containing the error (formatted)
  * @param  {String} offender          - offending part of `code`
  * @return {Object}                   - error data with the shape { lineNumber, codeBlock }
+ *
+ * Todo: needs revisiting - see `log.test.js:56`
  */
 const codeError = (file, code, offender) => {
   const needle = code
-                    .replace(/\s+/g, '')
                     .toLowerCase()
+                    .replace(/\s+/g, '')
                     .replace(/'/g, '"');
 
   const fragment = offender
                     .toLowerCase()
                     .replace(/'/g, '"');
 
-  // todo: remove single-line comments & remove multi-line comments (whilst preserving lines)
+  // Todo: remove single-line comments & remove multi-line comments (whilst preserving lines)
   const haystack = file.source.split(/\n/);
   let lineNumber;
   const exactMatchIfAny = findExactMatch(haystack, needle, fragment);
 
+  console.log(`code: ${code}`);
+  console.log(`offender: ${offender}`);
+
   if (exactMatchIfAny) {
     lineNumber = exactMatchIfAny;
-    console.log(`[exactMatchIfAny] lineNumber: ${lineNumber}`);
   } else {
     const partialMatchIfAny = findPartialMatch(haystack, needle, fragment);
 
     if (partialMatchIfAny) {
       lineNumber = partialMatchIfAny;
-      console.log(`[partialMatchIfAny] lineNumber: ${lineNumber}`);
     }
   }
 
@@ -64,21 +67,12 @@ const codeError = (file, code, offender) => {
 const findExactMatch = (haystack, needle, fragment) => {
   const lineIndex = haystack.findIndex((source, index) => {
     const loc = source
-                  .replace(/\s+/g, '')
                   .toLowerCase()
+                  .replace(/\s+/g, '')
                   .replace(/'/g, '"');
 
-    if (loc.includes(fragment)) {
-      console.log(`[findExactMatch] line: ${index + 1}`);
-      console.log(`[findExactMatch] loc: ${loc}`);
-      console.log(`[findExactMatch] fragment: ${fragment}`);
-      console.log(`[findExactMatch] needle: ${needle}`);
-      console.log('------------------------------------------');
-
-      // exact match
-      if (loc === needle) {
-        return true;
-      }
+    if (loc.includes(fragment) && loc === needle) {
+      return true;
     }
   });
 
@@ -88,8 +82,8 @@ const findExactMatch = (haystack, needle, fragment) => {
 const findPartialMatch = (haystack, needle, fragment) => {
   const lineIndex = haystack.findIndex((source, index) => {
     const loc = source
-                  .replace(/\s+/g, '')
                   .toLowerCase()
+                  .replace(/\s+/g, '')
                   .replace(/'/g, '"');
 
     if (loc.includes(fragment)) {
