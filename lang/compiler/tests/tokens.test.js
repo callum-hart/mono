@@ -316,3 +316,43 @@ test('Charset at-rule', () => {
   ]);
 });
 
+
+test('Supports at-rule', () => {
+  mockFile.source = `
+  @supports (display: flex) {
+    div {
+      display: flex;
+    }
+  }
+  `;
+
+  expect(Lexer.tokenize(mockFile)).toEqual([
+    [ 'SUPPORTS', '@supports (display: flex)', [ 1 ] ],
+    [ 'BRACE_OPEN', '{', [ 1, 26 ] ],
+    [ 'SELECTOR', 'div', [ 2 ], null ],
+    [ 'DECLARATION', 'display: flex;', [ 3 ], null ],
+    [ 'BRACE_CLOSE', '}', [ 4 ] ],
+    [ 'BRACE_CLOSE', '}', [ 5 ] ]
+  ]);
+});
+
+
+test('Supports at-rule with negation', () => {
+  mockFile.source = `
+  @supports not (display: flex) {
+    div {
+      float: left;
+    }
+  }
+  `;
+
+  expect(Lexer.tokenize(mockFile)).toEqual([
+    [ 'SUPPORTS', '@supports not (display: flex)', [ 1 ] ],
+    [ 'BRACE_OPEN', '{', [ 1, 30 ] ],
+    [ 'SELECTOR', 'div', [ 2 ], null ],
+    [ 'DECLARATION', 'float: left;', [ 3 ], null ],
+    [ 'BRACE_CLOSE', '}', [ 4 ] ],
+    [ 'BRACE_CLOSE', '}', [ 5 ] ]
+  ]);
+});
+

@@ -21,8 +21,6 @@
  *
  */
 
-const chalk = require('chalk'); // temp
-
 const Formatter = require('./formatter');
 const Log = require('./log').lexer;
 const HTML_ELEMENTS = require('./htmlElements');
@@ -44,6 +42,7 @@ const KEYFRAME                = 'KEYFRAME';               // @keyframes
 const KEYFRAME_SELECTOR       = 'KEYFRAME_SELECTOR';      // from, to, 0-100%
 const FONT_FACE               = 'FONT_FACE';              // @font-face
 const CHARSET                 = 'CHARSET';                // @charset
+const SUPPORTS                = 'SUPPORTS';               // @supports
 const DECLARATION             = 'DECLARATION';            // property: value || property<immutable>: value || property<public,?patch('ENG-123')>: value
 const SELECTOR                = 'SELECTOR';               // a.link
 
@@ -72,12 +71,8 @@ let currentFile;
 const tokenize = file => {
   currentFile = file;
   const formattedFile = Formatter.format(file);
-
-  console.log(chalk.blue.bold(`\nFormatted file: ${file.name} --------------- \n`));
-  console.log(chalk.grey(formattedFile));
-
-  let tokens = [];
-  let lines = formattedFile.split(/\n/);
+  const tokens = [];
+  const lines = formattedFile.split(/\n/);
   let pos = 0;
 
   while (pos < lines.length) {
@@ -94,9 +89,7 @@ const tokenize = file => {
     pos++;
   }
 
-  console.log('\ntokens:\n')
   console.log(tokens);
-
   return tokens;
 }
 
@@ -120,6 +113,10 @@ const getToken = (value, pos) => {
 
   if (isCharSet(value)) {
     return atRule(pos, CHARSET, value);
+  }
+
+  if (isSupports(value)) {
+    return atRule(pos, SUPPORTS, value);
   }
 
   if (isDeclaration(value)) {
@@ -167,6 +164,11 @@ const isCharSet = value => {
   return value.match(/^@charset.*;$/);
 }
 
+const isSupports = value => {
+  // line is a @supports at-rule i.e: `@supports (display: flex) {`
+  return value.match(/^@supports.*{$/);
+}
+
 const isDeclaration = value => {
   // line is a CSS declaration i.e: `background-color: rgba(0,0,0,.1);`
   return value.match(/.\S*[^\n]+\s*;/);
@@ -200,6 +202,7 @@ const closingBrace = pos => {
  * - `@keyframe`
  * - `@font-face`
  * - `@charset`
+ * - `@supports`
  *
  * An at-rule can consist of 1 or 2 tokens, depending on its type:
  *

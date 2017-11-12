@@ -1,6 +1,6 @@
 const fs = require('fs');
 const _ = require('lodash');
-const chalk = require('chalk');
+const chalk = require('chalk'); // temp
 
 const Log = require('./log').parser;
 const Config = require('./config');
@@ -39,10 +39,15 @@ const parse = () => {
 const parseFile = file => {
   const tokens = Lexer.tokenize(file);
 
-  // while (tokens.available()) {
-  //   // const token = tokens.next();
-  //   // switch (token[0]) {}
-  // }
+  console.log(chalk`\n {green {bold Start} parsing file: ${file.name} --------------- \n}`);
+
+  // initially generate CSS output without enforcing type-modifier system
+  for (const token of tokens) {
+    console.log(token);
+    console.log('-------------------------');
+  }
+
+  console.log(chalk`\n {red {bold End} parsing file: ${file.name} --------------- \n}`);
 }
 
 module.exports = {
