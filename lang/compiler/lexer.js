@@ -250,14 +250,14 @@ const declaration = (pos, value) => {
     // until first colon
     const property = declaration.match(/.+?(?=:)/)[0];
 
-    // todo: declarationIsValid - check for inappropriate shorthand usage
-
-    return [
-      DECLARATION,
-      declaration,
-      [ pos + 1 ],
-      getNotionIfAny(property)
-    ];
+    if (declarationIsValid(declaration)) {
+      return [
+        DECLARATION,
+        declaration,
+        [ pos + 1 ],
+        getNotionIfAny(property)
+      ]
+    }
   } catch (error) {
     error.log.call(undefined, currentFile, value, error.offender);
     throw new error.constructor(error.message);
@@ -575,6 +575,38 @@ const selectorIsValid = (selector) => {
       );
     }
   });
+
+  return true;
+}
+
+/**
+ * @stub - yet to be developed (if at all).
+ *
+ * Determine whether a CSS declaration is valid.
+ *
+ * Need to decide whether validating inappropriate shorthand is
+ * worthwhile - it could introduce more pain than gain.
+ *
+ * @param  {String} CSS declaration
+ * @return {True}
+ */
+const declarationIsValid = (declaration) => {
+  const property = declaration
+                      .replace(/<.+>/, BLANK) // remove mono notions
+                      .match(/.+?(?=:)/)[0];  // until first colon
+  const value = declaration
+                    .replace(/<.+>/, BLANK) // remove mono notions
+                    .replace(`${property}: `, BLANK);
+
+  switch (property) {
+    case 'margin':
+    case 'padding':
+      console.log(`[declarationIsValid] property: ${property}`);
+      console.log(`[declarationIsValid] value: ${value}`);
+      break;
+    default:
+      break;
+  }
 
   return true;
 }

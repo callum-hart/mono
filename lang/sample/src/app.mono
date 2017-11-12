@@ -20,6 +20,7 @@ h1.foo {
 
 nav ul.links {
   color: red;
+  margin: 10px;
 }
 
 div.inferredRuleSet<  immutable  >   {
@@ -91,6 +92,7 @@ p.foo,.hidden {
     margin-left<@override>: 100%;
     /*width<@mutate,@override>: 300%;*/
     width<immutable,@override>: 300%;
+    padding: 7px 0;
   }
 
   to {
