@@ -96,6 +96,8 @@ const tokenize = file => {
 
   console.log('\ntokens:\n')
   console.log(tokens);
+
+  return tokens;
 }
 
 const getToken = (value, pos) => {
