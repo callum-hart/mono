@@ -616,4 +616,16 @@ const declarationIsValid = (declaration) => {
   return true;
 }
 
-module.exports = { tokenize }
+module.exports = {
+  tokenize,
+  BRACE_OPEN,
+  BRACE_CLOSE,
+  MEDIA_QUERY,
+  KEYFRAME,
+  KEYFRAME_SELECTOR,
+  FONT_FACE,
+  CHARSET,
+  SUPPORTS,
+  DECLARATION,
+  SELECTOR
+}
