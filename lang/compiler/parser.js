@@ -59,12 +59,18 @@ const parseFile = file => {
         output += token[1];
         break;
       case Lexer.DECLARATION:
-        output += shedNotionIfAny(token);
+        if (token[3]) {
+          output += shedNotionIfAny(token)
+                      .replace(/;$/, ` ${notionToComment(token)};`);
+        } else {
+          output += token[1];
+        }
         break;
       case Lexer.SELECTOR:
         // either append an open brace or comma depending on whether nextToken is a SELECTOR
         const suffix = nextToken[0] === Lexer.SELECTOR ? ',' : '{';
         output += `${shedNotionIfAny(token)}${suffix}`;
+        // todo: handle inferred types
         break;
       default:
         return console.log(chalk`{red Unkown token: ${token}}`);
@@ -91,10 +97,9 @@ const shedNotionIfAny = (token) => {
 
 // construct CSS comment from token containing notion(s) if any
 const notionToComment = (token) => {
-  console.log('---------------------------');
-  console.log(chalk`{grey ${token}}`);
-
   if (token[3]) {
+    let comment = [];
+
     const [
       TYPE,
       MODIFIER,
@@ -103,19 +108,19 @@ const notionToComment = (token) => {
     ] = token[3];
 
     if (TYPE) {
-      console.log(`Type: ${TYPE}`);
+      comment.push(TYPE);
     }
     if (MODIFIER) {
-      console.log(`Modifier: ${MODIFIER}`);
+      comment.push(MODIFIER);
     }
     if (MOTIVE) {
-      console.log(`Motive: ${MOTIVE}`);
-      if (CONTEXTUAL_DATA) {
-        console.log(`Motive reason: ${CONTEXTUAL_DATA}`);
-      }
+      comment.push(MOTIVE);
     }
-  } else {
-    return token[1];
+    if (CONTEXTUAL_DATA) {
+      comment.push(CONTEXTUAL_DATA);
+    }
+
+    return `/* ${comment.join(', ')} */`;
   }
 }
 

@@ -365,10 +365,12 @@ const getNotionIfAny = string => {
         case OVERTHROW:
         case VETO:
         case FALLBACK:
+          // todo: this should check if MOTIVE_ALREADY_DECLARED
           notionData[2] = notionType;
           break;
         case BECAUSE:
         case PATCH:
+          // todo: this should check if MOTIVE_ALREADY_DECLARED
           notionData[2] = notionType;
           notionData[3] = getMotiveReason(prospect);
           break;
