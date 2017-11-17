@@ -84,6 +84,10 @@ const parseFile = file => {
 
         console.log(chalk`{grey token: ${token}}`);
         console.log('-'.repeat(100));
+
+        output += shedNotionIfAny(token)
+                    // insert notion comment before semicolon
+                    .replace(/;$/, `${notionToComment(token)};`);
         break;
       case Lexer.SELECTOR:
         // either append an open brace or comma depending on whether nextToken is a SELECTOR
@@ -106,9 +110,9 @@ const parseFile = file => {
     }
   });
 
-  // console.log('start OUTPUT ------------------------------------------\n');
-  // console.log(chalk`{grey ${output}}`);
-  // console.log('\nend OUTPUT ------------------------------------------');
+  console.log('start OUTPUT ------------------------------------------\n');
+  console.log(chalk`{grey ${output}}`);
+  console.log('\nend OUTPUT ------------------------------------------');
   console.log(chalk`\n {red {bold End} parsing file: ${file.name} --------------- \n}`);
 }
 
@@ -126,6 +130,8 @@ const shedNotionIfAny = (token) => {
 
 // construct CSS comment from token containing notion(s) if any
 const notionToComment = (token) => {
+  let comment = BLANK;
+
   if (token[3]) {
     let notions = [];
 
@@ -149,8 +155,10 @@ const notionToComment = (token) => {
       notions.push(CONTEXTUAL_DATA);
     }
 
-    return `/* ${notions.join(', ')} */`;
+    comment = ` /* ${notions.join(', ')} */ `;
   }
+
+  return comment;
 }
 
 module.exports = {
