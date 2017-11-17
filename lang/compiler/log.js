@@ -148,11 +148,6 @@ module.exports = {
       return `A config file (${configFileName}) already exists in this project. \n └─ Located: ${configFilePath} \nWould you like to replace it? (${yes}/${no}): `;
     }
   },
-  parser: {
-    PARSER_ERROR: err => {
-      console.log(`[Parser] Error with mono source file \n └─ ${err} `);
-    }
-  },
   formatter: {
     INVALID_CSS: (fileName, monoSource, prettierErr) => {
       // Line number reported by prettier is after formatting, here we find the
@@ -238,6 +233,16 @@ module.exports = {
       codeError(file, code, fragment);
       console.log(chalk`{red {bold ${fragment}} isn't a valid HTML element type}\n`);
       console.log(chalk`Futher reading:\n {grey - See https://developer.mozilla.org/en-US/docs/Web/HTML/Element for a comprehensive list of valid HTML elements}\n`);
+    }
+  },
+  parser: {
+    PARSER_ERROR: err => {
+      console.log(`[Parser] Error with mono source file \n └─ ${err} `);
+    },
+    CANNOT_INFER_TYPE: (file, code, fragment) => {
+      console.log(chalk.blue(`\n[Type error] Cannot infer type`));
+      codeError(file, code, fragment);
+      console.log(chalk`{red Type cannot be inferred by grouped selector}\n`);
     }
   }
 };

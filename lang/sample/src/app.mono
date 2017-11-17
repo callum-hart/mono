@@ -74,7 +74,7 @@ div.inferredRuleSet<  immutable  >   {
 div.inferredRuleSet2<immutable> {
   /*float<@override,?veto,@mutate>: somedirection;*/
   color<?veto, immutable>: grey;
-  height<?patch('1'),@override,public,?veto>: 100px; /* todo: multiple motives shouldn't be allowed */
+  height<?patch('1'),@override,public,?veto>: 100px; /* todo: should multiple motives be allowed? */
 }
 
 @charset "UTF-8";
@@ -151,7 +151,7 @@ body          {
   background: ivory;
 }
 
-ul<     immutable    >{
+ul<     protected    >{
   margin-left<   @mutate
 
   >: 0;

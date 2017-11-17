@@ -5,7 +5,7 @@ const chalk = require('chalk'); // temp
 const Log = require('./log').parser;
 const Config = require('./config');
 const Lexer = require('./lexer');
-const { ParserException } = require('./exceptions');
+const { ParserException, TypeException } = require('./exceptions');
 
 const EXTENSION = '.mono';
 const BLANK = '';
@@ -40,16 +40,18 @@ const parse = () => {
 const parseFile = file => {
   const tokens = Lexer.tokenize(file);
   let output = '';
+  let inferredType = false;
 
   console.log(chalk`\n {blue {bold Start} parsing file: ${file.name} --------------- \n}`);
 
   // initially generate CSS output without enforcing type-modifier system
+  // todo: handle inferred types
   tokens.forEach((token, index) => {
+    const prevToken = tokens[index-1]
     const nextToken = tokens[index+1];
 
     switch (token[0]) {
       case Lexer.BRACE_OPEN:
-      case Lexer.BRACE_CLOSE:
       case Lexer.MEDIA_QUERY:
       case Lexer.KEYFRAME:
       case Lexer.KEYFRAME_SELECTOR:
@@ -58,19 +60,35 @@ const parseFile = file => {
       case Lexer.SUPPORTS:
         output += token[1];
         break;
+      case Lexer.BRACE_CLOSE:
+        output += token[1];
+        inferredType = false;
+        break;
       case Lexer.DECLARATION:
         if (token[3]) {
           output += shedNotionIfAny(token)
-                      .replace(/;$/, ` ${notionToComment(token)};`);
+                      .replace(/;$/, ` ${notionToComment(token)};`); // insert notion comment before semicolon
         } else {
           output += token[1];
         }
         break;
       case Lexer.SELECTOR:
-        // either append an open brace or comma depending on whether nextToken is a SELECTOR
-        const suffix = nextToken[0] === Lexer.SELECTOR ? ',' : '{';
-        output += `${shedNotionIfAny(token)}${suffix}`;
-        // todo: handle inferred types
+        if (token[3]) {
+          if (prevToken[0] === Lexer.SELECTOR ||
+              nextToken[0] === Lexer.SELECTOR) {
+            Log.CANNOT_INFER_TYPE(file, token[1], token[3][0]);
+            throw new TypeException('Type cannot be inferred by grouped selector');
+          } else {
+            inferredType = token[3];
+            console.log(chalk`{blue token: "${token[1]}" infers type: ${inferredType[0]}}`);
+          }
+        } else {
+          console.log(chalk`{green token: "${token[1]}" doesn't infer type}`);
+          // either append an open brace or comma depending on whether nextToken is a SELECTOR
+          // const suffix = nextToken[0] === Lexer.SELECTOR ? ',' : '{';
+          // output += `${shedNotionIfAny(token)}${suffix}`;
+        }
+
         break;
       default:
         return console.log(chalk`{red Unkown token: ${token}}`);
@@ -98,7 +116,7 @@ const shedNotionIfAny = (token) => {
 // construct CSS comment from token containing notion(s) if any
 const notionToComment = (token) => {
   if (token[3]) {
-    let comment = [];
+    let notions = [];
 
     const [
       TYPE,
@@ -108,19 +126,19 @@ const notionToComment = (token) => {
     ] = token[3];
 
     if (TYPE) {
-      comment.push(TYPE);
+      notions.push(TYPE);
     }
     if (MODIFIER) {
-      comment.push(MODIFIER);
+      notions.push(MODIFIER);
     }
     if (MOTIVE) {
-      comment.push(MOTIVE);
+      notions.push(MOTIVE);
     }
     if (CONTEXTUAL_DATA) {
-      comment.push(CONTEXTUAL_DATA);
+      notions.push(CONTEXTUAL_DATA);
     }
 
-    return `/* ${comment.join(', ')} */`;
+    return `/* ${notions.join(', ')} */`;
   }
 }
 
