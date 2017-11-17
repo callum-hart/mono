@@ -65,39 +65,50 @@ const parseFile = file => {
         inferredType = false;
         break;
       case Lexer.DECLARATION:
-        if (token[3]) {
-          output += shedNotionIfAny(token)
-                      .replace(/;$/, ` ${notionToComment(token)};`); // insert notion comment before semicolon
+        const explicitType = token[3] && token[3][0];
+        console.log(chalk`{grey token: ${token}}`);
+
+        if (explicitType) {
+          console.log(chalk`{green declaration has explicit type: ${explicitType}}`);
+        } else if (inferredType) {
+          console.log(chalk`{blue declaration has inferred type: ${inferredType}}`);
+
+          if (token[3] === null) {
+            token[3] = new Array(4);
+          }
+
+          token[3][0] = `${inferredType}<Inferred>`;
         } else {
-          output += token[1];
+          console.log(chalk`{red declaration has NO type}`);
         }
+
+        console.log(chalk`{grey token: ${token}}`);
+        console.log('-'.repeat(100));
         break;
       case Lexer.SELECTOR:
+        // either append an open brace or comma depending on whether nextToken is a SELECTOR
+        const suffix = nextToken[0] === Lexer.SELECTOR ? ',' : '{';
+
         if (token[3]) {
           if (prevToken[0] === Lexer.SELECTOR ||
               nextToken[0] === Lexer.SELECTOR) {
             Log.CANNOT_INFER_TYPE(file, token[1], token[3][0]);
             throw new TypeException('Type cannot be inferred by grouped selector');
           } else {
-            inferredType = token[3];
-            console.log(chalk`{blue token: "${token[1]}" infers type: ${inferredType[0]}}`);
+            inferredType = token[3][0];
           }
-        } else {
-          console.log(chalk`{green token: "${token[1]}" doesn't infer type}`);
-          // either append an open brace or comma depending on whether nextToken is a SELECTOR
-          // const suffix = nextToken[0] === Lexer.SELECTOR ? ',' : '{';
-          // output += `${shedNotionIfAny(token)}${suffix}`;
         }
 
+        output += `${shedNotionIfAny(token)}${suffix}`;
         break;
       default:
         return console.log(chalk`{red Unkown token: ${token}}`);
     }
   });
 
-  console.log('start OUTPUT ------------------------------------------\n');
-  console.log(chalk`{grey ${output}}`);
-  console.log('\nend OUTPUT ------------------------------------------');
+  // console.log('start OUTPUT ------------------------------------------\n');
+  // console.log(chalk`{grey ${output}}`);
+  // console.log('\nend OUTPUT ------------------------------------------');
   console.log(chalk`\n {red {bold End} parsing file: ${file.name} --------------- \n}`);
 }
 

@@ -32,11 +32,11 @@ h1.foo {
 
 nav ul.links {
   color: red;
-  margin: 10px;
+  margin: 10.8888px;
 }
 
 div.inferredRuleSet<  immutable  >   {
-  color: red;
+  color: foo;
   /*font-weight<public,>: bold;*/ /*throws Expected notion after comma*/
   line-height<?because('some reason, with comma')>: 20px; /*throws Expected notion after comma*/
   background-color: grey;
@@ -71,10 +71,11 @@ div.inferredRuleSet<  immutable  >   {
 }*/
 
 /* lexer should throw error for invalid types, modifiers & motives          */
-div.inferredRuleSet2<immutable> {
+div.inferredRuleSet2<public> {
   /*float<@override,?veto,@mutate>: somedirection;*/
-  color<?veto, immutable>: grey;
-  height<?patch('1'),@override,public,?veto>: 100px; /* todo: should multiple motives be allowed? */
+  color<?veto, immutable>: someColor;
+  background: anotherColor;
+  height<?patch('1'),@override,public,?veto>: 100px; /* todo allow multiple motives */
 }
 
 @charset "UTF-8";
@@ -113,9 +114,9 @@ p.foo,.hidden {
   }
 }
 
-p.one, span.two<immutable> {
+/*p.one, span.two<immutable> {
   line-height<immutable>: 20px;
-}
+}*/
 
 
 @keyframes mymove {
@@ -127,10 +128,10 @@ p.one, span.two<immutable> {
 }
 
 
-p.three<  protected  >,
+/*p.three<  protected  >,
     span.four<   immutable> {
   line-height<immutable>: 20px;
-}
+}*/
 
 
 
@@ -154,8 +155,9 @@ body          {
 ul<     protected    >{
   margin-left<   @mutate
 
-  >: 0;
-  padding-left<@override>: 0;
+  >: 4300000;
+  padding-left<@override>: 200000;
+  line-height<immutable>: 4.43;
 }
 
 
