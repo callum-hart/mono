@@ -1,85 +1,102 @@
 # Parser
 
-Defining requirements for mono AST - WIP
+## Type-Modifier System
 
-## Rule-set
+#### CSS rules for overrides
+*Need to be considered in order to determine what is overriding vs overriden.*
 
-**`geo`**: rule-set location info. Contains:
-- *cascadePosition*: position of rule-set in the global cascade
-- *startLine*: line number where rule-set starts
-- *endLine*: line number where rule-set ends
+1) Importance overrides Specificity & Cascade:
 
-**`type`**: the rule-set type. Can be:
-- RULE_SET i.e: `span.icon {}`
-- INFERRED_RULE_SET i.e: `span.icon<immutable> {}`
-- GROUPED_RULE_SET i.e: `span.icon, svg {}`
-  - note: grouped rule-set can contain zero or more inferred rule-sets, i.e: `span.icon<immutable>, svg {}`
+```
+h1.title {
+  color: transparent !important; /* Winner */
+}
 
-**`selector`**: CSS selector info. Contains:
-- *rawSelector*: the selector i.e: `span.icon`
-- *specificityScore*: selectors specificity strength.
-  - used for cases involving illegal overrides, this helps determine which rule-set is overriding the other.
-- *elementType:* type of HTML element the selector targets i.e: `span`
-- *inferredType*: Used by INFERRED_RULE_SET. Contains type inferred by the rule-set i.e: `immutable`
+body h1.title {
+  color: dimgrey;
+}
 
-**`declarations`**: array containing each {declaration}
+h1.title {
+  color: slategrey;
+}
+```
 
-## Media-query
+*Todo: throw lexer exception when `!important` is used. Since mono bans uncontrolled overrides using/supporting `!important` is useless.*
 
-**`geo`**: media-query location info. Contains:
-- *startLine*: line number where rule-set starts
-- *endLine*: line number where rule-set ends
+2) Specificity overrides Cascade
 
-**`type`**: media type. Can be:
-- all
-- print
-- screen
-- speech
+```
+body h1.title {
+  color: dimgrey; /* Winner */
+}
 
-**`feature`**: feature type. Can be:
-- min-width
-- max-width
-- min-height
-- max-height
-- plus [many more](https://developer.mozilla.org/en-US/docs/Web/CSS/@media#Media_features)
+h1.title {
+  color: slategrey;
+}
+```
 
-**`ruleSets`**: array containing each {rule-set}
+3) Cascade overrides Cascade
 
-## Comment
+```
+h1.title {
+  color: dimgrey;
+}
 
-**`geo`**: comment location info. Contains:
-- *startLine*: line number where rule-set starts
-- *endLine*: line number where rule-set ends
+h1.title {
+  color: slategrey; /* Winner */
+}
+```
 
-**`type`**: the comment type. Can be:
-- single line
-- multi-line
+*Since specificity takes precedence over cascade the entire CSS will need to be parsed before calculating what override is dominant.*
 
-## Font face
-*For now just store font-face location info, can't see what else is needed*
+#### Mono rules for overrides
 
-**`geo`**: font-face location info. Contains:
-- *startLine*: line number where rule-set starts
-- *endLine*: line number where rule-set ends
+- An override is only permitted if the contract between a type and modifier is honoured:
+  - `@override` can only override declarations with the type `protected`.
+  - `@mutate` can only override declarations with the type `public`.
+- Overrides without a type/modifier are not allowed.
 
-## Keyframe
-*For now just store keyframe location info, can't see what else is needed*
+*Todo: improper usage of `@override` could be detected ahead of time since the selector must end with a pseudo-class.*
 
-**`geo`**: font-face location info. Contains:
-- *startLine*: line number where rule-set starts
-- *endLine*: line number where rule-set ends
+It appears the **first step** should be designing a model for representing overrides.
 
-## Declaration
+#### Scenarios
 
-**`geo`**: declaration location info. Contains:
-- *line*: declaration line number
+When selectors are equal the deciding factor is Cascade:
 
-**`property`**: CSS property i.e `font-size`
+```
+h1.title {
+  color<immutable>: slategrey;
+}
 
-**`value`**: CSS value i.e `12px`
+/* This overrides the declaration defined earlier in the cascade - not allowed since color is immutable */
+h1.title {
+  color: dimgrey;
+}
+```
 
-**`notion`**: Mono notion (if any). Can be:
-- type i.e: `protected`
-- modifier i.e: `@override`
-- motive i.e: `?patch('ENG-123')`
+When selectors are not equal the deciding factor is Specificity:
 
+```
+h1.title {
+  color<immutable>: slategrey;
+}
+
+/* This selector has a stronger specificity so overrides the declaration defined earlier in the cascade - not allowed since color is immutable */
+nav h1.title {
+  color: dimgrey;
+}
+```
+
+When selectors are not equal the deciding factor is Specificity regardless of Cascade:
+
+```
+/* This selector has a stronger specificity so overrides the declaration defined later in the cascade - not allowed since color is immutable */
+nav h1.title {
+  color: dimgrey;
+}
+
+h1.title {
+  color<immutable>: slategrey;
+}
+```
