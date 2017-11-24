@@ -3,7 +3,7 @@
 ## Type-Modifier System
 
 #### CSS rules for overrides
-*Need to be considered in order to determine what is overriding vs overriden.*
+*Need to be considered in order to determine what is overriding vs what is overriden.*
 
 1) Importance overrides Specificity & Cascade:
 
@@ -54,7 +54,8 @@ h1.title {
 - An override is only permitted if the contract between a type and modifier is honoured:
   - `@override` can only override declarations with the type `protected`.
   - `@mutate` can only override declarations with the type `public`.
-- Overrides without a type/modifier are not allowed.
+- Overrides without a compatible type/modifier are not allowed.
+- Overrides without using a modifier are not allowed.
 
 *Todo: improper usage of `@override` could be detected ahead of time since the selector must end with a pseudo-class.*
 
@@ -64,7 +65,7 @@ It appears the **first step** should be designing a model for representing overr
 
 When selectors are equal the deciding factor is Cascade:
 
-```
+```css
 h1.title {
   color<immutable>: slategrey;
 }
@@ -77,7 +78,7 @@ h1.title {
 
 When selectors are not equal the deciding factor is Specificity:
 
-```
+```css
 h1.title {
   color<immutable>: slategrey;
 }
@@ -88,9 +89,9 @@ nav h1.title {
 }
 ```
 
-When selectors are not equal the deciding factor is Specificity regardless of Cascade:
+When selectors are not equal the deciding factor is Specificity **regardless of Cascade**:
 
-```
+```css
 /* This selector has a stronger specificity so overrides the declaration defined later in the cascade - not allowed since color is immutable */
 nav h1.title {
   color: dimgrey;
