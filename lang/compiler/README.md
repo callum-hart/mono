@@ -9,3 +9,4 @@ Compile & build a mono project with `mono make`
 **Tests:**
 
 Run `npm test`
+Run `npm test -- fileName` to run specific test suite (in `tests` dir)

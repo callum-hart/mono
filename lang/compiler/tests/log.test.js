@@ -60,7 +60,7 @@ h1.title {
  * of time on them. Record issues found & revisit `codeError` in the future.
  */
 
-test('[codeError] should ignore matches in comments', () => {
+test.skip('[codeError] should ignore matches in comments', () => {
   mockFile.source =`
 h1{
   font-size: 20px;
@@ -82,7 +82,7 @@ h1{
 });
 
 
-test('[codeError] should find selector without element type #1', () => {
+test.skip('[codeError] should find selector without element type #1', () => {
   mockFile.source =`
 section.eins {
   display: none;
@@ -98,7 +98,7 @@ p.zwei, .eins {
 });
 
 
-test('[codeError] should find selector without element type #2', () => {
+test.skip('[codeError] should find selector without element type #2', () => {
   mockFile.source =`
 div.hidden {
   height: 0;
@@ -113,7 +113,7 @@ div.hidden {
 });
 
 
-test('[codeError] should find selector without element type #3', () => {
+test.skip('[codeError] should find selector without element type #3', () => {
   mockFile.source =`
 div.shown {
   height: initial;

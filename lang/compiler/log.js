@@ -22,7 +22,8 @@ const chalk = require('chalk');
  * @param  {String} offender          - offending part of `code`
  * @return {Object}                   - error data with the shape { lineNumber, codeBlock }
  *
- * Todo: needs revisiting - see `log.test.js:56`
+ * Todo: needs revisiting - see `log.test.js:56` - might need to use source-maps to
+ * map source with formatted source?
  */
 const codeError = (file, code, offender) => {
   const needle = code

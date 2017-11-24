@@ -44,8 +44,7 @@ const parseFile = file => {
 
   console.log(chalk`\n {blue {bold Start} parsing file: ${file.name} --------------- \n}`);
 
-  // initially generate CSS output without enforcing type-modifier system
-  // todo: handle inferred types
+  // generates CSS output without enforcing type-modifier system
   tokens.forEach((token, index) => {
     const prevToken = tokens[index-1]
     const nextToken = tokens[index+1];
