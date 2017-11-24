@@ -7,7 +7,7 @@
   2. watch: re-build project on files changes
 */
 
-const _ = require('lodash');
+const _ = require('lodash'); // todo: remove lodash dependency
 
 
 const Log = require('./log').cli;

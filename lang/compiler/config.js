@@ -1,6 +1,6 @@
 const fs = require('fs');
 const readline = require('readline');
-const _ = require('lodash');
+const _ = require('lodash'); // todo: remove lodash dependency
 
 
 const Log = require('./log').config;

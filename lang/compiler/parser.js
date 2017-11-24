@@ -142,19 +142,20 @@ const notionToComment = (token) => {
     ] = token[3];
 
     if (TYPE) {
-      notions.push(TYPE);
+      notions.push(`type: ${TYPE}`);
     }
     if (MODIFIER) {
-      notions.push(MODIFIER);
+      notions.push(`modifier: ${MODIFIER}`);
     }
     if (MOTIVE) {
-      notions.push(MOTIVE);
-    }
-    if (CONTEXTUAL_DATA) {
-      notions.push(CONTEXTUAL_DATA);
+      if (CONTEXTUAL_DATA) {
+        notions.push(`motive: ${MOTIVE}<${CONTEXTUAL_DATA}>`);
+      } else {
+        notions.push(`motive: ${MOTIVE}`);
+      }
     }
 
-    comment = ` /* ${notions.join(', ')} */ `;
+    comment = ` /* ${notions.join(' | ')} */ `;
   }
 
   return comment;
