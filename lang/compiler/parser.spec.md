@@ -197,6 +197,8 @@ p.link {
 }
 ```
 
+> Analogy: When painting a house saying its color should be white is too vague. Instead you specify what color each part of the house should be - the walls white, the door & window frames red, the roof orange etc...
+
 Could introduce **macros** if selectors became too verbose, i.e:
 
 Rather than:
@@ -217,6 +219,18 @@ Could use macros/generators:
 /* Would generate: */
 
 h1, h2, h3, h4, h5, h6, p, a, span, strong, i, li {
+  font-family: "Open Sans";
+}
+```
+
+```
+div %text% {
+  font-family: "Open Sans";
+}
+
+/* Would expand to: */
+
+div h1, div h2, div h3, div h4, div h5, div h6, div p, div a, div span, div strong, div i, div li {
   font-family: "Open Sans";
 }
 ```
