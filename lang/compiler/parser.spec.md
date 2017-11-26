@@ -93,7 +93,9 @@ h1.title {
 Overrides go undetected among **composable classes**, i.e:
 
 ```html
-<p class="foo bar">Hello</p>
+<p class="foo bar">
+  Hello
+</p>
 ```
 
 ```css
@@ -107,6 +109,8 @@ p.bar {
 ```
 
 CSS is unaware that `.foo` and `.bar` can be used together - could this be detected/prevented?
+
+Could composable classes be expressed in mono source-code?
 
 ### Mono Rules for Overrides
 
@@ -128,7 +132,7 @@ Inherited properties pose a problem since they are determined at runtime vs comp
 
 ```html
 <div class="sideBar">
-  <a class="link" href="" >Home</a>
+  <a class="link" href="">Home</a>
 </div>
 ```
 
@@ -147,7 +151,6 @@ The `font-size` inherited from `div.sideBar` is immutable, `a.link` should not b
 #### Ideas for Solutions:
 
 **Reset Styles**
-`all: initial;`
 
 ```css
 div.sideBar {
