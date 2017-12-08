@@ -29,7 +29,8 @@ const {
   TypeException,
   ModifierException,
   MotiveException,
-  SelectorException
+  SelectorException,
+  DeclarationException
 } = require('./exceptions');
 
 
@@ -550,7 +551,7 @@ const getMotiveReason = (motive) => {
  *
  * @param  {String} CSS selector
  * @return {True} if selector contains valid HTML element type(s)
- * @throws {SelectorException} When:
+ * @throws {SelectorException} when:
  *  - HTML element is missing, or
  *  - An invalid HTML element is used
  */
@@ -587,15 +588,12 @@ const selectorIsValid = (selector) => {
 }
 
 /**
- * @stub - yet to be developed (if at all).
- *
  * Determine whether a CSS declaration is valid.
  *
- * Need to decide whether validating inappropriate shorthand is
- * worthwhile - it could introduce more pain than gain.
- *
  * @param  {String} CSS declaration
- * @return {True}
+ * @return {True} if declaration is valid
+ * @throws {DeclarationException} when:
+ *   - Declaration uses !important
  */
 const declarationIsValid = (declaration) => {
   const property = declaration
@@ -605,17 +603,20 @@ const declarationIsValid = (declaration) => {
                     .replace(/<.+>/, BLANK) // remove mono notions
                     .replace(`${property}: `, BLANK);
 
-  switch (property) {
-    case 'margin':
-    case 'padding':
-      console.log(`[declarationIsValid] property: ${property}`);
-      console.log(`[declarationIsValid] value: ${value}`);
-      break;
-    default:
-      break;
+  if (isImportant(value)) {
+    throw new DeclarationException(
+      `${declaration} uses !important`,
+      '!important',
+      Log.DECLARATION_USES_IMPORTANT
+    );
+  } else {
+    return true;
   }
+}
 
-  return true;
+const isImportant = cssValue => {
+  // css value uses !important i.e: `opacity: 0 !important;`
+  return cssValue.match(/\!important.*;$/);
 }
 
 module.exports = {

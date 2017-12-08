@@ -234,6 +234,12 @@ module.exports = {
       codeError(file, code, fragment);
       console.log(chalk`{red {bold ${fragment}} isn't a valid HTML element type}\n`);
       console.log(chalk`Futher reading:\n {grey - See https://developer.mozilla.org/en-US/docs/Web/HTML/Element for a comprehensive list of valid HTML elements}\n`);
+    },
+    DECLARATION_USES_IMPORTANT: (file, code, fragment) => {
+      console.log(chalk.blue(`\n[Declaration error] Cannot use !important`));
+      codeError(file, code, fragment);
+      console.log(chalk`Tip: usage of {bold !important} suggests an uncontrolled override has been attempted. The only way to override a property is using a modifier.\n`);
+      console.log(chalk`Futher reading:\n {grey - See https://callum-hart.gitbooks.io/mono/docs/language/Modifiers.html for more information}\n`);
     }
   },
   parser: {

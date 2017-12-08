@@ -50,6 +50,14 @@ class SelectorException {
   }
 }
 
+class DeclarationException {
+  constructor(message, offender, log) {
+    this.message = message;
+    this.offender = offender;
+    this.log = log;
+  }
+}
+
 module.exports = {
   CSSException,
   ParserException,
@@ -57,5 +65,6 @@ module.exports = {
   TypeException,
   ModifierException,
   MotiveException,
-  SelectorException
+  SelectorException,
+  DeclarationException
 }

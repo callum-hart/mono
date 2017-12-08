@@ -19,8 +19,6 @@ h1.title {
 }
 ```
 
-*Todo: throw lexer exception when `!important` is used. Since mono bans uncontrolled overrides using/supporting `!important` is pointless.*
-
 2) Specificity overrides Cascade
 
 ```css
@@ -183,7 +181,7 @@ p.link {
 
 **Limit Inheritance**
 
-Inheritance could be moderated by controlling who can define inheritable properties.
+Inheritance could be moderated by limiting who can define inheritable properties.
 
 For example, properties related to text could only be set by pure textual elements (p, a, h1-h6 etc...), i.e:
 
@@ -232,5 +230,17 @@ div %text% {
 
 div h1, div h2, div h3, div h4, div h5, div h6, div p, div a, div span, div strong, div i, div li {
   font-family: "Open Sans";
+}
+```
+
+Overriding inheritable properties could be detected & prevented at compile-time, i.e:
+
+```css
+ul.contactList li.contact {
+  font-size<immutable>: 12px;
+}
+
+ul.contactList li.contact span.contact__name {
+  font-size: 13px; /* Overrides inherited style - this can be determined at compile-time */
 }
 ```

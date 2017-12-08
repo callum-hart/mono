@@ -4,7 +4,8 @@ const {
   TypeException,
   ModifierException,
   MotiveException,
-  SelectorException
+  SelectorException,
+  DeclarationException
 } = require('../exceptions');
 
 
@@ -414,5 +415,18 @@ test('Detect invalid element type in multiple selectors', () => {
   const invalidElementType = () => Lexer.tokenize(mockFile);
   expect(invalidElementType).toThrow(SelectorException);
   expect(invalidElementType).toThrow('title is not a valid element type');
+});
+
+
+test('Detect the usage of !important', () => {
+  mockFile.source = `
+  button.dontate {
+    opacity: 0 !important;
+  }
+  `;
+
+  const importantDeclaration = () => Lexer.tokenize(mockFile);
+  expect(importantDeclaration).toThrow(DeclarationException);
+  expect(importantDeclaration).toThrow('opacity: 0 !important; uses !important');
 });
 

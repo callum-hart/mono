@@ -16,7 +16,7 @@ h1.foo {
 
 @supports (display: flex) {
   div {
-    display: flex;
+    display: flex !important;
   }
 }
 
