@@ -14,11 +14,11 @@ h1.foo {
   font-size: 20px;
 }
 
-@supports (display: flex) {
+/*@supports (display: flex) {
   div {
     display: flex !important;
   }
-}
+}*/
 
 @supports not (display: flex) {
   div {

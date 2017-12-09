@@ -953,3 +953,12 @@ nav.main-links {
     _source: styles/nav/main.scss:20;
 }
 ```
+
+### Resources
+
+- https://www.phase2technology.com/blog/used-and-abused-css-inheritance-and-our-misuse-cascade
+- https://css-tricks.com/opt-in-typography/
+- https://www.javaworld.com/article/2076814/core-java/inheritance-versus-composition--which-one-should-you-choose-.html
+- https://micahgodbolt.com/blog/writing-the-correct-css-once-is-pretty-easy-all-situations/
+- https://micahgodbolt.com/blog/writing-the-correct-css-once-is-pretty-easy-part-2/
+- https://speakerdeck.com/chriseppstein/help-my-stylesheets-are-a-mess

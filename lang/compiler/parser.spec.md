@@ -1,5 +1,7 @@
 # Parser
 
+- Todo: design data structure that can determine overrides among CSS selectors.
+
 ### CSS Rules for Overrides
 *Need to be considered in order to determine what is overriding vs what is overriden.*
 
@@ -18,6 +20,8 @@ h1.title {
   color: slategrey;
 }
 ```
+
+*We don't need to worry about this, since mono permits the usage of !important*
 
 2) Specificity overrides Cascade
 

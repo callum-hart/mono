@@ -1,0 +1,73 @@
+
+/**
+ * Stylesheet demonstrating uncontrolled overrides
+ */
+
+
+/**
+ * Browser resets
+ */
+
+body, html {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+p {
+  font-size: 10px;
+}
+
+/**
+ * nav
+ */
+
+nav li {
+  float: left;
+  margin: 0 20px;
+  list-style: disc /* overrides line 14 */;
+}
+
+nav a {
+  text-decoration: underline /* overrides line 18 */;
+}
+
+
+/**
+ * main
+ */
+
+main#page {
+  clear: both;
+}
+
+main#page h1 {
+  font-size: 20px /* overrides line 22 */;
+}
+
+main#page div {
+  font-size: 6px /* overrides line 61 */;
+}
+
+div.page__content {
+  font-size: 12px;
+}
+
+div.page__content a {
+  font-size: 20px /* overrides line 57 */;
+}

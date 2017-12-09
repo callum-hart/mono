@@ -1,0 +1,26 @@
+/**
+ * Todo: investigate design pattern(s) that allow styles to be organised in a way
+ * in which overrides can be determined.
+ *
+ * Poor structure leads to:
+ *
+ *  - styles being applied from different contexts
+ *  - different ways of targeting an element using different selectors
+ *
+ * There are different types of style:
+ *
+ * - element: styles applied to HTML elements
+ * - location: styles coupled to structure of HTML
+ * - composite: styles combined using multiple classes
+ * - stateful: styles applied when a condition is met
+ *
+ *
+ * Ideas:
+ *
+ * - ban element styles, styles should be applied using a class/id
+ * - ban composition in regards to applying multiple classes to an element
+ * - single way of targeting an element
+ * - represent location styles with BEM, could BEM be enforced?
+ * - store shared styles in constants (class="*button")
+ * - store shared styles in variables (detached rule-sets in LESS, @extends in SASS)
+ */
