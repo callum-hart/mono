@@ -15,12 +15,241 @@
  * - stateful: styles applied when a condition is met
  *
  *
+ * NEED A WAY OF DESCRIBING STYLES IN A STAND-ALONE STYLE SYSTEM.
+ * CSS-in-JS provide many benefits BUT is coupled to JavaScript
+ * rendering.
+ *
+ *
  * Ideas:
  *
  * - ban element styles, styles should be applied using a class/id
  * - ban composition in regards to applying multiple classes to an element
- * - single way of targeting an element
+ * - single way of targeting an element, could use aliases to map different selectors for the same element
  * - represent location styles with BEM, could BEM be enforced?
  * - store shared styles in constants (class="*button")
  * - store shared styles in variables (detached rule-sets in LESS, @extends in SASS)
+ */
+
+/*
+final FOO: red;
+final POW: darkred;
+
+@enum bar {
+  color: FOO;
+  font-size: 12px;
+}
+
+.someClass {
+  @include bar;
+  color: POW; // not allowed
+  :hover font-size: 14px; // allowed
+}
+
+@alias button {
+  signUp: [
+    .modal .btn-signup,
+    .alert button,
+    nav .signUpBtn
+  ];
+  buyBtn: .checkout .buy;
+}
+
+@button {
+  height: 40px;
+  padding: 10px;
+}
+
+@button<signUp> {
+  background: blue;
+  font-weight: bold;
+  :hover background: lightblue;
+  :disabled opacity: 0.5;
+}
+
+@button<signUp:hover> {
+  background: lightblue;
+}
+
+@button<buyMe> {
+  background: green;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+@alias form {
+  --loading: .form--loading;
+  --error: .form--error;
+}
+
+@form {
+  background: white;
+  padding: 20px;
+}
+*/
+
+
+/*
+
+combinators can only have a maximum of 2:
+
+1 selector:
+@element {}
+
+button.btn {
+  // common styles applied to all buttons
+}
+
+2 selectors:
+@location @element {}
+
+nav.nav button.btn {
+  // styles specific to button in nav
+}
+
+OR only ever have 1 class, which incorporates the element and its location,
+could use mixins/enums to share common styles.
+
+@enum button {
+  // common styles applied to all buttons
+}
+
+button.nav__btn {
+  @include button;
+  // styles specific to button in nav
+}
+
+button.form__btn {
+  @include button;
+  // styles specific to button in nav
+}
+
+ */
+
+
+/*
+
+Could mirror the structure of HTML in style system:
+
+body
+  nav
+    ul.nav__links
+      li.nav__link
+
+body
+  nav
+    ul.nav__links ( styles )
+      li.nav__link ( styles )
+
+form.form--saving ( styles )
+  button.btn ( styles )
+
+form.form--error ( styles )
+  button.btn ( styles )
+
+form.form--disabled
+  button.btn || button.buyBtn || button.saveBtn ( styles )
+
+
+------------------------------------------------------------------
+Inheritable property override detection
+------------------------------------------------------------------
+
+body
+  h1 (font-size: 24px)
+  li (list-style: none)
+  nav.nav__links
+    li (list-style: disc) // not allowed
+  main#page
+    h1 (font-size: 28px) // not allowed
+
+
+body
+  nav.nav__links
+    ul (list-style: none)
+  main#page
+    h1 (font-size: 28px)
+    div.page__content (font-size: 12px)
+      a (font-size: 6px) // not allowed (since font-size has been set by parent / ancestor)
+
+
+------------------------------------------------------------------
+Could use entry points to avoid repeating the same structure
+------------------------------------------------------------------
+
+#entry pageContent =
+  body
+    main#page
+      div#page__content
+
+@pageContent
+  p (font-size: 10px)
+  a (font-size: 12px)
+
+#entry nav =
+  body
+    nav.nav__links
+
+@nav
+  li (list-style: disc)
+
+
+------------------------------------------------------------------
+Static Code Analysis
+------------------------------------------------------------------
+
+body
+  nav.nav__links
+    ul (font-size: 12px)
+  main#page
+    div.page__content (font-size: 12px)
+
+Since both font sizes are the same could suggest hoisting font-size up to body, i.e:
+
+body
+  font-size: 12px;
+
+
+------------------------------------------------------------------
+Mono would calculate & generate the Minimum Viable Selector
+------------------------------------------------------------------
+
+There wouldn't need to be a one-to-one mapping between structure and generated CSS selectors.
+The purpose of the structure is to describe location of elements & relationships between them.
+
+
+body
+  nav.nav__links (font-size: 8px)
+  main#page
+    div.page__content (font-size: 10x)
+
+Wouldn't need to generate:
+
+body nav.nav__links {}
+body main#page div.page__content {}
+
+Minimum Viable Selector would be:
+
+nav.nav__links ul {}
+div.page__content {}
+
+
+------------------------------------------------------------------
+How to describe states, variations?
+------------------------------------------------------------------
+
+
+------------------------------------------------------------------
+Store common groups of styles
+------------------------------------------------------------------
+
+$smallText =
+  font-size: 12px;
+  font-weight: bold;
+  font-family: "Arial";
+
+
+body
+  main#page
+    div.page__content ($smallText)
+
  */

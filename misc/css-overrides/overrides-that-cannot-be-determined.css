@@ -3,7 +3,6 @@
  * Stylesheet demonstrating uncontrolled overrides
  */
 
-
 /**
  * Browser resets
  */
@@ -40,11 +39,11 @@ p {
 nav li {
   float: left;
   margin: 0 20px;
-  list-style: disc /* overrides line 14 */;
+  list-style: disc /* overrides line 20 */;
 }
 
 nav a {
-  text-decoration: underline /* overrides line 18 */;
+  text-decoration: underline /* overrides line 24 */;
 }
 
 
@@ -57,11 +56,11 @@ main#page {
 }
 
 main#page h1 {
-  font-size: 20px /* overrides line 22 */;
+  font-size: 20px /* overrides line 28 */;
 }
 
 main#page div {
-  font-size: 6px /* overrides line 61 */;
+  font-size: 6px /* overrides line 67 */;
 }
 
 div.page__content {
@@ -69,5 +68,5 @@ div.page__content {
 }
 
 div.page__content a {
-  font-size: 20px /* overrides line 57 */;
+  font-size: 20px /* overrides line 63 */;
 }
