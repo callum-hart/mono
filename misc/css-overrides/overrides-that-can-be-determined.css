@@ -1,0 +1,58 @@
+<Group={body, html}>
+  margin: 0;
+</Group>
+
+<ul>
+  margin: 0;
+  padding: 0;
+  list-style: none;
+</ul>
+
+<a>
+  text-decoration: none;
+</a>
+
+<h1>
+ font-size: 24px;
+</h1>
+
+<p>
+  font-size: 10px;
+</p>
+
+
+/* Nav */
+
+<nav>
+  <li>
+    float: left;
+    margin: 0 20px;
+    list-style: disc; /* overrides inherited property line 8 */
+  </li>
+
+  <a>
+    text-decoration: underline; /* overrides line 12 */
+  </a>
+</nav>
+
+/* Main */
+
+<main#page>
+  clear: both;
+
+  <h1>
+    font-size: 20px; /* overrides line 16 */
+  </h1>
+
+  <div>
+    font-size: 6px;
+  </div>
+
+  <div.page__content>
+    font-size: 12px; /* overrides line 48 */
+
+    <a>
+      font-size: 20px; /* overrides inherited property line 52 */
+    </a>
+  </div>
+</main>

@@ -28,6 +28,8 @@
  * - represent location styles with BEM, could BEM be enforced?
  * - store shared styles in constants (class="*button")
  * - store shared styles in variables (detached rule-sets in LESS, @extends in SASS)
+ *
+ * TODO: think about different ways of modeling a style system with pen & paper, sentances & pseudo code.
  */
 
 /*
@@ -237,6 +239,18 @@ div.page__content {}
 How to describe states, variations?
 ------------------------------------------------------------------
 
+... using @pageContent entry point
+
+@pageContent
+  form(
+  .login (padding: 20px)
+    div.errors (display: none)
+  .login--loading (opacity: 0.5)
+    button.login (background: transparent) // what if this overrides background?
+  .login--error (background: red)
+    div.errors (display: block)
+  )
+
 
 ------------------------------------------------------------------
 Store common groups of styles
@@ -251,5 +265,147 @@ $smallText =
 body
   main#page
     div.page__content ($smallText)
+
+
+------------------------------------------------------------------
+Multiple selectors
+------------------------------------------------------------------
+
+body
+  main#page
+    nav.nav__links
+      li, a (font-size: 10px)
+
+
+------------------------------------------------------------------
+Could styling be represented with functions?
+
+Think of CSS properties in terms of data cohabiting in global scope.
+
+An elements location in the DOM is its context.
+
+Could JSX be used to describe styles?
+------------------------------------------------------------------
+
+<h1>
+  font-size: 12px;
+  color: black;
+</h1>
+
+<p.highlight>
+  color: yellow
+</p>
+
+<li>
+  list-style: none;
+</li>
+
+<nav.navBar>
+  background: grey;
+  height: 60px;
+  <h1>
+    font-size: 13px; // not allowed (already set by ancestor)
+  </h1>
+  <li:first>
+    font-weight: bold;
+  </li>
+  <li>
+    list-size: disc; // not allowed (already set by ancestor)
+    <span.icon>
+      width: 20px;
+      height: 20px;
+      display: block;
+    </span>
+  </li>
+  <p>
+    color: grey;
+  </p>
+  <p.highlight>
+    color: grey; // not allowed (already set by ancestor)
+  </p>
+</nav>
+
+// states
+
+<form.purchaseForm>
+  background: white;
+  padding: 20px;
+  margin: 20px;
+
+  <button.purchaseForm__button>
+    ...btnPrimary; // use composition to reuse common styles
+    float: left;
+    cursor: default;
+  </button>
+</form>
+
+// dot notation to "bind" composable classes
+<form.purchaseForm.purchaseForm--saving>
+  opacity: 0.2;
+  background: grey; // background has already been set, so this must be applied using negation
+
+  <button.purchaseForm__button>
+    pointer-events: none;
+  </button>
+</form>
+
+generates:
+
+form.purchaseForm {
+  padding: 20px;
+  margin: 20px;
+}
+
+form.purchaseForm:not(.purchaseForm--saving) {
+  background: white;
+}
+
+form.purchaseForm--saving {
+  background: grey;
+  opacity: 0.2;
+}
+
+
+// Media queries
+
+<div#app>
+  <Media min=300 max=900>
+    padding: 0 30px;
+  </Media>
+  <Media min=900>
+    padding: 0 50px;
+  </Media>
+</div>
+
+
+// Pseudo classes/elements
+
+<a.link:hover>
+  color: cadetblue;
+</a>
+
+<span.icon::after>
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+</span>
+
+
+// Grouped selectors
+
+<div.sideBar>
+  <Group={svg.icon, img.icon}>
+    display: block;
+    float: left;
+  </Group>
+</div>
+
+*/
+
+
+/*
+
+Using IDs to target elements would remove composible classes (in which one class overrides styles in the other).
 
  */
