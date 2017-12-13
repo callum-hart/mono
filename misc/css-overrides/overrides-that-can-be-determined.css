@@ -56,3 +56,27 @@
     </a>
   </div>
 </main>
+
+/*
+
+This override of inhertied property can be determined since we know li is a child of ul
+
+<ul>
+  list-style: none;
+</ul>
+
+<li>
+  list-size: disc;
+</li>
+
+Likewise, this override of inherited property can be determined since body is a top level element
+
+<body>
+  font-size: 12px;
+</body>
+
+<p>
+  font-size: 10px;
+</p>
+
+*/
