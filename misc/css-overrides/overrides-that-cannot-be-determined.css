@@ -70,3 +70,31 @@ div.page__content {
 div.page__content a {
   font-size: 20px /* overrides line 63 */;
 }
+
+/**
+ * Forms
+ */
+
+form[class="base-form"] {
+  background: grey;
+  border: 1px solid;
+}
+
+form[class="signup-form"] {
+  background: green;
+}
+
+form[class="base-form base-form--saving"] {
+  background: grey;
+  border: 1px solid;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+form[class="base-form"] p {
+  color: brown;
+}
+
+form[class="base-form base-form--saving"] p {
+  color: brown;
+}

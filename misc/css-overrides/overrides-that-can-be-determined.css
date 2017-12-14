@@ -79,4 +79,103 @@ Likewise, this override of inherited property can be determined since body is a 
   font-size: 10px;
 </p>
 
+However I like the idea that font properties can only be applied to pure textual elements (p, a, h1-h6 etc...)
+
+*/
+
+
+// Composable classes --
+
+// HML
+// <form class="base-form signup-form"></form>
+
+
+<form.base-form>
+  background: grey;
+  border: 1px solid;
+</form>
+
+<form.signup-form>
+  background: green;
+</form>
+
+/* The generated CSS could use attribute selectors:
+
+form[class="base-form"] {
+  background: grey;
+  border: 1px solid;
+}
+
+form[class="signup-form"] {
+  background: green;
+}
+
+This removes overrides among composable classes... however what happens if a modifier classes is needed, i.e "base-form base-form--saving" ?
+
+*/
+
+// this binds a relationship between "base-form" and "base-form--saving"
+<form.base-form.base-form--saving>
+  opacity: 0.6;
+  pointer-events: none;
+</form>
+
+/*
+form[class="base-form base-form--saving"] {
+    background: grey;     // copied from "form[class="base-form"]"
+    border: 1px solid;    // copied from "form[class="base-form"]"
+    opacity: 0.6;
+    pointer-events: none;
+}
+*/
+
+// you can overload styles
+<form.base-form.base-form--saving>
+  background: yellow; // overload background set in "base-form"
+  border: 1px solid;
+  opacity: 0.6;
+  pointer-events: none;
+</form>
+
+/*
+form[class="base-form base-form--saving"] {
+  background: yellow;   // not copied from "form[class="base-form"]"
+  border: 1px solid;    // copied from "form[class="base-form"]"
+  opacity: 0.6;
+  pointer-events: none;
+}
+ */
+
+
+
+// Composable classes with child elements --
+
+// HTML
+// <form class="base-form signup-form">
+//    <p>child element</p>
+// </form>
+
+
+<form.base-form>
+  background: grey;
+
+  <p>
+    color: brown;
+  </p>
+</form>
+
+/*
+
+form[class="base-form"] {
+  background: grey;
+}
+
+form[class="base-form"] p {
+  color: brown;
+}
+
+form[class="base-form base-form--saving"] p {
+  color: brown;
+}
+
 */
