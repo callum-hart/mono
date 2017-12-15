@@ -114,6 +114,7 @@ This removes overrides among composable classes... however what happens if a mod
 
 */
 
+
 // this binds a relationship between "base-form" and "base-form--saving"
 <form.base-form.base-form--saving>
   opacity: 0.6;
@@ -151,7 +152,7 @@ form[class="base-form base-form--saving"] {
 // Composable classes with child elements --
 
 // HTML
-// <form class="base-form signup-form">
+// <form class="base-form">
 //    <p>child element</p>
 // </form>
 
@@ -179,3 +180,6 @@ form[class="base-form base-form--saving"] p {
 }
 
 */
+
+
+// Don't allow id selectors (since they can sidestep composition detection)

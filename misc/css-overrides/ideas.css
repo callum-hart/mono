@@ -409,3 +409,80 @@ form.purchaseForm--saving {
 Using IDs to target elements would remove composible classes (in which one class overrides styles in the other).
 
  */
+
+
+/*
+
+In React JSX is syntax sugar for `React.createElement`
+
+This:
+
+<foo className="someClass">
+  background: red;
+  width: 100%;
+
+  <p class="anotherClass">
+    font-size: 12px;
+
+    <span>
+      color: black;
+      font-weight: bold;
+    </span>
+  </p>
+</foo>
+
+Compiles to:
+
+React.createElement(
+  "foo",
+  { className: "someClass" },
+  "background: red; width: 100%;",
+  React.createElement(
+    "p",
+    { "class": "anotherClass" },
+    "font-size: 12px;",
+    React.createElement(
+      "span",
+      null,
+      "color: black; font-weight: bold;"
+    )
+  )
+);
+
+
+Mono could work in the same way, compiling JSX to JS to CSS
+
+This:
+
+<form.base-form>
+  background: grey;
+
+  <p>
+    color: brown;
+  </p>
+</form>
+
+Compiles to:
+
+Mono.createStyle(
+  "form",
+  { className: "base-form" },
+  "background: grey;",
+  Mono.createStyle(
+    "p",
+    null,
+    "color: brown;"
+  )
+);
+
+Which generates:
+
+form[class="base-form"] {
+  background: grey;
+}
+
+form[class="base-form"] p {
+  color: brown;
+}
+
+*/
