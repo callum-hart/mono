@@ -111,3 +111,34 @@ form[class="base-form base-form--error"] p {
   font-size: 12px;
   color: #333;
 }
+
+
+/* In DEV mode could provide validations */
+
+form[class="base-form--saving"] {
+  error: '`base-form--saving` extends `base-form` but class `base-form` is missing';
+  hint: 'Prepend `base-form` class before `base-form--saving`';
+  background: mistyrose;
+  border: 1px solid indianred;
+}
+
+form[class="base-form--error"] {
+  error: '`base-form--error` extends `base-form` but class `base-form` is missing';
+  hint: 'Prepend `base-form` class before `base-form--error`';
+  background: mistyrose;
+  border: 1px solid indianred;
+}
+
+form[class="base-form--saving base-form"] {
+  error: 'Class order mismatch';
+  hint: 'Swap order of classes to: `base-form--saving base-form`';
+  background: mistyrose;
+  border: 1px solid indianred;
+}
+
+form[class="base-form--error base-form"] {
+  error: 'Class order mismatch';
+  hint: 'Swap order of classes to: `base-form base-form--error`';
+  background: mistyrose;
+  border: 1px solid indianred;
+}
