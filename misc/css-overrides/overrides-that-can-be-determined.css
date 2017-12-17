@@ -79,7 +79,11 @@ Likewise, this override of inherited property can be determined since body is a 
   font-size: 10px;
 </p>
 
-However I like the idea that font properties can only be applied to pure textual elements (p, a, h1-h6 etc...)
+This only works when the relationship between elements is deterministic. You couldn't tell whether `div.wrapper`
+is a parent of `span.text`.
+
+I like the idea that font properties can only be applied to pure textual elements (p, a, h1-h6 etc...) and to
+elements where the relationship is deterministic (as seen with body and ul).
 
 */
 
@@ -180,6 +184,5 @@ form[class="base-form base-form--saving"] p {
 }
 
 */
-
 
 // Don't allow id selectors (since they can sidestep composition detection)

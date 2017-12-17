@@ -1,0 +1,126 @@
+/**
+Pseudo Classes --
+
+- Note: this uses concepts demonstrated in `composition.css`
+
+------------------------------------------------------------------------
+
+<button.btn>
+  padding: 4px 10px;
+  font-size: 14px;
+  text-transform: uppercase;
+  background: lightgrey;
+</button>
+
+<button.btn:hover>
+  background: darkgrey;
+  cursor: pointer;
+</button>
+
+<button.btn.btn--save>
+  background: darkseagreen;
+</button>
+
+<button.btn.btn--save:hover>
+  background: mediumseagreen;
+</button>
+
+<button.btn.btn--delete>
+  background: indianred;
+</button>
+
+<button.btn.btn--delete:hover>
+  background: darkseagreen;
+</button>
+
+<button.btn.btn--icon>
+  position: relative;
+  padding-left: 40px;
+  background: lightblue;
+</button>
+
+<button.btn.btn--icon:hover>
+  background: lightskyblue;
+</button>
+
+<button.btn.btn--icon:before>
+  content: "";
+  position: absolute;
+  left: 10px;
+  width: 18px;
+  height: 18px;
+  border-radius: 10px;
+  background: slategrey;
+</button>
+
+ */
+
+
+/* Base button */
+
+button[class="btn"] {
+  padding: 4px 10px;
+  font-size: 14px;
+  text-transform: uppercase;
+  background: lightgrey;
+}
+
+button[class="btn"]:hover {
+  background: darkgrey;
+  cursor: pointer;
+}
+
+/* Save button */
+
+button[class="btn btn--save"] {
+  padding: 4px 10px;
+  font-size: 14px;
+  text-transform: uppercase;
+  background: darkseagreen;
+}
+
+button[class="btn btn--save"]:hover {
+  cursor: pointer;
+  background: mediumseagreen;
+}
+
+/* Delete button */
+
+button[class="btn btn--delete"] {
+  padding: 4px 10px;
+  font-size: 14px;
+  text-transform: uppercase;
+  background: palevioletred;
+}
+
+button[class="btn btn--delete"]:hover {
+  cursor: pointer;
+  background: indianred;
+}
+
+/* Icon button */
+
+button[class="btn btn--icon"] {
+  font-size: 14px;
+  text-transform: uppercase;
+  padding: 4px 10px 4px 40px; /* overload left padding */
+  background: lightblue;
+  position: relative;
+}
+
+button[class="btn btn--icon"]:hover {
+  cursor: pointer;
+  background: lightskyblue;
+}
+
+button[class="btn btn--icon"]:before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  width: 18px;
+  height: 18px;
+  border-radius: 10px;
+  background: slategrey;
+}
+
+

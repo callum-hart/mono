@@ -1,0 +1,70 @@
+/**
+Media queries --
+
+------------------------------------------------------------------------
+
+<nav>
+  display: flex;
+
+  <span.nav__icon>
+    width: 50px;
+    height: 50px;
+    background: cadetblue;
+  </span>
+
+  <ul.nav__links>
+    display: flex;
+    flex: 1;
+    padding-left: 0;
+    list-style: none;
+
+    <a>
+      <Media until=500>
+        padding: 0 10px;
+      </Media>
+      <Media from=500 to=900>
+        padding: 0 20px;
+      </Media>
+      <Media above=900>
+        padding: 0 50px;
+      </Media>
+    </a>
+  </ul>
+</nav>
+
+*/
+
+nav {
+  display: flex;
+}
+
+nav span[class="nav__icon"] {
+  width: 50px;
+  height: 50px;
+  background: cadetblue;
+}
+
+nav ul[class="nav__links"] {
+  display: flex;
+  flex: 1;
+  padding-left: 0;
+  list-style: none;
+}
+
+@media (max-width:500px) {
+  nav ul[class="nav__links"] a {
+    padding: 0 10px;
+  }
+}
+
+@media (min-width:501px) and (max-width:900px) {
+  nav ul[class="nav__links"] a {
+    padding: 0 20px;
+  }
+}
+
+@media (min-width:901px) {
+  nav ul[class="nav__links"] a {
+    padding: 0 50px;
+  }
+}

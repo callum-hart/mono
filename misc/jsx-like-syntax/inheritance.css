@@ -1,0 +1,67 @@
+/**
+
+Inheritance --
+
+- Inheritable properties cannot be determined.
+
+<div.wrapper>
+  font-size: 12px;
+</div>
+
+<span.text>
+  font-size: 20px;
+</span>
+
+No way of knowing if `span` overrides font size set in `div`.
+
+- Inheritable properties can only be set on:
+  - Pure textual elements (p, a, h1-h6 etc...)
+  - Elements whose relationship is deterministic (html, body, ul):
+
+We know `li` is a child of `ul`:
+
+<ul>
+  list-style: none;
+</ul>
+
+<li>
+  list-size: disc;
+</li>
+
+We know `p` is a child of `body`:
+
+<body>
+  font-size: 12px;
+</body>
+
+<p>
+  font-size: 10px;
+</p>
+
+------------------------------------------------------------------------
+
+<body>
+  font-size: 14px;
+</body>
+
+<ul>
+  list-style: none;
+</ul>
+
+*/
+
+body {
+  font-size: 14px;
+}
+
+ul {
+  list-style: none;
+}
+
+/*
+In this example we wouldn't be allowed to:
+
+- Set font-size on any element
+- Set list-style on li
+*/
+

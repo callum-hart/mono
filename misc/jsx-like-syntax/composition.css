@@ -1,0 +1,113 @@
+/**
+Composition --
+
+- Note: Don't allow id selectors since they can sidestep composition detection.
+
+------------------------------------------------------------------------
+
+<form.base-form>
+  padding: 20px;
+  margin: 10px;
+  background: ivory;
+  border: 1px solid grey;
+
+  <p>
+    font-size: 12px;
+    color: #333;
+  </p>
+
+  <span.error-message>
+    display: none;
+  </span>
+</form>
+
+<form.base-form.base-form--saving>
+  background: lightgrey;
+  opacity: 0.8;
+  pointer-events: none;
+</form>
+
+<form.base-form.base-form--error>
+  border: 1px solid red;
+
+  <input>
+    border: 1px solid red;
+  </input>
+
+  <span.error-message>
+    display: block;
+    color: red;
+  </span>
+</form>
+*/
+
+
+/* Base form */
+
+form[class="base-form"] {
+  padding: 20px;
+  margin: 10px;
+  background: ivory;
+  border: 1px solid grey;
+}
+
+form[class="base-form"] span[class="error-message"] {
+  display: none;
+}
+
+form[class="base-form"] p {
+  font-size: 12px;
+  color: #333;
+}
+
+
+/* Base form saving */
+
+form[class="base-form base-form--saving"] {
+  /* Styles copied from 'base-form' */
+  padding: 20px;
+  margin: 10px;
+  border: 1px solid #ccc;
+
+  /* Overload properties in 'base-form'  */
+  background: lightgrey;
+
+  /* Styles specific to 'base-form--saving' */
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+form[class="base-form base-form--saving"] span[class="error-message"] {
+  display: none;
+}
+
+form[class="base-form base-form--saving"] p {
+  font-size: 12px;
+  color: #333;
+}
+
+/* Base form error */
+
+form[class="base-form base-form--error"] {
+  /* Styles copied from 'base-form' */
+  padding: 20px;
+  margin: 10px;
+  background: ivory;
+
+  /* Overload properties in 'base-form'  */
+  border: 1px solid red;
+}
+
+form[class="base-form base-form--error"] input {
+  border: 1px solid red;
+}
+
+form[class="base-form base-form--error"] span[class="error-message"] {
+  display: block;
+  color: red;
+}
+
+form[class="base-form base-form--error"] p {
+  font-size: 12px;
+  color: #333;
+}
