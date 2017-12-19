@@ -2,6 +2,7 @@
 Pseudo Classes --
 
 - Note: this uses concepts demonstrated in `composition.css`
+- Todo: hover on parent changes child
 
 ------------------------------------------------------------------------
 
@@ -51,6 +52,18 @@ Pseudo Classes --
   height: 18px;
   border-radius: 10px;
   background: slategrey;
+</button>
+
+<button.btn.btn--withChild>
+  <span.btn__text>
+    color: red;
+  </span>
+</button>
+
+<button.btn.btn--withChild:hover>
+  <span.btn__text>
+    color: blue;
+  </span>
 </button>
 
  */
@@ -123,4 +136,25 @@ button[class="btn btn--icon"]:before {
   background: slategrey;
 }
 
+/* Button with child */
+
+button[class="btn btn--withChild"] {
+  padding: 4px 10px;
+  font-size: 14px;
+  text-transform: uppercase;
+  background: lightgrey;
+}
+
+button[class="btn btn--withChild"]:hover {
+  background: darkgrey;
+  cursor: pointer;
+}
+
+button[class="btn btn--withChild"] span[class="btn__text"] {
+  color: red;
+}
+
+button[class="btn btn--withChild"]:hover span[class="btn__text"] {
+  color: blue;
+}
 

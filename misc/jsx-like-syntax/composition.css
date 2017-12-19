@@ -67,7 +67,7 @@ form[class="base-form base-form--saving"] {
   /* Styles copied from 'base-form' */
   padding: 20px;
   margin: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid grey;
 
   /* Overload properties in 'base-form'  */
   background: lightgrey;
@@ -113,7 +113,7 @@ form[class="base-form base-form--error"] p {
 }
 
 
-/* In DEV mode could provide validations */
+/* In DEV mode provide run-time validations */
 
 form[class="base-form--saving"] {
   error: '`base-form--saving` extends `base-form` but class `base-form` is missing';
