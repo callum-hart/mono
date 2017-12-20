@@ -20,24 +20,24 @@ const Mono = {
     };
   },
 
-  createCSS(a) {
-    a.forEach(b => Mono._parseCSS(b));
+  createCSS(styles) {
+    styles.forEach(block => Mono._parseStyles(block));
     Mono._parseAst();
   },
 
-  _parseCSS(c, parentRef = null) {
-    const ref = Mono._makeRef(c);
+  _parseStyles(block, parentRef = null) {
+    const ref = Mono._makeRef(block);
     const fullyQualifiedRef = parentRef ? `${parentRef}${SPACE}${ref}` : ref;
-    Mono._saveRef(fullyQualifiedRef, c.styles);
+    Mono._saveRef(fullyQualifiedRef, block.styles);
 
-    if (c.children.length) {
+    if (block.children.length) {
       if (parentRef) {
         parentRef += `${SPACE}${ref}`;
       } else {
         parentRef = ref;
       }
 
-      c.children.forEach(d => Mono._parseCSS(d, parentRef));
+      block.children.forEach(child => Mono._parseStyles(child, parentRef));
     }
   },
 
@@ -60,10 +60,10 @@ const Mono = {
 
   _saveRef(ref, styles) {
     if (Mono._AST[ref]) {
+      // ref already exists, merge styles with existing styles if no overrides exist.
       try {
-        Mono._stylesClash(Mono._AST[ref], styles);
-        // merge styles
-        Mono._AST[ref] += styles;
+        Mono._stylesUnique(Mono._AST[ref], styles);
+        Mono._AST[ref] += styles; // merge styles
       } catch (e) {
         throw new e.constructor(e.message);
       }
@@ -72,7 +72,9 @@ const Mono = {
     }
   },
 
-  _stylesClash(existingStyles, newStyles) {
+  // unique in terms of CSS property (not including CSS value)
+  // would need to handle short-hands (margin vs margin-top)
+  _stylesUnique(existingStyles, newStyles) {
     for (var property in Mono._stylesAsObject(newStyles)) {
       if (Mono._stylesAsObject(existingStyles)[property]) {
         throw new Error(`
@@ -87,7 +89,7 @@ const Mono = {
       }
     }
 
-    return false;
+    return true;
   },
 
   _stylesAsObject(styles) {
@@ -98,7 +100,7 @@ const Mono = {
           .map(res => res.trim())
           .forEach(declaration => {
             const [property, value] = declaration.split(COLON).map(res => res.trim());
-            styleObj[property] = value;
+            styleObj[property.toLowerCase()] = value;
           });
 
     return styleObj;
@@ -143,7 +145,13 @@ const styles = [
   Mono.createStyle(
     "span",
     null,
-    "font-size: 23px; font-weight: bold; font-style:italic;line-height: 20px;"
+    "font-size: 23px; font-weight: bold; line-height: 20px;"
+  ),
+
+  Mono.createStyle(
+    "span",
+    "error-message",
+    "color: red; font-weight: bold;"
   ),
 
   Mono.createStyle(
@@ -180,7 +188,7 @@ const styles = [
     Mono.createStyle(
       "span",
       "error-message",
-      "display: block; color: red;",
+      "display: block;",
       Mono.createStyle(
         "a",
         "anotherLink",
