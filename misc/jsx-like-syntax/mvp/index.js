@@ -1,3 +1,8 @@
+/**
+ * Get first version of this done asap to test idea
+ */
+
+
 const SPACE = " ";
 const DOT = ".";
 
@@ -12,38 +17,42 @@ const Mono = {
     };
   },
 
-  createCSS(a) {
-    let CSS = '';
-
-    if (a.length) {
-      a.forEach(s => {
-        const selector = Mono._makeSelector(s);
-        console.log(selector);
-        console.log(s.styles);
-        console.log('-------------------------------');
-        CSS += `${selector} { ${s.styles} }`;
-
-        if (s.children.length) {
-          parentSelector = selector;
-          s.children.map(Mono.createCSS);
-        }
-      });
-    } else {
-      const selector = Mono._makeSelector(a);
-      CSS += `${parentSelector}${SPACE}${selector} { ${a.styles} }`;
-      console.log(`${parentSelector}${SPACE}${selector}`);
-      console.log(a.styles);
-      console.log('-------------------------------');
-
-      if (a.children.length) {
-        parentSelector += `${SPACE}${selector}`;
-        a.children.map(Mono.createCSS);
-      }
-    }
-
-    console.log(CSS);
+  creatCSS(a) {
+    a.forEach(b => Mono._makeCSS(b));
+    Mono._parseAst();
   },
 
+  _makeCSS(s, parentRef = null) {
+    const ref = Mono._makeRef(s);
+    const fullRef = parentRef ? `${parentRef}${SPACE}${ref}` : ref;
+
+    console.log(`fullRef: ${fullRef}`);
+    Mono._saveRef(fullRef, s.styles);
+
+    if (s.children.length) {
+      if (parentRef) {
+        parentRef += `${SPACE}${ref}`;
+      } else {
+        parentRef = ref;
+      }
+
+      s.children.map(b => Mono._makeCSS(b, parentRef));
+    }
+  },
+
+  _parseAst() {
+    console.log(Mono._AST);
+  },
+
+  _AST: {},
+
+  _saveRef(ref, styles) {
+    if (Mono._AST[ref]) {
+      console.log(`ref: ${ref} already saved, merge styles with existing ref?`);
+    } else {
+      Mono._AST[ref] = styles;
+    }
+  },
 
   _makeSelector({element, className}) {
     if (className) {
@@ -51,12 +60,24 @@ const Mono = {
     } else {
       return element;
     }
+  },
+
+  _makeRef({element, className}) {
+    if (className) {
+      return `${element}${DOT}${className}`;
+    } else {
+      return element;
+    }
+  },
+
+  _makeSelectorFromRef(ref) {
+    console.log(`[_makeSelectorFromRef] ref: ${ref}`);
   }
 }
 
 
 
-const ast = [
+const styles = [
   Mono.createStyle(
     "form",
     null,
@@ -118,4 +139,4 @@ const ast = [
 ];
 
 
-Mono.createCSS(ast);
+Mono.creatCSS(styles);
