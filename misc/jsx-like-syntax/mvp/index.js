@@ -60,7 +60,7 @@ const Mono = {
 
   _saveRef(ref, styles) {
     if (Mono._AST[ref]) {
-      // ref already exists, merge styles with existing styles if no overrides exist.
+      // ref already exists, merge styles with existing styles if no overrides present.
       try {
         Mono._stylesUnique(Mono._AST[ref], styles);
         Mono._AST[ref] += styles; // merge styles

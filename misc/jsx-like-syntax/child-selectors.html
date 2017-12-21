@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Child Selectors</title>
+  <link rel="stylesheet" href="child-selectors.css">
+</head>
+<body>
+
+  <h2>Child Selectors</h2>
+
+  <section class="the-problem">
+    <div>
+      <a href=""><code>background</code> set once</a>
+    </div>
+
+    <span>
+      <a href=""><code>background</code> set once</a>
+    </span>
+
+    <!-- Nested structure -->
+    <div>
+      <span>
+        <a href=""><code>background</code> set twice</a>
+      </span>
+    </div>
+
+    <span>
+      <div>
+        <a href=""><code>background</code> set twice</a>
+      </div>
+    </span>
+  </section>
+
+  <hr>
+
+  <section class="the-solution">
+    <div>
+      <a href=""><code>background</code> set once</a>
+    </div>
+
+    <span>
+      <a href=""><code>background</code> set once</a>
+    </span>
+
+    <!-- Nested structure -->
+    <div>
+      <span>
+        <a href=""><code>background</code> set once</a>
+      </span>
+    </div>
+
+    <span>
+      <div>
+        <a href=""><code>background</code> set once</a>
+      </div>
+    </span>
+  </section>
+
+  <hr>
+
+  <section class="another-solution">
+    <div>
+      <a href=""><code>background</code> set once</a>
+    </div>
+
+    <span>
+      <a href=""><code>background</code> set once</a>
+    </span>
+
+    <!-- Nested structure -->
+    <div>
+      <span>
+        <a href=""><code>background</code> set twice</a>
+      </span>
+    </div>
+
+    <span>
+      <div>
+        <a href=""><code>background</code> set twice</a>
+      </div>
+    </span>
+  </section>
+
+</body>
+</html>
