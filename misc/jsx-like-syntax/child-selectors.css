@@ -4,6 +4,18 @@ Child Selectors --
 - Selectors targeting children should use child combinator (>).
 - Without child combinator overrides can go undetected when structures are nested in the HTML.
 
+Benefits:
+- deterministic, confident styles will always look the same
+- removes overrides in nested structures (more robust)
+- enforces consistency in markup (otherwise styles won't apply)
+
+Drawbacks:
+- makes markup more verbose (have to include full path to target element)
+- makes styles less portable / flexible
+
+Alternatives:
+- calculate invalid nested structures up-front, and generate validation classes
+
 ------------------------------------------------------------------------
 
 <div>
@@ -31,24 +43,19 @@ Child Selectors --
   background: palevioletred;
 }
 
-/* The solution */
 
-.the-solution div > a {
+/* Child combinator solution */
+
+.a-solution div > a {
   background: deepskyblue;
 }
 
-.the-solution span > a {
+.a-solution span > a {
   background: palevioletred;
 }
 
-/*
-I don't really like the child combinator approach:
-- makes styling less flexible
-- makes markup in CSX more verbose (have to include full path to target element - see media-queries)
 
-Instead could invalid nested structures be calculated up-front, and validations be generated for them?
-
-*/
+/* Generated validation classes */
 
 .another-solution div a {
   background: deepskyblue;
@@ -57,8 +64,6 @@ Instead could invalid nested structures be calculated up-front, and validations 
 .another-solution span a {
   background: palevioletred;
 }
-
-/* Validations */
 
 .another-solution div span a {
   error: '`background` already set by grandparent `div`';

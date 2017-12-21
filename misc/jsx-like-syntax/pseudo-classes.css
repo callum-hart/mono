@@ -150,11 +150,11 @@ button[class="btn btn--withChild"]:hover {
   cursor: pointer;
 }
 
-button[class="btn btn--withChild"] span[class="btn__text"] {
+button[class="btn btn--withChild"] > span[class="btn__text"] {
   color: red;
 }
 
-button[class="btn btn--withChild"]:hover span[class="btn__text"] {
+button[class="btn btn--withChild"]:hover > span[class="btn__text"] {
   color: blue;
 }
 

@@ -962,3 +962,5 @@ nav.main-links {
 - https://micahgodbolt.com/blog/writing-the-correct-css-once-is-pretty-easy-all-situations/
 - https://micahgodbolt.com/blog/writing-the-correct-css-once-is-pretty-easy-part-2/
 - https://speakerdeck.com/chriseppstein/help-my-stylesheets-are-a-mess
+- https://medium.com/seek-blog/a-unified-styling-language-d0c208de2660
+    - "working with CSS at scale is all about picking a reasonable subset of the language"
