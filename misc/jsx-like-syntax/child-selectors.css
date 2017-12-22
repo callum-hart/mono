@@ -1,4 +1,5 @@
 /**
+
 Child Selectors --
 
 - Selectors targeting children should use child combinator (>).
@@ -9,6 +10,8 @@ Benefits:
 - removes overrides in nested structures (more robust)
 - enforces consistency in markup (otherwise styles won't apply)
 - makes overrides easier to determine
+- encourages flat HTML structures
+- discourages deeply nested location dependant styling
 
 Drawbacks:
 - makes markup more verbose (have to include full path to target element)

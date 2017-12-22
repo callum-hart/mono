@@ -5,14 +5,12 @@ Tags without class --
 - Cannot determine whether a tag in CSX has a class in HTML, which means
 overrides can go undetected.
 - Generated CSS could treat elements without a class differently to
-elements (of same type) with a class `span` != `span.icon` (using
-negation with attribute selector `:not([class])`.
-
+elements (of same type) with a class (`span` != `span.icon`).
 
 Benefits:
-- prevents possibility of overrides
+- prevents possibility of unforeseen overrides
 - discourages global tag styles
-- encourages using classes to apply styles
+- encourages usage of classes for styling
 - more deterministic
 
 Drawbacks:
@@ -42,7 +40,7 @@ of concerns?
 }
 
 .the-problem div[class="wrapper"] > span {
-  color: red; // overrides color if span uses the class `icon` in HTML
+  color: red; /* overrides color if span uses the class `icon` in HTML */
 }
 
 

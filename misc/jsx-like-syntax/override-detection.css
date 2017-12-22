@@ -1,0 +1,233 @@
+/**
+
+Override Detection --
+
+- Need to understand use cases in which overrides can happen in CSX.
+- Constraints such as child-selectors and tag-only-selectors remove
+many instances in which overrides happen in convensional CSS.
+- This file should explore and demonstrate where overrides can happen
+in CSX.
+- This will make preventing them easier :-)
+
+*/
+
+
+/* Identical Ref (tag) */
+
+/*csx
+
+<span>
+  color: blue;
+</span>
+
+</span>
+  color: red; // not allowed
+</span>
+
+---
+
+<div>
+  <p>
+    font-size: 10px;
+  </p>
+</div>
+
+<div>
+  <p>
+    font-size: 20px; // not allowed
+  </p>
+</div>
+
+*/
+
+
+/* Identical Ref (tag with class) */
+
+/*csx
+
+<h3.subTitle>
+  font-size: 20px;
+</h3>
+
+<h3.subTitle>
+  font-size: 10px; // not allowed
+</h3>
+
+---
+
+<div.wrapper>
+  <p.userName>
+    font-size: 10px;
+  </p>
+</div>
+
+<div.wrapper>
+  <p.userName>
+    font-size: 20px; // not allowed
+  </p>
+</div>
+
+---
+
+<ul.userList>
+  <li>
+    font-size: 10px;
+  </li>
+
+  <li>
+    font-size: 12px; // not allowed
+  </li>
+</ul>
+
+*/
+
+
+/* Nested */
+
+/*csx
+
+<a.link>
+  color: blue;
+</a>
+
+<li.listItem>
+  <a.link>
+    color: red; // not allowed
+  </a>
+</li>
+
+<nav>
+  <section.nav__links>
+    <a.link>
+      color: green; // not allowed
+    </a>
+  </section>
+</nav>
+
+---
+
+<section.sideBar>
+  <span.icon>
+    width: 15px;  // not allowed
+    height: 15px; // not allowed
+  </span>
+</section>
+
+<span.icon>
+  width: 20px;
+  height: 20px;
+</span>
+
+*/
+
+
+/* Media Query */
+
+/*csx
+
+<div.titleBar>
+  <h3>
+    font-size: 18px;
+  </h3>
+
+  <h3 minWidth="500px">
+    font-size: 22px; // not allowed
+  </h3>
+
+  <h3 minWidth="900px">
+    font-size: 24px; // not allowed
+  </h3>
+</div>
+
+---
+
+<strong.highlight>
+  background: yellow;
+  font-size: 12px;
+</strong>
+
+<div.content>
+  <p maxWidth="500px">
+    <strong.highlight>
+      font-size: 10px; // not allowed
+    </strong>
+  </p>
+</div>
+
+*/
+
+
+/*
+
+- If identical ref exists (already done)
+- If partial ref exists
+
+<p>
+  font-size: 12px;
+</p>
+
+<span.errorMessage>
+  color: red;
+</span>
+
+<form.checkout>
+  <span.errorMessage>
+    font-size: 10px;
+  </span>
+</form>
+
+<div.wrapper>
+  <form.checkout>
+    <p>
+      font-size: 10px; // not allowed
+    </p>
+
+    <span.errorMessag>
+      color: blue; // not allowed (span.errorMessage)
+      font-size: 12px; // not allowed (form.checkout span.errorMessage) #1
+    </span>
+  </form>
+</div>
+
+Traverse tree to see whether ref exists (starting from right-hand-side).
+
+In example #1 we check refs for:
+- span.errorMessage
+- form.checkout span.errorMessage
+- div.wrapper form.checkout span.errorMessage
+
+If ref exists need to check whether CSS property has already been declared.
+
+Will need to take into account media queries, for example:
+
+<p minWidth="500px">
+  font-size: 12px;
+</p>
+
+<div.wrapper>
+  <p maxWidth="500px">
+    font-size: 10px; // this is allowed since breakpoints are discrete (don't overlap)
+  </p>
+</div>
+
+An example that isn't allowed:
+
+<div.sideBar>
+  <ul.sideBar__list>
+    <li minWidth="360px"
+      height: 40px; // not allowed since breakpoints are indescrete (do overlap)
+    </li>
+  </ul>
+</div>
+
+<ul.sideBar__list>
+  <li minWidth="670px">
+    height: 50px;
+  </li>
+</ul>
+
+Traverse:
+- li
+- ul.sideBar__list li
+
+*/

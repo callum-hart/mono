@@ -3,12 +3,19 @@
  */
 
 
-const BLANK = "";
-const SPACE = " ";
-const DOT = ".";
-const COLON = ":";
-const SEMI_COLON = ";"
+const BLANK      = '';
+const SPACE      = ' ';
+const DOT        = '.';
+const COLON      = ':';
+const SEMI_COLON = ';';
 
+
+class MonoException {
+  constructor(message, data) {
+    this.message = message;
+    this.data = data;
+  }
+}
 
 const Mono = {
   createStyle(element, className, styles, ...children) {
@@ -46,23 +53,30 @@ const Mono = {
     console.log('------------------------');
 
     for (var ref in Mono._AST) {
-      ref.split(SPACE)
-          .forEach(c => {
-            const composableClass = c.split(DOT).length > 2;
-            const tagWithClass = c.includes(DOT);
+      const a = ref.split(SPACE);
 
-            if (composableClass) {
-              console.log(`"${c}" is a composable class`);
-            } else if (tagWithClass) {
-              const [tag, className] = c.split(DOT);
-              console.log(`"${c}" is an HTML element (${tag}) with the class (${className})`);
-            } else {
-              console.log(`"${c}" is an HTML element`);
-            }
+      // Traverse tree to see whether ref exists (starting from right-hand-side).
 
-          });
+      let i = a.length - 1;
+      let b = BLANK;
 
-      console.log('------------------------');
+      do {
+        b = (b === BLANK) ? a[i] : `${a[i]}${SPACE}` + b;
+
+        if (ref !== b && Mono._AST[b]) {
+          // ref already exists, check if styles are unique
+          try {
+            Mono._stylesUnique(Mono._AST[b], Mono._AST[ref]);
+          } catch (e) {
+            console.log(`\n[Override Found] \`${ref}\` overrides the property \`${e.data.property}\` set by \`${b}\``);
+            console.log(`\nExisting styles (\`${b}\`):\n   \`${e.data.existingStyles}\``);
+            console.log(`\nNew styles (\`${ref}\`):\n   \`${e.data.newStyles}\``);
+            throw new e.constructor();
+          }
+        }
+
+        i--;
+      } while (i >= 0);
     }
   },
 
@@ -75,7 +89,10 @@ const Mono = {
         Mono._stylesUnique(Mono._AST[ref], styles);
         Mono._AST[ref] += styles; // merge styles
       } catch (e) {
-        throw new e.constructor(e.message);
+        console.log(`\nThe CSS property \`${e.data.property}\` has already been defined for \`${ref}\``);
+        console.log(`\nExisting styles (\`${ref}\`):\n   "${e.data.existingStyles}"`);
+        console.log(`\nNew styles (\`${ref}\`):\n   "${e.data.newStyles}"`);
+        throw new e.constructor();
       }
     } else {
       Mono._AST[ref] = styles;
@@ -87,15 +104,11 @@ const Mono = {
   _stylesUnique(existingStyles, newStyles) {
     for (var property in Mono._stylesAsObject(newStyles)) {
       if (Mono._stylesAsObject(existingStyles)[property]) {
-        throw new Error(`
-          The property: '${property}' has already been defined.
-
-          existingStyles:
-            ${existingStyles}
-
-          newStyles:
-            ${newStyles}
-        `);
+        throw new MonoException('Override found', {
+          property,
+          existingStyles,
+          newStyles
+        });
       }
     }
 
@@ -138,8 +151,9 @@ const Mono = {
 }
 
 
+// Usage --
 
-const styles = [
+const stylesWithComposition = [
   Mono.createStyle(
     "form",
     null,
@@ -229,6 +243,58 @@ const styles = [
         "a",
         null,
         "padding: 0 10px;"
+      )
+    )
+  )
+];
+
+const styles = [
+  Mono.createStyle(
+    "p",
+    null,
+    "font-size: 12px;"
+  ),
+
+  // Mono.createStyle(
+  //   "p",
+  //   null,
+  //   "font-size: 13px /* not allowed */; line-height: 20px;"
+  // ),
+
+  Mono.createStyle(
+    "span",
+    "errorMessage",
+    "color: red;"
+  ),
+
+  Mono.createStyle(
+    "form",
+    "checkout",
+    null,
+    Mono.createStyle(
+      "span",
+      "errorMessage",
+      "font-size: 10px;"
+    )
+  ),
+
+  Mono.createStyle(
+    "div",
+    "wrapper",
+    null,
+    Mono.createStyle(
+      "form",
+      "checkout",
+      null,
+      Mono.createStyle(
+        "p",
+        null,
+        "font-size: 10px /* not allowed */;"
+      ),
+      Mono.createStyle(
+        "span",
+        "errorMessage",
+        "color: blue /* not allowed */; font-size: 12px /* not allowed */; "
       )
     )
   )
