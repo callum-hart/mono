@@ -8,6 +8,7 @@ Benefits:
 - deterministic, confident styles will always look the same
 - removes overrides in nested structures (more robust)
 - enforces consistency in markup (otherwise styles won't apply)
+- makes overrides easier to determine
 
 Drawbacks:
 - makes markup more verbose (have to include full path to target element)

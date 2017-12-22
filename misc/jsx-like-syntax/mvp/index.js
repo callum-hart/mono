@@ -42,14 +42,24 @@ const Mono = {
   },
 
   _parseAst() {
-    for (var ref in Mono._AST) {
-      console.log(ref);
-      console.log(Mono._AST[ref]);
+    console.log(Mono._AST);
+    console.log('------------------------');
 
+    for (var ref in Mono._AST) {
       ref.split(SPACE)
-          .map(b => b.split(DOT))
           .forEach(c => {
-            console.log(c);
+            const composableClass = c.split(DOT).length > 2;
+            const tagWithClass = c.includes(DOT);
+
+            if (composableClass) {
+              console.log(`"${c}" is a composable class`);
+            } else if (tagWithClass) {
+              const [tag, className] = c.split(DOT);
+              console.log(`"${c}" is an HTML element (${tag}) with the class (${className})`);
+            } else {
+              console.log(`"${c}" is an HTML element`);
+            }
+
           });
 
       console.log('------------------------');
@@ -203,6 +213,22 @@ const styles = [
           "yetAnotherLink",
           "color: RED"
         )
+      )
+    )
+  ),
+
+  Mono.createStyle(
+    "ul",
+    "nav__links",
+    "display: flex; padding-left: 0; list-style: none",
+    Mono.createStyle(
+      "li",
+      null,
+      null,
+      Mono.createStyle(
+        "a",
+        null,
+        "padding: 0 10px;"
       )
     )
   )
