@@ -308,10 +308,12 @@ In order to take media queries into account ref needs to change:
 
 "p": {
   styles: "font-size: 12px;",
-  minWidth: {
-    size: "400px",
-    styles: "font-weight: bold"
-  }
+  media: [
+    {
+      minWidth: 400,
+      styles: "font-weight: bold"
+    }
+  ]
 }
 
 "span p": {
@@ -326,6 +328,7 @@ In order to take media queries into account ref needs to change:
 
 <span.errorMessage minWidth="400px" maxWidth="500px">
   font-size: 12px;
+  color: blue; // not allowed (color already set)
 </span>
 
 <span.errorMessage minWidth="500px" maxWidth="800px">
@@ -345,7 +348,7 @@ As ref:
       minWidth: 400,
       maxWidth: 500,
       styles: {
-        "font-size: 12px; color: blue; // not allowed (color has already been set)"
+        "font-size: 12px; color: blue; // not allowed"
       }
     },
     {

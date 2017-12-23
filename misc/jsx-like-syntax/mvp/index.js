@@ -18,13 +18,13 @@ class CSXException {
 }
 
 const Mono = {
-  createStyle(element, className, styles, ...children) {
+  createStyle(element, props, styles, ...children) {
     return {
       element,
-      className,
+      props,
       styles,
       children
-    };
+    }
   },
 
   createCSS(styles) {
@@ -35,6 +35,7 @@ const Mono = {
   _parseStyles(block, parentRef = null) {
     const ref = Mono._makeRef(block);
     const fullyQualifiedRef = parentRef ? `${parentRef}${SPACE}${ref}` : ref;
+    console.log(block);
     Mono._saveRef(fullyQualifiedRef, block.styles);
 
     if (block.children.length) {
@@ -82,6 +83,7 @@ const Mono = {
 
   _AST: {},
 
+  // ref shape needs to change
   _saveRef(ref, styles) {
     if (Mono._AST[ref]) {
       // ref already exists, merge styles with existing styles if no overrides present.
@@ -129,17 +131,17 @@ const Mono = {
     return styleObj;
   },
 
-  _makeSelector({element, className}) {
-    if (className) {
-      return `${element}[class="${className.replace(DOT, SPACE)}"]`;
+  _makeSelector({element, props}) {
+    if (props && props.className) {
+      return `${element}[class="${props.className.replace(DOT, SPACE)}"]`;
     } else {
       return element;
     }
   },
 
-  _makeRef({element, className}) {
-    if (className) {
-      return `${element}${DOT}${className}`;
+  _makeRef({element, props}) {
+    if (props && props.className) {
+      return `${element}${DOT}${props.className}`;
     } else {
       return element;
     }
@@ -174,13 +176,17 @@ const stylesWithComposition = [
 
   Mono.createStyle(
     "span",
-    "error-message",
+    {
+      className: "error-message"
+    },
     "color: red; font-weight: bold;"
   ),
 
   Mono.createStyle(
     "form",
-    "base-form",
+    {
+      className: "base-form"
+    },
     "padding: 20px; margin: 10px;background: ivory; border: 1px solid grey;",
     Mono.createStyle(
       "p",
@@ -189,20 +195,26 @@ const stylesWithComposition = [
     ),
     Mono.createStyle(
       "span",
-      "error-message",
+      {
+        className: "error-message"
+      },
       "display: none;"
     )
   ),
 
   Mono.createStyle(
     "form",
-    "base-form.base-form--saving",
+    {
+      className: "base-form.base-form--saving"
+    },
     "background: lightgrey; opacity: 0.8; pointer-events: none;"
   ),
 
   Mono.createStyle(
     "form",
-    "base-form.base-form--error",
+    {
+      className: "base-form.base-form--error"
+    },
     "border: 1px solid red;",
     Mono.createStyle(
       "input",
@@ -211,11 +223,15 @@ const stylesWithComposition = [
     ),
     Mono.createStyle(
       "span",
-      "error-message",
+      {
+        className: "error-message"
+      },
       "display: block;",
       Mono.createStyle(
         "a",
-        "anotherLink",
+        {
+          className: "anotherLink"
+        },
         "color: grey"
       ),
       Mono.createStyle(
@@ -224,7 +240,9 @@ const stylesWithComposition = [
         "font-size: 20px",
         Mono.createStyle(
           "a",
-          "yetAnotherLink",
+          {
+            className: "yetAnotherLink"
+          },
           "color: RED"
         )
       )
@@ -233,7 +251,9 @@ const stylesWithComposition = [
 
   Mono.createStyle(
     "ul",
-    "nav__links",
+    {
+      className: "nav__links"
+    },
     "display: flex; padding-left: 0; list-style: none",
     Mono.createStyle(
       "li",
@@ -248,7 +268,7 @@ const stylesWithComposition = [
   )
 ];
 
-const styles = [
+const stylesWithOverrides = [
   Mono.createStyle(
     "p",
     null,
@@ -263,28 +283,38 @@ const styles = [
 
   Mono.createStyle(
     "span",
-    "errorMessage",
+    {
+      className: "errorMessage"
+    },
     "color: red;"
   ),
 
   Mono.createStyle(
     "form",
-    "checkout",
+    {
+      className: "checkout"
+    },
     null,
     Mono.createStyle(
       "span",
-      "errorMessage",
+      {
+        className: "errorMessage"
+      },
       "font-size: 10px;"
     )
   ),
 
   Mono.createStyle(
     "div",
-    "wrapper",
+    {
+      className: "wrapper"
+    },
     null,
     Mono.createStyle(
       "form",
-      "checkout",
+      {
+        className: "checkout"
+      },
       null,
       // Mono.createStyle(
       //   "p",
@@ -293,7 +323,9 @@ const styles = [
       // ),
       Mono.createStyle(
         "span",
-        "errorMessage",
+        {
+          className: "errorMessage"
+        },
         "color: blue /* not allowed */; font-size: 12px /* not allowed */; "
       )
     )
@@ -301,4 +333,43 @@ const styles = [
 ];
 
 
-Mono.createCSS(styles);
+// const stylesWithMediaQueries = [
+//   Mono.createStyle(
+//     "span",
+//     {
+//       className: "errorMessage"
+//     },
+//     "color: red;"
+//   ),
+
+//   Mono.createStyle(
+//     "span",
+//     {
+//       className: "errorMessage",
+//       minWidth: 400,
+//       maxWidth: 500
+//     },
+//     "font-size: 12px;"
+//   ),
+
+//   Mono.createStyle(
+//     "span",
+//     {
+//       className: "errorMessage",
+//       minWidth: 500,
+//       maxWidth: 800
+//     },
+//     "font-size: 14px;"
+//   ),
+
+//   Mono.createStyle(
+//     "span",
+//     {
+//       className: "errorMessage",
+//       minWidth: 800
+//     },
+//     "font-size: 16px;"
+//   )
+// ];
+
+Mono.createCSS(stylesWithOverrides);
