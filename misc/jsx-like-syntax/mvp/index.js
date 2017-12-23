@@ -10,7 +10,7 @@ const COLON      = ':';
 const SEMI_COLON = ';';
 
 
-class MonoException {
+class CSXException {
   constructor(message, data) {
     this.message = message;
     this.data = data;
@@ -100,11 +100,11 @@ const Mono = {
   },
 
   // unique in terms of CSS property (not including CSS value)
-  // would need to handle short-hands (margin vs margin-top)
+  // needs to handle: media queries, property short-hands (margin vs margin-top)
   _stylesUnique(existingStyles, newStyles) {
     for (var property in Mono._stylesAsObject(newStyles)) {
       if (Mono._stylesAsObject(existingStyles)[property]) {
-        throw new MonoException('Override found', {
+        throw new CSXException('Override found', {
           property,
           existingStyles,
           newStyles
@@ -286,11 +286,11 @@ const styles = [
       "form",
       "checkout",
       null,
-      Mono.createStyle(
-        "p",
-        null,
-        "font-size: 10px /* not allowed */;"
-      ),
+      // Mono.createStyle(
+      //   "p",
+      //   null,
+      //   "font-size: 10px /* not allowed */;"
+      // ),
       Mono.createStyle(
         "span",
         "errorMessage",

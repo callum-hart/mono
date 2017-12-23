@@ -154,13 +154,67 @@ in CSX.
   </p>
 </div>
 
+---
+
+<span.icon>
+  width: 20px;
+</span>
+
+<span.icon minWidth="720px">
+  height: 20px;
+</span>
+
+<nav minWidth="360px" maxWidth="720px">
+  <ul.nav__list>
+    <li>
+      <span.icon>
+        width: 15px;  // not allowed
+        height: 15px; // is allowed (height hasn't been set in this breakpoint range)
+      </span>
+    </li>
+  </ul>
+</nav>
+
 */
 
+
+/* Pseudo Classes */
+
+/*csx
+
+<ul.pseudo-class-example>
+  <li:first-of-type>
+    margin-top: 0; // not allowed
+  </li>
+
+  <li>
+    margin-top: 10px;
+    margin-bottom: 10px;
+  </li>
+
+  <li:last-of-type>
+    margin-bottom: 0; // not allowed
+  </li>
+</ul>
+
+*/
+
+ul.pseudo-class-example > li:first-of-type:not([class]) {
+  color: green;
+}
+
+ul.pseudo-class-example > li:last-of-type:not([class]) {
+  color: red;
+}
+
+ul.pseudo-class-example > li:not(:first-of-type):not(:last-of-type):not([class]) {
+  color: blue;
+}
 
 /*
 
 - If identical ref exists (already done)
-- If partial ref exists
+- If partial ref exists (done)
 
 <p>
   font-size: 12px;
@@ -206,16 +260,20 @@ Will need to take into account media queries, for example:
 
 <div.wrapper>
   <p maxWidth="500px">
-    font-size: 10px; // this is allowed since breakpoints are discrete (don't overlap)
+    font-size: 10px; // this is allowed since breakpoints are discrete (don't overlap) #2
   </p>
 </div>
+
+In example #2 we check refs for:
+- p
+- div.wrapper
 
 An example that isn't allowed:
 
 <div.sideBar>
   <ul.sideBar__list>
     <li minWidth="360px"
-      height: 40px; // not allowed since breakpoints are indescrete (do overlap)
+      height: 40px; // not allowed since breakpoints are indescrete (do overlap) #3
     </li>
   </ul>
 </div>
@@ -226,8 +284,228 @@ An example that isn't allowed:
   </li>
 </ul>
 
-Traverse:
+In example #3 we check refs for:
 - li
 - ul.sideBar__list li
+
+---
+
+Part of checking if styles are unique now needs to consider media queries.
+
+Currently the comparison is:
+
+existingStyles: {
+  "font-size": "20px",
+  "font-weight": "bold"
+}
+
+newStyles: {
+  "font-size": "12px", // not allowed
+  "color": "red"
+}
+
+In order to take media queries into account ref needs to change:
+
+"p": {
+  styles: "font-size: 12px;",
+  minWidth: {
+    size: "400px",
+    styles: "font-weight: bold"
+  }
+}
+
+"span p": {
+  styles: "font-weight: normal" // not allowed (overrides property set at min-width)
+}
+
+---
+
+<span.errorMessage>
+  color: red;
+</span
+
+<span.errorMessage minWidth="400px" maxWidth="500px">
+  font-size: 12px;
+</span>
+
+<span.errorMessage minWidth="500px" maxWidth="800px">
+  font-size: 14px;
+</span>
+
+<span.errorMessage minWidth="800px">
+  font-size: 16px;
+</span>
+
+As ref:
+
+"span.errorMessage": {
+  styles: "color: red",
+  media: [
+    {
+      minWidth: 400,
+      maxWidth: 500,
+      styles: {
+        "font-size: 12px; color: blue; // not allowed (color has already been set)"
+      }
+    },
+    {
+      minWidth: 500,
+      maxWidth: 800,
+      styles: {
+        "font-size: 14px;"
+      }
+    },
+    {
+      maxWidth: 800,
+      styles: {
+        "font-size: 16px;"
+      }
+    }
+  ]
+}
+
+---
+
+Mobile first isn't allowed with discrete breakpoints
+
+<button.btn>
+  font-size: 12px;
+  height: 40px;
+</button>
+
+<button.btn minWidth="360px">
+  font-size: 14px; // not allowed
+</button>
+
+<button.btn minWidth="580px">
+  font-size: 16px; // not allowed
+</button>
+
+<button.btn minWidth="900px">
+  font-size: 18px; // not allowed
+</button>
+
+As ref:
+
+"button.btn": {
+  styles: "font-size: 12px; height: 40px;",
+  media: [
+    {
+      minWidth: 360;
+      styles: "font-size: 14px // not allowed; background: red;"
+    },
+    {
+      minWidth: 580;
+      styles: "font-size: 16px; // not allowed"
+    },
+    {
+      minWidth: 900;
+      styles: "font-size: 18px; // not allowed background: yellow // not allowed (overrides background set at min-width 360)"
+    }
+  ]
+}
+
+---
+
+<span.child>
+  <a.link>
+    font-size: 12px;
+  </a>
+</span>
+
+<span.child minWidth="900px">
+  <img.icon>
+    width: 40px;
+  </img>
+</span>
+
+<div.wrapper maxWidth="800px">
+  display: flex;
+  flex-direction: row;
+
+  <span.child>
+    flex: 2;
+
+    <a.link>
+      font-size: 10px; // not allowed
+    </a>
+
+    <img.icon>
+      width: 20px; // is allowed
+    </img>
+  </span>
+</div>
+
+<div.wrapper minWidth="800px">
+  <span.child>
+    flex: 1; // is allowed
+  </span>
+</div>
+
+As ref:
+
+"span.child a.link": {
+  styles: "font-size: 12px;"
+}
+
+"span.child img.icon": {
+  styles: null,
+  media: [
+    {
+      minWidth: 900,
+      styles: "width: 40px;"
+    }
+  ]
+}
+
+"div.wrapper": {
+  styles: null,
+  media: [
+    {
+      maxWidth: 800,
+      styles: "display: flex; flex-direction: row;"
+    }
+  ]
+}
+
+"div.wrapper span.child": {
+  styles: null,
+  media: [
+    {
+      maxWidth: 800,
+      styles: "flex: 2;"
+    }
+  ]
+}
+
+"div.wrapper span.child a.link": {
+  styles: null,
+  media: [
+    {
+      maxWidth: 800,
+      styles: "font-size: 10px; // not allowed"
+    }
+  ]
+}
+
+"div.wrapper span.child img.icon": {
+  styles: null,
+  media: [
+    {
+      maxWidth: 800,
+      styles: "width: 20px; // is allowed (max-width is less than min-width of `span.child img.icon`)"
+    }
+  ]
+}
+
+"div.wrapper span.child": {
+  styles: null,
+  media: [
+    {
+      minWidth: 800,
+      styles: "flex: 1; // is allowed (`span.child` doesn't have flex property)"
+    }
+  ]
+}
 
 */

@@ -1,6 +1,9 @@
 /**
 Media queries --
 
+- Not allowed to nest media queries (media query defined within a media query)
+- Child elements inherit media query from parents
+
 ------------------------------------------------------------------------
 
 <nav>
@@ -33,6 +36,14 @@ Media queries --
     </li>
   </ul>
 </nav>
+
+---
+
+<div.wrapper minWidth="500px">
+  <span.icon minWidth="400px"> // not allowed (cannot nest media queries)
+    width: 30px;
+  </span>
+<div>
 
 */
 
@@ -70,3 +81,16 @@ nav > ul[class="nav__links"] {
     padding: 0 50px;
   }
 }
+
+/*
+
+Mono.createStyle(
+  "span",
+  {
+    className: null,
+    minWidth: 300px;
+  },
+  "font-size: 23px; font-weight: bold;
+)
+
+*/
