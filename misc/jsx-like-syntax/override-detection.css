@@ -178,7 +178,8 @@ in CSX.
 */
 
 
-/* Pseudo Classes */
+/* Pseudo Selectors */
+// todo: move this into separate file
 
 /*csx
 
@@ -290,7 +291,7 @@ In example #3 we check refs for:
 
 ---
 
-Part of checking if styles are unique now needs to consider media queries.
+Part of checking if styles are unique (_stylesUnique) now needs to consider media queries.
 
 Currently the comparison is:
 
@@ -366,6 +367,28 @@ As ref:
     }
   ]
 }
+
+// think this is an better shape for ref:
+
+"span.errorMessage": [
+  {
+    styles: "color: red"
+  },
+  {
+    minWidth: 400,
+    maxWidth: 500,
+    styles: "font-size: 12px; color: blue; // not allowed"
+  },
+  {
+    minWidth: 500,
+    maxWidth: 800,
+    styles: "font-size: 14px;"
+  },
+  {
+    maxWidth: 800,
+    "font-size: 16px;"
+  }
+]
 
 ---
 

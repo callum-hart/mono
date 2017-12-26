@@ -1,5 +1,13 @@
 /**
  * Get first version of this done asap to test idea
+ *
+ * Todos:
+ * - media queries (in progress)
+ * - composition
+ * - inheritance
+ *
+ * With this implementation all styles are immutable... more
+ * suitable project name immutable-css?
  */
 
 
@@ -8,6 +16,7 @@ const SPACE      = ' ';
 const DOT        = '.';
 const COLON      = ':';
 const SEMI_COLON = ';';
+const ZERO       = 0;
 
 
 class CSXException {
@@ -18,10 +27,10 @@ class CSXException {
 }
 
 const Mono = {
-  createStyle(element, props, styles, ...children) {
+  createStyle(element, attrs, styles, ...children) {
     return {
       element,
-      props,
+      attrs,
       styles,
       children
     }
@@ -32,11 +41,11 @@ const Mono = {
     Mono._parseAst();
   },
 
+  // todo: needs to handle inferred media queries & validate against nested media queries
   _parseStyles(block, parentRef = null) {
     const ref = Mono._makeRef(block);
     const fullyQualifiedRef = parentRef ? `${parentRef}${SPACE}${ref}` : ref;
-    console.log(block);
-    Mono._saveRef(fullyQualifiedRef, block.styles);
+    Mono._saveRef(fullyQualifiedRef, block);
 
     if (block.children.length) {
       if (parentRef) {
@@ -50,28 +59,27 @@ const Mono = {
   },
 
   _parseAst() {
+    console.log('AST:');
     console.log(Mono._AST);
-    console.log('------------------------');
+    console.log('---------------------------------------------');
 
     for (var ref in Mono._AST) {
       const a = ref.split(SPACE);
-
-      // Traverse tree to see whether ref exists (starting from right-hand-side).
-
       let i = a.length - 1;
       let b = BLANK;
 
+      // traverse tree to see whether ref exists (moving from right to left).
       do {
         b = (b === BLANK) ? a[i] : `${a[i]}${SPACE}` + b;
 
         if (ref !== b && Mono._AST[b]) {
           // ref already exists, check if styles are unique
           try {
-            Mono._stylesUnique(Mono._AST[b], Mono._AST[ref]);
+            Mono._stylesUnique(Mono._AST[b], Mono._AST[ref]); // todo: not working since changes to ref & _stylesUnique
           } catch (e) {
             console.log(`\n[Override Found] \`${ref}\` overrides the property \`${e.data.property}\` set by \`${b}\``);
-            console.log(`\nExisting styles (\`${b}\`):\n   \`${e.data.existingStyles}\``);
-            console.log(`\nNew styles (\`${ref}\`):\n   \`${e.data.newStyles}\``);
+            console.log(`\nExisting style (\`${b}\`):\n   \`${e.data.existingStyles}\``);
+            console.log(`\nNew style (\`${ref}\`):\n   \`${e.data.newStyles}\``);
             throw new e.constructor();
           }
         }
@@ -83,41 +91,72 @@ const Mono = {
 
   _AST: {},
 
-  // ref shape needs to change
-  _saveRef(ref, styles) {
+  _saveRef(ref, {styles, attrs}) {
     if (Mono._AST[ref]) {
       // ref already exists, merge styles with existing styles if no overrides present.
+      const newStyles = Mono._createStyleEntry(styles, attrs);
+
       try {
-        Mono._stylesUnique(Mono._AST[ref], styles);
-        Mono._AST[ref] += styles; // merge styles
+        Mono._AST[ref].forEach(existingStyles => Mono._stylesUnique(existingStyles, newStyles));
+        Mono._AST[ref].push(newStyles); // save styles
       } catch (e) {
         console.log(`\nThe CSS property \`${e.data.property}\` has already been defined for \`${ref}\``);
-        console.log(`\nExisting styles (\`${ref}\`):\n   "${e.data.existingStyles}"`);
-        console.log(`\nNew styles (\`${ref}\`):\n   "${e.data.newStyles}"`);
+        console.log(`\nExisting style (\`${ref}\`):\n   "${e.data.existingStyles.styles}"`);
+        console.log(`\nNew style (\`${ref}\`):\n   "${e.data.newStyles.styles}"`);
         throw new e.constructor();
       }
     } else {
-      Mono._AST[ref] = styles;
+      Mono._AST[ref] = [Mono._createStyleEntry(styles, attrs)];
+    }
+  },
+
+  _createStyleEntry(styles, attrs) {
+    const minWidth = (attrs && attrs.minWidth) ? attrs.minWidth : ZERO;
+    const maxWidth = (attrs && attrs.maxWidth) ? attrs.maxWidth : Infinity;
+
+    return {
+      styles,
+      minWidth,
+      maxWidth
     }
   },
 
   // unique in terms of CSS property (not including CSS value)
-  // needs to handle: media queries, property short-hands (margin vs margin-top)
+  // needs to handle property short-hands (margin vs margin-top) or validate against short-hand usage
   _stylesUnique(existingStyles, newStyles) {
-    for (var property in Mono._stylesAsObject(newStyles)) {
-      if (Mono._stylesAsObject(existingStyles)[property]) {
-        throw new CSXException('Override found', {
-          property,
-          existingStyles,
-          newStyles
-        });
+    if (Mono._breakpointsOverlap(existingStyles, newStyles)) {
+      console.log('breakpoints overlap');
+      for (var property in Mono._stylesToObject(newStyles.styles)) {
+        if (Mono._stylesToObject(existingStyles.styles)[property]) {
+          console.log('override found');
+          throw new CSXException('Override found', {
+            property,
+            existingStyles,
+            newStyles
+          });
+        } else {
+          console.log('no overrides found');
+        }
       }
+    } else {
+      console.log('breakpoints don\'t overlap');
     }
 
     return true;
   },
 
-  _stylesAsObject(styles) {
+  _breakpointsOverlap(rangeA, rangeB) {
+    const bothBelow = (rangeB.minWidth < rangeA.minWidth) && (rangeB.maxWidth < rangeA.minWidth);
+    const bothAbove = (rangeB.minWidth > rangeA.maxWidth) && (rangeB.maxWidth > rangeA.maxWidth);
+
+    if (bothBelow || bothAbove) {
+      return false;
+    } else {
+      return true;
+    }
+  },
+
+  _stylesToObject(styles) {
     const styleObj = {}
 
     styles.split(SEMI_COLON)
@@ -131,17 +170,17 @@ const Mono = {
     return styleObj;
   },
 
-  _makeSelector({element, props}) {
-    if (props && props.className) {
-      return `${element}[class="${props.className.replace(DOT, SPACE)}"]`;
+  _makeSelector({element, attrs}) {
+    if (attrs && attrs.className) {
+      return `${element}[class="${attrs.className.replace(DOT, SPACE)}"]`;
     } else {
       return element;
     }
   },
 
-  _makeRef({element, props}) {
-    if (props && props.className) {
-      return `${element}${DOT}${props.className}`;
+  _makeRef({element, attrs}) {
+    if (attrs && attrs.className) {
+      return `${element}${DOT}${attrs.className}`;
     } else {
       return element;
     }
@@ -332,44 +371,65 @@ const stylesWithOverrides = [
   )
 ];
 
+const stylesWithMediaQueries = [
+  Mono.createStyle(
+    "span",
+    {
+      className: "errorMessage",
+      minWidth: 300,
+      maxWidth: 600
+    },
+    "color: red;"
+  ),
 
-// const stylesWithMediaQueries = [
-//   Mono.createStyle(
-//     "span",
-//     {
-//       className: "errorMessage"
-//     },
-//     "color: red;"
-//   ),
+  Mono.createStyle(
+    "span",
+    {
+      className: "errorMessage",
+      minWidth: 600
+    },
+    "color: blue;"
+  ),
 
-//   Mono.createStyle(
-//     "span",
-//     {
-//       className: "errorMessage",
-//       minWidth: 400,
-//       maxWidth: 500
-//     },
-//     "font-size: 12px;"
-//   ),
+  Mono.createStyle(
+    "span",
+    {
+      className: "errorMessage",
+      minWidth: 300,
+      maxWidth: 500
+    },
+    "font-size: 12px;"
+  ),
 
-//   Mono.createStyle(
-//     "span",
-//     {
-//       className: "errorMessage",
-//       minWidth: 500,
-//       maxWidth: 800
-//     },
-//     "font-size: 14px;"
-//   ),
+  Mono.createStyle(
+    "span",
+    {
+      className: "errorMessage",
+      maxWidth: 200
+    },
+    "font-weight: bold;"
+  ),
 
-//   Mono.createStyle(
-//     "span",
-//     {
-//       className: "errorMessage",
-//       minWidth: 800
-//     },
-//     "font-size: 16px;"
-//   )
-// ];
+  Mono.createStyle(
+    "span",
+    {
+      className: "errorMessage"
+    },
+    "font-style: italic;"
+  ),
 
-Mono.createCSS(stylesWithOverrides);
+  // Mono.createStyle(
+  //   "div",
+  //   null,
+  //   "font-style: italic;",
+  //   Mono.createStyle(
+  //     "span",
+  //     {
+  //       className: "errorMessage"
+  //     },
+  //     "font-style: italic;"
+  //   )
+  // )
+];
+
+Mono.createCSS(stylesWithMediaQueries);
