@@ -44,8 +44,6 @@ const Mono = {
     const ref = Mono._makeRef(block);
     const fullyQualifiedRef = parentRef ? `${parentRef}${SPACE}${ref}` : ref;
     const { minWidth, maxWidth, className } = block.attrs;
-    console.log('---------------------');
-    console.log(block);
 
     if (inheritedMedia) {
       if (minWidth || maxWidth) {
@@ -62,15 +60,11 @@ const Mono = {
     }
 
     if (Mono._isComposableClass(parentRef, className)) {
-      console.log(`className: "${className}" is a composable class`);
       const baseClass = className.match(/^.+(?=(\.))/)[0]; // upto (but not including) dot
       const baseRef = `${block.element}${DOT}${baseClass}`;
 
       if (Mono._AST[baseRef]) {
-        console.log(`base ref: "${baseRef}" found.`);
-        console.log(`fullyQualifiedRef: "${fullyQualifiedRef}"`);
-        // clone base styles, replacing baseRef with fullyQualifiedRef and save to AST (`saveRef`)
-        // const baseStyles = // todo
+        Mono._cloneBaseStyles(baseRef, fullyQualifiedRef);
       } else {
         console.log(`The base class: "${baseRef}" does not exist.`);
       }
@@ -100,6 +94,21 @@ const Mono = {
     }
   },
 
+  _cloneBaseStyles(baseRef, clonedRef) {
+    for (var ref in Mono._AST) {
+      if (ref === baseRef || ref.startsWith(`${baseRef}${SPACE}`)) {
+        const fullyQualifiedClonedRef = ref.replace(baseRef, clonedRef);
+        // console.log(`\ncopy styles from: ${ref}`);
+        // console.log(`save under ref: ${fullyQualifiedClonedRef}`);
+
+        // clone and save base styles
+        Mono._AST[fullyQualifiedClonedRef] = [...Mono._AST[ref]];
+        Mono._AST[fullyQualifiedClonedRef].__proto__.cloned = true;
+        Mono._AST[fullyQualifiedClonedRef].__proto__._clonedFrom = ref;
+      }
+    }
+  },
+
   _isComposableClass(parentRef, className) {
     // for now only support composition for:
     //  - top level nodes (cannot use composition in nested nodes)
@@ -124,7 +133,7 @@ const Mono = {
         accumulator = (accumulator === BLANK) ? paths[i] : `${paths[i]}${SPACE}` + accumulator;
 
         if (ref !== accumulator && Mono._AST[accumulator]) {
-          // ref already exists as part of another ref, check if styles are unique
+          // ref exists as part of another ref, check if styles are unique
           try {
             Mono._AST[ref].forEach(refStyles => {
               Mono._AST[accumulator].forEach(accumulatedStyles => Mono._stylesUnique(accumulatedStyles, refStyles));
@@ -145,7 +154,7 @@ const Mono = {
   _AST: {},
 
   _saveRef(ref, {styles, attrs}) {
-    if (Mono._AST[ref]) {
+    if (Mono._AST[ref] && !Mono._AST[ref].__proto__.cloned) {
       // ref already exists, merge styles with existing styles if no overrides present.
       const newStyles = Mono._createStyleEntry(styles, attrs);
 
@@ -158,7 +167,17 @@ const Mono = {
         console.log(`\nNew style (\`${ref}\`):\n   "${e.data.comparison.styles}"`);
         throw new e.constructor();
       }
-    } else {
+    }
+    else if (Mono._AST[ref] && Mono._AST[ref].__proto__.cloned) {
+      // merge styles with existing styles (overloads are permitted)
+      console.log(`ref: "${ref}" contains cloned styles`);
+      console.log(`\nmerge existingStyles:`);
+      console.log(Mono._AST[ref]);
+      console.log(`\nwith newStyles:`);
+      console.log(styles);
+      console.log('----------------------------------------');
+    }
+    else {
       Mono._AST[ref] = [Mono._createStyleEntry(styles, attrs)];
     }
   },
