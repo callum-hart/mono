@@ -2,7 +2,7 @@
  * Get first version of this done asap to test idea
  *
  * Todos:
- * - media queries (in progress)
+ * - media queries (done)
  * - composition
  * - inheritance
  *
@@ -41,24 +41,54 @@ const Mono = {
     Mono._parseAst();
   },
 
-  // todo: needs to handle inferred media queries & validate against nested media queries
-  _parseStyles(block, parentRef = null) {
+  _parseStyles(block, parentRef = null, inheritedMedia = null) {
     const ref = Mono._makeRef(block);
     const fullyQualifiedRef = parentRef ? `${parentRef}${SPACE}${ref}` : ref;
+    const { minWidth, maxWidth } = block.attrs;
+
+    if (inheritedMedia) {
+      if (minWidth || maxWidth) {
+        Mono._logNestedMediaQuery(inheritedMedia, minWidth, maxWidth, fullyQualifiedRef);
+        throw new Error('Nested media query found');
+      } else {
+        // add inherited media queries to child block
+        block.attrs = {
+          ...block.attrs,
+          ...inheritedMedia.minWidth && { minWidth: inheritedMedia.minWidth },
+          ...inheritedMedia.maxWidth && { maxWidth: inheritedMedia.maxWidth }
+        }
+      }
+    }
+
     Mono._saveRef(fullyQualifiedRef, block);
 
     if (block.children.length) {
+      // save parent path for children
       if (parentRef) {
         parentRef += `${SPACE}${ref}`;
       } else {
         parentRef = ref;
       }
 
-      block.children.forEach(child => Mono._parseStyles(child, parentRef));
+      // handle inferred media queries if any
+      if (minWidth || maxWidth) {
+        inheritedMedia = {
+          setBy: parentRef,
+          ...minWidth && { minWidth },
+          ...maxWidth && { maxWidth }
+        }
+      }
+
+      // parse children
+      block.children.forEach(child => Mono._parseStyles(child, parentRef, inheritedMedia));
     }
   },
 
   _parseAst() {
+    console.log('---------------------------------------');
+    console.log('AST:')
+    console.log(Mono._AST);
+
     for (var ref in Mono._AST) {
       const paths = ref.split(SPACE);
       let i = paths.length - 1;
@@ -157,8 +187,6 @@ const Mono = {
   _stylesToObject(styles) {
     const styleObj = {};
 
-    console.log(`[_stylesToObject] styles: ${styles}`);
-
     styles.split(SEMI_COLON)
           .filter(res => res !== BLANK)
           .map(res => res.trim())
@@ -188,6 +216,24 @@ const Mono = {
 
   _makeSelectorFromRef(ref) {
     console.log(`[_makeSelectorFromRef] ref: ${ref}`);
+  },
+
+  _logNestedMediaQuery(inheritedMedia, minWidth, maxWidth, fullyQualifiedRef) {
+    console.log(`\nMedia query already set by parent: "${inheritedMedia.setBy}"`);
+    if (inheritedMedia.minWidth) {
+      console.log(` - minWidth of: ${inheritedMedia.minWidth}`);
+    }
+    if (inheritedMedia.maxWidth) {
+      console.log(` - maxWidth of: ${inheritedMedia.maxWidth}`);
+    }
+    console.log(`\nNested media query found in: "${fullyQualifiedRef}"`);
+    if (minWidth) {
+      console.log(` - minWidth: ${minWidth}`);
+    }
+    if (maxWidth) {
+      console.log(` - maxWidth: ${maxWidth}`);
+    }
+    console.log(`\nNested media queries are not allowed\n`);
   }
 }
 
@@ -420,26 +466,42 @@ const stylesWithMediaQueries = [
   ),
 
   Mono.createStyle(
+    "a",
+    {
+      className: "link",
+      maxWidth: 900
+    },
+    "color: cadetblue;"
+  ),
+
+  Mono.createStyle(
     "div",
-    null,
+    {
+      minWidth: 901
+    },
     "height: 100px;",
     Mono.createStyle(
       "span",
       {
-        className: "errorMessage",
-        minWidth: 900
+        className: "errorMessage"
       },
-      "line-height: 100; text-transform: uppercase; color: brown;"
+      "line-height: 100; text-transform: uppercase;",
+      Mono.createStyle(
+        "a",
+        {
+          className: "link"
+        },
+        "color: red"
+      )
     ),
     Mono.createStyle(
       "span",
       {
-        className: "errorMessage",
-        minWidth: 401
+        className: "errorMessage"
       },
       "float: left;"
     )
   )
 ];
 
-Mono.createCSS(stylesWithOverrides);
+Mono.createCSS(stylesWithMediaQueries);
