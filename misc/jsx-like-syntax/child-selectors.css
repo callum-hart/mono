@@ -1,6 +1,7 @@
 /**
 
 Child Selectors --
+todo: rename to: all-children-are-direct-children
 
 - Selectors targeting children should use child combinator (>).
 - Without child combinator overrides can go undetected when structures are nested in the HTML.

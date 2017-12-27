@@ -1,6 +1,7 @@
 /**
 
 Tags without class --
+todo: rename to: tag-not-equal-to-tag-with-class
 
 - Cannot determine whether a tag in CSX has a class in HTML, which means
 overrides can go undetected.

@@ -30,8 +30,8 @@ const Mono = {
   createStyle(element, attrs, styles, ...children) {
     return {
       element,
-      attrs,
-      styles,
+      attrs: attrs || {},
+      styles: styles || '',
       children
     }
   },
@@ -59,27 +59,25 @@ const Mono = {
   },
 
   _parseAst() {
-    console.log('AST:');
-    console.log(Mono._AST);
-    console.log('---------------------------------------------');
-
     for (var ref in Mono._AST) {
-      const a = ref.split(SPACE);
-      let i = a.length - 1;
-      let b = BLANK;
+      const paths = ref.split(SPACE);
+      let i = paths.length - 1;
+      let accumulator = BLANK;
 
-      // traverse tree to see whether ref exists (moving from right to left).
+      // traverse tree (right to left) to see whether ref exists as part of another ref
       do {
-        b = (b === BLANK) ? a[i] : `${a[i]}${SPACE}` + b;
+        accumulator = (accumulator === BLANK) ? paths[i] : `${paths[i]}${SPACE}` + accumulator;
 
-        if (ref !== b && Mono._AST[b]) {
-          // ref already exists, check if styles are unique
+        if (ref !== accumulator && Mono._AST[accumulator]) {
+          // ref already exists as part of another ref, check if styles are unique
           try {
-            Mono._stylesUnique(Mono._AST[b], Mono._AST[ref]); // todo: not working since changes to ref & _stylesUnique
+            Mono._AST[ref].forEach(refStyles => {
+              Mono._AST[accumulator].forEach(accumulatedStyles => Mono._stylesUnique(accumulatedStyles, refStyles));
+            });
           } catch (e) {
-            console.log(`\n[Override Found] \`${ref}\` overrides the property \`${e.data.property}\` set by \`${b}\``);
-            console.log(`\nExisting style (\`${b}\`):\n   \`${e.data.existingStyles}\``);
-            console.log(`\nNew style (\`${ref}\`):\n   \`${e.data.newStyles}\``);
+            console.log(`\n[Override Found] \`${ref}\` overrides the property \`${e.data.property}\` set by \`${accumulator}\``);
+            console.log(`\nExisting style (\`${accumulator}\`):\n   \`${e.data.control.styles}\``);
+            console.log(`\nNew style (\`${ref}\`):\n   \`${e.data.comparison.styles}\``);
             throw new e.constructor();
           }
         }
@@ -101,8 +99,8 @@ const Mono = {
         Mono._AST[ref].push(newStyles); // save styles
       } catch (e) {
         console.log(`\nThe CSS property \`${e.data.property}\` has already been defined for \`${ref}\``);
-        console.log(`\nExisting style (\`${ref}\`):\n   "${e.data.existingStyles.styles}"`);
-        console.log(`\nNew style (\`${ref}\`):\n   "${e.data.newStyles.styles}"`);
+        console.log(`\nExisting style (\`${ref}\`):\n   "${e.data.control.styles}"`);
+        console.log(`\nNew style (\`${ref}\`):\n   "${e.data.comparison.styles}"`);
         throw new e.constructor();
       }
     } else {
@@ -110,46 +108,46 @@ const Mono = {
     }
   },
 
-  _createStyleEntry(styles, attrs) {
-    const minWidth = (attrs && attrs.minWidth) ? attrs.minWidth : ZERO;
-    const maxWidth = (attrs && attrs.maxWidth) ? attrs.maxWidth : Infinity;
-
+  _createStyleEntry(styles, {minWidth, maxWidth}) {
     return {
       styles,
-      minWidth,
-      maxWidth
+      minWidth: minWidth ? minWidth : ZERO,
+      maxWidth: maxWidth ? maxWidth : Infinity
     }
   },
 
   // unique in terms of CSS property (not including CSS value)
   // needs to handle property short-hands (margin vs margin-top) or validate against short-hand usage
-  _stylesUnique(existingStyles, newStyles) {
-    if (Mono._breakpointsOverlap(existingStyles, newStyles)) {
+  _stylesUnique(control, comparison) {
+    if (Mono._breakpointsOverlap(control, comparison)) {
       console.log('breakpoints overlap');
-      for (var property in Mono._stylesToObject(newStyles.styles)) {
-        if (Mono._stylesToObject(existingStyles.styles)[property]) {
+      for (var property in Mono._stylesToObject(comparison.styles)) {
+        if (Mono._stylesToObject(control.styles)[property]) {
           console.log('override found');
           throw new CSXException('Override found', {
             property,
-            existingStyles,
-            newStyles
+            control,
+            comparison
           });
         } else {
           console.log('no overrides found');
         }
       }
     } else {
+      // overrides can't exist when breakpoints don't overlap
       console.log('breakpoints don\'t overlap');
     }
 
     return true;
   },
 
-  _breakpointsOverlap(rangeA, rangeB) {
-    const bothBelow = (rangeB.minWidth < rangeA.minWidth) && (rangeB.maxWidth < rangeA.minWidth);
-    const bothAbove = (rangeB.minWidth > rangeA.maxWidth) && (rangeB.maxWidth > rangeA.maxWidth);
+  _breakpointsOverlap(controlRange, comparisonRange) {
+    const rangeBelow = (comparisonRange.minWidth < controlRange.minWidth) &&
+                       (comparisonRange.maxWidth < controlRange.minWidth);
+    const rangeAbove = (comparisonRange.minWidth > controlRange.maxWidth) &&
+                       (comparisonRange.maxWidth > controlRange.maxWidth);
 
-    if (bothBelow || bothAbove) {
+    if (rangeBelow || rangeAbove) {
       return false;
     } else {
       return true;
@@ -157,7 +155,9 @@ const Mono = {
   },
 
   _stylesToObject(styles) {
-    const styleObj = {}
+    const styleObj = {};
+
+    console.log(`[_stylesToObject] styles: ${styles}`);
 
     styles.split(SEMI_COLON)
           .filter(res => res !== BLANK)
@@ -355,11 +355,11 @@ const stylesWithOverrides = [
         className: "checkout"
       },
       null,
-      // Mono.createStyle(
-      //   "p",
-      //   null,
-      //   "font-size: 10px /* not allowed */;"
-      // ),
+      Mono.createStyle(
+        "p",
+        null,
+        "font-size: 10px /* not allowed */;"
+      ),
       Mono.createStyle(
         "span",
         {
@@ -386,7 +386,8 @@ const stylesWithMediaQueries = [
     "span",
     {
       className: "errorMessage",
-      minWidth: 600
+      minWidth: 601,
+      maxWidth: 900
     },
     "color: blue;"
   ),
@@ -418,18 +419,27 @@ const stylesWithMediaQueries = [
     "font-style: italic;"
   ),
 
-  // Mono.createStyle(
-  //   "div",
-  //   null,
-  //   "font-style: italic;",
-  //   Mono.createStyle(
-  //     "span",
-  //     {
-  //       className: "errorMessage"
-  //     },
-  //     "font-style: italic;"
-  //   )
-  // )
+  Mono.createStyle(
+    "div",
+    null,
+    "height: 100px;",
+    Mono.createStyle(
+      "span",
+      {
+        className: "errorMessage",
+        minWidth: 900
+      },
+      "line-height: 100; text-transform: uppercase; color: brown;"
+    ),
+    Mono.createStyle(
+      "span",
+      {
+        className: "errorMessage",
+        minWidth: 401
+      },
+      "float: left;"
+    )
+  )
 ];
 
-Mono.createCSS(stylesWithMediaQueries);
+Mono.createCSS(stylesWithOverrides);
