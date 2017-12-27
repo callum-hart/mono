@@ -2,7 +2,6 @@
  * Get first version of this done asap to test idea
  *
  * Todos:
- * - media queries (done)
  * - composition
  * - inheritance
  *
@@ -44,7 +43,9 @@ const Mono = {
   _parseStyles(block, parentRef = null, inheritedMedia = null) {
     const ref = Mono._makeRef(block);
     const fullyQualifiedRef = parentRef ? `${parentRef}${SPACE}${ref}` : ref;
-    const { minWidth, maxWidth } = block.attrs;
+    const { minWidth, maxWidth, className } = block.attrs;
+    console.log('---------------------');
+    console.log(block);
 
     if (inheritedMedia) {
       if (minWidth || maxWidth) {
@@ -60,6 +61,21 @@ const Mono = {
       }
     }
 
+    if (Mono._isComposableClass(parentRef, className)) {
+      console.log(`className: "${className}" is a composable class`);
+      const baseClass = className.match(/^.+(?=(\.))/)[0]; // upto (but not including) dot
+      const baseRef = `${block.element}${DOT}${baseClass}`;
+
+      if (Mono._AST[baseRef]) {
+        console.log(`base ref: "${baseRef}" found.`);
+        console.log(`fullyQualifiedRef: "${fullyQualifiedRef}"`);
+        // clone base styles, replacing baseRef with fullyQualifiedRef and save to AST (`saveRef`)
+        // const baseStyles = // todo
+      } else {
+        console.log(`The base class: "${baseRef}" does not exist.`);
+      }
+    }
+
     Mono._saveRef(fullyQualifiedRef, block);
 
     if (block.children.length) {
@@ -70,7 +86,7 @@ const Mono = {
         parentRef = ref;
       }
 
-      // handle inferred media queries if any
+      // save inferred media queries if any
       if (minWidth || maxWidth) {
         inheritedMedia = {
           setBy: parentRef,
@@ -82,6 +98,15 @@ const Mono = {
       // parse children
       block.children.forEach(child => Mono._parseStyles(child, parentRef, inheritedMedia));
     }
+  },
+
+  _isComposableClass(parentRef, className) {
+    // for now only support composition for:
+    //  - top level nodes (cannot use composition in nested nodes)
+    //  - two classes
+    return parentRef === null &&
+           className &&
+           className.includes(DOT);
   },
 
   _parseAst() {
@@ -243,32 +268,6 @@ const Mono = {
 const stylesWithComposition = [
   Mono.createStyle(
     "form",
-    null,
-    "display: block;"
-  ),
-
-  Mono.createStyle(
-    "span",
-    null,
-    "color: blue; font-style: italic;"
-  ),
-
-  Mono.createStyle(
-    "span",
-    null,
-    "font-size: 23px; font-weight: bold; line-height: 20px;"
-  ),
-
-  Mono.createStyle(
-    "span",
-    {
-      className: "error-message"
-    },
-    "color: red; font-weight: bold;"
-  ),
-
-  Mono.createStyle(
-    "form",
     {
       className: "base-form"
     },
@@ -311,44 +310,7 @@ const stylesWithComposition = [
       {
         className: "error-message"
       },
-      "display: block;",
-      Mono.createStyle(
-        "a",
-        {
-          className: "anotherLink"
-        },
-        "color: grey"
-      ),
-      Mono.createStyle(
-        "p",
-        null,
-        "font-size: 20px",
-        Mono.createStyle(
-          "a",
-          {
-            className: "yetAnotherLink"
-          },
-          "color: RED"
-        )
-      )
-    )
-  ),
-
-  Mono.createStyle(
-    "ul",
-    {
-      className: "nav__links"
-    },
-    "display: flex; padding-left: 0; list-style: none",
-    Mono.createStyle(
-      "li",
-      null,
-      null,
-      Mono.createStyle(
-        "a",
-        null,
-        "padding: 0 10px;"
-      )
+      "display: block; color: red;"
     )
   )
 ];
@@ -504,4 +466,4 @@ const stylesWithMediaQueries = [
   )
 ];
 
-Mono.createCSS(stylesWithMediaQueries);
+Mono.createCSS(stylesWithComposition);
