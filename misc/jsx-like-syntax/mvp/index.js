@@ -96,6 +96,9 @@ const Mono = {
 
   _cloneBaseStyles(baseRef, clonedRef) {
     for (var ref in Mono._AST) {
+      // note: could potentiall clone all styles that include (not just start with) baseRef
+      // i.e: `div.container form.base-form` => `div.container form.base-form.base-form--saving`
+      // this would enable composition among nested nodes.
       if (ref === baseRef || ref.startsWith(`${baseRef}${SPACE}`)) {
         const fullyQualifiedClonedRef = ref.replace(baseRef, clonedRef);
         // console.log(`\ncopy styles from: ${ref}`);
@@ -135,8 +138,8 @@ const Mono = {
         if (ref !== accumulator && Mono._AST[accumulator]) {
           // ref exists as part of another ref, check if styles are unique
           try {
-            Mono._AST[ref].forEach(refStyles => {
-              Mono._AST[accumulator].forEach(accumulatedStyles => Mono._stylesUnique(accumulatedStyles, refStyles));
+            Mono._AST[ref].forEach(existingStyle => {
+              Mono._AST[accumulator].forEach(accumulatedStyle => Mono._stylesUnique(accumulatedStyle, existingStyle));
             });
           } catch (e) {
             console.log(`\n[Override Found] \`${ref}\` overrides the property \`${e.data.property}\` set by \`${accumulator}\``);
@@ -154,31 +157,59 @@ const Mono = {
   _AST: {},
 
   _saveRef(ref, {styles, attrs}) {
-    if (Mono._AST[ref] && !Mono._AST[ref].__proto__.cloned) {
-      // ref already exists, merge styles with existing styles if no overrides present.
-      const newStyles = Mono._createStyleEntry(styles, attrs);
+    if (Mono._AST[ref]) {
+      // ref already exists
+      const newStyle = Mono._createStyleEntry(styles, attrs);
 
-      try {
-        Mono._AST[ref].forEach(existingStyles => Mono._stylesUnique(existingStyles, newStyles));
-        Mono._AST[ref].push(newStyles); // save styles
-      } catch (e) {
-        console.log(`\nThe CSS property \`${e.data.property}\` has already been defined for \`${ref}\``);
-        console.log(`\nExisting style (\`${ref}\`):\n   "${e.data.control.styles}"`);
-        console.log(`\nNew style (\`${ref}\`):\n   "${e.data.comparison.styles}"`);
-        throw new e.constructor();
+      if (Mono._AST[ref].__proto__.cloned) {
+        // find existing style whose min & max width are equal to new style (if any)
+        const equivalentStyle = Mono._AST[ref].filter(({minWidth, maxWidth}) => minWidth === newStyle.minWidth && maxWidth === newStyle.maxWidth);
+
+        if (equivalentStyle.length) {
+          // merge new style with an equivalent style
+          Mono._mergeNewStylesWithEquivalentStyle(newStyle, equivalentStyle[0], ref);
+        } else {
+          // treat new style as a new entry in AST
+          Mono._saveNewStylesForExistingRef(newStyle, ref);
+        }
+
+        console.log('\n----------------------------------------\n');
+      } else {
+        // merge new styles with existing styles if no overrides present
+        Mono._saveNewStylesForExistingRef(newStyle, ref);
       }
-    }
-    else if (Mono._AST[ref] && Mono._AST[ref].__proto__.cloned) {
-      // merge styles with existing styles (overloads are permitted)
-      console.log(`ref: "${ref}" contains cloned styles`);
-      console.log(`\nmerge existingStyles:`);
-      console.log(Mono._AST[ref]);
-      console.log(`\nwith newStyles:`);
-      console.log(styles);
-      console.log('----------------------------------------');
-    }
-    else {
+    } else {
       Mono._AST[ref] = [Mono._createStyleEntry(styles, attrs)];
+    }
+  },
+
+  _saveNewStylesForExistingRef(newStyle, ref) {
+    try {
+      Mono._AST[ref].forEach(existingStyle => Mono._stylesUnique(existingStyle, newStyle));
+      Mono._AST[ref].push(newStyle); // save styles
+    } catch (e) {
+      console.log(`\nThe CSS property \`${e.data.property}\` has already been defined for \`${ref}\``);
+      console.log(`\nExisting style (\`${ref}\`):\n   "${e.data.control.styles}"`);
+      console.log(`\nNew style (\`${ref}\`):\n   "${e.data.comparison.styles}"`);
+      throw new e.constructor();
+    }
+  },
+
+  _mergeNewStylesWithEquivalentStyle(newStyle, equivalentStyle, ref) {
+    console.log(`ref: ${ref}`);
+    console.log('merge newStyle:');
+    console.log(newStyle);
+    console.log('with equivalentStyle:');
+    console.log(equivalentStyle);
+
+    for (var property in Mono._stylesToObject(equivalentStyle.styles)) {
+      if (Mono._stylesToObject(newStyle.styles)[property]) {
+        const existingValue = Mono._stylesToObject(equivalentStyle.styles)[property];
+        const newValue = Mono._stylesToObject(newStyle.styles)[property];
+        console.log(`replace property: ${property}`);
+        console.log(`from: ${existingValue}`);
+        console.log(`to: ${newValue}`);
+      }
     }
   },
 
@@ -301,16 +332,40 @@ const stylesWithComposition = [
       {
         className: "error-message"
       },
-      "display: none;"
+      "display: none; font-size: 10px;"
     )
   ),
 
   Mono.createStyle(
     "form",
     {
+      className: "base-form",
+      minWidth: 500
+    },
+    "width: 100%;"
+  ),
+
+  // Mono.createStyle(
+  //   "a",
+  //   {
+  //     className: "link"
+  //   },
+  //   "color: green;"
+  // ),
+
+  Mono.createStyle(
+    "form",
+    {
       className: "base-form.base-form--saving"
     },
-    "background: lightgrey; opacity: 0.8; pointer-events: none;"
+    "background: lightgrey; opacity: 0.8; pointer-events: none;",
+    Mono.createStyle(
+      "a",
+      {
+        className: "link"
+      },
+      "color: red;"
+    )
   ),
 
   Mono.createStyle(
@@ -331,6 +386,22 @@ const stylesWithComposition = [
       },
       "display: block; color: red;"
     )
+    // ,Mono.createStyle(
+    //   "span",
+    //   {
+    //     className: "error-message",
+    //     maxWidth: 400
+    //   },
+    //   "font-size: 12px; // not allowed"
+    // ),
+    // Mono.createStyle(
+    //   "span",
+    //   {
+    //     className: "error-message",
+    //     maxWidth: 600
+    //   },
+    //   "font-size: 14px; // not allowed"
+    // )
   )
 ];
 
