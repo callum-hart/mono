@@ -4,19 +4,23 @@
  * Todos:
  * - JSX mapping
  *
- * With this implementation all styles are immutable... more
- * suitable project name immutable-css?
  */
 
 const propertyWhitelist = require('./propertyWhitelist');
 
 
-const BLANK      = '';
-const SPACE      = ' ';
-const DOT        = '.';
-const COLON      = ':';
-const SEMI_COLON = ';';
-const ZERO       = 0;
+const BLANK             = '';
+const SPACE             = ' ';
+const DOT               = '.';
+const COLON             = ':';
+const SEMI_COLON        = ';';
+const CHILD_COMBINATOR  = '>';
+const OPEN_PARENTHESIS  = '(';
+const CLOSE_PARENTHESIS = ')';
+const OPEN_BRACE        = '{';
+const CLOSE_BRACE       = '}';
+const ZERO              = 0;
+const MEDIA_UNIT        = 'px';
 
 
 class CSXException {
@@ -39,6 +43,7 @@ const Mono = {
   createCSS(styles) {
     styles.forEach(block => Mono._parseStyles(block));
     Mono._parseAst();
+    Mono._makeCSS();
   },
 
   _parseStyles(block, parentRef = null, inheritedMedia = null) {
@@ -66,6 +71,7 @@ const Mono = {
 
       if (Mono._AST[baseRef]) {
         Mono._cloneBaseStyles(baseRef, fullyQualifiedRef);
+        // todo: generate run-time validations (see composition.css:116)
       } else {
         console.log(`The base class: "${baseRef}" does not exist.`);
         throw new Error('Base class not found');
@@ -121,10 +127,6 @@ const Mono = {
   },
 
   _parseAst() {
-    console.log('---------------------------------------');
-    console.log('AST:')
-    console.log(Mono._AST);
-
     for (var ref in Mono._AST) {
       const paths = ref.split(SPACE);
       let i = paths.length - 1;
@@ -151,6 +153,41 @@ const Mono = {
         i--;
       } while (i >= 0);
     }
+  },
+
+  _makeCSS() {
+    let CSS = BLANK;
+
+    for (var ref in Mono._AST) {
+      const selector = Mono._makeSelectorFromRef(ref);
+
+      Mono._AST[ref].forEach(({styles, minWidth, maxWidth}) => {
+        if (minWidth === ZERO && maxWidth === Infinity) {
+          CSS += `${selector}${SPACE}${OPEN_BRACE}\n`;
+          CSS += `${SPACE.repeat(2)}${styles}\n`;
+        } else {
+          // optimization: one media query per unique range containing all styles for that range
+          const ranges = [];
+
+          if (minWidth != ZERO) {
+            ranges.push(`${OPEN_PARENTHESIS}min-width:${minWidth}${MEDIA_UNIT}${CLOSE_PARENTHESIS}`);
+          }
+
+          if (maxWidth != Infinity) {
+            ranges.push(`${OPEN_PARENTHESIS}max-width:${maxWidth}${MEDIA_UNIT}${CLOSE_PARENTHESIS}`);
+          }
+
+          CSS += `@media${SPACE}${ranges.join(`${SPACE}and${SPACE}`)}${SPACE}${OPEN_BRACE}\n`;
+          CSS += `${SPACE.repeat(2)}${selector}${SPACE}${OPEN_BRACE}\n`;
+          CSS += `${SPACE.repeat(4)}${styles}\n`;
+          CSS += `${SPACE.repeat(2)}${CLOSE_BRACE}\n`;
+        }
+
+        CSS += `${CLOSE_BRACE}\n`;
+      });
+    }
+
+    console.log(CSS);
   },
 
   _AST: {},
@@ -182,6 +219,7 @@ const Mono = {
     }
   },
 
+  // valid in regards to inheritance
   _stylesValid(ref, element, styles) {
     propertyWhitelist.forEach(({elements, properties}) => {
       const whitelistedProperty = properties.find(property => styles.includes(property));
@@ -217,7 +255,7 @@ const Mono = {
     for (var property in newStyles) {
       if (equivalentStyles[property]) {
         // style already exists, override it
-        equivalentStyles[property] = `${newStyles[property]} /* polymorphic */`;
+        equivalentStyles[property] = `${newStyles[property]} /* polymorphic (original value: ${equivalentStyles[property]}) */`;
         equivalentStyle.styles = Mono._stylesToString(equivalentStyles);
       } else {
         // add style
@@ -235,7 +273,7 @@ const Mono = {
   },
 
   // unique in terms of CSS property (not including CSS value)
-  // needs to handle property short-hands (margin vs margin-top) or validate against short-hand usage
+  // todo: needs to handle short-hands (margin vs margin-top) or validate against short-hand usage
   _stylesUnique(control, comparison) {
     if (Mono._breakpointsOverlap(control, comparison)) {
       console.log('breakpoints overlap');
@@ -272,10 +310,10 @@ const Mono = {
     }
   },
 
-  _stylesToObject(styles) {
+  _stylesToObject(stylesAsString) {
     const styleObj = {};
 
-    styles.split(SEMI_COLON)
+    stylesAsString.split(SEMI_COLON)
           .filter(res => res !== BLANK)
           .map(res => res.trim())
           .forEach(declaration => {
@@ -287,21 +325,13 @@ const Mono = {
   },
 
   _stylesToString(stylesAsObject) {
-    let stylesStr = "";
+    let stylesStr = BLANK;
 
     for (var [property, value] of Object.entries(stylesAsObject)) {
       stylesStr += `${property}${COLON}${value}${SEMI_COLON}`;
     }
 
     return stylesStr;
-  },
-
-  _makeSelector({element, attrs}) {
-    if (attrs && attrs.className) {
-      return `${element}[class="${attrs.className.replace(DOT, SPACE)}"]`;
-    } else {
-      return element;
-    }
   },
 
   _makeRef({element, attrs}) {
@@ -313,7 +343,37 @@ const Mono = {
   },
 
   _makeSelectorFromRef(ref) {
-    console.log(`[_makeSelectorFromRef] ref: ${ref}`);
+    let selector = [];
+
+    ref.split(SPACE).forEach(part => {
+      if (part.includes(DOT)) {
+        const isComposableClass = part.split(DOT).length === 3; // [element, baseClass, subClass]
+
+        if (isComposableClass) {
+          selector.push(Mono._makeComposableClassSelector(part));
+        } else {
+          selector.push(Mono._makeClassSelector(part));
+        }
+      } else {
+        selector.push(Mono._makeTagOnlySelector(part));
+      }
+    });
+
+    return(selector.join(`${SPACE}${CHILD_COMBINATOR}${SPACE}`));
+  },
+
+  _makeTagOnlySelector(element) {
+    return `${element}:not([class])`;
+  },
+
+  _makeClassSelector(elementWithClass) {
+    const [element, cssClass] = elementWithClass.split(DOT);
+    return `${element}[class="${cssClass}"]`;
+  },
+
+  _makeComposableClassSelector(elementWithComposableClass) {
+    const [element, baseClass, subClass] = elementWithComposableClass.split(DOT);
+    return `${element}[class="${baseClass}${SPACE}${subClass}"]`;
   },
 
   _logNestedMediaQuery(inheritedMedia, minWidth, maxWidth, fullyQualifiedRef) {
@@ -340,6 +400,11 @@ const Mono = {
 
 const stylesWithComposition = [
   Mono.createStyle(
+    "strong",
+    null,
+    "font-size: 12px;"
+  ),
+  Mono.createStyle(
     "form",
     {
       className: "base-form"
@@ -363,7 +428,8 @@ const stylesWithComposition = [
     "form",
     {
       className: "base-form",
-      minWidth: 500
+      minWidth: 500,
+      maxWidth: 900
     },
     "width: 100%;"
   ),
@@ -381,11 +447,12 @@ const stylesWithComposition = [
     {
       className: "base-form.base-form--saving"
     },
-    "background: lightgrey; opacity: 0.8;border: 1px solid BLUE; pointer-events: none;",
+    "background: lightgrey; opacity: 0.8;border: 1px solid BLUE; cursor: not-allowed;",
     Mono.createStyle(
       "a",
       {
-        className: "link"
+        className: "link",
+        minWidth: 400
       },
       "color: red;"
     )
