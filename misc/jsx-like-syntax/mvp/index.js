@@ -2,11 +2,13 @@
  * Get first version of this done asap to test idea
  *
  * Todos:
- * - inheritance
+ * - JSX mapping
  *
  * With this implementation all styles are immutable... more
  * suitable project name immutable-css?
  */
+
+const propertyWhitelist = require('./propertyWhitelist');
 
 
 const BLANK      = '';
@@ -66,7 +68,7 @@ const Mono = {
         Mono._cloneBaseStyles(baseRef, fullyQualifiedRef);
       } else {
         console.log(`The base class: "${baseRef}" does not exist.`);
-        // todo: throw error
+        throw new Error('Base class not found');
       }
     }
 
@@ -153,29 +155,47 @@ const Mono = {
 
   _AST: {},
 
-  _saveRef(ref, {styles, attrs}) {
-    if (Mono._AST[ref]) {
-      // ref already exists
-      const newStyle = Mono._createStyleEntry(styles, attrs);
+  _saveRef(ref, {element, attrs, styles}) {
+    if (Mono._stylesValid(ref, element, styles)) {
+      if (Mono._AST[ref]) {
+        // ref already exists
+        const newStyle = Mono._createStyleEntry(styles, attrs);
 
-      if (Mono._AST[ref].__proto__.cloned) {
-        // find existing style whose min & max width are equal to new style (if any)
-        const equivalentStyle = Mono._AST[ref].find(({minWidth, maxWidth}) => minWidth === newStyle.minWidth && maxWidth === newStyle.maxWidth);
+        if (Mono._AST[ref].__proto__.cloned) {
+          // find existing style whose min & max width are equal to new style (if any)
+          const equivalentStyle = Mono._AST[ref].find(({minWidth, maxWidth}) => minWidth === newStyle.minWidth && maxWidth === newStyle.maxWidth);
 
-        if (equivalentStyle) {
-          // merge new style with an equivalent style
-          Mono._mergeNewStyleWithEquivalentStyle(newStyle, equivalentStyle);
+          if (equivalentStyle) {
+            // merge new style with an equivalent style
+            Mono._mergeNewStyleWithEquivalentStyle(newStyle, equivalentStyle);
+          } else {
+            // treat new style as a new entry in AST
+            Mono._saveNewStyleForExistingRef(newStyle, ref);
+          }
         } else {
-          // treat new style as a new entry in AST
+          // merge new styles with existing styles if no overrides present
           Mono._saveNewStyleForExistingRef(newStyle, ref);
         }
       } else {
-        // merge new styles with existing styles if no overrides present
-        Mono._saveNewStyleForExistingRef(newStyle, ref);
+        Mono._AST[ref] = [Mono._createStyleEntry(styles, attrs)];
       }
-    } else {
-      Mono._AST[ref] = [Mono._createStyleEntry(styles, attrs)];
     }
+  },
+
+  _stylesValid(ref, element, styles) {
+    propertyWhitelist.forEach(({elements, properties}) => {
+      const whitelistedProperty = properties.find(property => styles.includes(property));
+
+      if (whitelistedProperty && !elements.includes(element)) {
+        console.log(`\nThe HTML element "${element}" (${ref}) cannot use the property "${whitelistedProperty}"`);
+        console.log(`\nThe property "${whitelistedProperty}" can only be used by the following elements:`);
+        elements.forEach(element => console.log(`  - ${element}`));
+        console.log('\n');
+        throw new Error('Element cannot not use property');
+      }
+    });
+
+    return true;
   },
 
   _saveNewStyleForExistingRef(newStyle, ref) {

@@ -12,9 +12,9 @@ Inheritance --
   font-size: 20px;
 </span>
 
-No way of knowing if `span` overrides font size set in `div`.
+No way of knowing if `span` overrides font size set by parent `div.wrapper`.
 
-- Inheritable properties can only be set on:
+- Inheritable properties should only be set on the elements that use them:
   - Pure textual elements (p, a, h1-h6 etc...)
   - Elements whose relationship is deterministic (html, body, ul):
 
