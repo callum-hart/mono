@@ -256,12 +256,13 @@ const Mono = {
       if (equivalentStyles[property]) {
         // style already exists, override it
         equivalentStyles[property] = `${newStyles[property]} /* polymorphic (original value: ${equivalentStyles[property]}) */`;
-        equivalentStyle.styles = Mono._stylesToString(equivalentStyles);
       } else {
         // add style
-        equivalentStyle.styles += `${property}${COLON}${newStyles[property]}${SEMI_COLON}`;
+        equivalentStyles[property] = `${newStyles[property]}`;
       }
     }
+
+    equivalentStyle.styles = Mono._stylesToString(equivalentStyles);
   },
 
   _createStyleEntry(styles, {minWidth, maxWidth}) {
@@ -474,7 +475,7 @@ const stylesWithComposition = [
       {
         className: "error-message"
       },
-      "display: block; color: red;"
+      "display: block; color: red; font-size: 20px;"
     )
     // ,Mono.createStyle(
     //   "span",
